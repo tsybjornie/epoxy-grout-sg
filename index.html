@@ -27,6 +27,9 @@
         content="Waterproof, mold-proof epoxy grout. Premium brands from $4.80/sqft. 15+ year lifespan. Festive deals available.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://epoxygrout.sg">
+    <meta property="og:image" content="https://epoxygrout.sg/images/hero-bg.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_SG">
 
     <!-- Twitter Card -->
@@ -34,6 +37,7 @@
     <meta name="twitter:title" content="Professional Epoxy Grout Service | Singapore & JB">
     <meta name="twitter:description"
         content="Waterproof, mold-proof epoxy grout from $4.80/sqft. Premium brands. 15+ year lifespan.">
+    <meta name="twitter:image" content="https://epoxygrout.sg/images/hero-bg.png">
 
     <!-- JSON-LD Structured Data: LocalBusiness + Service + FAQ -->
     <script type="application/ld+json">
@@ -146,8 +150,7 @@
     }
     </script>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
         :root {
@@ -175,8 +178,8 @@
 
         /* Custom grout applicator cursor */
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            background: #F5F5F5;
             color: var(--text);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -190,7 +193,7 @@
             width: 6px;
             height: 6px;
             background: rgba(10, 10, 10, 0.15);
-            border-radius: 0;
+            border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             transition: opacity 0.8s ease;
@@ -237,7 +240,7 @@
             padding: 3px 10px;
             border-radius: 4px;
             margin: 0 3px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
             font-weight: 600;
         }
@@ -249,26 +252,29 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(15, 15, 20, 0.45);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(24px) saturate(1.4);
             -webkit-backdrop-filter: blur(24px) saturate(1.4);
             padding: 0 40px;
-            height: 64px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
             transition: background 0.3s;
+            border-radius: 0 0 20px 20px;
         }
 
         .nav-logo {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.4rem;
-            color: #FFFFFF;
+            color: #0A0A0A;
             text-decoration: none;
-            letter-spacing: 0.06em;
+            letter-spacing: -0.02em;
+            font-weight: 800;
+            transition: opacity 0.3s;
+            text-transform: uppercase;
         }
 
         .nav-links {
@@ -278,7 +284,7 @@
         }
 
         .nav-links a {
-            color: rgba(255, 255, 255, 0.6);
+            color: #555555;
             text-decoration: none;
             font-size: 0.8rem;
             font-weight: 500;
@@ -289,14 +295,15 @@
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: #FFFFFF;
+            color: #0A0A0A;
         }
 
         .nav-cta {
-            background: #FFFFFF !important;
-            color: #0A0A0A !important;
-            padding: 8px 20px;
+            background: #0A0A0A !important;
+            color: #FFFFFF !important;
+            padding: 10px 24px;
             font-weight: 600 !important;
+            border-radius: 50px;
         }
 
         .hamburger {
@@ -317,20 +324,34 @@
         /* Hero Section */
         .hero {
             position: relative;
-            padding: 200px 20px 160px;
-            text-align: center;
-            background-color: #111111;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.55)), url('images/hero-bg.png');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            padding: 0;
+            text-align: left;
+            background-color: #000000;
             z-index: 1;
-            min-height: 90vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 80px;
+            max-width: 1400px;
+            width: 100%;
         }
 
         .hero h1,
@@ -376,40 +397,22 @@
         }
 
         .hero h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3.5rem, 10vw, 7rem);
-            font-weight: 400;
-            line-height: 0.95;
-            margin-bottom: 28px;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(3rem, 8vw, 8.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            margin-bottom: 0;
             color: #FFFFFF;
-            letter-spacing: 0.02em;
+            letter-spacing: -0.04em;
             text-transform: uppercase;
-            text-align: center;
+            text-align: left;
             width: 100%;
+            max-width: 900px;
         }
 
-        .hero .subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            color: #777777;
-            max-width: 560px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
-            font-weight: 400;
-        }
-
-        .hero .price-highlight {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.15);
-            color: #FFFFFF;
-            padding: 16px 36px;
-            border-radius: 0;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 32px;
-            letter-spacing: 0.02em;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .hero h1 span.accent {
+            font-weight: 700;
+            color: #FF3B3B;
         }
 
         .hero .price-highlight .original {
@@ -425,8 +428,8 @@
             gap: 10px;
             padding: 18px 44px;
             border: none;
-            border-radius: 0;
-            font-family: 'DM Sans', sans-serif;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -487,7 +490,7 @@
         }
 
         .section-title {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 400;
             text-align: center;
@@ -523,7 +526,7 @@
 
         .package-card {
             background: #FFFFFF;
-            border-radius: 0;
+            border-radius: 16px;
             padding: 40px 32px;
             border: none;
             transition: all 0.3s ease;
@@ -553,6 +556,7 @@
             color: #FFFFFF;
             letter-spacing: 0.08em;
             text-transform: uppercase;
+            border-radius: 0 16px 0 12px;
         }
 
         .package-icon {
@@ -561,7 +565,7 @@
         }
 
         .package-name {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.5rem;
             font-weight: 400;
             text-transform: uppercase;
@@ -577,7 +581,7 @@
         }
 
         .package-price {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 2.2rem;
             font-weight: 400;
             margin-bottom: 4px;
@@ -628,7 +632,7 @@
             padding: 14px;
             border: none;
             border-radius: 0;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
@@ -717,7 +721,7 @@
         }
 
         .result-info h4 {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
             margin-bottom: 4px;
         }
@@ -761,7 +765,7 @@
         }
 
         .brand-card h4 {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.05rem;
             margin-bottom: 6px;
         }
@@ -830,7 +834,7 @@
         }
 
         .stat-number {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 3.2rem;
             font-weight: 400;
             color: #0A0A0A;
@@ -928,7 +932,7 @@
         }
 
         .benefit-card h4 {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
             margin-bottom: 10px;
             font-weight: 700;
@@ -1000,7 +1004,7 @@
         }
 
         .urgency-box h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.8rem;
             margin-bottom: 8px;
             font-weight: 400;
@@ -1031,7 +1035,7 @@
         }
 
         .countdown-unit .number {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 2rem;
             font-weight: 400;
             color: #0A0A0A;
@@ -1080,7 +1084,7 @@
             border: 1px solid #E0E0E0;
             border-radius: 0;
             color: var(--text);
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
             outline: none;
             transition: border-color 0.3s;
@@ -1103,7 +1107,7 @@
             border: none;
             border-radius: 0;
             color: #FFFFFF;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
@@ -1134,7 +1138,7 @@
         }
 
         .footer-brand h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.4rem;
             letter-spacing: 0.06em;
             margin-bottom: 16px;
@@ -1147,7 +1151,7 @@
         }
 
         .footer-col h4 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -1281,7 +1285,7 @@
         }
 
         .area-card h4 {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.05rem;
             margin-bottom: 4px;
             font-weight: 700;
@@ -1348,7 +1352,7 @@
         }
 
         .problem-card h4 {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
             margin-bottom: 8px;
             color: #0A0A0A;
@@ -1414,14 +1418,14 @@
             border-radius: 0;
             background: #0A0A0A;
             color: #FFFFFF;
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-weight: 800;
             font-size: 1rem;
             margin-bottom: 16px;
         }
 
         .process-step h4 {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
             margin-bottom: 8px;
             font-weight: 700;
@@ -1450,7 +1454,7 @@
         }
 
         .removal-service-card h4 {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.05rem;
             margin-bottom: 8px;
             font-weight: 700;
@@ -1495,7 +1499,7 @@
             background: #0A0A0A;
             color: #FFFFFF;
             padding: 16px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
             text-align: left;
             letter-spacing: 0.04em;
@@ -1576,7 +1580,7 @@
         }
 
         .diy-card h4 {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
             margin-bottom: 10px;
             color: #0A0A0A;
@@ -1611,7 +1615,7 @@
         }
 
         .diy-warning h4 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.3rem;
             color: #0A0A0A;
             margin-bottom: 12px;
@@ -1639,7 +1643,7 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            border-radius: 0;
+            border-radius: 12px;
             border: 1px solid #E0E0E0;
             overflow: hidden;
         }
@@ -1648,7 +1652,7 @@
             background: #0A0A0A;
             color: #FFFFFF;
             padding: 14px 16px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 0.8rem;
             text-align: left;
             letter-spacing: 0.04em;
@@ -1689,11 +1693,11 @@
 
         .faq-item {
             background: #FFFFFF;
-            border-radius: 0;
-            margin-bottom: 1px;
+            border-radius: 8px;
+            margin-bottom: 8px;
             border: none;
-            border-bottom: 1px solid #E0E0E0;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
 
         .faq-item:first-child {
@@ -1781,37 +1785,17 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="festive-badges">
-            <div class="badge badge-cny">Seasonal Offer</div>
-            <div class="badge badge-raya">Professional Service</div>
-        </div>
+    <section class="hero" id="hero" aria-label="Hero section showcasing professional epoxy grout application">
+        <!-- Video Background -->
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata"
+            title="Professional epoxy grout application by skilled workers">
+            <source src="images/hero-video.mp4" type="video/mp4">
+            <!-- Fallback image if video doesn't load -->
+            <img src="images/hero-bg.png" alt="Professional worker applying premium epoxy grout to bathroom tiles">
+        </video>
 
-        <h1>Premium Epoxy<br>Grout Services</h1>
-
-        <p class="subtitle">
-            Precision application for kitchen & bathroom tiles.
-            Waterproof, mold-resistant, and flawlessly finished.
-        </p>
-
-        <div class="price-highlight">
-            <span class="original">$8/sqft</span> From $4.80/sqft — Up to 40% Off
-        </div>
-
-        <a href="https://wa.me/6598004317?text=Hi!%20I%20would%20like%20to%20enquire%20about%20your%20epoxy%20grout%20services."
-            class="cta-button cta-primary" id="mainCta" style="margin-top: 32px;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="#0A0A0A">
-                <path
-                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                <path
-                    d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492l4.634-1.215A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.17 0-4.207-.69-5.87-1.882l-.42-.312-2.75.721.736-2.686-.344-.547A9.718 9.718 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
-            </svg>
-            Enquire Now
-        </a>
-
-        <div class="locations">
-            <div class="location-tag">Singapore Island-wide</div>
-            <div class="location-tag">Johor Bahru, Malaysia</div>
+        <div class="hero-content">
+            <h1>PROFESSIONAL<br>EPOXY GROUT<br><span class="accent">APPLICATION</span></h1>
         </div>
     </section>
 
@@ -1824,7 +1808,7 @@
             <!-- Package 1: Bathroom -->
             <div class="package-card">
                 <div class="package-icon"
-                    style="font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: #999;">
+                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: #999;">
                     01</div>
                 <div class="package-name">Bathroom Refresh</div>
                 <div class="package-desc">Perfect for 1 bathroom. Remove old grout, clean, apply premium epoxy grout.
@@ -1845,7 +1829,7 @@
             <!-- Package 2: Full Home (Featured) -->
             <div class="package-card featured">
                 <div class="package-icon"
-                    style="font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: #999;">
+                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: #999;">
                     02</div>
                 <div class="package-name">Full Home Makeover</div>
                 <div class="package-desc">Kitchen + 2 bathrooms. Complete festive home transformation.</div>
@@ -1866,7 +1850,7 @@
             <!-- Package 3: Kitchen -->
             <div class="package-card">
                 <div class="package-icon"
-                    style="font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: #999;">
+                    style="font-family: 'Inter', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: #999;">
                     03</div>
                 <div class="package-name">Kitchen Special</div>
                 <div class="package-desc">Grease-proof, stain-resistant grout for your cooking area.</div>
@@ -1888,7 +1872,7 @@
         <div
             style="margin-top: 24px; background: #FAFAFA; border-radius: 0; padding: 32px; border: 1px solid #E0E0E0; text-align: center;">
             <h3
-                style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; margin-bottom: 8px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">
+                style="font-family: 'Inter', sans-serif; font-size: 1.4rem; margin-bottom: 8px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">
                 JB
                 Residents —
                 Extra 10% Off</h3>
@@ -1922,10 +1906,10 @@
                         &lsaquo; &rsaquo;</div>
                 </div>
                 <div
-                    style="position: absolute; bottom: 16px; left: 16px; color: #FFFFFF; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
+                    style="position: absolute; bottom: 16px; left: 16px; color: #FFFFFF; font-family: 'Inter', sans-serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
                     Before</div>
                 <div
-                    style="position: absolute; bottom: 16px; right: 16px; color: #FFFFFF; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
+                    style="position: absolute; bottom: 16px; right: 16px; color: #FFFFFF; font-family: 'Inter', sans-serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
                     After</div>
             </div>
 
@@ -1945,10 +1929,10 @@
                         &lsaquo; &rsaquo;</div>
                 </div>
                 <div
-                    style="position: absolute; bottom: 16px; left: 16px; color: #FFFFFF; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
+                    style="position: absolute; bottom: 16px; left: 16px; color: #FFFFFF; font-family: 'Inter', sans-serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
                     Before</div>
                 <div
-                    style="position: absolute; bottom: 16px; right: 16px; color: #FFFFFF; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
+                    style="position: absolute; bottom: 16px; right: 16px; color: #FFFFFF; font-family: 'Inter', sans-serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
                     After</div>
             </div>
         </div>
@@ -1957,28 +1941,28 @@
         <div
             style="margin-top: 80px; display: flex; justify-content: center; gap: 80px; padding: 0 40px; flex-wrap: wrap;">
             <div style="text-align: center;">
-                <div style="font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: #FFFFFF; line-height: 1;">
+                <div style="font-family: 'Inter', sans-serif; font-size: 3.5rem; color: #FFFFFF; line-height: 1;">
                     01</div>
                 <div
                     style="color: rgba(255,255,255,0.4); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px;">
                     Inspect & Prepare</div>
             </div>
             <div style="text-align: center;">
-                <div style="font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: #FFFFFF; line-height: 1;">
+                <div style="font-family: 'Inter', sans-serif; font-size: 3.5rem; color: #FFFFFF; line-height: 1;">
                     02</div>
                 <div
                     style="color: rgba(255,255,255,0.4); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px;">
                     Remove Old Grout</div>
             </div>
             <div style="text-align: center;">
-                <div style="font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: #FFFFFF; line-height: 1;">
+                <div style="font-family: 'Inter', sans-serif; font-size: 3.5rem; color: #FFFFFF; line-height: 1;">
                     03</div>
                 <div
                     style="color: rgba(255,255,255,0.4); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px;">
                     Apply Epoxy Grout</div>
             </div>
             <div style="text-align: center;">
-                <div style="font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: #FFFFFF; line-height: 1;">
+                <div style="font-family: 'Inter', sans-serif; font-size: 3.5rem; color: #FFFFFF; line-height: 1;">
                     04</div>
                 <div
                     style="color: rgba(255,255,255,0.4); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px;">
@@ -2027,6 +2011,66 @@
         </div>
     </section>
 
+
+    <!-- Pricing Comparison Section -->
+    <section class="pricing-compare reveal">
+        <h2 class="section-title">How Our Pricing Compares</h2>
+        <p class="section-subtitle">Transparent pricing — we match or beat the market with premium materials</p>
+
+        <table class="pricing-table">
+            <thead>
+                <tr>
+                    <th>SERVICE</th>
+                    <th>MARKET AVERAGE</th>
+                    <th>TOP COMPETITORS</th>
+                    <th class="us">US</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1 Bathroom (floor)</td>
+                    <td>$450 - $650</td>
+                    <td>$550 (Pro-Tech)</td>
+                    <td class="us">$488</td>
+                </tr>
+                <tr>
+                    <td>2 Bathrooms (floor)</td>
+                    <td>$800 - $1,100</td>
+                    <td>$950 (Grout Specialist)</td>
+                    <td class="us">$888</td>
+                </tr>
+                <tr>
+                    <td>Kitchen + Yard</td>
+                    <td>$650 - $900</td>
+                    <td>$750 (Pro-Tech)</td>
+                    <td class="us">$688</td>
+                </tr>
+                <tr>
+                    <td>Kitchen + 2 Bathrooms</td>
+                    <td>$1,450 - $1,900</td>
+                    <td>$1,650 (Grout Specialist)</td>
+                    <td class="us">$1,488</td>
+                </tr>
+                <tr>
+                    <td>Full Home (per sqft)</td>
+                    <td>$3.50 - $5.00/psf</td>
+                    <td>$4.20/psf (Grout Specialist)</td>
+                    <td class="us">$4.00/sqft (premium brands)</td>
+                </tr>
+                <tr>
+                    <td>Living + Dining + Hallway</td>
+                    <td>$950 - $1,350</td>
+                    <td>$1,150 (Pro-Tech)</td>
+                    <td class="us">$1,088</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="pricing-note">* All prices before GST. Prices include premium brand-name epoxy
+            (Ardex/Sika/Mapei/Laticrete), colour matching consultation, and post-service cleanup. Prices may vary based
+            on tile size, condition, and area.</p>
+    </section>
+
     <!-- Colour Palette Section -->
     <section class="colour-palette reveal" style="padding: 100px 20px; max-width: 1100px; margin: 0 auto;">
         <h2 class="section-title">40+ Epoxy Grout Colours</h2>
@@ -2059,7 +2103,7 @@
                 </div>
                 <div style="text-align: center;">
                     <div id="selectedName"
-                        style="font-weight: 700; font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.04em;">
+                        style="font-weight: 700; font-family: 'Inter', sans-serif; font-size: 1.6rem; letter-spacing: 0.04em;">
                     </div>
                     <div id="selectedBrand"
                         style="font-size: 0.8rem; color: #999999; letter-spacing: 0.02em; margin-top: 4px;"></div>
@@ -2689,7 +2733,7 @@
         <div class="area-cards">
             <div class="area-card">
                 <div class="area-flag"
-                    style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em;">SG</div>
+                    style="font-family: 'Inter', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em;">SG</div>
                 <div>
                     <h4>Singapore — Island Wide</h4>
                     <p>HDB, Condo, Landed, Commercial</p>
@@ -2707,7 +2751,7 @@
             </div>
             <div class="area-card">
                 <div class="area-flag"
-                    style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em;">MY</div>
+                    style="font-family: 'Inter', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em;">MY</div>
                 <div>
                     <h4>Johor Bahru & Iskandar</h4>
                     <p>Residential, Commercial, Industrial</p>
