@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions — Premium Epoxy Grout SG</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #FFFFFF;
+            color: #0A0A0A;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 20, 0.45);
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            padding: 0 40px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: #FFFFFF;
+            text-decoration: none;
+            letter-spacing: 0.06em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #FFFFFF;
+        }
+
+        .nav-cta {
+            background: #FFFFFF !important;
+            color: #0A0A0A !important;
+            padding: 8px 20px;
+            font-weight: 600 !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: #FFFFFF;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.98);
+                flex-direction: column;
+                padding: 24px;
+                gap: 16px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        .page-header {
+            padding: 140px 20px 60px;
+            text-align: center;
+            background: #0A0A0A;
+            color: #FFFFFF;
+        }
+
+        .page-header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1rem;
+        }
+
+        .legal-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .legal-content h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin: 48px 0 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #0A0A0A;
+        }
+
+        .legal-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .legal-content p {
+            margin-bottom: 16px;
+            color: #444;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .legal-content ul,
+        .legal-content ol {
+            margin: 16px 0 24px 24px;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .legal-content li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .legal-content strong {
+            color: #0A0A0A;
+        }
+
+        .highlight-box {
+            background: #F5F5F5;
+            border-left: 4px solid #0A0A0A;
+            padding: 20px 24px;
+            margin: 24px 0;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .site-footer {
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 80px 40px 40px;
+        }
+
+        .footer-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .footer-col h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: #FFFFFF;
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">Premium Epoxy Grout</a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="index.html#packages">Services</a>
+            <a href="faq.html">FAQ</a>
+            <a href="index.html#quote" class="nav-cta">Get Quote</a>
+        </div>
+        <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Terms & Conditions</h1>
+        <p>Last updated: February 2026</p>
+    </div>
+
+    <div class="legal-content">
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>By engaging our services, submitting a booking request, or making a payment, you ("the Client") agree to be
+            bound by these Terms & Conditions in full. If you do not agree with any part of these terms, please do not
+            proceed with our services.</p>
+
+        <h2>2. Scope of Work</h2>
+        <p>Our service scope is limited to what is expressly agreed upon in the written quotation provided to the
+            Client. This typically includes:</p>
+        <ul>
+            <li>Removal of existing grout in the specified area(s)</li>
+            <li>Surface preparation and cleaning of tile joints</li>
+            <li>Application of epoxy grout in the agreed colour</li>
+            <li>Post-application cleanup of the immediate work area</li>
+        </ul>
+        <div class="highlight-box">
+            <strong>Our scope does NOT include:</strong> tile replacement, tile repair, waterproofing membrane work,
+            plumbing, electrical work, deep cleaning of tiles, removal of silicone sealant (unless specifically quoted),
+            or any work beyond what is stated in the quotation. Any additional work requested on-site may incur
+            additional charges.
+        </div>
+
+        <h2>3. Quotation & Pricing</h2>
+        <p>All quotations are valid for 14 days from the date of issue. Prices quoted are based on our assessment during
+            the site inspection. Additional charges may apply if, upon commencement of work, we discover:</p>
+        <ul>
+            <li>Tile damage, loose tiles, or structural issues not visible during inspection</li>
+            <li>Existing grout that requires additional effort to remove (e.g. epoxy-over-epoxy)</li>
+            <li>Non-standard tile sizes, irregular patterns, or unusually narrow/wide grout joints</li>
+            <li>Access difficulties not disclosed during the initial consultation</li>
+        </ul>
+        <p>We will inform the Client of any additional costs before proceeding. The Client has the right to decline
+            additional work, in which case we will complete only the originally agreed scope.</p>
+
+        <h2>4. Payment Terms</h2>
+        <p>A non-refundable deposit of 50% is required to confirm the booking. The remaining balance is due upon
+            completion of the work, before the team leaves the premises. Payment may be made via bank transfer, PayNow,
+            or cash.</p>
+
+        <h2>5. Curing Period & Client Responsibility</h2>
+        <div class="highlight-box">
+            <strong>IMPORTANT:</strong> Epoxy grout requires 24–48 hours to fully cure after application. During this
+            curing period, the treated area must NOT be walked on, used, cleaned, or exposed to water. It is the
+            Client's sole responsibility to ensure that all occupants, family members, tenants, domestic helpers, pets,
+            and visitors are aware of and comply with the curing requirements.
+        </div>
+        <p><strong>We are NOT responsible for any damage, defects, discolouration, cracking, or degradation of the grout
+                caused by premature use, foot traffic, water exposure, or any interference with the treated area during
+                the curing period.</strong> Such damage is not covered under our warranty and is not eligible for
+            touch-ups, rework, or refunds.</p>
+
+        <h2>6. No Refund Policy</h2>
+        <p><strong>All confirmed bookings are non-refundable once materials have been purchased or work has
+                commenced.</strong> Due to the bespoke nature of our service (custom-mixed materials, scheduled labour,
+            reserved time slots), we are unable to offer refunds for:</p>
+        <ul>
+            <li>Completed or partially completed work</li>
+            <li>Change of mind after work has begun</li>
+            <li>Dissatisfaction with the chosen grout colour (which was approved by the Client prior to application)
+            </li>
+            <li>Damage caused by the Client's failure to observe the curing period</li>
+            <li>Circumstances beyond our control (e.g. building management restrictions, power outages)</li>
+        </ul>
+        <p>Cancellations made at least 48 hours before the scheduled service date may receive a partial refund of the
+            deposit at our sole discretion.</p>
+
+        <h2>7. Colour Accuracy</h2>
+        <p>Grout colours previewed on our website or marketing materials are for reference only. Actual grout colour may
+            vary due to screen calibration differences, batch variation, tile colour influence, grout joint width,
+            lighting conditions, and setting environment. Physical sample swatches are provided for approval before work
+            begins. <strong>Once the Client approves the colour and work commences, we do not accept colour-related
+                complaints or requests for rework.</strong></p>
+
+        <h2>8. Warranty</h2>
+        <p>We provide a workmanship warranty as specified in your quotation (typically 2–3 years depending on the
+            package). The warranty covers:</p>
+        <ul>
+            <li>Cracking or delamination due to workmanship defects</li>
+            <li>Abnormal discolouration under normal use</li>
+        </ul>
+        <p>The warranty does NOT cover:</p>
+        <ul>
+            <li>Damage from premature use during the curing period</li>
+            <li>Physical impact damage (dropped objects, dragged furniture, etc.)</li>
+            <li>Damage from abrasive cleaners, bleach, or harsh chemicals</li>
+            <li>Wear from commercial or industrial use (unless specifically quoted for commercial application)</li>
+            <li>Damage from subsequent renovations, hacking, or modifications to the tiled area</li>
+            <li>Natural building movement, structural settling, or substrate failure</li>
+            <li>Discolouration caused by prolonged exposure to UV, smoke, or cooking fumes in non-ventilated areas</li>
+        </ul>
+
+        <h2>9. Client Obligations</h2>
+        <p>The Client agrees to:</p>
+        <ul>
+            <li>Provide safe, clear, and unobstructed access to the work area on the scheduled date</li>
+            <li>Ensure water supply and electrical power are available</li>
+            <li>Remove personal belongings, fragile items, and furniture from the immediate work area</li>
+            <li>Inform all household members and occupants of the scheduled service and curing requirements</li>
+            <li>Not direct, instruct, or demand our technicians to deviate from agreed procedures or use methods
+                contrary to manufacturer guidelines</li>
+        </ul>
+        <div class="highlight-box">
+            Our technicians follow established professional procedures. <strong>The Client may not demand, instruct, or
+                require our team to perform work in a manner that deviates from best practices</strong>, skip
+            preparation steps, use unapproved materials, rush the application process, or modify the agreed scope
+            without mutual written agreement. We reserve the right to refuse instructions that compromise quality or
+            safety.
+        </div>
+
+        <h2>10. Limitation of Liability</h2>
+        <p>Our total liability for any claim arising from our services shall not exceed the total amount paid by the
+            Client for the specific service in question. We are not liable for:</p>
+        <ul>
+            <li>Indirect, incidental, or consequential damages</li>
+            <li>Loss of use of the premises during the service and curing period</li>
+            <li>Damage to tiles, substrate, or fixtures that were pre-existing or not caused by our work</li>
+            <li>Delays caused by factors beyond our control</li>
+        </ul>
+
+        <h2>11. Dispute Resolution</h2>
+        <p>In the event of any dispute, both parties agree to first attempt resolution through good-faith negotiation.
+            If the dispute cannot be resolved, it shall be referred to mediation. These terms shall be governed by and
+            construed in accordance with the laws of the Republic of Singapore.</p>
+
+        <h2>12. Amendments</h2>
+        <p>We reserve the right to update these Terms & Conditions at any time. The version in effect at the time of
+            booking shall apply to that engagement. By proceeding with our services, you acknowledge that you have read,
+            understood, and agreed to these Terms & Conditions.</p>
+
+        <div style="text-align: center; margin-top: 60px;">
+            <a href="index.html"
+                style="display: inline-block; background: #0A0A0A; color: #FFFFFF; padding: 14px 36px; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase;">Back
+                to Home</a>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Premium Epoxy Grout</h3>
+                <p>Professional epoxy grout application, removal & replacement across Singapore and Johor Bahru. Using
+                    premium brands for lasting results.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <a href="index.html#packages">Bathroom Refresh</a>
+                <a href="index.html#packages">Full Home Makeover</a>
+                <a href="index.html#packages">Kitchen Special</a>
+                <a href="index.html#quote">Free Quote</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="faq.html">FAQ</a>
+                <a href="https://wa.me/6598004317">WhatsApp Us</a>
+                <a href="index.html#quote">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Premium Epoxy Grout SG. All rights reserved.</p>
+            <p>Singapore &middot; Johor Bahru</p>
+        </div>
+    </footer>
+</body>
+
+</html>

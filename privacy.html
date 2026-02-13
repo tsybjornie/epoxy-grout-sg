@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Premium Epoxy Grout SG</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #FFFFFF;
+            color: #0A0A0A;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 20, 0.45);
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            padding: 0 40px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: #FFFFFF;
+            text-decoration: none;
+            letter-spacing: 0.06em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #FFFFFF;
+        }
+
+        .nav-cta {
+            background: #FFFFFF !important;
+            color: #0A0A0A !important;
+            padding: 8px 20px;
+            font-weight: 600 !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: #FFFFFF;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.98);
+                flex-direction: column;
+                padding: 24px;
+                gap: 16px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        .page-header {
+            padding: 140px 20px 60px;
+            text-align: center;
+            background: #0A0A0A;
+            color: #FFFFFF;
+        }
+
+        .page-header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1rem;
+        }
+
+        .legal-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .legal-content h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin: 48px 0 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #0A0A0A;
+        }
+
+        .legal-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .legal-content p {
+            margin-bottom: 16px;
+            color: #444;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .legal-content ul {
+            margin: 16px 0 24px 24px;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .legal-content li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .legal-content strong {
+            color: #0A0A0A;
+        }
+
+        .site-footer {
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 80px 40px 40px;
+        }
+
+        .footer-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .footer-col h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: #FFFFFF;
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">Premium Epoxy Grout</a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="index.html#packages">Services</a>
+            <a href="faq.html">FAQ</a>
+            <a href="index.html#quote" class="nav-cta">Get Quote</a>
+        </div>
+        <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Privacy Policy</h1>
+        <p>Last updated: February 2026</p>
+    </div>
+
+    <div class="legal-content">
+
+        <h2>1. Information We Collect</h2>
+        <p>When you interact with our website, submit a quote request, or engage our services, we may collect the
+            following personal information:</p>
+        <ul>
+            <li><strong>Contact Information:</strong> Name, phone number, WhatsApp number, email address</li>
+            <li><strong>Property Information:</strong> Address, property type (HDB, Condo, Landed), unit details</li>
+            <li><strong>Service Information:</strong> Preferred package, grout colour selection, service date
+                preferences, special requirements</li>
+            <li><strong>Communication Records:</strong> Messages exchanged via WhatsApp, email, or our website form</li>
+            <li><strong>Technical Data:</strong> Browser type, device information, IP address, and page interaction data
+                collected through standard web analytics</li>
+        </ul>
+
+        <h2>2. How We Use Your Information</h2>
+        <p>We use your personal information for the following purposes:</p>
+        <ul>
+            <li>To respond to your enquiries and provide quotations</li>
+            <li>To schedule and perform our services</li>
+            <li>To communicate about your booking, including confirmation, reminders, and follow-ups</li>
+            <li>To process payments</li>
+            <li>To improve our services and customer experience</li>
+            <li>To send you promotional offers or updates (only with your consent; you may opt out at any time)</li>
+        </ul>
+
+        <h2>3. Data Sharing</h2>
+        <p>We do not sell, rent, or trade your personal information to third parties. We may share your information
+            with:</p>
+        <ul>
+            <li><strong>Service Partners:</strong> Trusted subcontractors or team members who perform the grouting work
+                at your property</li>
+            <li><strong>Payment Processors:</strong> To facilitate secure payment transactions</li>
+            <li><strong>Legal Obligations:</strong> If required by law, regulation, or court order</li>
+        </ul>
+
+        <h2>4. Data Retention</h2>
+        <p>We retain your personal information for as long as necessary to fulfil the purposes outlined in this policy,
+            including maintaining warranty records. Service records are typically retained for the duration of the
+            warranty period plus one additional year. You may request deletion of your data at any time by contacting us
+            via WhatsApp.</p>
+
+        <h2>5. Data Security</h2>
+        <p>We implement reasonable security measures to protect your personal information against unauthorized access,
+            loss, or misuse. However, no method of electronic transmission or storage is 100% secure, and we cannot
+            guarantee absolute security.</p>
+
+        <h2>6. Cookies & Analytics</h2>
+        <p>Our website may use standard web analytics tools to understand visitor behavior and improve our services.
+            These tools may collect anonymized data such as page views, session duration, and traffic sources. No
+            personally identifiable information is collected through these tools without your explicit consent.</p>
+
+        <h2>7. Your Rights</h2>
+        <p>Under the Personal Data Protection Act (PDPA) of Singapore, you have the right to:</p>
+        <ul>
+            <li>Access your personal data held by us</li>
+            <li>Request correction of inaccurate data</li>
+            <li>Withdraw consent for data collection or marketing communications</li>
+            <li>Request deletion of your personal data (subject to legal retention requirements)</li>
+        </ul>
+        <p>To exercise any of these rights, please contact us via WhatsApp at +65 9800 4317.</p>
+
+        <h2>8. Third-Party Links</h2>
+        <p>Our website may contain links to third-party websites (e.g. WhatsApp, social media platforms). We are not
+            responsible for the privacy practices or content of these external sites. We encourage you to review their
+            privacy policies separately.</p>
+
+        <h2>9. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated
+            revision date. Your continued use of our services after any changes constitutes acceptance of the updated
+            policy.</p>
+
+        <h2>10. Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy or how we handle your personal data, please contact us:
+        </p>
+        <ul>
+            <li><strong>WhatsApp:</strong> +65 9800 4317</li>
+            <li><strong>Website:</strong> Premium Epoxy Grout SG</li>
+        </ul>
+
+        <div style="text-align: center; margin-top: 60px;">
+            <a href="index.html"
+                style="display: inline-block; background: #0A0A0A; color: #FFFFFF; padding: 14px 36px; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase;">Back
+                to Home</a>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Premium Epoxy Grout</h3>
+                <p>Professional epoxy grout application, removal & replacement across Singapore and Johor Bahru. Using
+                    premium brands for lasting results.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <a href="index.html#packages">Bathroom Refresh</a>
+                <a href="index.html#packages">Full Home Makeover</a>
+                <a href="index.html#packages">Kitchen Special</a>
+                <a href="index.html#quote">Free Quote</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="faq.html">FAQ</a>
+                <a href="https://wa.me/6598004317">WhatsApp Us</a>
+                <a href="index.html#quote">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Premium Epoxy Grout SG. All rights reserved.</p>
+            <p>Singapore &middot; Johor Bahru</p>
+        </div>
+    </footer>
+</body>
+
+</html>

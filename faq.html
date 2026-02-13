@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ — Premium Epoxy Grout SG</title>
+    <meta name="description"
+        content="Frequently asked questions about our epoxy grout services in Singapore and Johor Bahru.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #FFFFFF;
+            color: #0A0A0A;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 20, 0.45);
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            padding: 0 40px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: #FFFFFF;
+            text-decoration: none;
+            letter-spacing: 0.06em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #FFFFFF;
+        }
+
+        .nav-cta {
+            background: #FFFFFF !important;
+            color: #0A0A0A !important;
+            padding: 8px 20px;
+            font-weight: 600 !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: #FFFFFF;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.98);
+                flex-direction: column;
+                padding: 24px;
+                gap: 16px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        /* Page header */
+        .page-header {
+            padding: 140px 20px 60px;
+            text-align: center;
+            background: #0A0A0A;
+            color: #FFFFFF;
+        }
+
+        .page-header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* FAQ content */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .faq-category {
+            margin-bottom: 60px;
+        }
+
+        .faq-category-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #0A0A0A;
+            margin-bottom: 32px;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #E8E8E8;
+        }
+
+        .faq-question {
+            padding: 20px 0;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            user-select: none;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #999;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.open .faq-question::after {
+            content: '\2212';
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+            padding-bottom: 24px;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 80px 40px 40px;
+        }
+
+        .footer-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .footer-col h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: #FFFFFF;
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">Premium Epoxy Grout</a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="index.html#packages">Services</a>
+            <a href="faq.html" class="active">FAQ</a>
+            <a href="index.html#quote" class="nav-cta">Get Quote</a>
+        </div>
+        <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Frequently Asked Questions</h1>
+        <p>Everything you need to know about our epoxy grout services</p>
+    </div>
+
+    <!-- FAQ Content -->
+    <div class="faq-section">
+
+        <!-- Category: Service & Process -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">Service & Process</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What is epoxy grout and how is it different from cement grout?</div>
+                <div class="faq-answer">Epoxy grout is a two-part resin-based grout that is 100% waterproof, non-porous,
+                    and highly resistant to stains, mold, and bacteria. Unlike traditional cement grout which absorbs
+                    water and discolours over time, epoxy grout maintains its colour and integrity for 15+ years. It's
+                    ideal for Singapore and JB's humid climate.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How long does the application process take?</div>
+                <div class="faq-answer">Most bathroom or kitchen projects are completed within 1 working day. Full home
+                    packages (kitchen + 2 bathrooms) typically take 1–2 days depending on the total area and complexity.
+                    We'll confirm the exact timeline during the free site inspection.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What brands of epoxy grout do you use?</div>
+                <div class="faq-answer">We use premium professional-grade epoxy grout from trusted brands including
+                    Ardex, Sika, Mapei Kerapoxy, and Laticrete. The specific brand may vary based on availability, tile
+                    type, and joint width. All brands we use are industry-leading and come with manufacturer warranties.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you remove the old grout before applying epoxy?</div>
+                <div class="faq-answer">Yes. Our standard process includes removing existing grout, thorough cleaning
+                    and preparation of the tile joints, application of epoxy grout, and final cleanup. Proper removal is
+                    essential for adhesion and longevity of the new epoxy grout.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I choose my grout colour?</div>
+                <div class="faq-answer">Absolutely. We offer 40+ colours across all our brand partners. You can preview
+                    colours on our website, and we provide physical sample swatches for approval before beginning any
+                    work. Custom colour matching is also available on request.</div>
+            </div>
+        </div>
+
+        <!-- Category: Curing & Aftercare -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">Curing & Aftercare</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">How long does epoxy grout take to cure / dry?</div>
+                <div class="faq-answer">Epoxy grout typically requires 24–48 hours to fully cure. During this curing
+                    period, the treated area must NOT be walked on, used, or exposed to water. The exact curing time
+                    depends on the brand used, temperature, humidity, and joint depth. We will advise you on the
+                    specific curing time after application.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What happens if I walk on the grout before it's fully cured?</div>
+                <div class="faq-answer">Walking on, using, or allowing water contact with uncured epoxy grout can cause
+                    permanent damage including cracking, discolouration, uneven surfaces, or delamination. <strong>Any
+                        damage caused by premature use of the treated area during the curing period is the client's
+                        responsibility and is not covered under our warranty or eligible for touch-ups, refunds, or
+                        rework.</strong> We strongly advise all household members, tenants, and visitors to stay away
+                    from treated areas until the curing period has elapsed.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How should I maintain epoxy grout after curing?</div>
+                <div class="faq-answer">Epoxy grout is very low maintenance. Simply clean with a mild detergent and soft
+                    cloth or mop. Avoid abrasive cleaners, steel wool, or harsh chemicals (e.g. bleach-based products)
+                    on the grout lines. For best results, wipe up spills promptly and avoid dragging heavy or sharp
+                    objects across the grouted surface.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I enter the room while the grout is drying?</div>
+                <div class="faq-answer">No. We strongly advise against entering, using, or allowing any foot traffic in
+                    the treated area during the 24–48 hour curing window. This includes pets and children. If you need
+                    access to other parts of your home, please plan accordingly before the service date. We are not
+                    liable for any damage resulting from premature access to the treated area.</div>
+            </div>
+        </div>
+
+        <!-- Category: Pricing & Warranty -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">Pricing & Warranty</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What does the price include?</div>
+                <div class="faq-answer">Our package prices include: removal of existing grout, surface preparation and
+                    cleaning, professional application of premium epoxy grout, final cleanup, and our service warranty.
+                    Prices are based on standard tile sizes and joint widths. Non-standard configurations may incur
+                    additional charges, which will be communicated during the quote.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you offer refunds?</div>
+                <div class="faq-answer">Due to the nature of our service (materials are custom-mixed and labour is
+                    performed on-site), <strong>all confirmed bookings are non-refundable once work has
+                        commenced.</strong> Cancellations made at least 48 hours before the scheduled date may receive a
+                    partial refund of the deposit at our discretion. Please review our full Terms & Conditions for
+                    details.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What does the warranty cover?</div>
+                <div class="faq-answer">Our warranty covers defects in workmanship and material failure under normal use
+                    conditions. This includes cracking, discolouration, or delamination that occurs under normal
+                    residential use. The warranty does NOT cover damage caused by: premature use during curing, impact
+                    or physical damage, use of abrasive/chemical cleaners, renovations or modifications after our
+                    service, or natural settling/movement of the building structure.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Is the site inspection really free?</div>
+                <div class="faq-answer">Yes, the initial site inspection and quotation are completely free with no
+                    obligation. We'll assess your tile type, grout condition, total area, and recommend the best
+                    solution. You only pay if you decide to proceed.</div>
+            </div>
+        </div>
+
+        <!-- Category: Scheduling & Areas -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">Scheduling & Service Areas</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What areas do you serve?</div>
+                <div class="faq-answer">We serve all areas in Singapore island-wide (HDB, Condo, Landed, Commercial) and
+                    Johor Bahru / Iskandar Malaysia (Taman Daya, Bukit Indah, Nusajaya, Mount Austin, Eco Botanic, and
+                    surrounding areas).</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How do I book a service?</div>
+                <div class="faq-answer">You can book via WhatsApp (tap the "Enquire Now" button), fill out the quote
+                    form on our website, or message us directly. We'll arrange a free site inspection at your
+                    convenience, provide a detailed quote, and schedule the work at a time that suits you.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you work on weekends?</div>
+                <div class="faq-answer">Yes, we operate 7 days a week including weekends and public holidays (subject to
+                    availability). Weekend and holiday slots tend to fill up faster, so we recommend booking early to
+                    secure your preferred date.</div>
+            </div>
+        </div>
+
+        <!-- Back to home -->
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html"
+                style="display: inline-block; background: #0A0A0A; color: #FFFFFF; padding: 14px 36px; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase;">Back
+                to Home</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Premium Epoxy Grout</h3>
+                <p>Professional epoxy grout application, removal & replacement across Singapore and Johor Bahru. Using
+                    premium brands for lasting results.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <a href="index.html#packages">Bathroom Refresh</a>
+                <a href="index.html#packages">Full Home Makeover</a>
+                <a href="index.html#packages">Kitchen Special</a>
+                <a href="index.html#quote">Free Quote</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="faq.html">FAQ</a>
+                <a href="https://wa.me/6598004317">WhatsApp Us</a>
+                <a href="index.html#quote">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Premium Epoxy Grout SG. All rights reserved.</p>
+            <p>Singapore &middot; Johor Bahru</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                const wasOpen = item.classList.contains('open');
+                // Close all in same category
+                item.closest('.faq-category').querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if (!wasOpen) item.classList.add('open');
+            });
+        });
+    </script>
+</body>
+
+</html>
