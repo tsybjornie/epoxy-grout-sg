@@ -317,7 +317,7 @@
         .hamburger span {
             width: 24px;
             height: 2px;
-            background: #FFFFFF;
+            background: #0A0A0A;
             transition: all 0.3s;
         }
 
@@ -1214,6 +1214,35 @@
 
             .hamburger {
                 display: flex;
+            }
+
+            /* WhatsApp button - less intrusive on mobile */
+            .whatsapp-float {
+                bottom: 80px;
+                right: 16px;
+                padding: 12px;
+                font-size: 0;
+            }
+
+            .whatsapp-float svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            /* Package cards - more breathing room */
+            .packages {
+                padding: 60px 24px;
+            }
+
+            .package-card {
+                margin: 0 4px;
+            }
+
+            /* Hero text - reduce size for mobile */
+            .hero h1 {
+                font-size: clamp(2.5rem, 8vw, 4rem);
+                line-height: 1;
+                padding: 0 20px;
             }
 
             .footer-grid {
