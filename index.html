@@ -4098,13 +4098,15 @@
                 }
             };
 
-            // Auto-open after 8 seconds if not interacted
+            // Auto-open after 8 seconds if not interacted AND not already seen
             setTimeout(() => {
                 const win = document.getElementById('chatWindow');
-                if (!win.classList.contains('open')) {
+                const hasSeenChat = localStorage.getItem('cg_chatSeen');
+                if (!win.classList.contains('open') && !hasSeenChat) {
                     // Don't auto-open on mobile to avoid annoyance
                     if (window.innerWidth > 768) {
                         toggleChatbot();
+                        localStorage.setItem('cg_chatSeen', '1');
                     }
                 }
             }, 8000);

@@ -500,11 +500,38 @@
 </head>
 
 <body>
+    <!-- PIN Lock Screen -->
+    <div id="pinLock"
+        style="position:fixed;top:0;left:0;right:0;bottom:0;background:#0A0A0A;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px">
+        <h2 style="font-family:'Inter',sans-serif;font-weight:800;font-size:24px;color:#fff">LeadGen <span
+                style="color:#D32F2F">AI</span></h2>
+        <p style="font-family:'Inter',sans-serif;color:#777;font-size:14px">Enter PIN to access</p>
+        <input type="password" id="pinInput" maxlength="6" placeholder="••••"
+            style="width:200px;text-align:center;padding:14px;background:#111;border:2px solid #333;border-radius:12px;color:#fff;font-size:24px;font-family:'Inter',sans-serif;letter-spacing:0.3em"
+            onkeydown="if(event.key==='Enter')checkPin()">
+        <button onclick="checkPin()"
+            style="padding:12px 32px;background:#D32F2F;color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-weight:700;font-size:14px;cursor:pointer">Unlock</button>
+        <p id="pinError" style="font-family:'Inter',sans-serif;color:#D32F2F;font-size:13px;display:none">Wrong PIN</p>
+    </div>
+
+    <!-- Backup Reminder Banner -->
+    <div id="backupBanner"
+        style="display:none;background:#FF9800;color:#0A0A0A;padding:10px 20px;text-align:center;font-family:'Inter',sans-serif;font-size:13px;font-weight:600">
+        ⚠️ You have <span id="backupCount"></span> leads stored in this browser only. <button
+            onclick="exportData();this.parentElement.style.display='none'"
+            style="background:#0A0A0A;color:#fff;border:none;padding:6px 14px;border-radius:4px;font-weight:700;cursor:pointer;font-size:12px;margin-left:8px">Export
+            CSV Backup</button>
+        <button onclick="this.parentElement.style.display='none';localStorage.setItem('lg_lastBackup',Date.now())"
+            style="background:none;border:none;color:#0A0A0A;cursor:pointer;font-size:16px;margin-left:4px">&times;</button>
+    </div>
+
     <div class="app">
         <div class="header">
             <h1>LeadGen <span>AI</span></h1>
             <div class="header-right">
                 <div class="brain-score">🧠 Brain Level: <span id="brainLevel">1</span></div>
+                <button class="btn btn-outline" onclick="changePin()" style="font-size:11px;padding:8px 12px">🔒
+                    PIN</button>
                 <button class="btn btn-outline" onclick="exportData()">Export CSV</button>
                 <button class="btn btn-primary" onclick="openModal()">+ Log Lead</button>
             </div>
@@ -705,6 +732,44 @@
 
     <script>
         // ============================
+        // PIN LOCK (#8)
+        // ============================
+        const DEFAULT_PIN = '1234';
+        function checkPin() {
+            const pin = document.getElementById('pinInput').value;
+            const storedPin = localStorage.getItem('lg_pin') || DEFAULT_PIN;
+            if (pin === storedPin) {
+                document.getElementById('pinLock').style.display = 'none';
+                showBackupReminder();
+            } else {
+                document.getElementById('pinError').style.display = 'block';
+                document.getElementById('pinInput').value = '';
+                document.getElementById('pinInput').style.borderColor = '#D32F2F';
+                setTimeout(() => { document.getElementById('pinInput').style.borderColor = '#333'; document.getElementById('pinError').style.display = 'none'; }, 1500);
+            }
+        }
+        function changePin() {
+            const newPin = prompt('Enter new PIN (4-6 digits):');
+            if (newPin && /^\d{4,6}$/.test(newPin)) {
+                localStorage.setItem('lg_pin', newPin);
+                alert('PIN updated!');
+            } else if (newPin) { alert('PIN must be 4-6 digits'); }
+        }
+
+        // ============================
+        // BACKUP REMINDER (#7)
+        // ============================
+        function showBackupReminder() {
+            const leads = getData('leads', []);
+            const lastBackup = parseInt(localStorage.getItem('lg_lastBackup') || '0');
+            const daysSinceBackup = (Date.now() - lastBackup) / 86400000;
+            if (leads.length >= 10 && daysSinceBackup > 3) {
+                document.getElementById('backupBanner').style.display = 'block';
+                document.getElementById('backupCount').textContent = leads.length;
+            }
+        }
+
+        // ============================
         // LEADGEN AI — SELF-LEARNING ENGINE
         // ============================
 
@@ -717,6 +782,139 @@
         let leads = getData('leads', []);
         let tests = getData('tests', getDefaultTests());
         let learnings = getData('learnings', { totalDecisions: 0, winPatterns: [] });
+
+        // ============================
+        // CONTENT BRAIN — LEARNS WHAT TO POST
+        // ============================
+        const MSG_STYLES = {
+            urgency: { keywords: ['limited', 'slots', 'left', 'ends', 'hurry', 'only', 'last'], label: '⏰ Urgency/Scarcity' },
+            price: { keywords: ['$', 'off', 'discount', 'save', 'deal', 'special', 'promo', 'cheap'], label: '💰 Price/Discount' },
+            problem: { keywords: ['mold', 'stain', 'disgusting', 'dirty', 'ugly', 'crack', 'bacteria', 'scrub'], label: '😱 Problem/Pain' },
+            social: { keywords: ['review', 'customer', 'project', 'trust', 'rated', '500+', 'completed'], label: '⭐ Social Proof' },
+            benefit: { keywords: ['waterproof', 'permanent', 'last', '15-20', 'anti-mold', 'warranty', 'premium'], label: '✅ Benefits' },
+            emotional: { keywords: ['❌', '🤢', '😱', '🔥', '💪', 'love', 'beautiful', 'transform'], label: '❤️ Emotional' },
+            cta: { keywords: ['dm', 'whatsapp', 'call', 'book', 'free', 'quote', 'inspection'], label: '📱 Call-to-Action' }
+        };
+
+        function analyzeStyle(text) {
+            const lower = (text || '').toLowerCase();
+            const scores = {};
+            let total = 0;
+            Object.entries(MSG_STYLES).forEach(([style, { keywords }]) => {
+                const count = keywords.filter(k => lower.includes(k)).length;
+                scores[style] = count;
+                total += count;
+            });
+            // Normalize to percentages
+            if (total > 0) Object.keys(scores).forEach(k => scores[k] = Math.round(scores[k] / total * 100));
+            return scores;
+        }
+
+        function getContentBrainInsights() {
+            const insights = [];
+            if (learnings.winPatterns.length === 0) return insights;
+
+            // Aggregate winning styles
+            const winStyles = {};
+            const loseStyles = {};
+            learnings.winPatterns.forEach(p => {
+                const ws = analyzeStyle(p.winner);
+                const ls = analyzeStyle(p.loser);
+                Object.entries(ws).forEach(([k, v]) => { winStyles[k] = (winStyles[k] || 0) + v; });
+                Object.entries(ls).forEach(([k, v]) => { loseStyles[k] = (loseStyles[k] || 0) + v; });
+            });
+
+            // Find top winning style
+            const sorted = Object.entries(winStyles).sort((a, b) => b[1] - a[1]);
+            if (sorted.length > 0) {
+                const topStyle = sorted[0][0];
+                const label = MSG_STYLES[topStyle]?.label || topStyle;
+                insights.push({
+                    icon: '🧠', title: `Your audience responds best to: ${label}`,
+                    text: `From ${learnings.winPatterns.length} test(s), ${label} messaging consistently wins. Use more of this style in your posts.`,
+                    action: null
+                });
+            }
+
+            // Find worst style to avoid
+            const loseSorted = Object.entries(loseStyles).sort((a, b) => b[1] - a[1]);
+            if (loseSorted.length > 0 && sorted.length > 0 && loseSorted[0][0] !== sorted[0][0]) {
+                const worstStyle = loseSorted[0][0];
+                const label = MSG_STYLES[worstStyle]?.label || worstStyle;
+                insights.push({
+                    icon: '🚫', title: `Avoid heavy ${label} messaging`,
+                    text: `This style appeared more in losing variants. Your audience doesn't respond as well to it.`,
+                    action: null
+                });
+            }
+
+            // Generate new post ideas based on winning style
+            const topStyle = sorted[0]?.[0];
+            const postIdeas = {
+                urgency: [
+                    '⏰ "Only 8 slots left for Feb — who needs their grout done?"',
+                    '🔥 "This week only: FREE tile cleaning with every booking"',
+                    '⚡ "Weekend slots filling fast — DM to lock yours in"'
+                ],
+                price: [
+                    '💰 "Bathroom grout from $439 — cheaper than 1 year of scrubbing supplies"',
+                    '🧮 "Cost breakdown: Epoxy grout vs re-tiling your whole bathroom"',
+                    '📊 "Why $439 now saves you $2,000 in 5 years"'
+                ],
+                problem: [
+                    '🤢 "Your grout has 2x more bacteria than a toilet seat. Here\'s proof."',
+                    '😱 "This is what lives INSIDE your cement grout (swipe →)"',
+                    '🔬 "We scraped grout from a 5-year-old HDB bathroom. You won\'t believe what we found."'
+                ],
+                social: [
+                    '⭐ "Another happy homeowner — swipe to see the before/after"',
+                    '📸 "Project 127 completed! Tampines 4-room HDB transformation"',
+                    '💬 "Mrs Tan gave us 5 stars — here\'s what she said"'
+                ],
+                benefit: [
+                    '✅ "Epoxy vs cement grout: 5 reasons professionals never go back"',
+                    '🛡️ "100% waterproof. Zero maintenance. Lasts 15-20 years."',
+                    '🏆 "The only grout that comes with a real warranty"'
+                ],
+                emotional: [
+                    '😍 "Imagine never scrubbing grout again. That\'s what epoxy does."',
+                    '🎉 "That feeling when your bathroom looks brand new again →"',
+                    '💪 "Stop living with ugly grout. You deserve better."'
+                ],
+                cta: [
+                    '📱 "DM GROUT for a free no-obligation quote — takes 2 mins"',
+                    '☎️ "WhatsApp us a photo of your grout → we\'ll quote in 1 hour"',
+                    '🆓 "Free inspection this week — limited to 10 homes"'
+                ]
+            };
+
+            if (topStyle && postIdeas[topStyle]) {
+                insights.push({
+                    icon: '💡', title: 'Post Ideas (Based on Your Winning Style)',
+                    text: postIdeas[topStyle].join('\n\n'),
+                    action: null
+                });
+            }
+
+            // Suggest next A/B test based on learnings
+            const untested = Object.keys(MSG_STYLES).filter(s => {
+                return !learnings.winPatterns.some(p => {
+                    const ws = analyzeStyle(p.winner);
+                    return ws[s] > 30;
+                });
+            });
+            if (untested.length >= 2) {
+                const s1 = MSG_STYLES[untested[0]]?.label;
+                const s2 = MSG_STYLES[untested[1]]?.label;
+                insights.push({
+                    icon: '🧪', title: `Suggested Test: ${s1} vs ${s2}`,
+                    text: `You haven't tested these styles yet. Create an A/B test to find out which your audience prefers.`,
+                    action: 'Create This Test', actionFn: createNewTest
+                });
+            }
+
+            return insights;
+        }
 
         function getDefaultTests() {
             return [
@@ -744,7 +942,9 @@
                 if (t.leadsA >= t.minLeads && t.leadsB >= t.minLeads) {
                     const rateA = t.leadsA > 0 ? t.convA / t.leadsA : 0;
                     const rateB = t.leadsB > 0 ? t.convB / t.leadsB : 0;
-                    if (Math.abs(rateA - rateB) > 0.05 || (t.leadsA + t.leadsB) >= t.minLeads * 3) {
+                    // Improved threshold (#9): require 10% diff for small samples, 5% for large
+                    const threshold = (t.leadsA + t.leadsB) < 40 ? 0.10 : 0.05;
+                    if (Math.abs(rateA - rateB) > threshold || (t.leadsA + t.leadsB) >= t.minLeads * 3) {
                         t.winner = rateA >= rateB ? 'A' : 'B';
                         t.status = 'completed';
                         learnings.totalDecisions++;
@@ -808,9 +1008,11 @@
             // A/B test insights
             tests.filter(t => t.status === 'completed').forEach(t => {
                 const winCopy = t.winner === 'A' ? t.copyA : t.copyB;
+                const winRate = t.winner === 'A' ? (t.leadsA > 0 ? t.convA / t.leadsA : 0) : (t.leadsB > 0 ? t.convB / t.leadsB : 0);
+                const loseRate = t.winner === 'A' ? (t.leadsB > 0 ? t.convB / t.leadsB : 0) : (t.leadsA > 0 ? t.convA / t.leadsA : 0);
                 insights.push({
                     icon: '🧪', title: `Winner found: "${t.name}"`,
-                    text: `Use this copy everywhere on ${t.channel}: "${winCopy.substring(0, 80)}..." — it outperformed by ${Math.abs(((t.winner === 'A' ? t.convA / t.leadsA : t.convB / t.leadsB) - (t.winner === 'A' ? t.convB / t.leadsB : t.convA / t.leadsA)) * 100).toFixed(0)}%.`,
+                    text: `Use this copy everywhere on ${t.channel}: "${winCopy.substring(0, 80)}..." — it outperformed by ${Math.abs((winRate - loseRate) * 100).toFixed(0)}%.`,
                     action: 'Copy winning text', actionFn: () => { navigator.clipboard.writeText(winCopy); alert('Copied!'); }
                 });
             });
@@ -830,16 +1032,11 @@
             // Brain level
             const brainLevel = Math.min(10, 1 + Math.floor(leads.length / 5) + learnings.totalDecisions);
 
-            // Auto-generate new copy suggestion from learnings
-            if (learnings.winPatterns.length >= 1) {
-                const patterns = learnings.winPatterns;
-                const last = patterns[patterns.length - 1];
-                insights.push({
-                    icon: '🤖', title: 'AI-Generated Copy Suggestion',
-                    text: `Based on ${patterns.length} completed test(s), your audience responds best to: ${last.winner.includes('CNY') ? 'promotional/discount messaging' : last.winner.includes('mold') || last.winner.includes('DISGUSTING') ? 'problem-agitation messaging' : 'direct messaging'}. Try combining winning elements into a new variation.`,
-                    action: null
-                });
-            }
+            // ============================
+            // CONTENT BRAIN INSIGHTS (replaces old naive copy suggestion)
+            // ============================
+            const contentInsights = getContentBrainInsights();
+            insights.push(...contentInsights);
 
             if (leads.length === 0) {
                 insights.push(
@@ -1014,20 +1211,30 @@
     `).join('');
         }
 
+        // Store template texts for safe copy
+        window._templateTexts = [];
         function renderTemplates() {
             const templates = getTemplates();
+            window._templateTexts = [];
+            let idx = 0;
             document.getElementById('templatesPanel').innerHTML = templates.map(t => `
         <div style="margin-bottom:24px">
             <h4 style="margin-bottom:12px">${t.icon} ${t.platform}</h4>
-            ${t.copies.map(c => `
+            ${t.copies.map(c => {
+                const i = idx++;
+                window._templateTexts[i] = c.text;
+                return `
                 <div class="test-card" style="margin-bottom:12px">
                     <div class="test-variant">${c.label}</div>
                     <pre style="font-family:'Inter',sans-serif;font-size:13px;color:#ccc;white-space:pre-wrap;line-height:1.6;margin:8px 0">${c.text}</pre>
-                    <button class="btn btn-outline" style="font-size:11px;padding:6px 12px" onclick="navigator.clipboard.writeText(\`${c.text.replace(/`/g, "\\`").replace(/\\/g, "\\\\")}\`);this.textContent='✅ Copied!'">📋 Copy</button>
+                    <button class="btn btn-outline" style="font-size:11px;padding:6px 12px" onclick="copyTemplate(${i},this)">📋 Copy</button>
                 </div>
-            `).join('')}
+            `}).join('')}
         </div>
     `).join('');
+        }
+        function copyTemplate(idx, btn) {
+            navigator.clipboard.writeText(window._templateTexts[idx]).then(() => { btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = '📋 Copy', 2000); });
         }
 
         function updateAdCopyDropdown() {
