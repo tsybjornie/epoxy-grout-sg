@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadGen AI — CLEANGROUT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            min-height: 100vh
+        }
+
+        .app {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #222;
+            margin-bottom: 30px
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.02em
+        }
+
+        .header h1 span {
+            color: #D32F2F
+        }
+
+        .header-right {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .brain-score {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px
+        }
+
+        .brain-score span {
+            color: #FFD700;
+            font-weight: 800
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .btn-primary {
+            background: #D32F2F;
+            color: #fff
+        }
+
+        .btn-primary:hover {
+            background: #B71C1C
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #444;
+            color: #fff
+        }
+
+        .btn-outline:hover {
+            border-color: #fff
+        }
+
+        .btn-gold {
+            background: #FFD700;
+            color: #0A0A0A
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: #111;
+            padding: 4px;
+            border-radius: 10px;
+            width: fit-content
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            border: none;
+            background: transparent;
+            color: #777
+        }
+
+        .tab.active {
+            background: #fff;
+            color: #0A0A0A
+        }
+
+        .tab:hover:not(.active) {
+            color: #fff
+        }
+
+        .tab-content {
+            display: none
+        }
+
+        .tab-content.active {
+            display: block
+        }
+
+        /* Stats Grid */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 30px
+        }
+
+        .stat-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 20px
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin-bottom: 6px
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.02em
+        }
+
+        .stat-change {
+            font-size: 12px;
+            margin-top: 4px
+        }
+
+        .stat-up {
+            color: #4CAF50
+        }
+
+        .stat-down {
+            color: #D32F2F
+        }
+
+        /* A/B Test Cards */
+        .test-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px
+        }
+
+        .test-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative
+        }
+
+        .test-card.winner {
+            border-color: #FFD700
+        }
+
+        .test-card.loser {
+            opacity: .6
+        }
+
+        .test-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700
+        }
+
+        .badge-winner {
+            background: #FFD700;
+            color: #0A0A0A
+        }
+
+        .badge-running {
+            background: #333;
+            color: #fff
+        }
+
+        .badge-loser {
+            background: #D32F2F;
+            color: #fff
+        }
+
+        .test-variant {
+            font-size: 11px;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px
+        }
+
+        .test-copy {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            color: #ccc
+        }
+
+        .test-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px
+        }
+
+        .test-metric {
+            text-align: center
+        }
+
+        .test-metric-val {
+            font-size: 20px;
+            font-weight: 800
+        }
+
+        .test-metric-label {
+            font-size: 11px;
+            color: #777
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #222;
+            border-radius: 3px;
+            margin-top: 12px;
+            overflow: hidden
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width .5s
+        }
+
+        .fill-a {
+            background: #D32F2F
+        }
+
+        .fill-b {
+            background: #4CAF50
+        }
+
+        /* Lead Log */
+        .lead-table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        .lead-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 12px;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            border-bottom: 1px solid #222
+        }
+
+        .lead-table td {
+            padding: 12px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid #1a1a1a
+        }
+
+        .lead-table tr:hover {
+            background: #111
+        }
+
+        .channel-badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700
+        }
+
+        .ch-fb {
+            background: rgba(66, 103, 178, .2);
+            color: #4267B2
+        }
+
+        .ch-ig {
+            background: rgba(225, 48, 108, .2);
+            color: #E1306C
+        }
+
+        .ch-goog {
+            background: rgba(66, 133, 244, .2);
+            color: #4285F4
+        }
+
+        .ch-wa {
+            background: rgba(37, 211, 102, .2);
+            color: #25D366
+        }
+
+        .ch-web {
+            background: rgba(255, 215, 0, .2);
+            color: #FFD700
+        }
+
+        .ch-mktp {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .status-hot {
+            color: #D32F2F;
+            font-weight: 700
+        }
+
+        .status-warm {
+            color: #FF9800;
+            font-weight: 700
+        }
+
+        .status-cold {
+            color: #777
+        }
+
+        .status-booked {
+            color: #4CAF50;
+            font-weight: 700
+        }
+
+        /* Insights Panel */
+        .insight-card {
+            background: linear-gradient(135deg, #111, #1a1a1a);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px
+        }
+
+        .insight-card h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .insight-card p {
+            font-size: 13px;
+            color: #999;
+            line-height: 1.6
+        }
+
+        .insight-card .action {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #D32F2F;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif
+        }
+
+        /* Add Lead Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .7);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center
+        }
+
+        .modal-overlay.open {
+            display: flex
+        }
+
+        .modal {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 30px;
+            width: 480px;
+            max-width: 90vw
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+            font-size: 18px
+        }
+
+        .form-group {
+            margin-bottom: 16px
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: .05em
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0a0a0a;
+            border: 1.5px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif
+        }
+
+        .form-group textarea {
+            height: 80px;
+            resize: vertical
+        }
+
+        .form-group select option {
+            background: #111
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px
+        }
+
+        /* Responsive */
+        @media(max-width:768px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .test-grid {
+                grid-template-columns: 1fr
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 12px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="header">
+            <h1>LeadGen <span>AI</span></h1>
+            <div class="header-right">
+                <div class="brain-score">🧠 Brain Level: <span id="brainLevel">1</span></div>
+                <button class="btn btn-outline" onclick="exportData()">Export CSV</button>
+                <button class="btn btn-primary" onclick="openModal()">+ Log Lead</button>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('dashboard')">Dashboard</div>
+            <div class="tab" onclick="switchTab('ab')">A/B Tests</div>
+            <div class="tab" onclick="switchTab('leads')">Lead Log</div>
+            <div class="tab" onclick="switchTab('insights')">AI Insights</div>
+            <div class="tab" onclick="switchTab('templates')">Ad Templates</div>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div class="tab-content active" id="tab-dashboard">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label">Total Leads</div>
+                    <div class="stat-value" id="totalLeads">0</div>
+                    <div class="stat-change stat-up" id="leadsChange">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Conversion Rate</div>
+                    <div class="stat-value" id="convRate">0%</div>
+                    <div class="stat-change" id="convChange">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Best Channel</div>
+                    <div class="stat-value" id="bestChannel" style="font-size:22px">—</div>
+                    <div class="stat-change stat-up" id="bestChannelRate">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Revenue (Est.)</div>
+                    <div class="stat-value" id="revenue">$0</div>
+                    <div class="stat-change stat-up" id="revChange">—</div>
+                </div>
+            </div>
+            <h3 style="margin-bottom:16px">📊 Channel Performance</h3>
+            <div id="channelBreakdown"
+                style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:30px"></div>
+            <h3 style="margin-bottom:16px">⚡ Recent Leads</h3>
+            <div id="recentLeads"></div>
+        </div>
+
+        <!-- A/B TESTS -->
+        <div class="tab-content" id="tab-ab">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                <h3>🧪 Active A/B Tests</h3>
+                <button class="btn btn-primary" onclick="createNewTest()">+ New Test</button>
+            </div>
+            <div id="abTests"></div>
+            <h3 style="margin:30px 0 16px">🏆 Completed Tests</h3>
+            <div id="completedTests"></div>
+        </div>
+
+        <!-- LEADS -->
+        <div class="tab-content" id="tab-leads">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                <h3>📋 All Leads</h3>
+                <div style="display:flex;gap:8px">
+                    <select id="filterChannel" onchange="renderLeads()"
+                        style="padding:8px 12px;background:#111;border:1px solid #333;border-radius:6px;color:#fff;font-size:13px">
+                        <option value="all">All Channels</option>
+                        <option value="Facebook">Facebook</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="Google">Google</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                        <option value="Website">Website</option>
+                        <option value="Marketplace">Marketplace</option>
+                    </select>
+                </div>
+            </div>
+            <table class="lead-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Channel</th>
+                        <th>Ad Copy</th>
+                        <th>Status</th>
+                        <th>Value</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="leadTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- AI INSIGHTS -->
+        <div class="tab-content" id="tab-insights">
+            <h3 style="margin-bottom:20px">🧠 AI Analysis & Recommendations</h3>
+            <div id="insightsPanel"></div>
+        </div>
+
+        <!-- AD TEMPLATES -->
+        <div class="tab-content" id="tab-templates">
+            <h3 style="margin-bottom:20px">📝 Ready-to-Use Templates</h3>
+            <div id="templatesPanel"></div>
+        </div>
+    </div>
+
+    <!-- Add Lead Modal -->
+    <div class="modal-overlay" id="leadModal">
+        <div class="modal">
+            <h3>Log New Lead</h3>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="leadName" placeholder="Customer name">
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" id="leadPhone" placeholder="+65 9XXX XXXX">
+            </div>
+            <div class="form-group">
+                <label>Channel</label>
+                <select id="leadChannel">
+                    <option value="Facebook">Facebook</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Google">Google</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Website">Website (Chatbot)</option>
+                    <option value="Marketplace">FB Marketplace</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Which Ad Copy Brought Them?</label>
+                <select id="leadAdCopy"></select>
+            </div>
+            <div class="form-group">
+                <label>Package Interest</label>
+                <select id="leadPackage">
+                    <option value="Bathroom">Bathroom ($439)</option>
+                    <option value="Kitchen">Kitchen ($529)</option>
+                    <option value="Full Home">Full Home ($1,339)</option>
+                    <option value="Unsure">Not sure yet</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="leadStatus">
+                    <option value="Hot">🔥 Hot — Ready to book</option>
+                    <option value="Warm">🟡 Warm — Interested</option>
+                    <option value="Cold">⚪ Cold — Just enquiring</option>
+                    <option value="Booked">✅ Booked!</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea id="leadNotes" placeholder="Any details..."></textarea>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveLead()">Save Lead</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New A/B Test Modal -->
+    <div class="modal-overlay" id="abModal">
+        <div class="modal">
+            <h3>🧪 Create A/B Test</h3>
+            <div class="form-group">
+                <label>Test Name</label>
+                <input type="text" id="testName" placeholder="e.g. FB Ad Copy - CNY vs Problem">
+            </div>
+            <div class="form-group">
+                <label>Channel</label>
+                <select id="testChannel">
+                    <option value="Facebook">Facebook</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Google">Google</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Marketplace">FB Marketplace</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Variant A — Copy</label>
+                <textarea id="testCopyA" placeholder="First ad copy variation..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Variant B — Copy</label>
+                <textarea id="testCopyB" placeholder="Second ad copy variation..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Min Leads to Declare Winner</label>
+                <select id="testMinLeads">
+                    <option value="10">10 leads each</option>
+                    <option value="20" selected>20 leads each</option>
+                    <option value="30">30 leads each</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-outline" onclick="closeABModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveTest()">Start Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================
+        // LEADGEN AI — SELF-LEARNING ENGINE
+        // ============================
+
+        const PRICES = { Bathroom: 439, Kitchen: 529, 'Full Home': 1339, Unsure: 0 };
+
+        // Data Store
+        function getData(key, def) { return JSON.parse(localStorage.getItem('lg_' + key) || JSON.stringify(def)); }
+        function setData(key, val) { localStorage.setItem('lg_' + key, JSON.stringify(val)); }
+
+        let leads = getData('leads', []);
+        let tests = getData('tests', getDefaultTests());
+        let learnings = getData('learnings', { totalDecisions: 0, winPatterns: [] });
+
+        function getDefaultTests() {
+            return [
+                {
+                    id: 1, name: 'FB Ad Copy: CNY vs Problem', channel: 'Facebook', status: 'running',
+                    copyA: '🧧 CNY SPECIAL — 10% OFF All Packages! Bathroom $439, Kitchen $529, Full Home $1,339. Limited slots! DM "CNY" for FREE quote →',
+                    copyB: 'Is your bathroom grout DISGUSTING? 🤢 Black mold. Yellow stains. We fix it PERMANENTLY with epoxy grout. From $439. DM for FREE inspection →',
+                    leadsA: 0, leadsB: 0, convA: 0, convB: 0, minLeads: 20, winner: null
+                },
+                {
+                    id: 2, name: 'CTA Style: Emoji vs Direct', channel: 'Facebook', status: 'running',
+                    copyA: '📱 DM us "CNY" to get your FREE quote today!',
+                    copyB: 'WhatsApp 9800 4317 now — only 12 slots left this month.',
+                    leadsA: 0, leadsB: 0, convA: 0, convB: 0, minLeads: 20, winner: null
+                }
+            ];
+        }
+
+        // ============================
+        // A/B TESTING ENGINE
+        // ============================
+        function evaluateTests() {
+            tests.forEach(t => {
+                if (t.status !== 'running') return;
+                if (t.leadsA >= t.minLeads && t.leadsB >= t.minLeads) {
+                    const rateA = t.leadsA > 0 ? t.convA / t.leadsA : 0;
+                    const rateB = t.leadsB > 0 ? t.convB / t.leadsB : 0;
+                    if (Math.abs(rateA - rateB) > 0.05 || (t.leadsA + t.leadsB) >= t.minLeads * 3) {
+                        t.winner = rateA >= rateB ? 'A' : 'B';
+                        t.status = 'completed';
+                        learnings.totalDecisions++;
+                        learnings.winPatterns.push({
+                            channel: t.channel, winner: t.winner === 'A' ? t.copyA : t.copyB,
+                            loser: t.winner === 'A' ? t.copyB : t.copyA,
+                            winRate: Math.max(rateA, rateB), loseRate: Math.min(rateA, rateB),
+                            date: new Date().toISOString()
+                        });
+                        setData('learnings', learnings);
+                    }
+                }
+            });
+            setData('tests', tests);
+        }
+
+        // ============================
+        // AI INSIGHTS ENGINE
+        // ============================
+        function generateInsights() {
+            const insights = [];
+            const now = new Date();
+
+            // Channel analysis
+            const channels = {};
+            leads.forEach(l => {
+                if (!channels[l.channel]) channels[l.channel] = { total: 0, booked: 0, hot: 0, revenue: 0 };
+                channels[l.channel].total++;
+                if (l.status === 'Booked') { channels[l.channel].booked++; channels[l.channel].revenue += PRICES[l.package] || 0; }
+                if (l.status === 'Hot') channels[l.channel].hot++;
+            });
+
+            // Best channel insight
+            let bestCh = null, bestRate = 0;
+            Object.entries(channels).forEach(([ch, d]) => {
+                const rate = d.total > 0 ? (d.booked + d.hot) / d.total : 0;
+                if (rate > bestRate && d.total >= 3) { bestRate = rate; bestCh = ch; }
+            });
+            if (bestCh) {
+                insights.push({
+                    icon: '🏆', title: `${bestCh} is your best channel`,
+                    text: `${(bestRate * 100).toFixed(0)}% of ${bestCh} leads are hot or booked. Double down here — increase budget by 50% and test new copy variations.`,
+                    action: `Create new ${bestCh} A/B test`, actionFn: () => { document.getElementById('testChannel').value = bestCh; createNewTest(); }
+                });
+            }
+
+            // Worst channel insight
+            let worstCh = null, worstRate = 1;
+            Object.entries(channels).forEach(([ch, d]) => {
+                const rate = d.total > 0 ? (d.booked + d.hot) / d.total : 0;
+                if (rate < worstRate && d.total >= 3) { worstRate = rate; worstCh = ch; }
+            });
+            if (worstCh && worstCh !== bestCh) {
+                insights.push({
+                    icon: '⚠️', title: `Consider pausing ${worstCh}`,
+                    text: `Only ${(worstRate * 100).toFixed(0)}% conversion. Either the copy isn't resonating or you're targeting the wrong audience. Test completely different messaging before spending more.`,
+                    action: null
+                });
+            }
+
+            // A/B test insights
+            tests.filter(t => t.status === 'completed').forEach(t => {
+                const winCopy = t.winner === 'A' ? t.copyA : t.copyB;
+                insights.push({
+                    icon: '🧪', title: `Winner found: "${t.name}"`,
+                    text: `Use this copy everywhere on ${t.channel}: "${winCopy.substring(0, 80)}..." — it outperformed by ${Math.abs(((t.winner === 'A' ? t.convA / t.leadsA : t.convB / t.leadsB) - (t.winner === 'A' ? t.convB / t.leadsB : t.convA / t.leadsA)) * 100).toFixed(0)}%.`,
+                    action: 'Copy winning text', actionFn: () => { navigator.clipboard.writeText(winCopy); alert('Copied!'); }
+                });
+            });
+
+            // Time-based insights
+            const thisWeek = leads.filter(l => (now - new Date(l.date)) < 7 * 86400000);
+            const lastWeek = leads.filter(l => { const d = now - new Date(l.date); return d >= 7 * 86400000 && d < 14 * 86400000; });
+            if (thisWeek.length > 0 && lastWeek.length > 0) {
+                const change = ((thisWeek.length - lastWeek.length) / lastWeek.length * 100).toFixed(0);
+                insights.push({
+                    icon: change >= 0 ? '📈' : '📉', title: `Leads ${change >= 0 ? 'up' : 'down'} ${Math.abs(change)}% this week`,
+                    text: `${thisWeek.length} leads this week vs ${lastWeek.length} last week. ${change >= 0 ? 'Keep doing what\'s working!' : 'Time to refresh your ad copy or increase budget.'}`,
+                    action: null
+                });
+            }
+
+            // Brain level
+            const brainLevel = Math.min(10, 1 + Math.floor(leads.length / 5) + learnings.totalDecisions);
+
+            // Auto-generate new copy suggestion from learnings
+            if (learnings.winPatterns.length >= 1) {
+                const patterns = learnings.winPatterns;
+                const last = patterns[patterns.length - 1];
+                insights.push({
+                    icon: '🤖', title: 'AI-Generated Copy Suggestion',
+                    text: `Based on ${patterns.length} completed test(s), your audience responds best to: ${last.winner.includes('CNY') ? 'promotional/discount messaging' : last.winner.includes('mold') || last.winner.includes('DISGUSTING') ? 'problem-agitation messaging' : 'direct messaging'}. Try combining winning elements into a new variation.`,
+                    action: null
+                });
+            }
+
+            if (leads.length === 0) {
+                insights.push(
+                    { icon: '🚀', title: 'Get Started', text: 'Log your first lead to start training the AI. Every lead you log makes the system smarter — it learns which channels and copy convert best.', action: 'Log First Lead', actionFn: openModal },
+                    { icon: '📋', title: 'Your First A/B Test is Ready', text: 'Two default tests are set up: CNY promo vs problem-agitation copy, and emoji CTA vs direct CTA. As you log leads, tag which ad brought them in.', action: null }
+                );
+            }
+
+            return { insights, brainLevel };
+        }
+
+        // ============================
+        // TEMPLATES
+        // ============================
+        function getTemplates() {
+            const best = learnings.winPatterns.length > 0 ? learnings.winPatterns[learnings.winPatterns.length - 1].winner : null;
+            return [
+                {
+                    platform: 'Facebook Marketplace', icon: '🏪', copies: [
+                        { label: 'Listing Title', text: '🧧 CNY 10% OFF | Professional Epoxy Grout | $439' },
+                        { label: 'Description', text: `CLEANGROUT Professional Epoxy Grout Service\n✅ Singapore island-wide & JB\n\n🚿 Bathroom — $439 (usual $780)\n🍳 Kitchen — $529 (usual $980)\n🏠 Full Home — $1,339 (usual $2,380)\n\n100% waterproof • Anti-mold • 15-year life • Done in 1 day\n\n📱 WhatsApp: 9800 4317` }
+                    ]
+                },
+                {
+                    platform: 'Facebook Ad', icon: '📘', copies: [
+                        { label: best ? '🏆 Winning Copy' : 'Option A — CNY Promo', text: best || '🧧 CNY SPECIAL — 10% OFF All Packages (Ends Feb 28!)\n\nYour grout is full of mold & stains? 😱\n\nWe replace it with PREMIUM EPOXY GROUT:\n✅ 100% Waterproof\n✅ Anti-mold & stain-proof\n✅ Lasts 15-20 years\n✅ Done in 1 day\n\n🔥 Bathroom $439 · Kitchen $529 · Full Home $1,339\n\n📱 DM "CNY" for FREE quote →' },
+                        { label: 'Option B — Problem', text: 'Is your bathroom grout DISGUSTING? 🤢\n\nBlack mold. Yellow stains. Crumbling gaps.\nNo amount of scrubbing will fix cement grout.\n\nThe permanent solution? EPOXY GROUT.\n✅ 100% waterproof\n✅ Mold literally cannot grow\n✅ From just $439\n\n📱 WhatsApp us for FREE inspection →' }
+                    ]
+                },
+                {
+                    platform: 'WhatsApp Broadcast', icon: '📱', copies: [
+                        { label: 'CNY Blast', text: 'Hi [Name]! 🧧\n\nCLEANGROUT is running a CNY Special — 10% OFF all packages until Feb 28!\n\n🚿 Bathroom — $439\n🍳 Kitchen — $529\n🏠 Full Home — $1,339\n\nWant me to hold a slot for you? Reply YES and I\'ll book your free inspection! 😊' },
+                        { label: 'Follow-Up', text: 'Hi [Name]! Just following up on your epoxy grout enquiry 😊\n\nOur CNY 10% OFF ends soon — shall I book your free inspection this week?\n\nNo obligation, we just assess and quote. Takes 15 min!' }
+                    ]
+                }
+            ];
+        }
+
+        // ============================
+        // RENDER FUNCTIONS
+        // ============================
+        function switchTab(name) {
+            document.querySelectorAll('.tab').forEach((t, i) => {
+                t.classList.toggle('active', ['dashboard', 'ab', 'leads', 'insights', 'templates'][i] === name);
+            });
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('tab-' + name).classList.add('active');
+            render();
+        }
+
+        function render() {
+            evaluateTests();
+            const { insights, brainLevel } = generateInsights();
+            document.getElementById('brainLevel', brainLevel);
+
+            // Brain level
+            const bl = document.getElementById('brainLevel');
+            bl.textContent = brainLevel;
+            bl.parentElement.innerHTML = `🧠 Brain Level: <span>${brainLevel}</span>/10`;
+
+            // Stats
+            const booked = leads.filter(l => l.status === 'Booked').length;
+            document.getElementById('totalLeads').textContent = leads.length;
+            document.getElementById('convRate').textContent = leads.length > 0 ? (booked / leads.length * 100).toFixed(0) + '%' : '0%';
+            document.getElementById('revenue').textContent = '$' + leads.filter(l => l.status === 'Booked').reduce((s, l) => s + (PRICES[l.package] || 0), 0).toLocaleString();
+
+            // Best channel
+            const chMap = {};
+            leads.forEach(l => {
+                if (!chMap[l.channel]) chMap[l.channel] = { t: 0, b: 0 };
+                chMap[l.channel].t++;
+                if (l.status === 'Booked' || l.status === 'Hot') chMap[l.channel].b++;
+            });
+            let bestCh = '—', bestR = 0;
+            Object.entries(chMap).forEach(([c, d]) => { const r = d.b / d.t; if (r > bestR) { bestR = r; bestCh = c; } });
+            document.getElementById('bestChannel').textContent = bestCh;
+            document.getElementById('bestChannelRate').textContent = bestCh !== '—' ? `${(bestR * 100).toFixed(0)}% hot/booked` : '—';
+
+            // Channel breakdown
+            const chDiv = document.getElementById('channelBreakdown');
+            chDiv.innerHTML = Object.entries(chMap).map(([ch, d]) => `
+        <div class="stat-card">
+            <div class="stat-label">${ch}</div>
+            <div class="stat-value" style="font-size:24px">${d.t}</div>
+            <div class="stat-change ${d.b / d.t > 0.3 ? 'stat-up' : ''}">${(d.b / d.t * 100).toFixed(0)}% converting</div>
+        </div>
+    `).join('');
+
+            // Recent leads
+            const rl = document.getElementById('recentLeads');
+            const recent = [...leads].reverse().slice(0, 5);
+            rl.innerHTML = recent.length ? `<table class="lead-table"><thead><tr><th>Name</th><th>Channel</th><th>Status</th><th>Package</th></tr></thead><tbody>${recent.map(l => `<tr><td>${l.name}</td><td><span class="channel-badge ch-${l.channel.toLowerCase().replace(' ', '')}">${l.channel}</span></td><td><span class="status-${l.status.toLowerCase()}">${l.status}</span></td><td>${l.package}</td></tr>`).join('')
+                }</tbody></table>` : '<p style="color:#777">No leads yet. Click "+ Log Lead" to start!</p>';
+
+            renderTests();
+            renderLeads();
+            renderInsights(insights);
+            renderTemplates();
+            updateAdCopyDropdown();
+        }
+
+        function renderTests() {
+            const active = tests.filter(t => t.status === 'running');
+            const completed = tests.filter(t => t.status === 'completed');
+
+            document.getElementById('abTests').innerHTML = active.length ? active.map(t => renderTestCard(t)).join('') : '<p style="color:#777">No active tests. Create one to start optimizing!</p>';
+            document.getElementById('completedTests').innerHTML = completed.length ? completed.map(t => renderTestCard(t)).join('') : '<p style="color:#777">No completed tests yet. Tests complete when both variants reach the minimum lead count.</p>';
+        }
+
+        function renderTestCard(t) {
+            const totalA = t.leadsA, totalB = t.leadsB;
+            const rateA = totalA > 0 ? (t.convA / totalA * 100).toFixed(0) : 0;
+            const rateB = totalB > 0 ? (t.convB / totalB * 100).toFixed(0) : 0;
+            const pctA = (totalA + totalB) > 0 ? totalA / (totalA + totalB) * 100 : 50;
+
+            return `<div class="test-grid"><div class="test-card ${t.winner === 'A' ? 'winner' : t.winner === 'B' ? 'loser' : ''}">
+        <span class="test-badge ${t.winner === 'A' ? 'badge-winner' : t.winner === 'B' ? 'badge-loser' : 'badge-running'}">${t.winner === 'A' ? '👑 WINNER' : t.winner === 'B' ? 'LOSER' : 'RUNNING'}</span>
+        <div class="test-variant">Variant A — ${t.name}</div>
+        <div class="test-copy">"${t.copyA.substring(0, 120)}..."</div>
+        <div class="test-metrics">
+            <div class="test-metric"><div class="test-metric-val">${totalA}</div><div class="test-metric-label">Leads</div></div>
+            <div class="test-metric"><div class="test-metric-val">${t.convA}</div><div class="test-metric-label">Converted</div></div>
+            <div class="test-metric"><div class="test-metric-val">${rateA}%</div><div class="test-metric-label">Conv Rate</div></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill fill-a" style="width:${pctA}%"></div></div>
+    </div><div class="test-card ${t.winner === 'B' ? 'winner' : t.winner === 'A' ? 'loser' : ''}">
+        <span class="test-badge ${t.winner === 'B' ? 'badge-winner' : t.winner === 'A' ? 'badge-loser' : 'badge-running'}">${t.winner === 'B' ? '👑 WINNER' : t.winner === 'A' ? 'LOSER' : 'RUNNING'}</span>
+        <div class="test-variant">Variant B — ${t.name}</div>
+        <div class="test-copy">"${t.copyB.substring(0, 120)}..."</div>
+        <div class="test-metrics">
+            <div class="test-metric"><div class="test-metric-val">${totalB}</div><div class="test-metric-label">Leads</div></div>
+            <div class="test-metric"><div class="test-metric-val">${t.convB}</div><div class="test-metric-label">Converted</div></div>
+            <div class="test-metric"><div class="test-metric-val">${rateB}%</div><div class="test-metric-label">Conv Rate</div></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill fill-b" style="width:${100 - pctA}%"></div></div>
+    </div></div>`;
+        }
+
+        function renderLeads() {
+            const filter = document.getElementById('filterChannel').value;
+            const filtered = filter === 'all' ? leads : leads.filter(l => l.channel === filter);
+            const tbody = document.getElementById('leadTableBody');
+            tbody.innerHTML = [...filtered].reverse().map((l, i) => `<tr>
+        <td style="font-size:13px;color:#999">${new Date(l.date).toLocaleDateString()}</td>
+        <td>${l.name}</td>
+        <td><span class="channel-badge ch-${l.channel.toLowerCase().replace(/\s/g, '')}">${l.channel}</span></td>
+        <td style="font-size:12px;color:#777;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.adCopy || '—'}</td>
+        <td><span class="status-${l.status.toLowerCase()}">${l.status}</span></td>
+        <td>${PRICES[l.package] ? '$' + PRICES[l.package] : '—'}</td>
+        <td><select onchange="updateLeadStatus(${leads.indexOf(l)},this.value)" style="padding:4px 8px;background:#1a1a1a;border:1px solid #333;border-radius:4px;color:#fff;font-size:12px">
+            <option ${l.status === 'Hot' ? 'selected' : ''} value="Hot">🔥 Hot</option>
+            <option ${l.status === 'Warm' ? 'selected' : ''} value="Warm">🟡 Warm</option>
+            <option ${l.status === 'Cold' ? 'selected' : ''} value="Cold">⚪ Cold</option>
+            <option ${l.status === 'Booked' ? 'selected' : ''} value="Booked">✅ Booked</option>
+        </select></td>
+    </tr>`).join('');
+        }
+
+        function renderInsights(insights) {
+            document.getElementById('insightsPanel').innerHTML = insights.map(i => `
+        <div class="insight-card">
+            <h4>${i.icon} ${i.title}</h4>
+            <p>${i.text}</p>
+            ${i.action ? `<button class="action" onclick="(${i.actionFn})()">${i.action}</button>` : ''}
+        </div>
+    `).join('');
+        }
+
+        function renderTemplates() {
+            const templates = getTemplates();
+            document.getElementById('templatesPanel').innerHTML = templates.map(t => `
+        <div style="margin-bottom:24px">
+            <h4 style="margin-bottom:12px">${t.icon} ${t.platform}</h4>
+            ${t.copies.map(c => `
+                <div class="test-card" style="margin-bottom:12px">
+                    <div class="test-variant">${c.label}</div>
+                    <pre style="font-family:'Inter',sans-serif;font-size:13px;color:#ccc;white-space:pre-wrap;line-height:1.6;margin:8px 0">${c.text}</pre>
+                    <button class="btn btn-outline" style="font-size:11px;padding:6px 12px" onclick="navigator.clipboard.writeText(\`${c.text.replace(/`/g, "\\`").replace(/\\/g, "\\\\")}\`);this.textContent='✅ Copied!'">📋 Copy</button>
+                </div>
+            `).join('')}
+        </div>
+    `).join('');
+        }
+
+        function updateAdCopyDropdown() {
+            const sel = document.getElementById('leadAdCopy');
+            const activeTests = tests.filter(t => t.status === 'running');
+            sel.innerHTML = '<option value="">— Not from a test —</option>' +
+                activeTests.map(t => `
+            <option value="${t.id}_A">${t.name} — Variant A</option>
+            <option value="${t.id}_B">${t.name} — Variant B</option>
+        `).join('');
+        }
+
+        // ============================
+        // ACTIONS
+        // ============================
+        function openModal() { document.getElementById('leadModal').classList.add('open'); }
+        function closeModal() { document.getElementById('leadModal').classList.remove('open'); }
+        function createNewTest() { document.getElementById('abModal').classList.add('open'); }
+        function closeABModal() { document.getElementById('abModal').classList.remove('open'); }
+
+        function saveLead() {
+            const lead = {
+                name: document.getElementById('leadName').value || 'Unknown',
+                phone: document.getElementById('leadPhone').value,
+                channel: document.getElementById('leadChannel').value,
+                adCopy: document.getElementById('leadAdCopy').value,
+                package: document.getElementById('leadPackage').value,
+                status: document.getElementById('leadStatus').value,
+                notes: document.getElementById('leadNotes').value,
+                date: new Date().toISOString()
+            };
+            leads.push(lead);
+            setData('leads', leads);
+
+            // Update A/B test counts
+            if (lead.adCopy) {
+                const [testId, variant] = lead.adCopy.split('_');
+                const test = tests.find(t => t.id == testId);
+                if (test) {
+                    if (variant === 'A') { test.leadsA++; if (lead.status === 'Booked' || lead.status === 'Hot') test.convA++; }
+                    if (variant === 'B') { test.leadsB++; if (lead.status === 'Booked' || lead.status === 'Hot') test.convB++; }
+                    setData('tests', tests);
+                }
+            }
+
+            closeModal();
+            document.getElementById('leadName').value = '';
+            document.getElementById('leadPhone').value = '';
+            document.getElementById('leadNotes').value = '';
+            render();
+        }
+
+        function updateLeadStatus(idx, status) {
+            const oldStatus = leads[idx].status;
+            leads[idx].status = status;
+            setData('leads', leads);
+
+            // Update A/B test conversion if changing to/from Booked/Hot
+            if (leads[idx].adCopy) {
+                const [testId, variant] = leads[idx].adCopy.split('_');
+                const test = tests.find(t => t.id == testId);
+                if (test) {
+                    const wasConv = oldStatus === 'Booked' || oldStatus === 'Hot';
+                    const isConv = status === 'Booked' || status === 'Hot';
+                    if (!wasConv && isConv) { if (variant === 'A') test.convA++; else test.convB++; }
+                    if (wasConv && !isConv) { if (variant === 'A') test.convA = Math.max(0, test.convA - 1); else test.convB = Math.max(0, test.convB - 1); }
+                    setData('tests', tests);
+                }
+            }
+            render();
+        }
+
+        function saveTest() {
+            const test = {
+                id: Date.now(),
+                name: document.getElementById('testName').value || 'Untitled Test',
+                channel: document.getElementById('testChannel').value,
+                status: 'running',
+                copyA: document.getElementById('testCopyA').value,
+                copyB: document.getElementById('testCopyB').value,
+                leadsA: 0, leadsB: 0, convA: 0, convB: 0,
+                minLeads: parseInt(document.getElementById('testMinLeads').value),
+                winner: null
+            };
+            tests.push(test);
+            setData('tests', tests);
+            closeABModal();
+            switchTab('ab');
+        }
+
+        function exportData() {
+            const csv = 'Date,Name,Phone,Channel,Ad Copy,Package,Status,Notes\n' +
+                leads.map(l => `${l.date},${l.name},${l.phone},${l.channel},"${l.adCopy || ''}",${l.package},${l.status},"${l.notes || ''}"`).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'cleangrout_leads_' + new Date().toISOString().split('T')[0] + '.csv';
+            a.click();
+        }
+
+        // Auto-import chatbot leads
+        function importChatbotLeads() {
+            const chatLeads = JSON.parse(localStorage.getItem('cleangrout_leads') || '[]');
+            chatLeads.forEach(cl => {
+                if (!leads.find(l => l.phone === cl.phone && l.name === cl.name)) {
+                    leads.push({
+                        name: cl.name, phone: cl.phone, channel: 'Website',
+                        adCopy: '', package: cl.package || 'Unsure', status: 'Warm',
+                        notes: 'Auto-imported from chatbot', date: cl.timestamp
+                    });
+                }
+            });
+            setData('leads', leads);
+        }
+
+        // Init
+        importChatbotLeads();
+        render();
+    </script>
+</body>
+
+</html>
