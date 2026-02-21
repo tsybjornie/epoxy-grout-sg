@@ -542,6 +542,7 @@
             <div class="tab" onclick="switchTab('ab')">A/B Tests</div>
             <div class="tab" onclick="switchTab('leads')">Lead Log</div>
             <div class="tab" onclick="switchTab('insights')">AI Insights</div>
+            <div class="tab" onclick="switchTab('content')">🎬 Content Studio</div>
             <div class="tab" onclick="switchTab('templates')">Ad Templates</div>
         </div>
 
@@ -574,6 +575,8 @@
                 style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:30px"></div>
             <h3 style="margin-bottom:16px">⚡ Recent Leads</h3>
             <div id="recentLeads"></div>
+            <h3 style="margin:24px 0 16px">🔔 Follow-Up Reminders</h3>
+            <div id="followUpPanel"></div>
         </div>
 
         <!-- A/B TESTS -->
@@ -601,6 +604,7 @@
                         <option value="WhatsApp">WhatsApp</option>
                         <option value="Website">Website</option>
                         <option value="Marketplace">Marketplace</option>
+                        <option value="TikTok">TikTok/Reels</option>
                     </select>
                 </div>
             </div>
@@ -624,6 +628,12 @@
         <div class="tab-content" id="tab-insights">
             <h3 style="margin-bottom:20px">🧠 AI Analysis & Recommendations</h3>
             <div id="insightsPanel"></div>
+        </div>
+
+        <!-- CONTENT STUDIO -->
+        <div class="tab-content" id="tab-content">
+            <h3 style="margin-bottom:20px">🎬 Content Studio — ASMR, Reels & Content Calendar</h3>
+            <div id="contentStudioPanel"></div>
         </div>
 
         <!-- AD TEMPLATES -->
@@ -654,6 +664,7 @@
                     <option value="WhatsApp">WhatsApp</option>
                     <option value="Website">Website (Chatbot)</option>
                     <option value="Marketplace">FB Marketplace</option>
+                    <option value="TikTok">TikTok/Reels/Shorts</option>
                 </select>
             </div>
             <div class="form-group">
@@ -1071,6 +1082,19 @@
                         { label: 'CNY Blast', text: 'Hi [Name]! 🧧\n\nCLEANGROUT is running a CNY Special — 10% OFF all packages until Feb 28!\n\n🚿 Bathroom — $439\n🍳 Kitchen — $529\n🏠 Full Home — $1,339\n\nWant me to hold a slot for you? Reply YES and I\'ll book your free inspection! 😊' },
                         { label: 'Follow-Up', text: 'Hi [Name]! Just following up on your epoxy grout enquiry 😊\n\nOur CNY 10% OFF ends soon — shall I book your free inspection this week?\n\nNo obligation, we just assess and quote. Takes 15 min!' }
                     ]
+                },
+                {
+                    platform: 'Google My Business', icon: '📍', copies: [
+                        { label: 'GMB Update Post', text: '✨ CLEANGROUT — Professional Epoxy Grout Service\n\n🧧 CNY Special: 10% OFF All Packages!\n\n🚿 Bathroom — $439\n🍳 Kitchen — $529\n🏠 Full Home — $1,339\n\n✅ 100% waterproof\n✅ Anti-mold & stain-proof\n✅ Done in 1 day\n✅ 15-20 year lifespan\n\nBook your FREE inspection today!\n📱 WhatsApp: 9800 4317' },
+                        { label: 'Review Request (After Job)', text: 'Hi [Name]! Thank you so much for choosing CLEANGROUT! 🙏\n\nWe hope you love your new epoxy grout! Would you mind leaving us a quick Google review? It really helps other homeowners find us.\n\n👉 [Insert Google Review Link]\n\nThank you! 😊' }
+                    ]
+                },
+                {
+                    platform: 'TikTok / Reels / Shorts', icon: '🎬', copies: [
+                        { label: 'ASMR Grout Removal Caption', text: '10 years of mold... removed in 60 seconds 🤢➡️✨\n\n#asmr #groutcleaning #satisfying #oddlysatisfying #cleaningtiktok #beforeandafter #hdb #singapore #bathroomrenovation #cleaningasmr #transformation #sglife #epoxy' },
+                        { label: 'Before/After Transformation', text: 'POV: You finally fix your disgusting grout 😱➡️😍\n\nFrom $439 — link in bio\n\n#grout #epoxy #beforeandafter #homerenovation #satisfying #singapore #hdb #bathroomgoals #asmr #cleaningtiktok #diy' },
+                        { label: 'Epoxy Application ASMR', text: 'The sound of fresh epoxy grout... 🤤\n\n100% waterproof. Zero mold. Lasts 15-20 years.\nFrom $439.\n\n#asmr #epoxy #grout #satisfying #oddlysatisfying #diy #renovation #singapore #hdb #cleaningtiktok #asmrsounds' }
+                    ]
                 }
             ];
         }
@@ -1080,7 +1104,7 @@
         // ============================
         function switchTab(name) {
             document.querySelectorAll('.tab').forEach((t, i) => {
-                t.classList.toggle('active', ['dashboard', 'ab', 'leads', 'insights', 'templates'][i] === name);
+                t.classList.toggle('active', ['dashboard', 'ab', 'leads', 'insights', 'content', 'templates'][i] === name);
             });
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.getElementById('tab-' + name).classList.add('active');
@@ -1135,7 +1159,9 @@
             renderTests();
             renderLeads();
             renderInsights(insights);
+            renderContentStudio();
             renderTemplates();
+            renderFollowUps();
             updateAdCopyDropdown();
         }
 
@@ -1237,14 +1263,273 @@
             navigator.clipboard.writeText(window._templateTexts[idx]).then(() => { btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = '📋 Copy', 2000); });
         }
 
+        // ============================
+        // CONTENT STUDIO — ASMR + CALENDAR + SCRIPTS
+        // ============================
+        function renderContentStudio() {
+            const panel = document.getElementById('contentStudioPanel');
+            if (!panel) return;
+
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const today = new Date();
+            const topStyle = learnings.winPatterns.length > 0 ?
+                Object.entries(analyzeStyle(learnings.winPatterns[learnings.winPatterns.length - 1].winner))
+                    .sort((a, b) => b[1] - a[1])[0]?.[0] : null;
+
+            // ASMR Video Ideas
+            const asmrIdeas = [
+                { title: '🎧 "Removing 10-year-old grout" ASMR', script: 'Setup: Phone on tripod, close-up angle on tile gap.\n\n1. Show the dirty grout (zoom in on mold) — 3 sec\n2. Start scraping with grout removal tool — 15 sec (the MONEY sound)\n3. Pan to show progress line — 3 sec\n4. Speed-up the rest — 10 sec\n5. Show clean gap ready for epoxy — 3 sec\n\nCaption: "10 years of filth... gone 🤢➡️✨"\nNo music. Just the raw scraping sound.', platform: 'TikTok + Reels + Shorts', hashtags: '#asmr #groutcleaning #satisfying #oddlysatisfying #cleaningtiktok #hdb #singapore' },
+                { title: '🤤 "Fresh epoxy application" ASMR', script: 'Setup: Overhead camera angle, good lighting.\n\n1. Show clean tile gaps (from removal) — 2 sec\n2. Scoop epoxy onto rubber float — 3 sec\n3. Slow diagonal spread across tiles — 20 sec (smooth ASMR)\n4. Second pass from other angle — 10 sec\n5. Close-up of filled gaps — 3 sec\n\nCaption: "The sound of waterproof perfection 🤤"\nNo music. Ambient work sounds only.', platform: 'TikTok + Reels + Shorts', hashtags: '#asmr #epoxy #satisfying #oddlysatisfying #renovation #asmrsounds' },
+                { title: '🧽 "The Haze Wipe Reveal" ASMR', script: 'Setup: Side angle, capture the wipe motion.\n\n1. Show haze-covered tiles (looks messy) — 3 sec\n2. Wet sponge squeeze sound — 2 sec\n3. First slow wipe — tiles emerge GLEAMING — 8 sec\n4. Continue wiping row by row — 15 sec\n5. Final wide shot of clean tiles — 5 sec\n\nCaption: "The most satisfying part of Every. Single. Job. 😍"\nNo music. Sponge + water sounds.', platform: 'TikTok + Reels + Shorts', hashtags: '#satisfying #cleaning #beforeandafter #reveal #transformation' },
+                { title: '⏩ "Full Bathroom in 60 Seconds" Timelapse', script: 'Setup: Wide angle covering full bathroom.\n\n1. Before shot — dirty grout close-ups (5 sec)\n2. Text overlay: "10-year-old HDB bathroom"\n3. Timelapse of removal → cleaning → application → wiping (45 sec)\n4. Slow-mo final pan of completed bathroom (10 sec)\n5. Text: "From $439. WhatsApp link in bio."\n\nAudio: Trending audio OR satisfying ASMR sounds', platform: 'TikTok + Reels + Shorts', hashtags: '#timelapse #renovation #hdb #singapore #beforeandafter #transformation' },
+                { title: '📐 "Split Screen Before/After"', script: 'Setup: Same angle, before and after.\n\n1. Film same tiles BEFORE (dirty, moldy) — 5 sec\n2. BLACK SCREEN "4 hours later..." — 2 sec\n3. Film EXACT same angle AFTER — 5 sec\n4. Side-by-side split screen comparison — 8 sec\n5. Text: "Same bathroom. Same tiles. Different grout."\n\nCaption: "You don\'t need new tiles. You need new grout."\nAudio: Trending satisfying sound', platform: 'TikTok + Reels + Shorts', hashtags: '#beforeandafter #grout #renovation #hdb #satisfying #homemakeover' },
+                { title: '🔬 "What Lives in Your Grout" (Shock Content)', script: 'Setup: Macro lens or close-up phone camera.\n\n1. Normal bathroom shot — looks ok from far (3 sec)\n2. Text: "Looks clean, right? Let\'s zoom in..."\n3. Extreme close-up of grout line — mold, discoloration (5 sec)\n4. Text: "2x more bacteria than a toilet seat"\n5. Speed-up of the cleaning + epoxy process (15 sec)\n6. Macro shot of new epoxy grout — pristine (5 sec)\n\nCaption: "You can\'t unsee this 😱 #grout"\nAudio: Ominous sound → satisfying reveal', platform: 'TikTok + Reels + Shorts', hashtags: '#gross #bacteria #cleaning #satisfying #beforeandafter #grout #singapore' }
+            ];
+
+            // Content Calendar (7 days)
+            const contentTypes = [
+                { type: '📸 Before/After Post', platform: 'IG + FB', color: '#4CAF50' },
+                { type: '🎧 ASMR Video', platform: 'TikTok + Reels', color: '#E91E63' },
+                { type: '💰 Promo/Price Post', platform: 'FB + Marketplace', color: '#FF9800' },
+                { type: '⭐ Customer Review', platform: 'IG Stories + GMB', color: '#2196F3' },
+                { type: '🎧 ASMR Video', platform: 'TikTok + Reels', color: '#E91E63' },
+                { type: '📋 Educational (Tips)', platform: 'IG Carousel + FB', color: '#9C27B0' },
+                { type: '🤢 Problem/Shock Post', platform: 'TikTok + FB', color: '#f44336' }
+            ];
+
+            // Job-based filming suggestions
+            const bookedLeads = leads.filter(l => l.status === 'Booked');
+            let filmingSuggestion = '';
+            if (bookedLeads.length > 0) {
+                const lastBooked = bookedLeads[bookedLeads.length - 1];
+                filmingSuggestion = `
+                <div class="test-card" style="border-left:4px solid #E91E63;margin-bottom:24px">
+                    <h4 style="color:#E91E63;margin-bottom:8px">🎬 FILM NEXT JOB: ${esc(lastBooked.name)} (${lastBooked.package})</h4>
+                    <p style="color:#aaa;font-size:13px;margin-bottom:12px">You have a ${lastBooked.package} job booked. Here's what to film:</p>
+                    <div style="display:grid;gap:8px;font-size:13px;color:#ccc">
+                        <div>📱 <strong>Video 1:</strong> Before shot — close-up of dirty grout (10 sec)</div>
+                        <div>📱 <strong>Video 2:</strong> ASMR grout removal (30 sec, no music)</div>
+                        <div>📱 <strong>Video 3:</strong> Epoxy application smooth pass (20 sec)</div>
+                        <div>📱 <strong>Video 4:</strong> Haze wipe reveal (15 sec)</div>
+                        <div>📱 <strong>Video 5:</strong> Wide after shot + customer reaction (10 sec)</div>
+                    </div>
+                    <p style="color:#777;font-size:12px;margin-top:12px">💡 That's 5 pieces of content from 1 job = 1 week of posts!</p>
+                </div>`;
+            }
+
+            panel.innerHTML = `
+                ${filmingSuggestion}
+
+                <h4 style="margin-bottom:16px">📅 7-Day Content Calendar</h4>
+                <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:30px">
+                    ${[0, 1, 2, 3, 4, 5, 6].map(i => {
+                const d = new Date(today); d.setDate(d.getDate() + i);
+                const ct = contentTypes[(d.getDay()) % 7];
+                const isToday = i === 0;
+                return `<div class="test-card" style="text-align:center;padding:12px 8px;${isToday ? 'border:1px solid #D32F2F' : ''}">
+                            <div style="font-size:11px;color:#777;margin-bottom:4px">${isToday ? '⬅️ TODAY' : days[d.getDay()]} ${d.getDate()}/${d.getMonth() + 1}</div>
+                            <div style="font-size:20px;margin:8px 0">${ct.type.split(' ')[0]}</div>
+                            <div style="font-size:11px;color:${ct.color};font-weight:600">${ct.type.split(' ').slice(1).join(' ')}</div>
+                            <div style="font-size:10px;color:#555;margin-top:4px">${ct.platform}</div>
+                        </div>`;
+            }).join('')}
+                </div>
+
+                ${topStyle ? `<div class="insight-card" style="margin-bottom:24px">
+                    <h4>🧠 Your Winning Style: ${MSG_STYLES[topStyle]?.label || topStyle}</h4>
+                    <p>Focus your content on this style — it converts best with your audience. Mix it into your ASMR captions and post copy.</p>
+                </div>` : ''}
+
+                <h4 style="margin-bottom:16px">🎧 ASMR Video Scripts (Ready to Film)</h4>
+                ${asmrIdeas.map((idea, idx) => `
+                    <div class="test-card" style="margin-bottom:16px">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                            <h4 style="margin:0">${idea.title}</h4>
+                            <span style="font-size:11px;color:#777">${idea.platform}</span>
+                        </div>
+                        <pre style="font-family:'Inter',sans-serif;font-size:12px;color:#ccc;white-space:pre-wrap;line-height:1.6;margin:8px 0;background:#0d0d0d;padding:12px;border-radius:6px">${idea.script}</pre>
+                        <div style="display:flex;gap:8px;margin-top:8px">
+                            <span style="font-size:11px;color:#777">${idea.hashtags}</span>
+                        </div>
+                    </div>
+                `).join('')}
+
+                <h4 style="margin:24px 0 16px">💡 Pro Tips for ASMR Grout Videos</h4>
+                <div class="test-card">
+                    <div style="display:grid;gap:10px;font-size:13px;color:#ccc">
+                        <div>🎯 <strong>Best time to post:</strong> 7-9 PM SGT (TikTok), 12-2 PM (IG Reels)</div>
+                        <div>🔊 <strong>Audio:</strong> NO background music for ASMR. Raw tool sounds = more views</div>
+                        <div>📱 <strong>Phone setup:</strong> Prop against wall or cheap tripod. Landscape for YouTube, portrait for TikTok</div>
+                        <div>⏱️ <strong>Length:</strong> 15-30 sec for TikTok, 30-60 sec for Reels, 60 sec+ for YouTube Shorts</div>
+                        <div>📝 <strong>Caption formula:</strong> Hook (shock/curiosity) + Result + CTA + Hashtags</div>
+                        <div>🔄 <strong>Repurpose:</strong> 1 job = 5 clips. Post same clip to TikTok, Reels, AND Shorts</div>
+                        <div>📊 <strong>Track results:</strong> Log "TikTok" as channel when leads mention your videos</div>
+                    </div>
+                </div>
+
+                <h4 style="margin:30px 0 16px">🛠️ Free Tools — Everything You Need (No Subscriptions)</h4>
+                <p style="color:#777;font-size:13px;margin-bottom:16px">All free or open-source. Click any tool name to open it.</p>
+
+                <div style="margin-bottom:20px">
+                    <h5 style="color:#E91E63;margin-bottom:12px">🎬 Video Editing (for ASMR & Reels)</h5>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://www.capcut.com" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">CapCut</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Best for TikTok/Reels editing. Auto-captions, trending templates, split-screen. Used by 90% of TikTok creators.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://www.blackmagicdesign.com/products/davinciresolve" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">DaVinci Resolve</a>
+                            <span style="background:#4CAF50;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Hollywood-grade color correction. Professional before/after comparisons. Free version is incredibly powerful.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://www.openshot.org" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">OpenShot</a>
+                            <span style="background:#2196F3;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">OPEN SOURCE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Simple drag-and-drop video editor. Perfect for quick timelapses and basic edits.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://kdenlive.org" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Kdenlive</a>
+                            <span style="background:#2196F3;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">OPEN SOURCE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Multi-track video editor. Great for combining multiple ASMR clips into one video.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:20px">
+                    <h5 style="color:#FF9800;margin-bottom:12px">🎨 Design & Graphics (for Posts & Thumbnails)</h5>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://www.canva.com" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Canva</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE TIER</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Drag-and-drop design. Before/after templates, IG story templates, FB ad graphics. AI image generation included.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://www.gimp.org" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">GIMP</a>
+                            <span style="background:#2196F3;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">OPEN SOURCE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Free Photoshop alternative. Edit before/after photos, add watermarks, create ad images.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://inkscape.org" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Inkscape</a>
+                            <span style="background:#2196F3;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">OPEN SOURCE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Vector graphics editor for logos, flyers, and business cards. Professional print-quality output.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://www.remove.bg" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Remove.bg</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE TIER</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Instantly remove image backgrounds. Perfect for product shots and testimonial graphics.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:20px">
+                    <h5 style="color:#9C27B0;margin-bottom:12px">📅 Social Media Scheduling</h5>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://business.facebook.com" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Meta Business Suite</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Schedule FB + IG posts, manage inbox, view analytics. THE essential free tool for FB/IG businesses.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://postiz.com" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Postiz</a>
+                            <span style="background:#2196F3;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">OPEN SOURCE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Self-hosted social media scheduler. AI-powered content suggestions. Full control over your data.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://buffer.com" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Buffer</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE TIER</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Schedule 3 channels, 10 posts each. Simple and clean UI. Best for getting started with scheduling.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://later.com" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Later</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE TIER</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Visual content calendar. Drag-and-drop scheduling. Best for planning IG grid aesthetics.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:20px">
+                    <h5 style="color:#4CAF50;margin-bottom:12px">📊 Lead Gen & CRM</h5>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://www.hubspot.com/products/crm" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">HubSpot CRM</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE TIER</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Unlimited contacts. Email tracking, meeting scheduling, deal pipeline. Industry standard free CRM.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://www.bitrix24.com" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Bitrix24</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE TIER</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Free CRM + website builder + online forms. Captures leads from your website automatically.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://business.google.com" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">Google Business Profile</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Show up in Google Maps & Search. Post updates, collect reviews, get leads. MUST HAVE for local businesses.</div>
+                        </div>
+                        <div class="test-card" style="padding:12px">
+                            <a href="https://business.whatsapp.com" target="_blank" style="color:#fff;font-weight:700;text-decoration:none">WhatsApp Business</a>
+                            <span style="background:#25D366;color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px">FREE</span>
+                            <div style="font-size:11px;color:#999;margin-top:4px">Business profile, quick replies, labels, catalogs, broadcast lists. Essential for SG market.</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================
+        // FOLLOW-UP REMINDERS
+        // ============================
+        function renderFollowUps() {
+            const panel = document.getElementById('followUpPanel');
+            if (!panel) return;
+
+            const now = new Date();
+            const needFollowUp = leads.filter(l => {
+                if (l.status === 'Booked' || l.status === 'Cold') return false;
+                const daysSince = (now - new Date(l.date)) / 86400000;
+                return daysSince >= 2 && daysSince < 30;
+            });
+
+            if (needFollowUp.length === 0) {
+                panel.innerHTML = '<p style="color:#777;font-size:13px">No leads need follow-up right now 👍</p>';
+                return;
+            }
+
+            panel.innerHTML = needFollowUp.map(l => {
+                const daysSince = Math.floor((now - new Date(l.date)) / 86400000);
+                const urgency = daysSince >= 7 ? '#f44336' : daysSince >= 4 ? '#FF9800' : '#4CAF50';
+                return `
+                <div class="test-card" style="margin-bottom:8px;border-left:3px solid ${urgency};display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <strong style="color:#fff">${esc(l.name)}</strong>
+                        <span style="color:#777;font-size:12px;margin-left:8px">${l.channel} · ${l.package} · ${daysSince}d ago</span>
+                    </div>
+                    <div style="display:flex;gap:8px">
+                        <a href="https://wa.me/65${l.phone?.replace(/\D/g, '').slice(-8) || '98004317'}?text=${encodeURIComponent('Hi ' + (l.name || '') + '! Just following up on your epoxy grout enquiry 😊 Shall I book your free inspection?')}" target="_blank"
+                           style="padding:6px 12px;background:#25D366;color:#fff;border-radius:4px;font-size:11px;font-weight:600;text-decoration:none">📱 WhatsApp</a>
+                        <button onclick="markFollowedUp(${leads.indexOf(l)})" style="padding:6px 12px;background:#333;color:#fff;border:none;border-radius:4px;font-size:11px;cursor:pointer">✅ Done</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function markFollowedUp(idx) {
+            if (leads[idx]) {
+                leads[idx].lastFollowUp = new Date().toISOString();
+                leads[idx].notes = (leads[idx].notes || '') + ' | Followed up ' + new Date().toLocaleDateString();
+                setData('leads', leads);
+                render();
+            }
+        }
+
         function updateAdCopyDropdown() {
             const sel = document.getElementById('leadAdCopy');
             const activeTests = tests.filter(t => t.status === 'running');
             sel.innerHTML = '<option value="">— Not from a test —</option>' +
                 activeTests.map(t => `
-            <option value="${t.id}_A">${t.name} — Variant A</option>
-            <option value="${t.id}_B">${t.name} — Variant B</option>
-        `).join('');
+                <option value="${t.id}_A">${t.name} — Variant A</option>
+                <option value="${t.id}_B">${t.name} — Variant B</option>
+            `).join('');
         }
 
         // ============================
