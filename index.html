@@ -3153,6 +3153,765 @@
             }
         }, { passive: true });
     </script>
+
+    <!-- ============================================ -->
+    <!-- AI CHATBOT - 24/7 LEAD CAPTURE & SALES BOT  -->
+    <!-- ============================================ -->
+    <style>
+        /* Chatbot Styles */
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 64px;
+            height: 64px;
+            background: #0A0A0A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            outline: none;
+        }
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(0,0,0,0.4);
+        }
+        .chatbot-toggle svg { width: 28px; height: 28px; fill: #fff; }
+        .chatbot-toggle .close-icon { display: none; }
+        .chatbot-toggle.active .chat-icon { display: none; }
+        .chatbot-toggle.active .close-icon { display: block; }
+
+        .chatbot-pulse {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(10,10,10,0.3);
+            z-index: 9998;
+            animation: chatPulse 2s infinite;
+            pointer-events: none;
+        }
+        @keyframes chatPulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+
+        .chatbot-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 20px;
+            height: 20px;
+            background: #D32F2F;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 380px;
+            max-height: 560px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.2);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            border: 1px solid #f0f0f0;
+        }
+        .chatbot-window.open { display: flex; }
+
+        .chatbot-header {
+            background: #0A0A0A;
+            color: #fff;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .chatbot-avatar {
+            width: 40px;
+            height: 40px;
+            background: #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: #0A0A0A;
+            flex-shrink: 0;
+        }
+        .chatbot-header-info h4 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 700;
+        }
+        .chatbot-header-info p {
+            margin: 2px 0 0 0;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        .chatbot-header-info .online-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 350px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-msg {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            animation: chatFadeIn 0.3s ease;
+        }
+        @keyframes chatFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chat-msg.bot {
+            background: #f5f5f5;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            color: #0A0A0A;
+        }
+        .chat-msg.user {
+            background: #0A0A0A;
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .chat-option-btn {
+            background: #fff;
+            border: 1.5px solid #0A0A0A;
+            color: #0A0A0A;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+        .chat-option-btn:hover {
+            background: #0A0A0A;
+            color: #fff;
+        }
+
+        .chat-cny-banner {
+            background: linear-gradient(135deg, #D32F2F, #B71C1C);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .chat-cny-banner span { color: #FFD700; }
+
+        .chatbot-input-area {
+            border-top: 1px solid #f0f0f0;
+            padding: 12px;
+            display: flex;
+            gap: 8px;
+        }
+        .chatbot-input-area input {
+            flex: 1;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .chatbot-input-area input:focus { border-color: #0A0A0A; }
+        .chatbot-input-area button {
+            background: #0A0A0A;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .chat-typing {
+            display: flex;
+            gap: 4px;
+            padding: 10px 14px;
+            align-self: flex-start;
+        }
+        .chat-typing span {
+            width: 8px; height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+            animation: typingBounce 1.2s infinite;
+        }
+        .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+
+        .chat-wa-btn {
+            display: inline-block;
+            background: #25D366;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            margin-top: 6px;
+            transition: background 0.2s;
+        }
+        .chat-wa-btn:hover { background: #1da851; }
+
+        @media (max-width: 480px) {
+            .chatbot-window {
+                width: calc(100vw - 20px);
+                right: 10px;
+                bottom: 90px;
+                max-height: 70vh;
+            }
+            .chatbot-toggle { bottom: 16px; right: 16px; width: 56px; height: 56px; }
+            .chatbot-pulse { bottom: 16px; right: 16px; width: 56px; height: 56px; }
+        }
+    </style>
+
+    <!-- Chatbot Toggle Button -->
+    <div class="chatbot-pulse" id="chatPulse"></div>
+    <button class="chatbot-toggle" id="chatToggle" onclick="toggleChatbot()" aria-label="Open chat">
+        <svg class="chat-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+        <svg class="close-icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        <div class="chatbot-badge">1</div>
+    </button>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatWindow">
+        <div class="chatbot-header">
+            <div class="chatbot-avatar">CG</div>
+            <div class="chatbot-header-info">
+                <h4>CLEANGROUT Assistant</h4>
+                <p><span class="online-dot"></span>Online now &bull; Replies instantly</p>
+            </div>
+        </div>
+        <div class="chatbot-messages" id="chatMessages"></div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatInput" placeholder="Type your question..." onkeydown="if(event.key==='Enter')sendChat()">
+            <button onclick="sendChat()">Send</button>
+        </div>
+    </div>
+
+    <script>
+    // ============================================
+    // CLEANGROUT AI CHATBOT — UNFAIR ADVANTAGE
+    // ============================================
+    (function() {
+        const WHATSAPP = '6598004317';
+        const PHONE = '+65 9800 4317';
+        let chatState = 'welcome';
+        let leadData = { name: '', phone: '', area: '', package: '' };
+        let questionCount = 0;
+
+        // Knowledge Base
+        const KB = {
+            packages: {
+                bathroom: { name: 'Bathroom Refresh', price: 488, cny: 439, usual: 780, sqft: 50, warranty: '2-year', time: '1 day', save: 49 },
+                kitchen: { name: 'Kitchen Special', price: 588, cny: 529, usual: 980, sqft: 80, warranty: '2-year', time: '1 day', save: 59 },
+                fullhome: { name: 'Full Home Makeover', price: 1488, cny: 1339, usual: 2380, sqft: 180, warranty: '3-year', time: '1-2 days', save: 149 }
+            },
+            brands: ['Ardex (Germany)', 'Sika (Switzerland)', 'Mapei (Italy)', 'Laticrete (USA)'],
+            areas: ['Singapore (Island-wide)', 'Johor Bahru'],
+            process: ['1. Free inspection & quote', '2. Remove old grout', '3. Deep clean tile gaps', '4. Apply premium epoxy grout', '5. Color-match & finish', '6. Final inspection & handover'],
+            benefits: ['100% Waterproof', 'Anti-mold & anti-bacterial', 'Stain-proof', 'Lasts 15-20 years', 'Zero maintenance', 'Color-matched to your tiles'],
+            faq: {
+                'how long': 'Most jobs are completed in just 1 day! Full home makeovers may take 1-2 days.',
+                'how long does it last': 'Premium epoxy grout lasts 15-20 years with zero maintenance. Compare that to cement grout which needs re-doing every 3-5 years!',
+                'warranty': 'We offer a 2-year warranty on Bathroom & Kitchen packages, and a 3-year warranty on Full Home Makeover. We stand behind our work.',
+                'what brands': 'We only use premium brands: Ardex (Germany), Sika (Switzerland), Mapei (Italy), and Laticrete (USA). These are professional-grade, not hardware store products.',
+                'color': 'Yes! We color-match the epoxy grout to your tiles. We have over 30 colors available. We bring samples during the free inspection.',
+                'smell': 'Epoxy grout has minimal odor during application and it dissipates within a few hours. You can use the room the next day.',
+                'messy': 'Not at all! Our team uses dust-free tools and protective covers. We clean up everything before we leave.',
+                'difference': 'Cement grout is porous — water soaks in, causing mold, stains, and cracking. Epoxy grout is 100% waterproof, creating a permanent seal that never absorbs water or bacteria.',
+                'diy': 'While DIY kits exist, epoxy grout requires professional application for a seamless finish. Improper mixing or application leads to haze, uneven coverage, and wasted product. Our certified applicators ensure a flawless result.',
+                'hdb': 'Yes! We work on all property types — HDB, condo, landed, commercial. We\'ve completed 500+ projects across Singapore.',
+                'jb': 'Yes! We serve both Singapore and Johor Bahru. JB residents enjoy an extra 10% discount on all packages!',
+                'payment': 'We accept PayNow, bank transfer, cash, and credit card. Payment is due after completion and your inspection.',
+                'book': 'Easy! Just WhatsApp us your address and preferred date. We\'ll confirm within 2 hours.',
+                'discount': '🧧 CNY SPECIAL: 10% OFF all packages until Feb 28! Bathroom $439, Kitchen $529, Full Home $1,339.',
+                'cny': '🧧 CNY SPECIAL: 10% OFF all packages until Feb 28, 2026! Perfect timing for a fresh start. Limited slots available.',
+                'mold': 'Mold grows in cement grout because it\'s porous — water gets trapped inside. Epoxy grout is 100% waterproof, so mold literally cannot grow. It\'s the permanent solution.',
+                'price': 'Our packages start from $488 (Bathroom). With the CNY 10% off, that\'s just $439! Full Home Makeover is $1,339 (save $149). Want me to recommend a package?',
+                'cheap': 'We\'re actually 33-39% cheaper than the market average while using premium brands. We compete on value, not just price.',
+                'quote': 'Our inspection and quote are completely FREE with no obligations. We\'ll assess your grout, recommend the right package, and give you an exact price. Want to book one?'
+            }
+        };
+
+        // Initialize
+        window.toggleChatbot = function() {
+            const win = document.getElementById('chatWindow');
+            const btn = document.getElementById('chatToggle');
+            const pulse = document.getElementById('chatPulse');
+            const badge = btn.querySelector('.chatbot-badge');
+
+            if (win.classList.contains('open')) {
+                win.classList.remove('open');
+                btn.classList.remove('active');
+            } else {
+                win.classList.add('open');
+                btn.classList.add('active');
+                if (badge) badge.style.display = 'none';
+                if (pulse) pulse.style.display = 'none';
+
+                if (chatState === 'welcome') {
+                    chatState = 'menu';
+                    showWelcome();
+                }
+            }
+        };
+
+        function addMsg(text, type, delay) {
+            return new Promise(resolve => {
+                if (delay) {
+                    showTyping();
+                    setTimeout(() => {
+                        hideTyping();
+                        _addMsg(text, type);
+                        resolve();
+                    }, delay);
+                } else {
+                    _addMsg(text, type);
+                    resolve();
+                }
+            });
+        }
+
+        function _addMsg(html, type) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = 'chat-msg ' + (type || 'bot');
+            div.innerHTML = html;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addOptions(options) {
+            const container = document.getElementById('chatMessages');
+            const wrap = document.createElement('div');
+            wrap.className = 'chat-options';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'chat-option-btn';
+                btn.textContent = opt.label;
+                btn.onclick = () => {
+                    // Remove all option buttons
+                    document.querySelectorAll('.chat-options').forEach(el => el.remove());
+                    _addMsg(opt.label, 'user');
+                    opt.action();
+                };
+                wrap.appendChild(btn);
+            });
+            container.appendChild(wrap);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showTyping() {
+            const container = document.getElementById('chatMessages');
+            const typing = document.createElement('div');
+            typing.className = 'chat-typing';
+            typing.id = 'typingIndicator';
+            typing.innerHTML = '<span></span><span></span><span></span>';
+            container.appendChild(typing);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function hideTyping() {
+            const el = document.getElementById('typingIndicator');
+            if (el) el.remove();
+        }
+
+        async function showWelcome() {
+            const hour = new Date().getHours();
+            let greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+
+            await addMsg(`${greeting}! 👋 I'm the CLEANGROUT Assistant.`, 'bot', 500);
+            await addMsg(`🧧 <strong>CNY SPECIAL — 10% OFF</strong> all packages until Feb 28!`, 'bot', 800);
+            await addMsg(`How can I help you today?`, 'bot', 600);
+
+            addOptions([
+                { label: '💰 See Pricing', action: showPricing },
+                { label: '🔍 What is Epoxy Grout?', action: showWhatIs },
+                { label: '📋 Our Process', action: showProcess },
+                { label: '📞 Book Free Quote', action: startLeadCapture }
+            ]);
+        }
+
+        async function showPricing() {
+            chatState = 'pricing';
+            await addMsg(`Here are our packages with <strong>CNY 10% OFF</strong>:`, 'bot', 600);
+
+            const p = KB.packages;
+            await addMsg(
+                `<strong>01 — BATHROOM REFRESH</strong><br>` +
+                `<s style="color:#999">Usual $${p.bathroom.usual}</s> → <strong style="color:#D32F2F">$${p.bathroom.cny}</strong><br>` +
+                `Up to ${p.bathroom.sqft} sqft · ${p.bathroom.warranty} warranty<br>` +
+                `<span style="background:#FFD700;color:#000;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700">SAVE $${p.bathroom.save}</span>`, 'bot', 800);
+
+            await addMsg(
+                `<strong>02 — FULL HOME MAKEOVER ⭐</strong><br>` +
+                `<s style="color:#999">Usual $${p.fullhome.usual}</s> → <strong style="color:#D32F2F">$${p.fullhome.cny}</strong><br>` +
+                `Kitchen + 2 Bathrooms · ${p.fullhome.warranty} warranty<br>` +
+                `<span style="background:#FFD700;color:#000;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700">SAVE $${p.fullhome.save} — BEST VALUE</span>`, 'bot', 800);
+
+            await addMsg(
+                `<strong>03 — KITCHEN SPECIAL</strong><br>` +
+                `<s style="color:#999">Usual $${p.kitchen.usual}</s> → <strong style="color:#D32F2F">$${p.kitchen.cny}</strong><br>` +
+                `Up to ${p.kitchen.sqft} sqft · ${p.kitchen.warranty} warranty<br>` +
+                `<span style="background:#FFD700;color:#000;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700">SAVE $${p.kitchen.save}</span>`, 'bot', 800);
+
+            await addMsg(`Which package interests you? Or would you like a free assessment?`, 'bot', 500);
+
+            addOptions([
+                { label: '🚿 Bathroom $439', action: () => selectPackage('bathroom') },
+                { label: '🏠 Full Home $1,339', action: () => selectPackage('fullhome') },
+                { label: '🍳 Kitchen $529', action: () => selectPackage('kitchen') },
+                { label: '📞 Get Free Quote', action: startLeadCapture },
+                { label: '← Back', action: () => { showMainMenu(); } }
+            ]);
+        }
+
+        async function selectPackage(pkg) {
+            leadData.package = pkg;
+            const p = KB.packages[pkg];
+            await addMsg(`Great choice! The <strong>${p.name}</strong> is perfect. 🎯`, 'bot', 500);
+            await addMsg(
+                `<strong>What you get:</strong><br>` +
+                `✓ Up to ${p.sqft} sqft coverage<br>` +
+                `✓ Premium brands (Ardex, Sika, Mapei)<br>` +
+                `✓ ${p.warranty} warranty<br>` +
+                `✓ Completed in ${p.time}<br>` +
+                `✓ Color-matched grouting<br>` +
+                `✓ Free tile cleaning included`, 'bot', 800);
+
+            await addMsg(`Ready to book your <strong>free inspection</strong>? I just need a few details! 😊`, 'bot', 500);
+
+            addOptions([
+                { label: '✅ Yes, Book Now!', action: startLeadCapture },
+                { label: '❓ More Questions', action: showMainMenu },
+                { label: '📱 WhatsApp Direct', action: goWhatsApp }
+            ]);
+        }
+
+        async function showWhatIs() {
+            await addMsg(`<strong>What is Epoxy Grout?</strong> 🧪`, 'bot', 500);
+            await addMsg(
+                `Regular <strong>cement grout</strong> is porous — water soaks in, causing:<br>` +
+                `❌ Mold & bacteria growth<br>` +
+                `❌ Black stains that won't clean<br>` +
+                `❌ Cracking & crumbling<br>` +
+                `❌ Re-grouting every 3-5 years`, 'bot', 800);
+
+            await addMsg(
+                `<strong>Epoxy grout</strong> is completely different:<br>` +
+                `✅ 100% Waterproof (zero absorption)<br>` +
+                `✅ Anti-mold & anti-bacterial<br>` +
+                `✅ Stain-proof<br>` +
+                `✅ Lasts 15-20 years<br>` +
+                `✅ Zero maintenance<br><br>` +
+                `Think of it as a <strong>permanent seal</strong> between your tiles. Water, dirt, and bacteria literally cannot penetrate it.`, 'bot', 1000);
+
+            addOptions([
+                { label: '💰 See Pricing', action: showPricing },
+                { label: '🧴 What Brands?', action: showBrands },
+                { label: '📞 Book Free Quote', action: startLeadCapture },
+                { label: '← Back', action: showMainMenu }
+            ]);
+        }
+
+        async function showBrands() {
+            await addMsg(
+                `<strong>We only use premium brands:</strong><br><br>` +
+                `🇩🇪 <strong>Ardex</strong> — German engineering<br>` +
+                `🇨🇭 <strong>Sika</strong> — Swiss precision<br>` +
+                `🇮🇹 <strong>Mapei</strong> — Italian quality<br>` +
+                `🇺🇸 <strong>Laticrete</strong> — American innovation<br><br>` +
+                `These are professional-grade products used in 5-star hotels and luxury condos. Not hardware store brands!`, 'bot', 800);
+
+            addOptions([
+                { label: '💰 See Pricing', action: showPricing },
+                { label: '📞 Book Free Quote', action: startLeadCapture },
+                { label: '← Back', action: showMainMenu }
+            ]);
+        }
+
+        async function showProcess() {
+            await addMsg(`<strong>Our Simple 6-Step Process:</strong>`, 'bot', 500);
+            await addMsg(
+                `1️⃣ <strong>Free Inspection</strong> — We assess your grout condition<br>` +
+                `2️⃣ <strong>Remove Old Grout</strong> — Clean out damaged cement grout<br>` +
+                `3️⃣ <strong>Deep Clean</strong> — Thoroughly clean tile gaps<br>` +
+                `4️⃣ <strong>Apply Epoxy</strong> — Professional application<br>` +
+                `5️⃣ <strong>Color Match</strong> — Perfectly matched to your tiles<br>` +
+                `6️⃣ <strong>Final Check</strong> — Inspection & handover<br><br>` +
+                `⏱️ Most jobs completed in <strong>1 day</strong>!`, 'bot', 1000);
+
+            addOptions([
+                { label: '💰 See Pricing', action: showPricing },
+                { label: '📞 Book Free Quote', action: startLeadCapture },
+                { label: '← Back', action: showMainMenu }
+            ]);
+        }
+
+        async function showMainMenu() {
+            await addMsg(`What else would you like to know?`, 'bot', 400);
+            addOptions([
+                { label: '💰 Pricing', action: showPricing },
+                { label: '🔍 What is Epoxy?', action: showWhatIs },
+                { label: '📋 Process', action: showProcess },
+                { label: '🧴 Brands We Use', action: showBrands },
+                { label: '📞 Book Free Quote', action: startLeadCapture }
+            ]);
+        }
+
+        // Lead Capture Flow
+        async function startLeadCapture() {
+            chatState = 'lead_name';
+            await addMsg(`Awesome! Let me set up your <strong>free inspection</strong>. 🎉`, 'bot', 500);
+            await addMsg(`What's your <strong>name</strong>?`, 'bot', 400);
+        }
+
+        function handleLeadInput(text) {
+            if (chatState === 'lead_name') {
+                leadData.name = text;
+                chatState = 'lead_phone';
+                addMsg(`Nice to meet you, <strong>${text}</strong>! 😊`, 'bot', 500).then(() => {
+                    addMsg(`What's your <strong>phone number</strong>? (We'll WhatsApp you the quote)`, 'bot', 400);
+                });
+            } else if (chatState === 'lead_phone') {
+                leadData.phone = text;
+                chatState = 'lead_area';
+                addMsg(`Got it! 📱`, 'bot', 400).then(() => {
+                    addMsg(`Where is your property located?`, 'bot', 400).then(() => {
+                        addOptions([
+                            { label: '🇸🇬 Singapore', action: () => setArea('Singapore') },
+                            { label: '🇲🇾 Johor Bahru', action: () => setArea('Johor Bahru') }
+                        ]);
+                    });
+                });
+            }
+        }
+
+        async function setArea(area) {
+            leadData.area = area;
+            chatState = 'lead_type';
+
+            if (area === 'Johor Bahru') {
+                await addMsg(`Great! JB residents get an <strong>extra 10% discount</strong> on top of our prices! 🎉`, 'bot', 500);
+            }
+
+            if (!leadData.package) {
+                await addMsg(`Which area of your home needs epoxy grout?`, 'bot', 500);
+                addOptions([
+                    { label: '🚿 Bathroom Only', action: () => finalizeLeadPkg('bathroom') },
+                    { label: '🍳 Kitchen Only', action: () => finalizeLeadPkg('kitchen') },
+                    { label: '🏠 Full Home', action: () => finalizeLeadPkg('fullhome') },
+                    { label: '🤔 Not Sure Yet', action: () => finalizeLeadPkg('unsure') }
+                ]);
+            } else {
+                finalizeLeadPkg(leadData.package);
+            }
+        }
+
+        async function finalizeLeadPkg(pkg) {
+            leadData.package = pkg;
+            chatState = 'complete';
+
+            const pkgName = pkg === 'unsure' ? 'Free Assessment' : KB.packages[pkg]?.name || pkg;
+            const pkgPrice = pkg !== 'unsure' ? KB.packages[pkg]?.cny : null;
+
+            await addMsg(`Perfect! Here's your booking summary:`, 'bot', 600);
+            await addMsg(
+                `📋 <strong>Booking Summary</strong><br>` +
+                `👤 Name: ${leadData.name}<br>` +
+                `📱 Phone: ${leadData.phone}<br>` +
+                `📍 Location: ${leadData.area}<br>` +
+                `📦 Package: ${pkgName}` +
+                (pkgPrice ? ` — <strong style="color:#D32F2F">$${pkgPrice}</strong> (CNY Special)` : '') +
+                `<br><br>` +
+                `<a class="chat-wa-btn" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+                    `🧧 CNY Booking Request\n\nName: ${leadData.name}\nPhone: ${leadData.phone}\nLocation: ${leadData.area}\nPackage: ${pkgName}\n\nI'd like to schedule a free inspection!`
+                )}" target="_blank">📱 CONFIRM VIA WHATSAPP →</a>`, 'bot', 800);
+
+            await addMsg(`Click the button above to confirm your booking on WhatsApp! We'll reply within 2 hours. 🙏`, 'bot', 500);
+
+            // Store lead in localStorage for tracking
+            const leads = JSON.parse(localStorage.getItem('cleangrout_leads') || '[]');
+            leads.push({ ...leadData, timestamp: new Date().toISOString(), source: 'chatbot' });
+            localStorage.setItem('cleangrout_leads', JSON.stringify(leads));
+
+            addOptions([
+                { label: '❓ More Questions', action: showMainMenu },
+                { label: '📱 Call ' + PHONE, action: () => window.open('tel:' + PHONE) }
+            ]);
+        }
+
+        function goWhatsApp() {
+            const msg = leadData.package ?
+                `Hi! I'm interested in the ${KB.packages[leadData.package]?.name} package (CNY Special). Can I book a free inspection?` :
+                `Hi! I'm interested in your epoxy grout service. Can I get a free quote?`;
+            window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // Smart FAQ Matching
+        function matchFAQ(input) {
+            const lower = input.toLowerCase();
+            const faq = KB.faq;
+
+            for (const [key, answer] of Object.entries(faq)) {
+                const keywords = key.split(' ');
+                const matchCount = keywords.filter(k => lower.includes(k)).length;
+                if (matchCount >= Math.ceil(keywords.length * 0.6)) {
+                    return answer;
+                }
+            }
+
+            // Keyword fallback
+            if (lower.match(/price|cost|how much|package|rate/)) return faq['price'];
+            if (lower.match(/mold|mould|black|dirty|stain/)) return faq['mold'];
+            if (lower.match(/long|duration|time|day|fast/)) return faq['how long'];
+            if (lower.match(/brand|ardex|sika|mapei/)) return faq['what brands'];
+            if (lower.match(/color|colour|match/)) return faq['color'];
+            if (lower.match(/warrant/)) return faq['warranty'];
+            if (lower.match(/book|schedule|appointment|slot/)) return faq['book'];
+            if (lower.match(/discount|promo|offer|deal|cny|chinese/)) return faq['cny'];
+            if (lower.match(/jb|johor|malaysia/)) return faq['jb'];
+            if (lower.match(/hdb|condo|flat|landed/)) return faq['hdb'];
+            if (lower.match(/pay|payment|paynow|credit/)) return faq['payment'];
+            if (lower.match(/diy|myself|self/)) return faq['diy'];
+            if (lower.match(/smell|odor|fume/)) return faq['smell'];
+            if (lower.match(/mess|dirty|dust|clean/)) return faq['messy'];
+            if (lower.match(/difference|vs|versus|compare|cement/)) return faq['difference'];
+            if (lower.match(/quote|estimate|assessment|free/)) return faq['quote'];
+            if (lower.match(/cheap|expensive|worth|value/)) return faq['cheap'];
+            if (lower.match(/last|durable|years|lifespan/)) return faq['how long does it last'];
+            if (lower.match(/process|step|how do you|procedure/)) return null; // trigger process flow
+
+            return null;
+        }
+
+        // Send Chat Handler
+        window.sendChat = function() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            _addMsg(text, 'user');
+            questionCount++;
+
+            // If in lead capture flow
+            if (chatState === 'lead_name' || chatState === 'lead_phone') {
+                handleLeadInput(text);
+                return;
+            }
+
+            // Try FAQ match
+            const answer = matchFAQ(text);
+            if (answer) {
+                addMsg(answer, 'bot', 700).then(() => {
+                    // After 3 questions, suggest booking
+                    if (questionCount >= 3 && chatState !== 'complete') {
+                        addMsg(`You've got great questions! Ready for a <strong>free inspection</strong> so we can give you an exact quote?`, 'bot', 600).then(() => {
+                            addOptions([
+                                { label: '✅ Yes, Book Now', action: startLeadCapture },
+                                { label: '📱 WhatsApp Direct', action: goWhatsApp },
+                                { label: '❓ More Questions', action: showMainMenu }
+                            ]);
+                        });
+                    } else {
+                        addOptions([
+                            { label: '💰 Pricing', action: showPricing },
+                            { label: '📞 Book Free Quote', action: startLeadCapture },
+                            { label: '❓ Ask Another', action: () => {} }
+                        ]);
+                    }
+                });
+            } else if (text.toLowerCase().match(/process|step|how/)) {
+                showProcess();
+            } else {
+                // Fallback — still helpful
+                addMsg(`Great question! For the most accurate answer, our specialist can help you directly:`, 'bot', 700).then(() => {
+                    addMsg(
+                        `<a class="chat-wa-btn" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Hi! I have a question: ' + text)}" target="_blank">📱 ASK ON WHATSAPP →</a>`, 'bot', 400).then(() => {
+                        addOptions([
+                            { label: '💰 See Pricing', action: showPricing },
+                            { label: '📋 Our Process', action: showProcess },
+                            { label: '📞 Book Free Quote', action: startLeadCapture }
+                        ]);
+                    });
+                });
+            }
+        };
+
+        // Auto-open after 8 seconds if not interacted
+        setTimeout(() => {
+            const win = document.getElementById('chatWindow');
+            if (!win.classList.contains('open')) {
+                // Don't auto-open on mobile to avoid annoyance
+                if (window.innerWidth > 768) {
+                    toggleChatbot();
+                }
+            }
+        }, 8000);
+
+    })();
+    </script>
+
 </body>
 
 </html>
