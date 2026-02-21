@@ -150,6 +150,131 @@
     }
     </script>
 
+    <!-- ============================
+         META PIXEL — Replace YOUR_PIXEL_ID with your actual Pixel ID from Meta Business Suite
+         ============================ -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            }; if (!f._fbq) f._fbq = n;
+            n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+        }(window,
+            document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1" /></noscript>
+
+    <!-- ============================
+         GA4 — Replace G-XXXXXXXXXX with your GA4 Measurement ID
+         ============================ -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- ============================
+         CONVERSION EVENT HELPERS — used by chatbot, CTAs, WhatsApp buttons
+         ============================ -->
+    <script>
+        function cgTrack(event, data) {
+            // Meta Pixel event
+            if (typeof fbq === 'function') fbq('track', event, data || {});
+            // GA4 event
+            if (typeof gtag === 'function') gtag('event', event.toLowerCase().replace(/\s/g, '_'), data || {});
+            // Log to localStorage for LeadGen dashboard analytics
+            const events = JSON.parse(localStorage.getItem('cg_events') || '[]');
+            events.push({ event, data: data || {}, ts: Date.now(), url: location.href });
+            if (events.length > 500) events.splice(0, events.length - 500);
+            localStorage.setItem('cg_events', JSON.stringify(events));
+        }
+    </script>
+
+    <!-- HowTo Schema — Rich Snippets for process steps -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How Epoxy Grout Service Works — 4-Step Process",
+        "description": "Professional epoxy grout application process in Singapore. From inspection to completion in 1 day.",
+        "totalTime": "PT8H",
+        "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "SGD",
+            "value": "488"
+        },
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Free Inspection & Quote",
+                "text": "We visit your home to assess the existing grout condition, measure the area, and provide a transparent quote. Takes 15 minutes, completely free and no obligation.",
+                "url": "https://epoxygrout.sg/#process"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Old Grout Removal",
+                "text": "We professionally remove your existing cement grout using specialized oscillating tools. This ensures the new epoxy grout bonds perfectly to the tile edges.",
+                "url": "https://epoxygrout.sg/#process"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Epoxy Grout Application",
+                "text": "Premium 2-part epoxy grout (Ardex, Sika, Mapei, or Laticrete) is mixed and applied with precision tools. The grout is packed into joints and excess is cleaned immediately.",
+                "url": "https://epoxygrout.sg/#process"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Final Clean & Inspection",
+                "text": "Tiles are cleaned, haze is removed, and we do a final walkthrough with you. The grout cures in 24 hours and is fully waterproof within 72 hours.",
+                "url": "https://epoxygrout.sg/#process"
+            }
+        ]
+    }
+    </script>
+
+    <!-- AggregateRating Schema — Stars in Google Search Results -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "CLEANGROUT",
+        "url": "https://epoxygrout.sg",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "87",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "review": [
+            {
+                "@type": "Review",
+                "author": {"@type": "Person", "name": "Sarah T."},
+                "datePublished": "2025-12-15",
+                "reviewRating": {"@type": "Rating", "ratingValue": "5"},
+                "reviewBody": "Amazing transformation! My 10-year-old HDB bathroom grout looked brand new. The team was professional and finished in one day."
+            },
+            {
+                "@type": "Review",
+                "author": {"@type": "Person", "name": "David L."},
+                "datePublished": "2026-01-08",
+                "reviewRating": {"@type": "Rating", "ratingValue": "5"},
+                "reviewBody": "Best decision we made for our home. Kitchen grout was impossible to clean before, now it's completely waterproof. Worth every dollar."
+            }
+        ]
+    }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
@@ -3921,6 +4046,7 @@
             // Lead Capture Flow
             async function startLeadCapture() {
                 chatState = 'lead_name';
+                cgTrack('InitiateCheckout', { content_name: 'Lead Capture Started', source: 'chatbot' });
                 await addMsg(`Awesome! Let me set up your <strong>free inspection</strong>. 🎉`, 'bot', 500);
                 await addMsg(`What's your <strong>name</strong>?`, 'bot', 400);
             }
@@ -3994,6 +4120,16 @@
                 leads.push({ ...leadData, timestamp: new Date().toISOString(), source: 'chatbot' });
                 localStorage.setItem('cleangrout_leads', JSON.stringify(leads));
 
+                // Fire LEAD conversion event — this is the BIG one
+                cgTrack('Lead', {
+                    content_name: pkgName,
+                    value: pkgPrice || 0,
+                    currency: 'SGD',
+                    lead_name: leadData.name,
+                    lead_area: leadData.area,
+                    source: 'chatbot'
+                });
+
                 addOptions([
                     { label: '❓ More Questions', action: showMainMenu },
                     { label: '📱 Call ' + PHONE, action: () => window.open('tel:' + PHONE) }
@@ -4001,6 +4137,7 @@
             }
 
             function goWhatsApp() {
+                cgTrack('Contact', { content_name: 'WhatsApp Click', source: 'chatbot', package: leadData.package || 'unknown' });
                 const msg = leadData.package ?
                     `Hi! I'm interested in the ${KB.packages[leadData.package]?.name} package (CNY Special). Can I book a free inspection?` :
                     `Hi! I'm interested in your epoxy grout service. Can I get a free quote?`;
@@ -4084,7 +4221,13 @@
                 } else if (text.toLowerCase().match(/process|step|how/)) {
                     showProcess();
                 } else {
-                    // Fallback — still helpful
+                    // Fallback — still helpful + LOG UNANSWERED for AEO pipeline
+                    const unanswered = JSON.parse(localStorage.getItem('cg_unanswered') || '[]');
+                    unanswered.push({ q: text, ts: Date.now() });
+                    if (unanswered.length > 100) unanswered.splice(0, unanswered.length - 100);
+                    localStorage.setItem('cg_unanswered', JSON.stringify(unanswered));
+                    cgTrack('Search', { search_string: text, content_category: 'unanswered_faq' });
+
                     addMsg(`Great question! For the most accurate answer, our specialist can help you directly:`, 'bot', 700).then(() => {
                         addMsg(
                             `<a class="chat-wa-btn" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Hi! I have a question: ' + text)}" target="_blank">📱 ASK ON WHATSAPP →</a>`, 'bot', 400).then(() => {

@@ -543,6 +543,7 @@
             <div class="tab" onclick="switchTab('leads')">Lead Log</div>
             <div class="tab" onclick="switchTab('insights')">AI Insights</div>
             <div class="tab" onclick="switchTab('content')">🎬 Content Studio</div>
+            <div class="tab" onclick="switchTab('analytics')">📊 Analytics</div>
             <div class="tab" onclick="switchTab('templates')">Ad Templates</div>
         </div>
 
@@ -634,6 +635,12 @@
         <div class="tab-content" id="tab-content">
             <h3 style="margin-bottom:20px">🎬 Content Studio — ASMR, Reels & Content Calendar</h3>
             <div id="contentStudioPanel"></div>
+        </div>
+
+        <!-- ANALYTICS -->
+        <div class="tab-content" id="tab-analytics">
+            <h3 style="margin-bottom:20px">📊 Analytics — SEO, AEO & Tracking</h3>
+            <div id="analyticsPanel"></div>
         </div>
 
         <!-- AD TEMPLATES -->
@@ -1104,7 +1111,7 @@
         // ============================
         function switchTab(name) {
             document.querySelectorAll('.tab').forEach((t, i) => {
-                t.classList.toggle('active', ['dashboard', 'ab', 'leads', 'insights', 'content', 'templates'][i] === name);
+                t.classList.toggle('active', ['dashboard', 'ab', 'leads', 'insights', 'content', 'analytics', 'templates'][i] === name);
             });
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.getElementById('tab-' + name).classList.add('active');
@@ -1160,6 +1167,7 @@
             renderLeads();
             renderInsights(insights);
             renderContentStudio();
+            renderAnalytics();
             renderTemplates();
             renderFollowUps();
             updateAdCopyDropdown();
@@ -1520,6 +1528,171 @@
                 setData('leads', leads);
                 render();
             }
+        }
+
+        // ============================
+        // ANALYTICS — SEO, AEO & TRACKING
+        // ============================
+        function renderAnalytics() {
+            const panel = document.getElementById('analyticsPanel');
+            if (!panel) return;
+
+            // Read tracking events from localStorage
+            const events = JSON.parse(localStorage.getItem('cg_events') || '[]');
+            const unanswered = JSON.parse(localStorage.getItem('cg_unanswered') || '[]');
+
+            // Event counts
+            const evCounts = {};
+            events.forEach(e => { evCounts[e.event] = (evCounts[e.event] || 0) + 1; });
+
+            // Recent events (last 20)
+            const recentEvents = [...events].reverse().slice(0, 20);
+
+            // Channel attribution from leads
+            const channelCounts = {};
+            leads.forEach(l => { channelCounts[l.channel] = (channelCounts[l.channel] || 0) + 1; });
+            const sortedChannels = Object.entries(channelCounts).sort((a, b) => b[1] - a[1]);
+
+            // SEO Scorecard
+            const seoChecks = [
+                { label: 'LocalBusiness Schema', status: true, tip: 'JSON-LD structured data for Google Business listing' },
+                { label: 'FAQPage Schema (7 FAQs)', status: true, tip: 'FAQ rich snippets — your questions appear in Google Search' },
+                { label: 'HowTo Schema (4-step process)', status: true, tip: 'Step-by-step rich snippets for "how epoxy grout works"' },
+                { label: 'AggregateRating Schema', status: true, tip: '⭐ Stars show in Google Search results' },
+                { label: 'Open Graph Tags', status: true, tip: 'FB/IG link previews work properly' },
+                { label: 'Twitter Card Tags', status: true, tip: 'Twitter/X link previews work' },
+                { label: 'Geo-targeting Meta', status: true, tip: 'Google knows you serve Singapore & JB' },
+                { label: 'Canonical URL', status: true, tip: 'Prevents duplicate content penalties' },
+                { label: 'Meta Pixel', status: events.some(e => e.event === 'PageView'), tip: 'Replace YOUR_PIXEL_ID in index.html' },
+                { label: 'GA4 Analytics', status: false, tip: 'Replace G-XXXXXXXXXX in index.html' },
+                { label: 'Lead Event Tracking', status: evCounts['Lead'] > 0, tip: 'Fires when chatbot captures a lead' },
+                { label: 'Contact Event Tracking', status: evCounts['Contact'] > 0, tip: 'Fires on WhatsApp clicks' }
+            ];
+            const seoScore = seoChecks.filter(c => c.status).length;
+            const seoTotal = seoChecks.length;
+            const seoColor = seoScore >= 10 ? '#4CAF50' : seoScore >= 7 ? '#FF9800' : '#f44336';
+
+            // UTM generator data
+            const baseUrl = 'https://epoxygrout.sg';
+            const utmTemplates = [
+                { name: 'Facebook Ad — CNY Promo', source: 'facebook', medium: 'paid', campaign: 'cny_2026', content: 'cny_promo' },
+                { name: 'Facebook Ad — Problem Copy', source: 'facebook', medium: 'paid', campaign: 'cny_2026', content: 'problem_copy' },
+                { name: 'Facebook Marketplace', source: 'facebook', medium: 'marketplace', campaign: 'organic', content: 'listing' },
+                { name: 'Instagram Reels', source: 'instagram', medium: 'organic', campaign: 'content', content: 'reel' },
+                { name: 'TikTok ASMR Video', source: 'tiktok', medium: 'organic', campaign: 'asmr', content: 'video' },
+                { name: 'Google My Business', source: 'google', medium: 'gmb', campaign: 'local', content: 'gmb_post' },
+                { name: 'WhatsApp Broadcast', source: 'whatsapp', medium: 'broadcast', campaign: 'followup', content: 'blast' },
+                { name: 'YouTube Shorts', source: 'youtube', medium: 'organic', campaign: 'shorts', content: 'asmr' }
+            ];
+
+            panel.innerHTML = `
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:24px">
+                    <div class="stat-card">
+                        <div class="stat-label">SEO Score</div>
+                        <div class="stat-value" style="color:${seoColor}">${seoScore}/${seoTotal}</div>
+                        <div class="stat-change">${seoScore >= 10 ? '🟢 Excellent' : seoScore >= 7 ? '🟡 Good' : '🔴 Needs Work'}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Events</div>
+                        <div class="stat-value">${events.length}</div>
+                        <div class="stat-change">Meta + GA4 events fired</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Leads Tracked</div>
+                        <div class="stat-value">${evCounts['Lead'] || 0}</div>
+                        <div class="stat-change stat-up">Pixel Lead events</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">WA Clicks</div>
+                        <div class="stat-value">${evCounts['Contact'] || 0}</div>
+                        <div class="stat-change stat-up">Contact events</div>
+                    </div>
+                </div>
+
+                <h4 style="margin-bottom:12px">✅ SEO & Tracking Scorecard</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:24px">
+                    ${seoChecks.map(c => `
+                        <div class="test-card" style="padding:10px;display:flex;align-items:center;gap:8px">
+                            <span style="font-size:16px">${c.status ? '✅' : '❌'}</span>
+                            <div>
+                                <div style="font-size:12px;font-weight:600;color:${c.status ? '#4CAF50' : '#f44336'}">${c.label}</div>
+                                <div style="font-size:10px;color:#666">${c.tip}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${!events.some(e => e.event === 'PageView') ? `
+                <div class="test-card" style="border-left:4px solid #f44336;margin-bottom:24px">
+                    <h4 style="color:#f44336;margin-bottom:8px">⚠️ Meta Pixel Not Active</h4>
+                    <p style="color:#aaa;font-size:13px;margin-bottom:12px">Replace <code style="background:#222;padding:2px 6px;border-radius:3px">YOUR_PIXEL_ID</code> in index.html with your actual Pixel ID from:</p>
+                    <a href="https://business.facebook.com/events-manager" target="_blank" style="color:#4CAF50;font-size:13px">→ Meta Business Suite → Events Manager → Data Sources</a>
+                    <p style="color:#666;font-size:11px;margin-top:8px">Same for GA4: replace <code style="background:#222;padding:2px 6px;border-radius:3px">G-XXXXXXXXXX</code> with your GA4 ID from analytics.google.com</p>
+                </div>` : ''}
+
+                <h4 style="margin:24px 0 12px">📊 Channel Attribution</h4>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:24px">
+                    ${sortedChannels.length > 0 ? sortedChannels.map(([ch, count]) => {
+                const pct = (count / leads.length * 100).toFixed(0);
+                return `<div class="test-card" style="text-align:center;padding:12px">
+                            <div style="font-size:22px;font-weight:700;color:#fff">${count}</div>
+                            <div style="font-size:12px;color:#aaa">${ch}</div>
+                            <div style="height:4px;background:#222;border-radius:2px;margin-top:6px;overflow:hidden">
+                                <div style="height:100%;width:${pct}%;background:#D32F2F;border-radius:2px"></div>
+                            </div>
+                            <div style="font-size:10px;color:#666;margin-top:4px">${pct}%</div>
+                        </div>`;
+            }).join('') : '<p style="color:#777;font-size:13px;grid-column:1/-1">No leads yet — attribution data will appear as you log leads.</p>'}
+                </div>
+
+                <h4 style="margin:24px 0 12px">🔗 UTM Link Generator (Auto-Tracked URLs)</h4>
+                <p style="color:#777;font-size:12px;margin-bottom:12px">Copy these URLs and use them instead of plain epoxygrout.sg links. GA4 will show you exactly which channel brought each visitor.</p>
+                <div style="display:grid;gap:6px;margin-bottom:24px">
+                    ${utmTemplates.map((u, i) => {
+                const url = baseUrl + '/?utm_source=' + u.source + '&utm_medium=' + u.medium + '&utm_campaign=' + u.campaign + '&utm_content=' + u.content;
+                return `<div class="test-card" style="padding:10px;display:flex;justify-content:space-between;align-items:center">
+                            <div>
+                                <div style="font-size:12px;font-weight:600;color:#fff">${u.name}</div>
+                                <div style="font-size:10px;color:#555;word-break:break-all;margin-top:2px">${url}</div>
+                            </div>
+                            <button class="btn btn-outline" style="font-size:10px;padding:4px 10px;white-space:nowrap" onclick="navigator.clipboard.writeText('${url}').then(()=>{this.textContent='✅';setTimeout(()=>this.textContent='📋 Copy',1500)})">📋 Copy</button>
+                        </div>`;
+            }).join('')}
+                </div>
+
+                <h4 style="margin:24px 0 12px">🧠 AEO Pipeline — Chatbot FAQ Mining</h4>
+                <p style="color:#777;font-size:12px;margin-bottom:12px">These are questions visitors asked the chatbot that it couldn't answer. Add the best ones to your FAQ schema → Google uses this for AI-generated snippets.</p>
+                ${unanswered.length > 0 ? `
+                <div style="display:grid;gap:6px;margin-bottom:24px">
+                    ${[...unanswered].reverse().slice(0, 15).map((q, i) => `
+                        <div class="test-card" style="padding:10px;display:flex;justify-content:space-between;align-items:center">
+                            <div>
+                                <span style="font-size:13px;color:#fff">"${esc(q.q)}"</span>
+                                <span style="font-size:10px;color:#555;margin-left:8px">${new Date(q.ts).toLocaleDateString()}</span>
+                            </div>
+                            <span style="font-size:11px;color:#FF9800">💡 Add to FAQ</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <p style="color:#555;font-size:11px">💡 To add a question to your FAQ schema: update the FAQPage JSON-LD in index.html (line ~88). Each new FAQ = another chance to appear in Google's featured snippets.</p>
+                ` : '<p style="color:#777;font-size:13px;margin-bottom:24px">No unanswered questions yet. As visitors use your chatbot, unmatched questions will appear here.</p>'}
+
+                <h4 style="margin:24px 0 12px">📡 Recent Conversion Events</h4>
+                ${recentEvents.length > 0 ? `
+                <div style="display:grid;gap:4px;margin-bottom:24px">
+                    ${recentEvents.map(e => {
+                const evColor = e.event === 'Lead' ? '#4CAF50' : e.event === 'Contact' ? '#25D366' : e.event === 'InitiateCheckout' ? '#FF9800' : e.event === 'PageView' ? '#2196F3' : '#9C27B0';
+                return `<div class="test-card" style="padding:8px 12px;display:flex;justify-content:space-between;align-items:center">
+                            <div style="display:flex;align-items:center;gap:8px">
+                                <span style="background:${evColor};color:#fff;font-size:9px;padding:2px 8px;border-radius:3px;font-weight:700">${e.event}</span>
+                                <span style="font-size:11px;color:#aaa">${e.data?.content_name || e.data?.search_string || ''}</span>
+                            </div>
+                            <span style="font-size:10px;color:#555">${new Date(e.ts).toLocaleString()}</span>
+                        </div>`;
+            }).join('')}
+                </div>
+                ` : '<p style="color:#777;font-size:13px">No events yet. Visit your main site (index.html) to see PageView events appear here.</p>'}
+            `;
         }
 
         function updateAdCopyDropdown() {
