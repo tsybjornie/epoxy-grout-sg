@@ -893,12 +893,13 @@
         function render() {
             evaluateTests();
             const { insights, brainLevel } = generateInsights();
-            document.getElementById('brainLevel', brainLevel);
 
             // Brain level
             const bl = document.getElementById('brainLevel');
-            bl.textContent = brainLevel;
-            bl.parentElement.innerHTML = `🧠 Brain Level: <span>${brainLevel}</span>/10`;
+            if (bl) {
+                bl.textContent = brainLevel;
+                bl.parentElement.innerHTML = `🧠 Brain Level: <span>${brainLevel}</span>/10`;
+            }
 
             // Stats
             const booked = leads.filter(l => l.status === 'Booked').length;
@@ -931,7 +932,7 @@
             // Recent leads
             const rl = document.getElementById('recentLeads');
             const recent = [...leads].reverse().slice(0, 5);
-            rl.innerHTML = recent.length ? `<table class="lead-table"><thead><tr><th>Name</th><th>Channel</th><th>Status</th><th>Package</th></tr></thead><tbody>${recent.map(l => `<tr><td>${l.name}</td><td><span class="channel-badge ch-${l.channel.toLowerCase().replace(' ', '')}">${l.channel}</span></td><td><span class="status-${l.status.toLowerCase()}">${l.status}</span></td><td>${l.package}</td></tr>`).join('')
+            rl.innerHTML = recent.length ? `<table class="lead-table"><thead><tr><th>Name</th><th>Channel</th><th>Status</th><th>Package</th></tr></thead><tbody>${recent.map(l => `<tr><td>${esc(l.name)}</td><td><span class="channel-badge ch-${l.channel.toLowerCase().replace(/\s/g, '')}">${l.channel}</span></td><td><span class="status-${l.status.toLowerCase()}">${l.status}</span></td><td>${l.package}</td></tr>`).join('')
                 }</tbody></table>` : '<p style="color:#777">No leads yet. Click "+ Log Lead" to start!</p>';
 
             renderTests();
@@ -982,28 +983,33 @@
             const filter = document.getElementById('filterChannel').value;
             const filtered = filter === 'all' ? leads : leads.filter(l => l.channel === filter);
             const tbody = document.getElementById('leadTableBody');
-            tbody.innerHTML = [...filtered].reverse().map((l, i) => `<tr>
+            tbody.innerHTML = [...filtered].reverse().map((l, i) => {
+                const idx = leads.indexOf(l);
+                return `<tr>
         <td style="font-size:13px;color:#999">${new Date(l.date).toLocaleDateString()}</td>
-        <td>${l.name}</td>
+        <td>${esc(l.name)}</td>
         <td><span class="channel-badge ch-${l.channel.toLowerCase().replace(/\s/g, '')}">${l.channel}</span></td>
-        <td style="font-size:12px;color:#777;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.adCopy || '—'}</td>
+        <td style="font-size:12px;color:#777;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.adCopy || '—')}</td>
         <td><span class="status-${l.status.toLowerCase()}">${l.status}</span></td>
         <td>${PRICES[l.package] ? '$' + PRICES[l.package] : '—'}</td>
-        <td><select onchange="updateLeadStatus(${leads.indexOf(l)},this.value)" style="padding:4px 8px;background:#1a1a1a;border:1px solid #333;border-radius:4px;color:#fff;font-size:12px">
+        <td style="display:flex;gap:4px;align-items:center"><select onchange="updateLeadStatus(${idx},this.value)" style="padding:4px 8px;background:#1a1a1a;border:1px solid #333;border-radius:4px;color:#fff;font-size:12px">
             <option ${l.status === 'Hot' ? 'selected' : ''} value="Hot">🔥 Hot</option>
             <option ${l.status === 'Warm' ? 'selected' : ''} value="Warm">🟡 Warm</option>
             <option ${l.status === 'Cold' ? 'selected' : ''} value="Cold">⚪ Cold</option>
             <option ${l.status === 'Booked' ? 'selected' : ''} value="Booked">✅ Booked</option>
-        </select></td>
-    </tr>`).join('');
+        </select><button onclick="deleteLead(${idx})" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px" title="Delete">🗑</button></td>
+    </tr>`}).join('');
         }
 
+        // Store action functions for insight buttons
+        window._insightActions = {};
         function renderInsights(insights) {
-            document.getElementById('insightsPanel').innerHTML = insights.map(i => `
+            insights.forEach((ins, idx) => { if (ins.actionFn) window._insightActions[idx] = ins.actionFn; });
+            document.getElementById('insightsPanel').innerHTML = insights.map((i, idx) => `
         <div class="insight-card">
             <h4>${i.icon} ${i.title}</h4>
             <p>${i.text}</p>
-            ${i.action ? `<button class="action" onclick="(${i.actionFn})()">${i.action}</button>` : ''}
+            ${i.action ? `<button class="action" onclick="window._insightActions[${idx}]()">${i.action}</button>` : ''}
         </div>
     `).join('');
         }
@@ -1113,14 +1119,33 @@
         }
 
         function exportData() {
+            const csvEsc = s => `"${String(s || '').replace(/"/g, '""')}"`;
             const csv = 'Date,Name,Phone,Channel,Ad Copy,Package,Status,Notes\n' +
-                leads.map(l => `${l.date},${l.name},${l.phone},${l.channel},"${l.adCopy || ''}",${l.package},${l.status},"${l.notes || ''}"`).join('\n');
+                leads.map(l => [l.date, csvEsc(l.name), csvEsc(l.phone), l.channel, csvEsc(l.adCopy), l.package, l.status, csvEsc(l.notes)].join(',')).join('\n');
             const blob = new Blob([csv], { type: 'text/csv' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = 'cleangrout_leads_' + new Date().toISOString().split('T')[0] + '.csv';
             a.click();
         }
+
+        function deleteLead(idx) {
+            if (!confirm('Delete this lead?')) return;
+            leads.splice(idx, 1);
+            setData('leads', leads);
+            render();
+        }
+
+        // HTML escape to prevent XSS
+        function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+        // Close modals on backdrop click or Escape
+        document.querySelectorAll('.modal-overlay').forEach(m => {
+            m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+        });
 
         // Auto-import chatbot leads
         function importChatbotLeads() {
