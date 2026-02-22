@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Price Calculator | Epoxy Grout, Painting, Plumbing & More | CLEANGROUT Singapore</title>
+    <meta name="description"
+        content="Calculate your price instantly. Epoxy grout, painting, tile restoration, plumbing, electrical & handyman services. Transparent pricing - no hidden costs. WhatsApp quote in 30 seconds.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"CLEANGROUT Price Calculator","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"AggregateOffer","lowPrice":"88","highPrice":"6888","priceCurrency":"SGD"}}
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            min-height: 100vh
+        }
+
+        .calc-container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 40px 20px
+        }
+
+        h1 {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 8px
+        }
+
+        h1 span {
+            color: #D32F2F
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 40px
+        }
+
+        .step {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: border-color .3s
+        }
+
+        .step.active {
+            border-color: #D32F2F
+        }
+
+        .step-num {
+            display: inline-block;
+            background: #D32F2F;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            text-align: center;
+            line-height: 28px;
+            border-radius: 50%;
+            font-size: 13px;
+            font-weight: 800;
+            margin-right: 10px
+        }
+
+        .step-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px
+        }
+
+        .opt {
+            background: #1a1a1a;
+            border: 2px solid #222;
+            border-radius: 10px;
+            padding: 14px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .2s;
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .opt:hover {
+            border-color: #555
+        }
+
+        .opt.selected {
+            border-color: #D32F2F;
+            background: #1a0a0a;
+            color: #D32F2F
+        }
+
+        .opt .price-hint {
+            display: block;
+            font-size: 11px;
+            color: #555;
+            margin-top: 4px;
+            font-weight: 400
+        }
+
+        .opt.popular {
+            position: relative
+        }
+
+        .opt.popular::after {
+            content: 'POPULAR';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #D32F2F;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px
+        }
+
+        .opt.best-value {
+            position: relative
+        }
+
+        .opt.best-value::after {
+            content: 'BEST VALUE';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FFD700;
+            color: #0A0A0A;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px
+        }
+
+        /* Bundles section */
+        .bundles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px
+        }
+
+        .bundle {
+            background: linear-gradient(135deg, #1a0a0a, #0a0a1a);
+            border: 2px solid #333;
+            border-radius: 14px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all .3s;
+            position: relative
+        }
+
+        .bundle:hover {
+            border-color: #D32F2F;
+            transform: translateY(-2px)
+        }
+
+        .bundle.selected {
+            border-color: #D32F2F;
+            box-shadow: 0 0 20px rgba(211, 47, 47, .2)
+        }
+
+        .bundle-name {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 4px
+        }
+
+        .bundle-price {
+            font-size: 24px;
+            font-weight: 900;
+            color: #D32F2F;
+            margin: 8px 0
+        }
+
+        .bundle-price small {
+            font-size: 13px;
+            color: #555;
+            font-weight: 400
+        }
+
+        .bundle-list {
+            list-style: none;
+            font-size: 12px;
+            color: #999;
+            line-height: 1.8
+        }
+
+        .bundle-list li::before {
+            content: '✓ ';
+            color: #4CAF50;
+            font-weight: 700
+        }
+
+        .bundle-save {
+            display: inline-block;
+            background: #FFD700;
+            color: #0A0A0A;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-top: 8px
+        }
+
+        .bundle-tag {
+            position: absolute;
+            top: -8px;
+            left: 16px;
+            background: #D32F2F;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 4px;
+            letter-spacing: .05em
+        }
+
+        /* Add-ons */
+        .addons {
+            margin-top: 12px
+        }
+
+        .addon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: #1a1a1a;
+            border: 1.5px solid #222;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #ccc;
+            transition: border-color .2s
+        }
+
+        .addon:hover {
+            border-color: #444
+        }
+
+        .addon input {
+            width: 18px;
+            height: 18px;
+            accent-color: #D32F2F
+        }
+
+        .addon .addon-price {
+            margin-left: auto;
+            color: #D32F2F;
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .addon-desc {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px
+        }
+
+        /* Result box */
+        .result-box {
+            background: linear-gradient(135deg, #1a0a0a, #0a0a1a);
+            border: 2px solid #D32F2F;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 24px;
+            display: none
+        }
+
+        .result-box.show {
+            display: block;
+            animation: fadeIn .5s ease
+        }
+
+        .est-price {
+            font-size: 56px;
+            font-weight: 900;
+            color: #D32F2F;
+            margin: 12px 0
+        }
+
+        .est-price small {
+            font-size: 18px;
+            color: #777
+        }
+
+        .est-label {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px
+        }
+
+        .breakdown {
+            text-align: left;
+            background: #0a0a0a;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            font-size: 13px
+        }
+
+        .breakdown div {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #1a1a1a;
+            color: #aaa
+        }
+
+        .breakdown div:last-child {
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            padding-top: 12px;
+            margin-top: 8px;
+            border-top: 1px solid #333
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 16px;
+            text-decoration: none;
+            transition: transform .2s;
+            border: none;
+            cursor: pointer
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05)
+        }
+
+        .cta-btn.wa {
+            background: #25D366;
+            color: #fff
+        }
+
+        .cta-btn.call {
+            background: #4285F4;
+            color: #fff;
+            margin-left: 8px
+        }
+
+        .guarantee {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .guarantee span {
+            font-size: 11px;
+            color: #777;
+            background: #111;
+            padding: 6px 12px;
+            border-radius: 6px
+        }
+
+        /* Trust */
+        .trust {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 32px
+        }
+
+        .trust-item {
+            text-align: center;
+            padding: 16px 8px;
+            background: #111;
+            border-radius: 10px
+        }
+
+        .trust-item .num {
+            font-size: 22px;
+            font-weight: 900;
+            color: #D32F2F
+        }
+
+        .trust-item .label {
+            font-size: 10px;
+            color: #777;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: .02em
+        }
+
+        /* Section divider */
+        .section-divider {
+            text-align: center;
+            margin: 32px 0 16px;
+            font-size: 11px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: .15em;
+            font-weight: 700
+        }
+
+        .section-divider span {
+            background: #0A0A0A;
+            padding: 0 16px;
+            position: relative;
+            z-index: 1
+        }
+
+        .section-divider::before {
+            content: '';
+            display: block;
+            height: 1px;
+            background: #222;
+            margin-top: 8px;
+            position: relative;
+            top: 14px
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @media(max-width:600px) {
+            .bundles {
+                grid-template-columns: 1fr
+            }
+
+            .trust {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calc-container">
+        <h1>Instant <span>Price Calculator</span></h1>
+        <p class="subtitle">Get your personalized quote in 30 seconds. No obligation, no hidden costs.</p>
+
+        <!-- STEP 1: Property Type -->
+        <div class="step active" id="step1">
+            <div class="step-title"><span class="step-num">1</span> Property Type</div>
+            <div class="options" id="propOpts">
+                <div class="opt" data-val="hdb3" onclick="selectOpt(this,'prop')">3-Room HDB<span
+                        class="price-hint">60-65 sqm</span></div>
+                <div class="opt" data-val="hdb4" onclick="selectOpt(this,'prop')">4-Room HDB<span
+                        class="price-hint">90-95 sqm</span></div>
+                <div class="opt popular" data-val="hdb5" onclick="selectOpt(this,'prop')">5-Room HDB<span
+                        class="price-hint">110-120 sqm</span></div>
+                <div class="opt" data-val="exec" onclick="selectOpt(this,'prop')">Executive<span
+                        class="price-hint">130-150 sqm</span></div>
+                <div class="opt" data-val="bto" onclick="selectOpt(this,'prop')">BTO<span class="price-hint">New
+                        flat</span></div>
+                <div class="opt" data-val="condo" onclick="selectOpt(this,'prop')">Condo<span
+                        class="price-hint">Private</span></div>
+                <div class="opt" data-val="landed" onclick="selectOpt(this,'prop')">Landed<span class="price-hint">200+
+                        sqm</span></div>
+            </div>
+        </div>
+
+        <!-- STEP 2: What do you need? -->
+        <div class="step" id="step2">
+            <div class="step-title"><span class="step-num">2</span> What Do You Need?</div>
+            <div class="options" id="serviceMode">
+                <div class="opt" data-val="grout" onclick="selectMode(this)">🔧 Epoxy Grout<span class="price-hint">From
+                        $488</span></div>
+                <div class="opt" data-val="paint" onclick="selectMode(this)">🎨 Painting<span class="price-hint">From
+                        $888</span></div>
+                <div class="opt" data-val="tile" onclick="selectMode(this)">✨ Tile Restoration<span
+                        class="price-hint">From $388</span></div>
+                <div class="opt" data-val="handyman" onclick="selectMode(this)">🔨 Handyman<span class="price-hint">From
+                        $88/hr</span></div>
+                <div class="opt best-value" data-val="bundle" onclick="selectMode(this)">📦 Full Package<span
+                        class="price-hint">Save 15-25%</span></div>
+            </div>
+        </div>
+
+        <!-- STEP 3A: Grout Details (shown when grout selected) -->
+        <div class="step" id="step3grout" style="display:none">
+            <div class="step-title"><span class="step-num">3</span> Grout Areas</div>
+            <div class="options">
+                <div class="opt" data-val="bath1" onclick="selectOpt(this,'area')">1 Bathroom<span
+                        class="price-hint">Most popular</span></div>
+                <div class="opt" data-val="bath2" onclick="selectOpt(this,'area')">2 Bathrooms<span
+                        class="price-hint">Save $98</span></div>
+                <div class="opt" data-val="kitchen" onclick="selectOpt(this,'area')">Kitchen Only<span
+                        class="price-hint">Backsplash + floor</span></div>
+                <div class="opt" data-val="bath1_kit" onclick="selectOpt(this,'area')">1 Bath + Kitchen<span
+                        class="price-hint">Best value combo</span></div>
+                <div class="opt" data-val="bath2_kit" onclick="selectOpt(this,'area')">2 Bath + Kitchen<span
+                        class="price-hint">Full home</span></div>
+                <div class="opt" data-val="custom" onclick="selectOpt(this,'area')">3+ Bathrooms<span
+                        class="price-hint">Landed/large</span></div>
+            </div>
+            <div style="margin-top:12px">
+                <div class="step-title" style="font-size:14px;margin-bottom:12px">Grout Type</div>
+                <div class="options">
+                    <div class="opt selected" data-val="epoxy" onclick="selectOpt(this,'svc')">Standard Epoxy<span
+                            class="price-hint">Most popular</span></div>
+                    <div class="opt" data-val="mapei" onclick="selectOpt(this,'svc')">Mapei Kerapoxy<span
+                            class="price-hint">Premium Italian</span></div>
+                    <div class="opt" data-val="polyurea" onclick="selectOpt(this,'svc')">Polyurea Coating<span
+                            class="price-hint">Waterproof layer</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3B: Painting Details -->
+        <div class="step" id="step3paint" style="display:none">
+            <div class="step-title"><span class="step-num">3</span> Painting Scope</div>
+            <div class="options">
+                <div class="opt" data-val="1room" onclick="selectOpt(this,'paintScope')">1 Room<span
+                        class="price-hint">From $288</span></div>
+                <div class="opt" data-val="2room" onclick="selectOpt(this,'paintScope')">2 Rooms<span
+                        class="price-hint">From $488</span></div>
+                <div class="opt" data-val="common" onclick="selectOpt(this,'paintScope')">Common Areas<span
+                        class="price-hint">Living + Dining</span></div>
+                <div class="opt" data-val="whole3" onclick="selectOpt(this,'paintScope')">Whole 3-Room<span
+                        class="price-hint">From $888</span></div>
+                <div class="opt" data-val="whole4" onclick="selectOpt(this,'paintScope')">Whole 4-Room<span
+                        class="price-hint">From $1,288</span></div>
+                <div class="opt" data-val="whole5" onclick="selectOpt(this,'paintScope')">Whole 5-Room<span
+                        class="price-hint">From $1,588</span></div>
+                <div class="opt" data-val="wholecondo" onclick="selectOpt(this,'paintScope')">Whole Condo<span
+                        class="price-hint">From $1,888</span></div>
+                <div class="opt" data-val="wholelanded" onclick="selectOpt(this,'paintScope')">Whole Landed<span
+                        class="price-hint">From $3,888</span></div>
+            </div>
+            <div style="margin-top:12px">
+                <div class="step-title" style="font-size:14px;margin-bottom:12px">Paint Brand</div>
+                <div class="options">
+                    <div class="opt selected" data-val="nippon" onclick="selectOpt(this,'paintBrand')">Nippon Paint<span
+                            class="price-hint">Standard</span></div>
+                    <div class="opt" data-val="dulux" onclick="selectOpt(this,'paintBrand')">Dulux<span
+                            class="price-hint">+10%</span></div>
+                    <div class="opt" data-val="jotun" onclick="selectOpt(this,'paintBrand')">Jotun<span
+                            class="price-hint">Premium +15%</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3C: Tile Restoration -->
+        <div class="step" id="step3tile" style="display:none">
+            <div class="step-title"><span class="step-num">3</span> Tile Restoration Scope</div>
+            <div class="options">
+                <div class="opt" data-val="tile1bath" onclick="selectOpt(this,'tileScope')">1 Bathroom<span
+                        class="price-hint">From $388</span></div>
+                <div class="opt" data-val="tile2bath" onclick="selectOpt(this,'tileScope')">2 Bathrooms<span
+                        class="price-hint">From $688</span></div>
+                <div class="opt" data-val="tilekitchen" onclick="selectOpt(this,'tileScope')">Kitchen Floor<span
+                        class="price-hint">From $488</span></div>
+                <div class="opt" data-val="tilefull" onclick="selectOpt(this,'tileScope')">Full Home Tiles<span
+                        class="price-hint">From $1,288</span></div>
+            </div>
+        </div>
+
+        <!-- STEP 3D: Handyman -->
+        <div class="step" id="step3handyman" style="display:none">
+            <div class="step-title"><span class="step-num">3</span> Handyman Services</div>
+            <div class="options">
+                <div class="opt" data-val="plumbing" onclick="selectOpt(this,'handyType')">🔧 Plumbing<span
+                        class="price-hint">From $88</span></div>
+                <div class="opt" data-val="electrical" onclick="selectOpt(this,'handyType')">⚡ Electrical<span
+                        class="price-hint">From $88</span></div>
+                <div class="opt" data-val="putty" onclick="selectOpt(this,'handyType')">🧱 Wall Putty/Repair<span
+                        class="price-hint">From $188</span></div>
+                <div class="opt" data-val="cleaning" onclick="selectOpt(this,'handyType')">🧹 Deep Cleaning<span
+                        class="price-hint">From $288</span></div>
+                <div class="opt" data-val="hourly" onclick="selectOpt(this,'handyType')">⏰ Hourly Rate<span
+                        class="price-hint">$88/hr (2hr min)</span></div>
+            </div>
+        </div>
+
+        <!-- STEP 3E: Bundles -->
+        <div class="step" id="step3bundle" style="display:none">
+            <div class="step-title"><span class="step-num">3</span> Choose Your Package</div>
+            <div class="bundles">
+                <div class="bundle" onclick="selectBundle(this, 'refresh')">
+                    <div class="bundle-tag">POPULAR</div>
+                    <div class="bundle-name">🔄 Quick Refresh</div>
+                    <div class="bundle-price">$1,688 <small>was $2,052</small></div>
+                    <ul class="bundle-list">
+                        <li>2 Bathroom epoxy grout</li>
+                        <li>Silicone renewal (all joints)</li>
+                        <li>Tile restoration (2 baths)</li>
+                        <li>Deep cleaning</li>
+                    </ul>
+                    <div class="bundle-save">SAVE $364</div>
+                </div>
+                <div class="bundle" onclick="selectBundle(this, 'presale')">
+                    <div class="bundle-tag">🔥 BEST VALUE</div>
+                    <div class="bundle-name">🏠 Pre-Sale / Move-Out</div>
+                    <div class="bundle-price">$3,488 <small>was $4,376</small></div>
+                    <ul class="bundle-list">
+                        <li>Full home painting (Nippon)</li>
+                        <li>2 Bathroom epoxy grout</li>
+                        <li>Kitchen epoxy grout</li>
+                        <li>Silicone renewal (all areas)</li>
+                        <li>Tile restoration (all wet areas)</li>
+                        <li>Full home deep cleaning</li>
+                    </ul>
+                    <div class="bundle-save">SAVE $888</div>
+                </div>
+                <div class="bundle" onclick="selectBundle(this, 'movein')">
+                    <div class="bundle-name">✨ BTO Move-In Ready</div>
+                    <div class="bundle-price">$2,188 <small>was $2,740</small></div>
+                    <ul class="bundle-list">
+                        <li>Full home epoxy grout</li>
+                        <li>Silicone all wet areas</li>
+                        <li>Light installation (up to 10)</li>
+                        <li>Minor plumbing checks</li>
+                        <li>Full home cleaning</li>
+                    </ul>
+                    <div class="bundle-save">SAVE $552</div>
+                </div>
+                <div class="bundle" onclick="selectBundle(this, 'total')">
+                    <div class="bundle-tag">PREMIUM</div>
+                    <div class="bundle-name">👑 Total Home Makeover</div>
+                    <div class="bundle-price">$5,888 <small>was $7,640</small></div>
+                    <ul class="bundle-list">
+                        <li>Full home painting (Dulux)</li>
+                        <li>All bathroom + kitchen epoxy</li>
+                        <li>Silicone renewal everywhere</li>
+                        <li>Tile restoration (full home)</li>
+                        <li>Wall putty & crack repair</li>
+                        <li>Electrical checks & fixes</li>
+                        <li>Plumbing checks & fixes</li>
+                        <li>Full home deep cleaning</li>
+                    </ul>
+                    <div class="bundle-save">SAVE $1,752</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 4: Add-ons -->
+        <div class="step" id="step4">
+            <div class="step-title"><span class="step-num">4</span> Add-ons (Optional)</div>
+            <div class="addons">
+                <label class="addon"><input type="checkbox" id="addonSilicone" onchange="calcPrice()"> Silicone renewal
+                    (all joints) <span class="addon-price">+$88</span></label>
+                <label class="addon"><input type="checkbox" id="addonWaterproof" onchange="calcPrice()"> Waterproof
+                    coating (shower area) <span class="addon-price">+$188</span></label>
+                <label class="addon"><input type="checkbox" id="addonTileRestore" onchange="calcPrice()"> Tile polishing
+                    & restoration <span class="addon-price">+$288</span></label>
+                <label class="addon"><input type="checkbox" id="addonColor" onchange="calcPrice()"> Custom color
+                    matching <span class="addon-price">+$38</span></label>
+                <label class="addon"><input type="checkbox" id="addonDeepClean" onchange="calcPrice()"> Post-work deep
+                    cleaning <span class="addon-price">+$188</span></label>
+                <label class="addon"><input type="checkbox" id="addonPlumbing" onchange="calcPrice()"> Minor plumbing
+                    fix <span class="addon-price">+$88</span></label>
+                <label class="addon"><input type="checkbox" id="addonElectrical" onchange="calcPrice()"> Light/switch
+                    replacement (up to 5) <span class="addon-price">+$128</span></label>
+                <label class="addon"><input type="checkbox" id="addonPutty" onchange="calcPrice()"> Wall putty & crack
+                    filling <span class="addon-price">+$188</span></label>
+            </div>
+        </div>
+
+        <!-- RESULT -->
+        <div class="result-box" id="resultBox">
+            <p style="color:#777;font-size:12px;font-weight:700;letter-spacing:1px">ESTIMATED PRICE</p>
+            <div class="est-price" id="estPrice">$0</div>
+            <div class="est-label" id="estLabel">Select options above for your quote</div>
+            <div class="breakdown" id="breakdown"></div>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px">
+                <a id="waBtn" href="#" target="_blank" class="cta-btn wa">📱 WhatsApp This Quote</a>
+            </div>
+            <div class="guarantee">
+                <span>✅ No hidden charges</span>
+                <span>🛡️ 10-year grout warranty</span>
+                <span>🔍 Free inspection</span>
+                <span>⚡ Same-day response</span>
+            </div>
+        </div>
+
+        <!-- Trust signals -->
+        <div class="trust">
+            <div class="trust-item">
+                <div class="num">500+</div>
+                <div class="label">Homes Done</div>
+            </div>
+            <div class="trust-item">
+                <div class="num">10yr</div>
+                <div class="label">Grout Warranty</div>
+            </div>
+            <div class="trust-item">
+                <div class="num">1-Day</div>
+                <div class="label">Completion</div>
+            </div>
+            <div class="trust-item">
+                <div class="num">8+</div>
+                <div class="label">Services</div>
+            </div>
+        </div>
+
+        <div class="section-divider" style="margin-top:40px"><span>All Services Available</span></div>
+        <div
+            style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:16px;font-size:12px;color:#777;text-align:center">
+            <div style="background:#111;padding:12px;border-radius:8px">🔧 Epoxy Grout</div>
+            <div style="background:#111;padding:12px;border-radius:8px">🎨 Full Home Painting</div>
+            <div style="background:#111;padding:12px;border-radius:8px">✨ Tile Restoration</div>
+            <div style="background:#111;padding:12px;border-radius:8px">🧱 Wall Putty & Repair</div>
+            <div style="background:#111;padding:12px;border-radius:8px">🔧 Plumbing</div>
+            <div style="background:#111;padding:12px;border-radius:8px">⚡ Electrical</div>
+            <div style="background:#111;padding:12px;border-radius:8px">🧹 Deep Cleaning</div>
+            <div style="background:#111;padding:12px;border-radius:8px">🔨 Handyman</div>
+        </div>
+    </div>
+
+    <script>
+        let selections = { prop: null, area: null, svc: 'epoxy', mode: null, paintScope: null, paintBrand: 'nippon', tileScope: null, handyType: null, bundle: null };
+
+        const pricing = {
+            epoxy: { bath: 488, kitchen: 588 },
+            mapei: { bath: 588, kitchen: 688 },
+            polyurea: { bath: 688, kitchen: 788 }
+        };
+
+        const propMulti = { hdb3: 1, hdb4: 1, hdb5: 1.05, exec: 1.1, bto: 0.9, condo: 1.2, landed: 1.4 };
+
+        const paintPricing = {
+            '1room': 288, '2room': 488, 'common': 588, 'whole3': 888, 'whole4': 1288, 'whole5': 1588, 'wholecondo': 1888, 'wholelanded': 3888
+        };
+        const paintBrandMulti = { nippon: 1, dulux: 1.1, jotun: 1.15 };
+
+        const tilePricing = { tile1bath: 388, tile2bath: 688, tilekitchen: 488, tilefull: 1288 };
+
+        const handyPricing = { plumbing: 188, electrical: 188, putty: 288, cleaning: 388, hourly: 176 };
+
+        const bundlePricing = {
+            refresh: { price: 1688, label: 'Quick Refresh Package' },
+            presale: { price: 3488, label: 'Pre-Sale / Move-Out Package' },
+            movein: { price: 2188, label: 'BTO Move-In Ready Package' },
+            total: { price: 5888, label: 'Total Home Makeover Package' }
+        };
+
+        function selectMode(el) {
+            el.parentElement.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            selections.mode = el.dataset.val;
+            // Reset sub-selections
+            selections.area = null; selections.paintScope = null; selections.tileScope = null; selections.handyType = null; selections.bundle = null;
+
+            ['step3grout', 'step3paint', 'step3tile', 'step3handyman', 'step3bundle'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+
+            const map = { grout: 'step3grout', paint: 'step3paint', tile: 'step3tile', handyman: 'step3handyman', bundle: 'step3bundle' };
+            const target = document.getElementById(map[selections.mode]);
+            if (target) { target.style.display = 'block'; target.classList.add('active'); }
+
+            document.getElementById('step2').classList.add('active');
+            document.getElementById('resultBox').classList.remove('show');
+            calcPrice();
+        }
+
+        function selectBundle(el, bundleKey) {
+            document.querySelectorAll('.bundle').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+            selections.bundle = bundleKey;
+            calcPrice();
+        }
+
+        function selectOpt(el, group) {
+            el.parentElement.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            selections[group] = el.dataset.val;
+
+            if (group === 'prop') document.getElementById('step2').classList.add('active');
+            calcPrice();
+        }
+
+        function calcPrice() {
+            const { prop, mode, area, svc, paintScope, paintBrand, tileScope, handyType, bundle } = selections;
+            if (!prop) return;
+
+            const m = propMulti[prop] || 1;
+            let items = [];
+            let total = 0;
+            let label = '';
+
+            const propNames = { hdb3: '3-Room HDB', hdb4: '4-Room HDB', hdb5: '5-Room HDB', exec: 'Executive', bto: 'BTO', condo: 'Condo', landed: 'Landed' };
+
+            // BUNDLES
+            if (mode === 'bundle' && bundle) {
+                const b = bundlePricing[bundle];
+                total = Math.round(b.price * m);
+                items.push([b.label, total]);
+                label = `${propNames[prop]} | ${b.label}`;
+            }
+            // GROUT
+            else if (mode === 'grout' && area) {
+                const s = pricing[svc] || pricing.epoxy;
+                const bath = Math.round(s.bath * m);
+                const kit = Math.round(s.kitchen * m);
+                const svcNames = { epoxy: 'Standard Epoxy', mapei: 'Mapei Kerapoxy', polyurea: 'Polyurea' };
+
+                if (area === 'bath1') { items.push(['1x Bathroom grouting', bath]); total = bath; }
+                else if (area === 'bath2') { const c = Math.round(bath * 1.8); items.push(['2x Bathroom grouting', c]); total = c; }
+                else if (area === 'kitchen') { items.push(['1x Kitchen grouting', kit]); total = kit; }
+                else if (area === 'bath1_kit') { items.push(['1x Bathroom', bath]); items.push(['1x Kitchen', kit]); items.push(['Combo discount', -88]); total = bath + kit - 88; }
+                else if (area === 'bath2_kit') { const b2 = Math.round(bath * 1.8); items.push(['2x Bathroom', b2]); items.push(['1x Kitchen', kit]); items.push(['Combo discount', -120]); total = b2 + kit - 120; }
+                else if (area === 'custom') { const c = Math.round(bath * 2.5) + kit; items.push(['3+ Bathrooms + Kitchen', c]); total = c; }
+                label = `${propNames[prop]} | ${svcNames[svc]}`;
+            }
+            // PAINTING
+            else if (mode === 'paint' && paintScope) {
+                const base = paintPricing[paintScope] || 888;
+                const brandM = paintBrandMulti[paintBrand] || 1;
+                total = Math.round(base * m * brandM);
+                const brandNames = { nippon: 'Nippon', dulux: 'Dulux', jotun: 'Jotun' };
+                items.push([`Painting (${brandNames[paintBrand]})`, total]);
+                label = `${propNames[prop]} | Painting`;
+            }
+            // TILE
+            else if (mode === 'tile' && tileScope) {
+                total = Math.round((tilePricing[tileScope] || 388) * m);
+                items.push(['Tile restoration & polishing', total]);
+                label = `${propNames[prop]} | Tile Restoration`;
+            }
+            // HANDYMAN
+            else if (mode === 'handyman' && handyType) {
+                total = Math.round((handyPricing[handyType] || 176) * m);
+                const hNames = { plumbing: 'Plumbing', electrical: 'Electrical', putty: 'Wall Putty/Repair', cleaning: 'Deep Cleaning', hourly: 'Handyman (2hr minimum)' };
+                items.push([hNames[handyType], total]);
+                label = `${propNames[prop]} | ${hNames[handyType]}`;
+            }
+            else { document.getElementById('resultBox').classList.remove('show'); return; }
+
+            // Add-ons
+            const addons = [
+                ['addonSilicone', 'Silicone renewal', 88],
+                ['addonWaterproof', 'Waterproof coating', 188],
+                ['addonTileRestore', 'Tile polishing', 288],
+                ['addonColor', 'Color matching', 38],
+                ['addonDeepClean', 'Deep cleaning', 188],
+                ['addonPlumbing', 'Plumbing fix', 88],
+                ['addonElectrical', 'Light/switch replacement', 128],
+                ['addonPutty', 'Wall putty & cracks', 188]
+            ];
+            addons.forEach(([id, name, price]) => {
+                const el = document.getElementById(id);
+                if (el && el.checked) { items.push([name, price]); total += price; }
+            });
+
+            // Show result
+            const box = document.getElementById('resultBox');
+            box.classList.add('show');
+            document.getElementById('estPrice').innerHTML = `$${total.toLocaleString()} <small>nett</small>`;
+            document.getElementById('estLabel').textContent = label;
+
+            items.push(['TOTAL', total]);
+            document.getElementById('breakdown').innerHTML = items.map(([l, a]) =>
+                `<div><span>${l}</span><span>${a === 0 ? '' : a < 0 ? '-$' + Math.abs(a) : '$' + a.toLocaleString()}</span></div>`
+            ).join('');
+
+            // WhatsApp link
+            const msg = `Hi! I used the price calculator and got a quote for:\n\nProperty: ${propNames[prop]}\nService: ${label}\nEstimated: $${total.toLocaleString()}\n\nCan I book a free inspection?`;
+            document.getElementById('waBtn').href = `https://wa.me/6598004317?text=${encodeURIComponent(msg)}`;
+
+            // Track
+            try {
+                const events = JSON.parse(localStorage.getItem('cg_events') || '[]');
+                events.push({ event: 'quote_calculated', data: { prop, mode, total }, ts: new Date().toISOString() });
+                localStorage.setItem('cg_events', JSON.stringify(events));
+            } catch (e) { }
+        }
+    </script>
+</body>
+
+</html>

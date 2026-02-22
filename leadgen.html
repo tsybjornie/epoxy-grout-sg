@@ -541,10 +541,13 @@
             <div class="tab active" onclick="switchTab('dashboard')">Dashboard</div>
             <div class="tab" onclick="switchTab('ab')">A/B Tests</div>
             <div class="tab" onclick="switchTab('leads')">Lead Log</div>
+            <div class="tab" onclick="switchTab('schedule')">📅 Schedule</div>
             <div class="tab" onclick="switchTab('insights')">AI Insights</div>
             <div class="tab" onclick="switchTab('content')">🎬 Content Studio</div>
             <div class="tab" onclick="switchTab('analytics')">📊 Analytics</div>
             <div class="tab" onclick="switchTab('templates')">Ad Templates</div>
+            <div class="tab" onclick="switchTab('competitors')">🔍 Competitors</div>
+            <div class="tab" onclick="switchTab('settings')">Settings</div>
         </div>
 
         <!-- DASHBOARD -->
@@ -637,6 +640,12 @@
             <div id="contentStudioPanel"></div>
         </div>
 
+        <!-- SCHEDULE -->
+        <div class="tab-content" id="tab-schedule">
+            <h3 style="margin-bottom:20px">📅 Scheduling & Deposits</h3>
+            <div id="schedulePanel"></div>
+        </div>
+
         <!-- ANALYTICS -->
         <div class="tab-content" id="tab-analytics">
             <h3 style="margin-bottom:20px">📊 Analytics — SEO, AEO & Tracking</h3>
@@ -647,6 +656,18 @@
         <div class="tab-content" id="tab-templates">
             <h3 style="margin-bottom:20px">📝 Ready-to-Use Templates</h3>
             <div id="templatesPanel"></div>
+        </div>
+
+        <!-- COMPETITOR INTEL -->
+        <div class="tab-content" id="tab-competitors">
+            <h3 style="margin-bottom:20px">🔍 Competitor Intelligence</h3>
+            <div id="competitorPanel"></div>
+        </div>
+
+        <!-- SETTINGS / INTEGRATIONS -->
+        <div class="tab-content" id="tab-settings">
+            <h3 style="margin-bottom:20px">Settings &amp; Integrations</h3>
+            <div id="settingsPanel"></div>
         </div>
     </div>
 
@@ -672,6 +693,10 @@
                     <option value="Website">Website (Chatbot)</option>
                     <option value="Marketplace">FB Marketplace</option>
                     <option value="TikTok">TikTok/Reels/Shorts</option>
+                    <option value="Carousell">Carousell</option>
+                    <option value="GMB">Google Maps/GMB</option>
+                    <option value="Referral">Referral</option>
+                    <option value="SEO">SEO (Organic)</option>
                 </select>
             </div>
             <div class="form-group">
@@ -679,12 +704,35 @@
                 <select id="leadAdCopy"></select>
             </div>
             <div class="form-group">
-                <label>Package Interest</label>
+                <label>Service Type</label>
                 <select id="leadPackage">
-                    <option value="Bathroom">Bathroom ($439)</option>
-                    <option value="Kitchen">Kitchen ($529)</option>
-                    <option value="Full Home">Full Home ($1,339)</option>
-                    <option value="Unsure">Not sure yet</option>
+                    <option value="Bathroom">🚿 Bathroom Epoxy Grout ($488)</option>
+                    <option value="Kitchen">🍳 Kitchen Epoxy Grout ($588)</option>
+                    <option value="Full Home">🏠 Full Home Epoxy ($1,488)</option>
+                    <option value="Polyurea">🛡️ Polyurea Coating ($688+)</option>
+                    <option value="Silicone">🔧 Silicone Application ($188+)</option>
+                    <option value="Combo">📦 Combo (Epoxy + Silicone)</option>
+                    <option value="Unsure">❓ Not sure yet</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <select id="leadLocation">
+                    <option value="">— Select area —</option>
+                    <option value="Tampines">Tampines</option>
+                    <option value="Bedok">Bedok</option>
+                    <option value="Woodlands">Woodlands</option>
+                    <option value="Jurong">Jurong</option>
+                    <option value="Ang Mo Kio">Ang Mo Kio</option>
+                    <option value="Punggol">Punggol</option>
+                    <option value="Sengkang">Sengkang</option>
+                    <option value="Yishun">Yishun</option>
+                    <option value="Bishan">Bishan</option>
+                    <option value="Sembawang">Sembawang</option>
+                    <option value="Pasir Ris">Pasir Ris</option>
+                    <option value="Bukit Batok">Bukit Batok</option>
+                    <option value="Other SG">Other (Singapore)</option>
+                    <option value="JB">Johor Bahru 🇲🇾</option>
                 </select>
             </div>
             <div class="form-group">
@@ -697,8 +745,37 @@
                 </select>
             </div>
             <div class="form-group">
+                <label>📅 Inspection Date</label>
+                <input type="date" id="leadInspDate">
+            </div>
+            <div class="form-group">
+                <label>🕐 Inspection Time</label>
+                <select id="leadInspTime">
+                    <option value="">— Select slot —</option>
+                    <option value="09:00">9:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="14:00">2:00 PM</option>
+                    <option value="15:00">3:00 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                    <option value="17:00">5:00 PM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>💰 Deposit</label>
+                <select id="leadDeposit">
+                    <option value="none">No deposit yet</option>
+                    <option value="pending">Deposit requested ($100)</option>
+                    <option value="paid_paynow">✅ Paid via PayNow ($100)</option>
+                    <option value="paid_cash">✅ Paid cash ($100)</option>
+                    <option value="paid_bank">✅ Paid bank transfer ($100)</option>
+                    <option value="waived">Deposit waived</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label>Notes</label>
-                <textarea id="leadNotes" placeholder="Any details..."></textarea>
+                <textarea id="leadNotes" placeholder="Address, unit number, any details..."></textarea>
             </div>
             <div class="form-actions">
                 <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
@@ -1190,7 +1267,7 @@
         // ============================
         function switchTab(name) {
             document.querySelectorAll('.tab').forEach((t, i) => {
-                t.classList.toggle('active', ['dashboard', 'ab', 'leads', 'insights', 'content', 'analytics', 'templates'][i] === name);
+                t.classList.toggle('active', ['dashboard', 'ab', 'leads', 'schedule', 'insights', 'content', 'analytics', 'templates', 'competitors', 'settings'][i] === name);
             });
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.getElementById('tab-' + name).classList.add('active');
@@ -1249,6 +1326,9 @@
             renderAnalytics();
             renderTemplates();
             renderFollowUps();
+            renderSchedule();
+            renderCompetitorIntel();
+            renderSettings();
             updateAdCopyDropdown();
         }
 
@@ -1890,6 +1970,10 @@
                 adCopy: document.getElementById('leadAdCopy').value,
                 package: document.getElementById('leadPackage').value,
                 status: document.getElementById('leadStatus').value,
+                location: document.getElementById('leadLocation')?.value || '',
+                inspDate: document.getElementById('leadInspDate')?.value || '',
+                inspTime: document.getElementById('leadInspTime')?.value || '',
+                deposit: document.getElementById('leadDeposit')?.value || 'none',
                 notes: document.getElementById('leadNotes').value,
                 date: new Date().toISOString()
             };
@@ -1911,6 +1995,10 @@
             document.getElementById('leadName').value = '';
             document.getElementById('leadPhone').value = '';
             document.getElementById('leadNotes').value = '';
+            if (document.getElementById('leadInspDate')) document.getElementById('leadInspDate').value = '';
+            if (document.getElementById('leadInspTime')) document.getElementById('leadInspTime').selectedIndex = 0;
+            if (document.getElementById('leadDeposit')) document.getElementById('leadDeposit').selectedIndex = 0;
+            if (document.getElementById('leadLocation')) document.getElementById('leadLocation').selectedIndex = 0;
             render();
         }
 
@@ -1954,8 +2042,8 @@
 
         function exportData() {
             const csvEsc = s => `"${String(s || '').replace(/"/g, '""')}"`;
-            const csv = 'Date,Name,Phone,Channel,Ad Copy,Package,Status,Notes\n' +
-                leads.map(l => [l.date, csvEsc(l.name), csvEsc(l.phone), l.channel, csvEsc(l.adCopy), l.package, l.status, csvEsc(l.notes)].join(',')).join('\n');
+            const csv = 'Date,Name,Phone,Channel,Ad Copy,Package,Status,Location,Insp Date,Insp Time,Deposit,Notes\n' +
+                leads.map(l => [l.date, csvEsc(l.name), csvEsc(l.phone), l.channel, csvEsc(l.adCopy), l.package, l.status, csvEsc(l.location), l.inspDate || '', l.inspTime || '', l.deposit || 'none', csvEsc(l.notes)].join(',')).join('\n');
             const blob = new Blob([csv], { type: 'text/csv' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
@@ -1994,6 +2082,531 @@
                 }
             });
             setData('leads', leads);
+        }
+
+        // ============================
+        // SCHEDULE & DEPOSIT RENDERING
+        // ============================
+        function renderSchedule() {
+            const panel = document.getElementById('schedulePanel');
+            if (!panel) return;
+            const today = new Date().toISOString().split('T')[0];
+            const scheduled = leads.filter(l => l.inspDate).sort((a, b) => a.inspDate.localeCompare(b.inspDate));
+            const upcoming = scheduled.filter(l => l.inspDate >= today);
+            const past = scheduled.filter(l => l.inspDate < today);
+            const unscheduled = leads.filter(l => !l.inspDate && l.status !== 'Lost');
+
+            // Deposit stats
+            const totalDeposits = leads.filter(l => l.deposit && l.deposit.startsWith('paid_')).length;
+            const pendingDeposits = leads.filter(l => l.deposit === 'pending').length;
+            const depositAmount = totalDeposits * 100;
+
+            const depBadge = d => {
+                if (!d || d === 'none') return '<span style="font-size:10px;color:#666">No deposit</span>';
+                if (d === 'pending') return '<span style="font-size:10px;background:#FF9800;color:#fff;padding:2px 6px;border-radius:3px">💰 Pending</span>';
+                if (d.startsWith('paid_')) return '<span style="font-size:10px;background:#4CAF50;color:#fff;padding:2px 6px;border-radius:3px">✅ $100 Paid</span>';
+                if (d === 'waived') return '<span style="font-size:10px;color:#777">Waived</span>';
+                return '';
+            };
+
+            const timeLabel = t => {
+                if (!t) return '';
+                const [h, m] = t.split(':');
+                const hr = parseInt(h);
+                return hr < 12 ? `${hr}:${m} AM` : hr === 12 ? '12:00 PM' : `${hr - 12}:${m} PM`;
+            };
+
+            const genWhatsApp = (l) => {
+                const date = l.inspDate ? new Date(l.inspDate + 'T00:00:00').toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short' }) : 'TBD';
+                const time = l.inspTime ? timeLabel(l.inspTime) : 'TBD';
+                const msg = `Hi ${l.name}! 👋 This is CLEANGROUT. Your inspection is confirmed:\n\n📅 ${date}\n🕐 ${time}\n📍 ${l.location || 'TBD'}\n🔧 ${l.package}\n\n${l.deposit && l.deposit.startsWith('paid_') ? '✅ Deposit received — thank you!' : '💰 To confirm, please send $100 deposit via PayNow to 9800 4317.'}\n\nSee you then! 😊`;
+                return `https://wa.me/65${l.phone?.replace(/\D/g, '').replace(/^65/, '')}?text=${encodeURIComponent(msg)}`;
+            };
+
+            panel.innerHTML = `
+                <div class="stats" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
+                    <div class="stat-card"><div class="stat-value" style="color:#2196F3">${upcoming.length}</div><div class="stat-label">Upcoming</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#FF9800">${unscheduled.length}</div><div class="stat-label">Unscheduled</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#4CAF50">$${depositAmount}</div><div class="stat-label">Deposits Collected</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:#E91E63">${pendingDeposits}</div><div class="stat-label">Pending Deposits</div></div>
+                </div>
+
+                <h4 style="margin-bottom:16px">📅 Upcoming Inspections</h4>
+                ${upcoming.length > 0 ? `<div style="display:grid;gap:8px;margin-bottom:24px">
+                    ${upcoming.map((l, i) => {
+                const idx = leads.indexOf(l);
+                const isToday = l.inspDate === today;
+                const isTomorrow = l.inspDate === new Date(Date.now() + 86400000).toISOString().split('T')[0];
+                const dateStr = new Date(l.inspDate + 'T00:00:00').toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short' });
+                return `<div class="test-card" style="padding:14px;${isToday ? 'border:1px solid #D32F2F;background:#1a0a0a' : isTomorrow ? 'border:1px solid #FF9800' : ''}">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    ${isToday ? '<span style="background:#D32F2F;color:#fff;font-size:9px;padding:2px 8px;border-radius:3px;font-weight:700">TODAY</span>' : isTomorrow ? '<span style="background:#FF9800;color:#fff;font-size:9px;padding:2px 8px;border-radius:3px;font-weight:700">TOMORROW</span>' : ''}
+                                    <span style="color:#fff;font-weight:700">${esc(l.name)}</span>
+                                    <span style="color:#666;font-size:12px">${l.phone || ''}</span>
+                                </div>
+                                ${depBadge(l.deposit)}
+                            </div>
+                            <div style="display:flex;gap:16px;font-size:12px;color:#aaa;margin-bottom:8px">
+                                <span>📅 ${dateStr}</span>
+                                <span>🕐 ${timeLabel(l.inspTime) || 'Time TBD'}</span>
+                                <span>📍 ${l.location || 'Location TBD'}</span>
+                                <span>🔧 ${l.package}</span>
+                            </div>
+                            <div style="display:flex;gap:8px">
+                                <a href="${genWhatsApp(l)}" target="_blank" style="background:#25D366;color:#fff;padding:4px 12px;border-radius:4px;font-size:11px;font-weight:700;text-decoration:none">📱 Send Confirmation</a>
+                                ${l.deposit === 'none' || l.deposit === 'pending' ? `<button onclick="leads[${idx}].deposit='paid_paynow';setData('leads',leads);renderSchedule()" style="background:#4CAF50;color:#fff;padding:4px 12px;border-radius:4px;font-size:11px;font-weight:700;border:none;cursor:pointer">✅ Mark Deposit Paid</button>` : ''}
+                                <button onclick="leads[${idx}].status='Booked';setData('leads',leads);render()" style="background:#333;color:#fff;padding:4px 12px;border-radius:4px;font-size:11px;font-weight:700;border:none;cursor:pointer">✅ Mark Booked</button>
+                            </div>
+                        </div>`;
+            }).join('')}
+                </div>` : '<p style="color:#777;font-size:13px;margin-bottom:24px">No upcoming inspections. Log a lead with an inspection date to see it here.</p>'}
+
+                ${unscheduled.length > 0 ? `<h4 style="margin-bottom:16px">⚠️ Needs Scheduling (${unscheduled.length})</h4>
+                <div style="display:grid;gap:6px;margin-bottom:24px">
+                    ${unscheduled.slice(0, 10).map((l, i) => {
+                const idx = leads.indexOf(l);
+                return `<div class="test-card" style="padding:10px;display:flex;justify-content:space-between;align-items:center">
+                            <div>
+                                <span style="color:#fff;font-weight:600">${esc(l.name)}</span>
+                                <span style="color:#666;font-size:12px;margin-left:8px">${l.package} • ${l.channel}</span>
+                            </div>
+                            <a href="https://wa.me/65${(l.phone || '').replace(/\D/g, '').replace(/^65/, '')}?text=${encodeURIComponent('Hi ' + l.name + '! This is CLEANGROUT. When would be a good time for a free inspection? We have slots available this week. 📅')}" target="_blank" style="background:#FF9800;color:#fff;padding:4px 10px;border-radius:4px;font-size:10px;font-weight:700;text-decoration:none">📅 Schedule via WhatsApp</a>
+                        </div>`;
+            }).join('')}
+                </div>` : ''}
+
+                <h4 style="margin:24px 0 12px">💰 Deposit Tracking Summary</h4>
+                <div class="test-card" style="padding:16px">
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;text-align:center;margin-bottom:16px">
+                        <div><div style="font-size:28px;font-weight:800;color:#4CAF50">$${depositAmount}</div><div style="font-size:11px;color:#666">Collected</div></div>
+                        <div><div style="font-size:28px;font-weight:800;color:#FF9800">${pendingDeposits}</div><div style="font-size:11px;color:#666">Pending</div></div>
+                        <div><div style="font-size:28px;font-weight:800;color:#2196F3">${totalDeposits + pendingDeposits}</div><div style="font-size:11px;color:#666">Total Requests</div></div>
+                    </div>
+                    <p style="color:#777;font-size:12px">Pro tip: Always collect $100 deposit before scheduling. It reduces no-shows by 90% and shows the customer is serious.</p>
+                </div>
+            `;
+        }
+
+        // ============================
+        // COMPETITOR INTELLIGENCE
+        // ============================
+        function getCompetitors() {
+            return getData('competitors', [
+                { name: 'Grout Hero SG', url: 'https://www.grouthero.sg', pricing: '$400-$1,200', reviews: '~50', rating: '4.5', social: 'IG ~2K', content: 'Before/after posts 2x/week', strengths: 'Good Google rankings, active on IG', weaknesses: 'No AI chatbot, no polyurea', notes: '' },
+                { name: 'The Grout Guy', url: '', pricing: '$380-$1,100', reviews: '~30', rating: '4.3', social: 'FB ~1K', content: 'FB posts weekly, marketplace', strengths: 'Lower pricing, Carousell presence', weaknesses: 'Basic website, no schema markup, slow response', notes: '' },
+                { name: 'SG Tile Restore', url: '', pricing: '$450-$1,300', reviews: '~20', rating: '4.0', social: 'IG ~800', content: 'Occasional FB posts', strengths: 'Premium positioning', weaknesses: 'Low online presence, no FB ads', notes: '' },
+                { name: 'Happy Grout', url: '', pricing: '$350-$900', reviews: '~15', rating: '4.2', social: 'FB ~500', content: 'Marketplace listings', strengths: 'Budget pricing', weaknesses: 'No website, no content strategy, cash only', notes: '' }
+            ]);
+        }
+
+        function saveCompetitor(comp) {
+            const comps = getCompetitors();
+            comps.push(comp);
+            setData('competitors', comps);
+            renderCompetitorIntel();
+        }
+
+        function removeCompetitor(idx) {
+            if (!confirm('Remove this competitor?')) return;
+            const comps = getCompetitors();
+            comps.splice(idx, 1);
+            setData('competitors', comps);
+            renderCompetitorIntel();
+        }
+
+        function updateCompNote(idx, note) {
+            const comps = getCompetitors();
+            comps[idx].notes = note;
+            setData('competitors', comps);
+        }
+
+        function renderCompetitorIntel() {
+            const panel = document.getElementById('competitorPanel');
+            if (!panel) return;
+            const comps = getCompetitors();
+
+            // Your positioning
+            const yourData = {
+                pricing: '$488-$1,488',
+                reviews: leads.filter(l => l.status === 'Booked').length + ' booked',
+                strengths: ['AI chatbot', 'FAQ schema', 'AI crawler optimization', 'Polyurea + Silicone services', '11 location pages', 'WhatsApp auto-scheduler', 'A/B testing system'],
+                weaknesses: ['Newer brand', 'Building review count', 'Need more video content']
+            };
+
+            // Score positioning
+            const scoreItems = [
+                { area: 'SEO & Schema', you: 9, avg: 3, tip: 'You have FAQPage + Service schema on 15+ pages. Most competitors have zero structured data.' },
+                { area: 'AI Search (AEO)', you: 10, avg: 1, tip: 'You allow 12 AI crawlers. Most competitors block them all. Massive advantage.' },
+                { area: 'Content Marketing', you: 7, avg: 4, tip: 'Your Content Studio generates ideas + scripts. Post consistently to build authority.' },
+                { area: 'Pricing Strategy', you: 7, avg: 6, tip: 'Mid-premium positioning. Justify with quality messaging and warranty.' },
+                { area: 'Service Range', you: 9, avg: 5, tip: 'Epoxy + Polyurea + Silicone + Mapei. Most competitors only do basic grout.' },
+                { area: 'Lead Capture', you: 9, avg: 3, tip: 'Chatbot + WhatsApp + Scheduling + Deposit system. Light years ahead.' },
+                { area: 'Social Proof', you: 5, avg: 6, tip: 'Focus on collecting Google reviews after every job. Target 50+ reviews ASAP.' },
+                { area: 'Paid Ads', you: 6, avg: 5, tip: 'Use A/B testing to optimize. Run FB + Google Ads simultaneously.' },
+                { area: 'Local Coverage', you: 9, avg: 3, tip: '11 neighborhood pages + JB. Competitors have 0-2 location pages.' },
+                { area: 'Response Speed', you: 8, avg: 5, tip: 'AI chatbot = instant. Add WhatsApp Business auto-replies for after-hours.' }
+            ];
+
+            const yourTotal = scoreItems.reduce((s, i) => s + i.you, 0);
+            const avgTotal = scoreItems.reduce((s, i) => s + i.avg, 0);
+
+            panel.innerHTML = `
+                <!-- COMPETITIVE SCORECARD -->
+                <div class="test-card" style="padding:20px;margin-bottom:24px;border:1px solid #FFD700">
+                    <h4 style="color:#FFD700;margin-bottom:16px">\ud83c\udfc6 Competitive Positioning Score</h4>
+                    <div style="display:flex;justify-content:center;gap:40px;margin-bottom:20px">
+                        <div style="text-align:center">
+                            <div style="font-size:48px;font-weight:900;color:#4CAF50">${yourTotal}</div>
+                            <div style="font-size:12px;color:#4CAF50;font-weight:700">CLEANGROUT</div>
+                        </div>
+                        <div style="text-align:center;display:flex;align-items:center;font-size:24px;color:#555">vs</div>
+                        <div style="text-align:center">
+                            <div style="font-size:48px;font-weight:900;color:#777">${avgTotal}</div>
+                            <div style="font-size:12px;color:#777;font-weight:700">AVG COMPETITOR</div>
+                        </div>
+                    </div>
+                    <div style="display:grid;gap:6px">
+                        ${scoreItems.map(s => {
+                const diff = s.you - s.avg;
+                const color = diff > 3 ? '#4CAF50' : diff > 0 ? '#8BC34A' : diff === 0 ? '#FF9800' : '#f44336';
+                const icon = diff > 3 ? '\ud83d\udfe2' : diff > 0 ? '\u2705' : diff === 0 ? '\ud83d\udfe1' : '\ud83d\udd34';
+                return `<div style="display:grid;grid-template-columns:140px 1fr 60px 60px 40px;align-items:center;padding:6px 10px;background:#111;border-radius:6px;font-size:12px">
+                                <span style="color:#aaa;font-weight:600">${s.area}</span>
+                                <div style="display:flex;align-items:center;gap:4px">
+                                    <div style="flex:1;height:6px;background:#222;border-radius:3px;overflow:hidden">
+                                        <div style="width:${s.you * 10}%;height:100%;background:${color};border-radius:3px"></div>
+                                    </div>
+                                </div>
+                                <span style="text-align:center;font-weight:700;color:${color}">${s.you}/10</span>
+                                <span style="text-align:center;color:#555">${s.avg}/10</span>
+                                <span title="${esc(s.tip)}" style="cursor:help">${icon}</span>
+                            </div>`;
+            }).join('')}
+                    </div>
+                    <p style="color:#555;font-size:10px;margin-top:12px">Hover over icons for actionable tips. Scores based on online presence analysis.</p>
+                </div>
+
+                <!-- QUICK SPY LINKS -->
+                <h4 style="margin-bottom:12px">\ud83d\udd75\ufe0f Quick Spy Tools</h4>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px">
+                    <a href="https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=SG&q=epoxy%20grout" target="_blank" class="test-card" style="padding:14px;text-align:center;text-decoration:none;cursor:pointer">
+                        <div style="font-size:24px;margin-bottom:6px">\ud83d\udcf1</div>
+                        <div style="font-size:12px;color:#4267B2;font-weight:700">FB Ad Library</div>
+                        <div style="font-size:10px;color:#666">See competitor ads</div>
+                    </a>
+                    <a href="https://www.google.com/search?q=epoxy+grout+singapore" target="_blank" class="test-card" style="padding:14px;text-align:center;text-decoration:none;cursor:pointer">
+                        <div style="font-size:24px;margin-bottom:6px">\ud83d\udd0d</div>
+                        <div style="font-size:12px;color:#4285F4;font-weight:700">Google Search</div>
+                        <div style="font-size:10px;color:#666">Who's ranking #1?</div>
+                    </a>
+                    <a href="https://www.google.com/maps/search/epoxy+grout+singapore" target="_blank" class="test-card" style="padding:14px;text-align:center;text-decoration:none;cursor:pointer">
+                        <div style="font-size:24px;margin-bottom:6px">\ud83d\udccd</div>
+                        <div style="font-size:12px;color:#34A853;font-weight:700">Google Maps</div>
+                        <div style="font-size:10px;color:#666">Reviews & ratings</div>
+                    </a>
+                    <a href="https://www.carousell.sg/search/epoxy%20grout" target="_blank" class="test-card" style="padding:14px;text-align:center;text-decoration:none;cursor:pointer">
+                        <div style="font-size:24px;margin-bottom:6px">\ud83d\udee0\ufe0f</div>
+                        <div style="font-size:12px;color:#FF4F00;font-weight:700">Carousell</div>
+                        <div style="font-size:10px;color:#666">Marketplace pricing</div>
+                    </a>
+                </div>
+
+                <!-- COMPETITOR PROFILES -->
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                    <h4>\ud83c\udfaf Competitor Profiles</h4>
+                    <button class="btn btn-primary" style="font-size:11px;padding:6px 14px" onclick="addCompetitorPrompt()">+ Add Competitor</button>
+                </div>
+                <div style="overflow-x:auto;margin-bottom:24px">
+                    <table class="lead-table" style="min-width:800px">
+                        <thead>
+                            <tr>
+                                <th>Competitor</th>
+                                <th>Pricing</th>
+                                <th>Reviews</th>
+                                <th>Rating</th>
+                                <th>Social</th>
+                                <th>Content</th>
+                                <th>Strengths</th>
+                                <th>Weaknesses</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background:#0d1f0d;border-bottom:1px solid #333">
+                                <td style="font-weight:700;color:#4CAF50">\ud83d\udc51 CLEANGROUT (You)</td>
+                                <td style="color:#4CAF50">${yourData.pricing}</td>
+                                <td style="color:#4CAF50">${yourData.reviews}</td>
+                                <td style="color:#4CAF50">\u2b50 Target: 4.8+</td>
+                                <td style="color:#4CAF50">Building</td>
+                                <td style="color:#4CAF50">AI-powered</td>
+                                <td style="color:#4CAF50;font-size:10px">${yourData.strengths.join(', ')}</td>
+                                <td style="color:#FF9800;font-size:10px">${yourData.weaknesses.join(', ')}</td>
+                                <td></td>
+                            </tr>
+                            ${comps.map((c, idx) => `<tr style="border-bottom:1px solid #222">
+                                <td style="font-weight:600">${c.url ? `<a href="${c.url}" target="_blank" style="color:#fff;text-decoration:none">${esc(c.name)} \u2197</a>` : esc(c.name)}</td>
+                                <td style="font-size:12px">${esc(c.pricing)}</td>
+                                <td style="font-size:12px">${esc(c.reviews)}</td>
+                                <td style="font-size:12px">${esc(c.rating)}</td>
+                                <td style="font-size:11px;color:#777">${esc(c.social)}</td>
+                                <td style="font-size:11px;color:#777">${esc(c.content)}</td>
+                                <td style="font-size:10px;color:#8BC34A">${esc(c.strengths)}</td>
+                                <td style="font-size:10px;color:#f44336">${esc(c.weaknesses)}</td>
+                                <td><button onclick="removeCompetitor(${idx})" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px" title="Remove">\ud83d\uddd1</button></td>
+                            </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- COUNTER-STRATEGIES -->
+                <h4 style="margin-bottom:16px">\u2694\ufe0f Counter-Strategies</h4>
+                <div style="display:grid;gap:8px;margin-bottom:24px">
+                    <div class="test-card" style="padding:14px;border-left:4px solid #4CAF50">
+                        <h5 style="color:#4CAF50;margin-bottom:6px">\ud83d\ude80 You're Winning: AI & Tech</h5>
+                        <p style="font-size:12px;color:#aaa">No competitor has AI chatbot, schema markup, or AI crawler optimization. Keep pushing this advantage. Your SEO pages will compound over time.</p>
+                    </div>
+                    <div class="test-card" style="padding:14px;border-left:4px solid #4CAF50">
+                        <h5 style="color:#4CAF50;margin-bottom:6px">\ud83d\ude80 You're Winning: Service Range</h5>
+                        <p style="font-size:12px;color:#aaa">Polyurea + Silicone + Mapei = services competitors don't offer. Each service page captures different keyword intent.</p>
+                    </div>
+                    <div class="test-card" style="padding:14px;border-left:4px solid #FF9800">
+                        <h5 style="color:#FF9800;margin-bottom:6px">\u26a0\ufe0f Action Needed: Reviews</h5>
+                        <p style="font-size:12px;color:#aaa">Some competitors have 30-50 Google reviews. Use your post-job automation templates to collect reviews after every job. Target: 50 reviews in 60 days.</p>
+                    </div>
+                    <div class="test-card" style="padding:14px;border-left:4px solid #FF9800">
+                        <h5 style="color:#FF9800;margin-bottom:6px">\u26a0\ufe0f Action Needed: Video Content</h5>
+                        <p style="font-size:12px;color:#aaa">ASMR grout videos get 100K+ views on TikTok. Film every job using the Content Studio scripts. Consistency > quality at first.</p>
+                    </div>
+                    <div class="test-card" style="padding:14px;border-left:4px solid #2196F3">
+                        <h5 style="color:#2196F3;margin-bottom:6px">\ud83d\udca1 Opportunity: ChatGPT Domination</h5>
+                        <p style="font-size:12px;color:#aaa">Since you allow AI crawlers and competitors don't, ChatGPT and Perplexity will start recommending YOU. Search "best epoxy grout Singapore" on ChatGPT to monitor this.</p>
+                    </div>
+                </div>
+
+                <!-- WEEKLY RECON CHECKLIST -->
+                <h4 style="margin-bottom:12px">\ud83d\udccb Weekly Recon Checklist</h4>
+                <div class="test-card" style="padding:16px">
+                    <div style="display:grid;gap:8px;font-size:13px">
+                        <label style="display:flex;align-items:center;gap:8px;color:#ccc;cursor:pointer">
+                            <input type="checkbox" style="width:16px;height:16px"> Search "epoxy grout Singapore" on Google (incognito) \u2014 note who's ranking
+                        </label>
+                        <label style="display:flex;align-items:center;gap:8px;color:#ccc;cursor:pointer">
+                            <input type="checkbox" style="width:16px;height:16px"> Check FB Ad Library for new competitor ads
+                        </label>
+                        <label style="display:flex;align-items:center;gap:8px;color:#ccc;cursor:pointer">
+                            <input type="checkbox" style="width:16px;height:16px"> Check Carousell for competitor pricing changes
+                        </label>
+                        <label style="display:flex;align-items:center;gap:8px;color:#ccc;cursor:pointer">
+                            <input type="checkbox" style="width:16px;height:16px"> Check competitor Google reviews (new reviews = new keywords to target)
+                        </label>
+                        <label style="display:flex;align-items:center;gap:8px;color:#ccc;cursor:pointer">
+                            <input type="checkbox" style="width:16px;height:16px"> Ask ChatGPT "best epoxy grout service in Singapore" \u2014 check if you appear
+                        </label>
+                        <label style="display:flex;align-items:center;gap:8px;color:#ccc;cursor:pointer">
+                            <input type="checkbox" style="width:16px;height:16px"> Check competitor IG/TikTok for new content ideas to adapt
+                        </label>
+                    </div>
+                    <p style="color:#555;font-size:11px;margin-top:12px">\ud83d\udca1 Do this every Monday morning. Takes 10 minutes. Keeps you 10 steps ahead.</p>
+                </div>
+            `;
+        }
+
+        function addCompetitorPrompt() {
+            const name = prompt('Competitor name:');
+            if (!name) return;
+            const pricing = prompt('Their pricing range (e.g. $300-$900):') || 'Unknown';
+            const url = prompt('Their website URL (optional):') || '';
+            saveCompetitor({
+                name, url, pricing, reviews: '?', rating: '?',
+                social: 'Unknown', content: 'Unknown',
+                strengths: prompt('Their strengths:') || 'Unknown',
+                weaknesses: prompt('Their weaknesses:') || 'Unknown',
+                notes: ''
+            });
+        }
+
+        // ============================
+        // SETTINGS & INTEGRATIONS
+        // ============================
+        function getApiKeys() {
+            return getData('apiKeys', {
+                openai: '', gemini: '', google_business: '', meta_token: '', meta_page_id: '',
+                whatsapp_token: '', whatsapp_phone_id: '', tiktok: '', carousell: ''
+            });
+        }
+
+        function saveApiKey(key, value) {
+            const keys = getApiKeys();
+            keys[key] = value;
+            setData('apiKeys', keys);
+            renderSettings();
+        }
+
+        function testApiConnection(platform) {
+            const keys = getApiKeys();
+            let msg = '';
+            switch (platform) {
+                case 'openai':
+                    if (!keys.openai) { alert('Enter your OpenAI API key first'); return; }
+                    fetch('https://api.openai.com/v1/models', { headers: { 'Authorization': 'Bearer ' + keys.openai } })
+                        .then(r => { alert(r.ok ? 'OpenAI connected! AI content generation is now live.' : 'Connection failed. Check your API key.'); })
+                        .catch(() => alert('Network error. Check your internet connection.'));
+                    return;
+                case 'gemini':
+                    if (!keys.gemini) { alert('Enter your Gemini API key first'); return; }
+                    fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + keys.gemini)
+                        .then(r => { alert(r.ok ? 'Google Gemini connected! AI features are now live.' : 'Connection failed. Check your API key.'); })
+                        .catch(() => alert('Network error.'));
+                    return;
+                default:
+                    alert('Connection test for ' + platform + ' - check console for details.');
+            }
+        }
+
+        function renderSettings() {
+            const panel = document.getElementById('settingsPanel');
+            if (!panel) return;
+            const keys = getApiKeys();
+
+            const maskKey = k => k ? k.substring(0, 8) + '...' + k.substring(k.length - 4) : '';
+            const status = k => k ? '<span style="color:#4CAF50;font-size:11px;font-weight:700">CONNECTED</span>' : '<span style="color:#555;font-size:11px">NOT SET</span>';
+
+            const integrations = [
+                {
+                    id: 'openai', name: 'OpenAI (GPT-4)', icon: 'AI',
+                    color: '#10a37f', key: keys.openai,
+                    desc: 'Powers AI content generation, smart insights, chatbot responses, and ad copy writing.',
+                    setup: 'Get your API key from <a href="https://platform.openai.com/api-keys" target="_blank" style="color:#10a37f">platform.openai.com/api-keys</a>',
+                    unlocks: ['Auto-generate ad copy from A/B test winners', 'AI-powered lead scoring', 'Smart chatbot responses', 'Content Studio auto-writer', 'Competitor analysis summaries'],
+                    fields: [{ key: 'openai', label: 'API Key', placeholder: 'sk-...' }]
+                },
+                {
+                    id: 'gemini', name: 'Google Gemini', icon: 'AI',
+                    color: '#4285F4', key: keys.gemini,
+                    desc: 'Alternative AI engine. Use if you prefer Google AI or want a backup.',
+                    setup: 'Get your API key from <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#4285F4">aistudio.google.com/apikey</a>',
+                    unlocks: ['Same features as OpenAI', 'Better integration with Google services', 'Free tier available'],
+                    fields: [{ key: 'gemini', label: 'API Key', placeholder: 'AIza...' }]
+                },
+                {
+                    id: 'google_business', name: 'Google Business Profile', icon: 'GMB',
+                    color: '#34A853', key: keys.google_business,
+                    desc: 'Manage Google Maps listing, post updates, reply to reviews, and track search performance.',
+                    setup: 'Set up at <a href="https://console.cloud.google.com/apis" target="_blank" style="color:#34A853">Google Cloud Console</a> &rarr; Enable "My Business" API',
+                    unlocks: ['Auto-post job completions to Google', 'Reply to Google reviews from dashboard', 'Track search impressions and clicks', 'Update business hours and services', 'Monitor review count and rating'],
+                    fields: [{ key: 'google_business', label: 'OAuth Token', placeholder: 'ya29...' }]
+                },
+                {
+                    id: 'meta', name: 'Meta (Facebook + Instagram)', icon: 'META',
+                    color: '#4267B2', key: keys.meta_token,
+                    desc: 'Post to Facebook and Instagram, manage ads, track engagement, and auto-respond to DMs.',
+                    setup: 'Create an app at <a href="https://developers.facebook.com" target="_blank" style="color:#4267B2">developers.facebook.com</a> &rarr; Get Page Access Token',
+                    unlocks: ['Auto-post before/after photos to FB + IG', 'Create and manage FB/IG ads from dashboard', 'Track ad performance and spend', 'Auto-respond to page messages', 'Schedule content from Content Studio'],
+                    fields: [
+                        { key: 'meta_token', label: 'Page Access Token', placeholder: 'EAAx...' },
+                        { key: 'meta_page_id', label: 'Page ID', placeholder: '123456789' }
+                    ]
+                },
+                {
+                    id: 'whatsapp', name: 'WhatsApp Business API', icon: 'WA',
+                    color: '#25D366', key: keys.whatsapp_token,
+                    desc: 'Send automated messages, booking confirmations, follow-up sequences, and deposit reminders.',
+                    setup: 'Apply at <a href="https://business.whatsapp.com/products/business-platform" target="_blank" style="color:#25D366">WhatsApp Business Platform</a> or use 360dialog/Twilio',
+                    unlocks: ['Auto-send booking confirmations', 'Automated follow-up sequences (2-day, 7-day)', 'Deposit payment reminders', 'Post-job review request messages', 'Template message management'],
+                    fields: [
+                        { key: 'whatsapp_token', label: 'API Token', placeholder: 'whsk_...' },
+                        { key: 'whatsapp_phone_id', label: 'Phone Number ID', placeholder: '1234567890' }
+                    ]
+                },
+                {
+                    id: 'tiktok', name: 'TikTok for Business', icon: 'TT',
+                    color: '#ff0050', key: keys.tiktok,
+                    desc: 'Post ASMR grout videos, track views, and manage TikTok ad campaigns.',
+                    setup: 'Register at <a href="https://developers.tiktok.com" target="_blank" style="color:#ff0050">developers.tiktok.com</a> &rarr; Create app &rarr; Get access token',
+                    unlocks: ['Upload videos directly from dashboard', 'Track video views and engagement', 'Manage TikTok ad campaigns', 'Auto-add hashtags and captions'],
+                    fields: [{ key: 'tiktok', label: 'Access Token', placeholder: 'act...' }]
+                }
+            ];
+
+            panel.innerHTML = `
+                <p style="color:#777;font-size:13px;margin-bottom:24px">Connect your APIs below. Keys are stored locally in your browser and never sent to any server except the platform itself.</p>
+
+                ${integrations.map(int => `
+                    <div class="test-card" style="padding:20px;margin-bottom:12px;border-left:4px solid ${int.color}">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                            <div style="display:flex;align-items:center;gap:12px">
+                                <span style="background:${int.color};color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:4px">${int.icon}</span>
+                                <span style="font-size:16px;font-weight:700">${int.name}</span>
+                            </div>
+                            ${status(int.key)}
+                        </div>
+                        <p style="font-size:12px;color:#aaa;margin-bottom:12px">${int.desc}</p>
+
+                        ${int.fields.map(f => `
+                            <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center">
+                                <label style="font-size:11px;color:#777;min-width:120px">${f.label}:</label>
+                                <input type="password" id="api_${f.key}" value="${keys[f.key] || ''}"
+                                    placeholder="${f.placeholder}"
+                                    style="flex:1;background:#0a0a0a;border:1px solid #333;border-radius:6px;padding:8px 12px;color:#fff;font-size:12px;font-family:monospace">
+                                <button onclick="saveApiKey('${f.key}', document.getElementById('api_${f.key}').value)"
+                                    style="background:${int.color};color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap">Save</button>
+                            </div>
+                        `).join('')}
+
+                        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+                            ${int.id === 'openai' || int.id === 'gemini' ? `<button onclick="testApiConnection('${int.id}')" style="background:#222;color:#fff;border:1px solid #333;border-radius:6px;padding:6px 14px;font-size:11px;cursor:pointer">Test Connection</button>` : ''}
+                            ${int.key ? `<button onclick="saveApiKey('${int.fields[0].key}', '');renderSettings()" style="background:#1a0a0a;color:#f44336;border:1px solid #333;border-radius:6px;padding:6px 14px;font-size:11px;cursor:pointer">Disconnect</button>` : ''}
+                        </div>
+
+                        <details style="margin-top:12px">
+                            <summary style="font-size:11px;color:#555;cursor:pointer">Setup instructions + What this unlocks</summary>
+                            <div style="padding:12px 0 0">
+                                <p style="font-size:12px;color:#888;margin-bottom:8px">${int.setup}</p>
+                                <div style="font-size:11px;color:#aaa">
+                                    ${int.unlocks.map(u => `<div style="padding:3px 0">&#x2022; ${u}</div>`).join('')}
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                `).join('')}
+
+                <!-- AUTOMATION MAP -->
+                <h4 style="margin-top:32px;margin-bottom:16px">How APIs Connect to Your Dashboard</h4>
+                <div class="test-card" style="padding:20px">
+                    <table style="width:100%;border-collapse:collapse;font-size:12px">
+                        <thead>
+                            <tr style="border-bottom:1px solid #333">
+                                <th style="padding:8px;text-align:left;color:#D32F2F">Dashboard Feature</th>
+                                <th style="padding:8px;text-align:left;color:#D32F2F">API Required</th>
+                                <th style="padding:8px;text-align:left;color:#D32F2F">What Happens</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid #1a1a1a"><td style="padding:8px;color:#ccc">Content Studio</td><td style="padding:8px;color:#aaa">OpenAI or Gemini + Meta</td><td style="padding:8px;color:#777">AI writes copy, auto-posts to FB/IG/TikTok</td></tr>
+                            <tr style="border-bottom:1px solid #1a1a1a"><td style="padding:8px;color:#ccc">Schedule Tab</td><td style="padding:8px;color:#aaa">WhatsApp Business</td><td style="padding:8px;color:#777">Auto-sends booking confirmations and reminders</td></tr>
+                            <tr style="border-bottom:1px solid #1a1a1a"><td style="padding:8px;color:#ccc">AI Insights</td><td style="padding:8px;color:#aaa">OpenAI or Gemini</td><td style="padding:8px;color:#777">Smarter recommendations based on lead patterns</td></tr>
+                            <tr style="border-bottom:1px solid #1a1a1a"><td style="padding:8px;color:#ccc">Analytics</td><td style="padding:8px;color:#aaa">Google Business + Meta</td><td style="padding:8px;color:#777">Pull real search/social data into dashboard</td></tr>
+                            <tr style="border-bottom:1px solid #1a1a1a"><td style="padding:8px;color:#ccc">Ad Templates</td><td style="padding:8px;color:#aaa">OpenAI or Gemini + Meta</td><td style="padding:8px;color:#777">AI generates copy, one-click publish to FB/IG</td></tr>
+                            <tr style="border-bottom:1px solid #1a1a1a"><td style="padding:8px;color:#ccc">A/B Tests</td><td style="padding:8px;color:#aaa">Meta</td><td style="padding:8px;color:#777">Create real FB ad split tests from dashboard</td></tr>
+                            <tr style="border-bottom:1px solid #1a1a1a"><td style="padding:8px;color:#ccc">Lead Follow-ups</td><td style="padding:8px;color:#aaa">WhatsApp Business</td><td style="padding:8px;color:#777">Auto-send follow-up messages on schedule</td></tr>
+                            <tr><td style="padding:8px;color:#ccc">Review Requests</td><td style="padding:8px;color:#aaa">WhatsApp + Google</td><td style="padding:8px;color:#777">Auto-request Google reviews after job completion</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- QUICK START GUIDE -->
+                <h4 style="margin-top:24px;margin-bottom:12px">Quick Start: Recommended Order</h4>
+                <div class="test-card" style="padding:16px">
+                    <div style="display:grid;gap:8px;font-size:13px;color:#ccc">
+                        <div style="display:flex;gap:10px;align-items:center"><span style="background:#10a37f;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">1</span> <strong>OpenAI or Gemini</strong> - Unlocks AI content generation immediately (Gemini has free tier)</div>
+                        <div style="display:flex;gap:10px;align-items:center"><span style="background:#25D366;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">2</span> <strong>WhatsApp Business</strong> - Automates booking confirmations and follow-ups</div>
+                        <div style="display:flex;gap:10px;align-items:center"><span style="background:#34A853;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">3</span> <strong>Google Business</strong> - Auto-post updates and manage reviews</div>
+                        <div style="display:flex;gap:10px;align-items:center"><span style="background:#4267B2;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">4</span> <strong>Meta (FB/IG)</strong> - Auto-post content and manage ads</div>
+                        <div style="display:flex;gap:10px;align-items:center"><span style="background:#ff0050;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">5</span> <strong>TikTok</strong> - Upload ASMR grout videos and track views</div>
+                    </div>
+                </div>
+            `;
         }
 
         // Init

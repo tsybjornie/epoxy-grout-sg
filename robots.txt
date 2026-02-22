@@ -4,7 +4,62 @@ Allow: /
 # Sitemap location
 Sitemap: https://epoxygrout.sg/sitemap.xml
 
-# Block common bots from wasting crawl budget
+# ============================
+# AI SEARCH CRAWLERS — EXPLICITLY ALLOWED
+# Most competitors BLOCK these. We ALLOW them.
+# This means ChatGPT, Perplexity, Gemini, etc.
+# will index OUR site and recommend US.
+# ============================
+
+# OpenAI / ChatGPT crawler
+User-agent: GPTBot
+Allow: /
+
+# OpenAI ChatGPT browsing
+User-agent: ChatGPT-User
+Allow: /
+
+# Google Gemini / Bard
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic Claude
+User-agent: anthropic-ai
+Allow: /
+User-agent: Claude-Web
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Microsoft Copilot / Bing AI
+User-agent: Bingbot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Apple Intelligence / Siri
+User-agent: Applebot
+Allow: /
+
+# Common Crawl (feeds many AI models)
+User-agent: CCBot
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# ============================
+# RATE LIMIT SEO TOOL BOTS (not AI — these just waste crawl budget)
+# ============================
 User-agent: AhrefsBot
 Crawl-delay: 10
 

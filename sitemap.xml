@@ -2,16 +2,129 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://epoxygrout.sg/</loc>
-        <lastmod>2026-02-13</lastmod>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://epoxygrout.sg/faq.html</loc>
-        <lastmod>2026-02-13</lastmod>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
+    <!-- PROGRAMMATIC SEO — NEIGHBORHOOD PAGES -->
+    <url>
+        <loc>https://epoxygrout.sg/locations/tampines.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/woodlands.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/johor-bahru.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/bedok.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/punggol.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/jurong.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/ang-mo-kio.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/yishun.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/bishan.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/sengkang.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/locations/sembawang.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <!-- SERVICE PAGES -->
+    <url>
+        <loc>https://epoxygrout.sg/services/epoxy-grout.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/services/polyurea.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/services/silicone.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://epoxygrout.sg/services/mapei.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <!-- PROPERTY TYPE PAGES -->
+    <url><loc>https://epoxygrout.sg/property-types/hdb-3-room.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://epoxygrout.sg/property-types/hdb-4-room.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://epoxygrout.sg/property-types/hdb-5-room.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://epoxygrout.sg/property-types/condo.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://epoxygrout.sg/property-types/bto.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://epoxygrout.sg/property-types/landed.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://epoxygrout.sg/property-types/executive.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+    <!-- PROBLEM PAGES -->
+    <url><loc>https://epoxygrout.sg/problems/mold-grout.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://epoxygrout.sg/problems/stained-grout.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://epoxygrout.sg/problems/cracked-grout.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://epoxygrout.sg/problems/peeling-grout.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://epoxygrout.sg/problems/water-leak-tiles.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <!-- BLOG / KNOWLEDGE BASE -->
+    <url><loc>https://epoxygrout.sg/blog/epoxy-vs-cement-grout.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://epoxygrout.sg/blog/how-to-maintain-epoxy-grout.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://epoxygrout.sg/blog/best-grout-for-hdb-bathroom.html</loc><lastmod>2026-02-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <!-- INTERACTIVE TOOLS -->
+    <url><loc>https://epoxygrout.sg/quote.html</loc><lastmod>2026-02-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+    <!-- UTILITY PAGES -->
     <url>
         <loc>https://epoxygrout.sg/terms.html</loc>
         <lastmod>2026-02-13</lastmod>
