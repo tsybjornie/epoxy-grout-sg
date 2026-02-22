@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cold Call Pro — Contact Book & Call Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0A0A0A;
+            --card: #111;
+            --card2: #161616;
+            --border: #1e1e1e;
+            --border2: #2a2a2a;
+            --accent: #D32F2F;
+            --green: #4CAF50;
+            --blue: #4285F4;
+            --gold: #FFD700;
+            --orange: #FF9800;
+            --purple: #9C27B0;
+            --cyan: #00BCD4;
+            --text: #eee;
+            --muted: #777;
+            --dim: #444
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh
+        }
+
+        /* Header */
+        .header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .header h1 span {
+            color: var(--accent)
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all .2s;
+            font-family: 'Inter', sans-serif
+        }
+
+        .btn:hover {
+            transform: translateY(-1px)
+        }
+
+        .btn-red {
+            background: var(--accent);
+            color: #fff
+        }
+
+        .btn-green {
+            background: var(--green);
+            color: #fff
+        }
+
+        .btn-blue {
+            background: var(--blue);
+            color: #fff
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border2);
+            color: var(--text)
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 11px
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            padding: 4px 8px
+        }
+
+        .btn-ghost:hover {
+            color: var(--text)
+        }
+
+        /* Layout */
+        .app {
+            display: grid;
+            grid-template-columns: 280px 1fr 340px;
+            height: calc(100vh - 57px)
+        }
+
+        @media(max-width:1100px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar,
+            .detail-panel {
+                display: none
+            }
+
+            .sidebar.mobile-show,
+            .detail-panel.mobile-show {
+                display: block;
+                position: fixed;
+                top: 57px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 50;
+                background: var(--bg);
+                overflow-y: auto
+            }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            background: var(--bg)
+        }
+
+        .sidebar-section {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .sidebar-title {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: 10px
+        }
+
+        .search-box {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        .search-box::placeholder {
+            color: var(--dim)
+        }
+
+        /* Filters */
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px
+        }
+
+        .chip {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--muted);
+            transition: .2s
+        }
+
+        .chip:hover,
+        .chip.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: #1a0a0a
+        }
+
+        .chip .count {
+            margin-left: 4px;
+            opacity: .6
+        }
+
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            margin-top: 8px
+        }
+
+        .stat-mini {
+            background: var(--card);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center
+        }
+
+        .stat-mini .val {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--accent)
+        }
+
+        .stat-mini .lbl {
+            font-size: 9px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin-top: 2px
+        }
+
+        /* Contact List */
+        .contact-list {
+            overflow-y: auto
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background .15s
+        }
+
+        .contact-item:hover {
+            background: var(--card)
+        }
+
+        .contact-item.active {
+            background: var(--card);
+            border-left: 3px solid var(--accent)
+        }
+
+        .contact-item.selected {
+            background: #1a0a0a
+        }
+
+        .contact-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            flex-shrink: 0
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .contact-name {
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .contact-company {
+            font-size: 11px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .contact-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .status-new {
+            background: #888
+        }
+
+        .status-called {
+            background: var(--blue)
+        }
+
+        .status-interested {
+            background: var(--green)
+        }
+
+        .status-followup {
+            background: var(--orange)
+        }
+
+        .status-closed {
+            background: var(--gold)
+        }
+
+        .status-notinterested {
+            background: var(--accent)
+        }
+
+        /* Main Panel */
+        .main-panel {
+            overflow-y: auto;
+            padding: 0
+        }
+
+        .main-toolbar {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 10
+        }
+
+        .view-tabs {
+            display: flex;
+            gap: 0
+        }
+
+        .view-tab {
+            padding: 6px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: .2s
+        }
+
+        .view-tab:hover {
+            color: var(--text)
+        }
+
+        .view-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent)
+        }
+
+        /* Table View */
+        .table-wrap {
+            overflow-x: auto
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px
+        }
+
+        th {
+            position: sticky;
+            top: 0;
+            background: var(--card);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: .05em;
+            border-bottom: 1px solid var(--border)
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle
+        }
+
+        tr:hover td {
+            background: var(--card)
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase
+        }
+
+        .pill-new {
+            background: rgba(136, 136, 136, .15);
+            color: #888
+        }
+
+        .pill-called {
+            background: rgba(66, 133, 244, .15);
+            color: var(--blue)
+        }
+
+        .pill-interested {
+            background: rgba(76, 175, 80, .15);
+            color: var(--green)
+        }
+
+        .pill-followup {
+            background: rgba(255, 152, 0, .15);
+            color: var(--orange)
+        }
+
+        .pill-closed {
+            background: rgba(255, 215, 0, .15);
+            color: var(--gold)
+        }
+
+        .pill-notinterested {
+            background: rgba(211, 47, 47, .15);
+            color: var(--accent)
+        }
+
+        .call-btn-inline {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif
+        }
+
+        /* Detail Panel */
+        .detail-panel {
+            border-left: 1px solid var(--border);
+            overflow-y: auto;
+            background: var(--bg)
+        }
+
+        .detail-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .detail-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            margin: 0 auto 12px
+        }
+
+        .detail-name {
+            font-size: 18px;
+            font-weight: 800
+        }
+
+        .detail-company {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 16px
+        }
+
+        .detail-section {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .detail-section h4 {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 10px
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px
+        }
+
+        .detail-row .label {
+            color: var(--muted)
+        }
+
+        .detail-row .value {
+            font-weight: 600;
+            text-align: right
+        }
+
+        .detail-row .value a {
+            color: var(--blue);
+            text-decoration: none
+        }
+
+        /* Call Log */
+        .call-log-item {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px
+        }
+
+        .call-log-item:last-child {
+            border: none
+        }
+
+        .call-log-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px
+        }
+
+        .call-log-date {
+            color: var(--muted);
+            font-size: 11px
+        }
+
+        .call-log-duration {
+            color: var(--green);
+            font-weight: 700;
+            font-size: 11px
+        }
+
+        .call-log-notes {
+            color: #aaa;
+            line-height: 1.5
+        }
+
+        /* Call Script */
+        .script-box {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.7;
+            white-space: pre-line;
+            max-height: 300px;
+            overflow-y: auto
+        }
+
+        .script-box .highlight {
+            color: var(--gold);
+            font-weight: 700
+        }
+
+        .script-box .variable {
+            color: var(--cyan);
+            font-weight: 600
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200
+        }
+
+        .modal-overlay.show {
+            display: flex
+        }
+
+        .modal {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto
+        }
+
+        .modal h2 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 16px
+        }
+
+        .form-group {
+            margin-bottom: 14px
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: .05em
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        /* Timer */
+        .call-timer {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--green);
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+            margin: 12px 0
+        }
+
+        .call-active-bar {
+            background: var(--green);
+            color: #fff;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            display: none;
+            position: sticky;
+            top: 0;
+            z-index: 20
+        }
+
+        .call-active-bar.show {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Active Call Bar -->
+    <div class="call-active-bar" id="callBar">
+        <span>📞 On call with <strong id="callBarName">—</strong></span>
+        <span id="callBarTimer">00:00</span>
+        <button class="btn btn-sm" style="background:#fff;color:#000" onclick="endCall()">⏹ End Call</button>
+    </div>
+
+    <div class="header">
+        <h1>📞 Cold Call <span>Pro</span></h1>
+        <div class="header-actions">
+            <button class="btn btn-outline btn-sm" onclick="importCSV()">📥 Import CSV</button>
+            <button class="btn btn-outline btn-sm" onclick="exportCSV()">📤 Export CSV</button>
+            <button class="btn btn-red" onclick="showAddModal()">+ Add Contact</button>
+        </div>
+    </div>
+
+    <div class="app">
+        <!-- Left Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-section">
+                <input class="search-box" id="searchBox" placeholder="Search contacts..." oninput="filterContacts()">
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">Filter by Status</div>
+                <div class="filter-chips" id="filterChips">
+                    <div class="chip active" data-filter="all" onclick="setFilter('all',this)">All <span class="count"
+                            id="countAll">0</span></div>
+                    <div class="chip" data-filter="new" onclick="setFilter('new',this)">🆕 New <span class="count"
+                            id="countNew2">0</span></div>
+                    <div class="chip" data-filter="called" onclick="setFilter('called',this)">📞 Called <span
+                            class="count" id="countCalled">0</span></div>
+                    <div class="chip" data-filter="interested" onclick="setFilter('interested',this)">✅ Interested <span
+                            class="count" id="countInterested">0</span></div>
+                    <div class="chip" data-filter="followup" onclick="setFilter('followup',this)">🔄 Follow-up <span
+                            class="count" id="countFollowup">0</span></div>
+                    <div class="chip" data-filter="closed" onclick="setFilter('closed',this)">💰 Closed <span
+                            class="count" id="countClosed">0</span></div>
+                    <div class="chip" data-filter="notinterested" onclick="setFilter('notinterested',this)">❌ Not Int.
+                        <span class="count" id="countNotinterested">0</span></div>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">Quick Stats</div>
+                <div class="stats-row">
+                    <div class="stat-mini">
+                        <div class="val" id="statToday">0</div>
+                        <div class="lbl">Calls Today</div>
+                    </div>
+                    <div class="stat-mini">
+                        <div class="val" id="statRate">0%</div>
+                        <div class="lbl">Interest Rate</div>
+                    </div>
+                    <div class="stat-mini">
+                        <div class="val" id="statPipeline">$0</div>
+                        <div class="lbl">Pipeline</div>
+                    </div>
+                    <div class="stat-mini">
+                        <div class="val" id="statClosed">$0</div>
+                        <div class="lbl">Closed</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">Categories</div>
+                <div class="filter-chips" id="categoryChips">
+                    <div class="chip active" data-cat="all" onclick="setCategoryFilter('all',this)">All</div>
+                    <div class="chip" data-cat="property-agent" onclick="setCategoryFilter('property-agent',this)">🏠
+                        Property Agent</div>
+                    <div class="chip" data-cat="id-contractor" onclick="setCategoryFilter('id-contractor',this)">🔨
+                        ID/Contractor</div>
+                    <div class="chip" data-cat="condo-mgmt" onclick="setCategoryFilter('condo-mgmt',this)">🏢 Condo Mgmt
+                    </div>
+                    <div class="chip" data-cat="homeowner" onclick="setCategoryFilter('homeowner',this)">👤 Homeowner
+                    </div>
+                    <div class="chip" data-cat="sme" onclick="setCategoryFilter('sme',this)">💼 SME</div>
+                    <div class="chip" data-cat="other" onclick="setCategoryFilter('other',this)">📋 Other</div>
+                </div>
+            </div>
+            <div class="contact-list" id="contactList"></div>
+        </div>
+
+        <!-- Main Panel -->
+        <div class="main-panel" id="mainPanel">
+            <div class="main-toolbar">
+                <div class="view-tabs">
+                    <div class="view-tab active" onclick="setView('table',this)">📋 Table</div>
+                    <div class="view-tab" onclick="setView('scripts',this)">📝 Scripts</div>
+                    <div class="view-tab" onclick="setView('analytics',this)">📊 Analytics</div>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center">
+                    <span style="font-size:11px;color:var(--muted)" id="selectedCount">0 selected</span>
+                    <button class="btn btn-sm btn-outline" onclick="selectAll()">Select All</button>
+                    <button class="btn btn-sm btn-green" onclick="bulkCall()" id="bulkCallBtn" style="display:none">📞
+                        Call Selected</button>
+                </div>
+            </div>
+
+            <!-- Table View -->
+            <div id="viewTable">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:30px"><input type="checkbox" id="selectAllCb"
+                                        onchange="toggleSelectAll(this)"></th>
+                                <th>Name</th>
+                                <th>Company / Area</th>
+                                <th>Phone</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Last Contact</th>
+                                <th>Value</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Scripts View -->
+            <div id="viewScripts" style="display:none;padding:20px">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px">
+                        <h3 style="font-size:14px;font-weight:800;margin-bottom:12px">🏠 Property Agent Script</h3>
+                        <div class="script-box">Hi <span class="variable">[NAME]</span>, this is <span
+                                class="variable">[YOUR NAME]</span> from CLEANGROUT.
+
+                            I work with several property agents in <span class="variable">[AREA]</span> and wanted to
+                            reach out because we offer a service that helps your sellers get better prices.
+
+                            <span class="highlight">We do professional epoxy grout + painting + tile restoration that
+                                makes units look brand new before viewings.</span>
+
+                            Most of our agent partners find that a $1,500-3,000 refresh job helps sell the unit faster
+                            and at a higher price.
+
+                            <span class="highlight">We also offer a referral commission of $100 per booked job.</span>
+
+                            Would it make sense for me to send you some before/after photos so you can see the quality?
+
+                            <span class="variable">[IF YES]</span> → Great, what's the best WhatsApp to send them to?
+                            <span class="variable">[IF BUSY]</span> → No worries, when's a better time to chat?
+                            <span class="variable">[IF NOT INTERESTED]</span> → I understand. Can I leave you my number
+                            in case any of your clients ever need grout or painting work?
+                        </div>
+                    </div>
+
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px">
+                        <h3 style="font-size:14px;font-weight:800;margin-bottom:12px">🔨 Contractor / ID Script</h3>
+                        <div class="script-box">Hi <span class="variable">[NAME]</span>, I'm calling from CLEANGROUT —
+                            we're a specialized grout and painting team.
+
+                            I noticed your work on <span class="variable">[PLATFORM/PROJECT]</span> — really impressive.
+
+                            <span class="highlight">Reason I'm calling: Many IDs and contractors partner with us as a
+                                subcontractor for grout and painting works.</span>
+
+                            The benefit is you don't need to carry these workers on payroll — we handle it end-to-end:
+                            ✓ Epoxy grout (10-year warranty)
+                            ✓ Full home painting
+                            ✓ Tile restoration
+                            ✓ Silicone renewal
+
+                            <span class="highlight">You can mark up our prices or we pay you a referral fee — your
+                                choice.</span>
+
+                            Would you be open to receiving our pricing sheet? I can WhatsApp it to you right now.
+
+                            <span class="variable">[IF YES]</span> → Great, I'll send it over. Shall I also include some
+                            references from other partners?
+                            <span class="variable">[IF BUSY]</span> → Totally understand. When's a good time to follow
+                            up?
+                        </div>
+                    </div>
+
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px">
+                        <h3 style="font-size:14px;font-weight:800;margin-bottom:12px">🏢 Condo Management Script</h3>
+                        <div class="script-box">Hi, may I speak with someone from the management committee?
+
+                            My name is <span class="variable">[YOUR NAME]</span> from CLEANGROUT. We specialize in
+                            bathroom and kitchen restoration for condos.
+
+                            <span class="highlight">We're offering an exclusive group rate for residents at <span
+                                    class="variable">[CONDO NAME]</span>:</span>
+
+                            ✓ 15% discount for all units in the development
+                            ✓ We handle all scheduling — minimal disruption
+                            ✓ 1-day completion per unit
+                            ✓ 10-year warranty on all grout work
+
+                            We've done this for several condos and the residents love it. Usually we put up a notice on
+                            the notice board and residents book directly with us.
+
+                            Would it be possible to discuss this with the management committee?
+
+                            <span class="variable">[IF YES]</span> → Would email or meeting work better?
+                            <span class="variable">[IF NO]</span> → Could I leave some brochures at the management
+                            office instead?
+                        </div>
+                    </div>
+
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px">
+                        <h3 style="font-size:14px;font-weight:800;margin-bottom:12px">👤 Direct Homeowner Script</h3>
+                        <div class="script-box">Hi <span class="variable">[NAME]</span>! I noticed you posted about
+                            <span class="variable">[TOPIC]</span> in <span class="variable">[GROUP/PLATFORM]</span>.
+
+                            I'm from CLEANGROUT — we do epoxy grout, painting, and tile restoration for HDB and condos.
+
+                            <span class="highlight">Quick question: Is your grout still giving you problems?</span>
+
+                            <span class="variable">[IF YES]</span> → We can fix that permanently with epoxy grout. It's
+                            waterproof, mold-proof, and we give a 10-year warranty. Starting from $488 per bathroom.
+
+                            Would you like a free estimate? I can send you our price calculator:
+                            epoxy-nine.vercel.app/quote.html
+
+                            Or easier — just WhatsApp me a photo of the grout and I can give you an instant quote:
+                            wa.me/6598004317
+
+                            <span class="variable">[IF NOT NOW]</span> → No worries at all! Can I WhatsApp you our price
+                            guide for future reference?
+                        </div>
+                    </div>
+
+                    <div
+                        style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;grid-column:1/-1">
+                        <h3 style="font-size:14px;font-weight:800;margin-bottom:12px">💼 SME / Business Owner Script
+                            (Web Services)</h3>
+                        <div class="script-box">Hi <span class="variable">[NAME]</span>, my name is <span
+                                class="variable">[YOUR NAME]</span>. I help small businesses in Singapore get more
+                            customers online.
+
+                            <span class="highlight">I noticed <span class="variable">[BUSINESS NAME]</span> doesn't have
+                                a website / could use an updated online presence.</span>
+
+                            We build professional websites with built-in booking systems and WhatsApp integration,
+                            specifically designed for service businesses like yours.
+
+                            Our package includes:
+                            ✓ Professional website with mobile optimization
+                            ✓ WhatsApp booking button (customers book directly)
+                            ✓ Google Business Profile setup
+                            ✓ Basic SEO so you show up in Google searches
+
+                            <span class="highlight">We can have this live within 3-5 working days. Starting from
+                                $1,500.</span>
+
+                            And if you're a Malaysian-registered company, you might qualify for MDEC grants that cover
+                            up to 50% of the cost.
+
+                            Would you like to see some examples of sites we've built?
+
+                            <span class="variable">[IF YES]</span> → Great, can I WhatsApp them to you?
+                            <span class="variable">[IF PRICE CONCERN]</span> → Totally understand. With the grant
+                            subsidy, your out-of-pocket could be as low as $750. Shall I check eligibility for you?
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics View -->
+            <div id="viewAnalytics" style="display:none;padding:20px">
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+                    <div style="background:var(--card);border-radius:12px;padding:20px;text-align:center">
+                        <div style="font-size:32px;font-weight:900;color:var(--accent)" id="anTotal">0</div>
+                        <div style="font-size:11px;color:var(--muted);margin-top:4px">Total Contacts</div>
+                    </div>
+                    <div style="background:var(--card);border-radius:12px;padding:20px;text-align:center">
+                        <div style="font-size:32px;font-weight:900;color:var(--blue)" id="anCalled">0</div>
+                        <div style="font-size:11px;color:var(--muted);margin-top:4px">Called</div>
+                    </div>
+                    <div style="background:var(--card);border-radius:12px;padding:20px;text-align:center">
+                        <div style="font-size:32px;font-weight:900;color:var(--green)" id="anInterested">0</div>
+                        <div style="font-size:11px;color:var(--muted);margin-top:4px">Interested</div>
+                    </div>
+                    <div style="background:var(--card);border-radius:12px;padding:20px;text-align:center">
+                        <div style="font-size:32px;font-weight:900;color:var(--gold)" id="anClosed">0</div>
+                        <div style="font-size:11px;color:var(--muted);margin-top:4px">Closed Won</div>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                    <div style="background:var(--card);border-radius:12px;padding:20px">
+                        <h3 style="font-size:14px;font-weight:800;margin-bottom:16px">📊 Conversion Funnel</h3>
+                        <div id="funnelChart"></div>
+                    </div>
+                    <div style="background:var(--card);border-radius:12px;padding:20px">
+                        <h3 style="font-size:14px;font-weight:800;margin-bottom:16px">📞 Call Activity (Last 7 Days)
+                        </h3>
+                        <div id="activityChart"></div>
+                    </div>
+                    <div style="background:var(--card);border-radius:12px;padding:20px">
+                        <h3 style="font-size:14px;font-weight:800;margin-bottom:16px">🏷️ By Category</h3>
+                        <div id="categoryChart"></div>
+                    </div>
+                    <div style="background:var(--card);border-radius:12px;padding:20px">
+                        <h3 style="font-size:14px;font-weight:800;margin-bottom:16px">📅 Follow-ups Due</h3>
+                        <div id="followupList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Panel -->
+        <div class="detail-panel" id="detailPanel">
+            <div id="detailContent" style="text-align:center;padding:40px;color:var(--muted)">
+                <p style="font-size:48px;margin-bottom:12px">👈</p>
+                <p>Select a contact to view details</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Contact Modal -->
+    <div class="modal-overlay" id="addModal">
+        <div class="modal">
+            <h2 id="modalTitle">Add Contact</h2>
+            <input type="hidden" id="editId">
+            <div class="form-row">
+                <div class="form-group"><label>Name *</label><input id="fName" placeholder="John Tan"></div>
+                <div class="form-group"><label>Phone *</label><input id="fPhone" placeholder="+65 9xxx xxxx"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Company / Area</label><input id="fCompany"
+                        placeholder="ERA Realty / Tampines"></div>
+                <div class="form-group"><label>Email</label><input id="fEmail" placeholder="john@email.com"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="fCategory">
+                        <option value="property-agent">🏠 Property Agent</option>
+                        <option value="id-contractor">🔨 ID / Contractor</option>
+                        <option value="condo-mgmt">🏢 Condo Management</option>
+                        <option value="homeowner">👤 Homeowner</option>
+                        <option value="sme">💼 SME / Business</option>
+                        <option value="other">📋 Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Est. Deal Value (S$)</label>
+                    <input id="fValue" type="number" placeholder="1500">
+                </div>
+            </div>
+            <div class="form-group"><label>Notes</label><textarea id="fNotes" rows="3"
+                    placeholder="Source, context, etc."></textarea></div>
+            <div class="form-group"><label>Follow-up Date</label><input id="fFollowup" type="date"></div>
+            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-red" onclick="saveContact()">💾 Save Contact</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call Modal -->
+    <div class="modal-overlay" id="callModal">
+        <div class="modal" style="max-width:420px;text-align:center">
+            <h2>📞 Calling...</h2>
+            <div style="font-size:18px;font-weight:800;margin:8px 0" id="callContactName">—</div>
+            <div style="font-size:14px;color:var(--muted)" id="callContactPhone">—</div>
+            <div class="call-timer" id="callTimer">00:00</div>
+            <div style="margin-bottom:16px">
+                <a id="callPhoneLink" href="tel:" class="btn btn-green" style="text-decoration:none;font-size:14px">📱
+                    Tap to Dial</a>
+            </div>
+            <div class="form-group" style="text-align:left"><label>Call Notes</label><textarea id="callNotes" rows="4"
+                    placeholder="What did you discuss?"></textarea></div>
+            <div class="form-group" style="text-align:left">
+                <label>Update Status</label>
+                <select id="callStatus">
+                    <option value="called">📞 Called (No outcome yet)</option>
+                    <option value="interested">✅ Interested</option>
+                    <option value="followup">🔄 Needs Follow-up</option>
+                    <option value="notinterested">❌ Not Interested</option>
+                    <option value="closed">💰 Closed / Won!</option>
+                </select>
+            </div>
+            <div class="form-group" style="text-align:left"><label>Follow-up Date</label><input id="callFollowupDate"
+                    type="date"></div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+                <button class="btn btn-outline" onclick="cancelCall()">Cancel</button>
+                <button class="btn btn-red" onclick="endCall()">⏹ End & Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATA =====
+        let contacts = JSON.parse(localStorage.getItem('cc_contacts') || '[]');
+        let currentFilter = 'all';
+        let currentCategory = 'all';
+        let currentView = 'table';
+        let selectedContact = null;
+        let selectedIds = new Set();
+        let callTimerInterval = null;
+        let callStartTime = null;
+        let callingContactId = null;
+
+        // ===== CONTACT CRUD =====
+        function showAddModal(editContact = null) {
+            document.getElementById('addModal').classList.add('show');
+            document.getElementById('modalTitle').textContent = editContact ? 'Edit Contact' : 'Add Contact';
+            if (editContact) {
+                document.getElementById('editId').value = editContact.id;
+                document.getElementById('fName').value = editContact.name;
+                document.getElementById('fPhone').value = editContact.phone;
+                document.getElementById('fCompany').value = editContact.company || '';
+                document.getElementById('fEmail').value = editContact.email || '';
+                document.getElementById('fCategory').value = editContact.category || 'other';
+                document.getElementById('fValue').value = editContact.value || '';
+                document.getElementById('fNotes').value = editContact.notes || '';
+                document.getElementById('fFollowup').value = editContact.followupDate || '';
+            } else {
+                document.getElementById('editId').value = '';
+                ['fName', 'fPhone', 'fCompany', 'fEmail', 'fValue', 'fNotes', 'fFollowup'].forEach(id => document.getElementById(id).value = '');
+                document.getElementById('fCategory').value = 'property-agent';
+            }
+        }
+
+        function closeModal() { document.getElementById('addModal').classList.remove('show'); }
+
+        function saveContact() {
+            const name = document.getElementById('fName').value.trim();
+            const phone = document.getElementById('fPhone').value.trim();
+            if (!name || !phone) { alert('Name and phone are required'); return; }
+
+            const editId = document.getElementById('editId').value;
+            const data = {
+                name, phone,
+                company: document.getElementById('fCompany').value.trim(),
+                email: document.getElementById('fEmail').value.trim(),
+                category: document.getElementById('fCategory').value,
+                value: parseFloat(document.getElementById('fValue').value) || 0,
+                notes: document.getElementById('fNotes').value.trim(),
+                followupDate: document.getElementById('fFollowup').value
+            };
+
+            if (editId) {
+                const idx = contacts.findIndex(c => c.id == editId);
+                if (idx > -1) contacts[idx] = { ...contacts[idx], ...data };
+            } else {
+                contacts.push({ id: Date.now(), ...data, status: 'new', callLog: [], created: new Date().toISOString() });
+            }
+            save(); closeModal(); render();
+        }
+
+        function deleteContact(id) {
+            if (!confirm('Delete this contact?')) return;
+            contacts = contacts.filter(c => c.id !== id);
+            if (selectedContact?.id === id) selectedContact = null;
+            save(); render();
+        }
+
+        // ===== CALL SYSTEM =====
+        function startCall(id) {
+            const contact = contacts.find(c => c.id === id);
+            if (!contact) return;
+            callingContactId = id;
+            callStartTime = Date.now();
+
+            document.getElementById('callContactName').textContent = contact.name;
+            document.getElementById('callContactPhone').textContent = contact.phone;
+            document.getElementById('callPhoneLink').href = `tel:${contact.phone.replace(/\s/g, '')}`;
+            document.getElementById('callNotes').value = '';
+            document.getElementById('callStatus').value = 'called';
+            document.getElementById('callFollowupDate').value = '';
+            document.getElementById('callModal').classList.add('show');
+
+            // Start timer
+            clearInterval(callTimerInterval);
+            callTimerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - callStartTime) / 1000);
+                const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+                const secs = String(elapsed % 60).padStart(2, '0');
+                document.getElementById('callTimer').textContent = `${mins}:${secs}`;
+                document.getElementById('callBarTimer').textContent = `${mins}:${secs}`;
+            }, 1000);
+
+            // Show active bar
+            document.getElementById('callBarName').textContent = contact.name;
+            document.getElementById('callBar').classList.add('show');
+        }
+
+        function endCall() {
+            clearInterval(callTimerInterval);
+            const contact = contacts.find(c => c.id === callingContactId);
+            if (contact) {
+                const duration = Math.floor((Date.now() - callStartTime) / 1000);
+                const notes = document.getElementById('callNotes').value.trim();
+                const status = document.getElementById('callStatus').value;
+                const followup = document.getElementById('callFollowupDate').value;
+
+                contact.callLog = contact.callLog || [];
+                contact.callLog.push({
+                    date: new Date().toISOString(),
+                    duration,
+                    notes,
+                    status
+                });
+                contact.status = status;
+                contact.lastContact = new Date().toISOString();
+                if (followup) contact.followupDate = followup;
+                save();
+            }
+            document.getElementById('callModal').classList.remove('show');
+            document.getElementById('callBar').classList.remove('show');
+            render();
+            if (selectedContact?.id === callingContactId) showDetail(callingContactId);
+        }
+
+        function cancelCall() {
+            clearInterval(callTimerInterval);
+            document.getElementById('callModal').classList.remove('show');
+            document.getElementById('callBar').classList.remove('show');
+        }
+
+        // ===== FILTERS =====
+        function setFilter(filter, el) {
+            currentFilter = filter;
+            document.querySelectorAll('#filterChips .chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            render();
+        }
+
+        function setCategoryFilter(cat, el) {
+            currentCategory = cat;
+            document.querySelectorAll('#categoryChips .chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            render();
+        }
+
+        function filterContacts() { render(); }
+
+        function getFiltered() {
+            const q = document.getElementById('searchBox').value.toLowerCase();
+            return contacts.filter(c => {
+                if (currentFilter !== 'all' && c.status !== currentFilter) return false;
+                if (currentCategory !== 'all' && c.category !== currentCategory) return false;
+                if (q && !c.name.toLowerCase().includes(q) && !(c.company || '').toLowerCase().includes(q) && !c.phone.includes(q)) return false;
+                return true;
+            });
+        }
+
+        // ===== VIEWS =====
+        function setView(view, el) {
+            currentView = view;
+            document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+            if (el) el.classList.add('active');
+            ['viewTable', 'viewScripts', 'viewAnalytics'].forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById('view' + view.charAt(0).toUpperCase() + view.slice(1)).style.display = '';
+            if (view === 'analytics') renderAnalytics();
+        }
+
+        // ===== SELECTION =====
+        function toggleSelect(id) {
+            if (selectedIds.has(id)) selectedIds.delete(id); else selectedIds.add(id);
+            updateSelectionUI();
+        }
+        function toggleSelectAll(cb) {
+            const filtered = getFiltered();
+            if (cb.checked) filtered.forEach(c => selectedIds.add(c.id)); else selectedIds.clear();
+            updateSelectionUI(); render();
+        }
+        function selectAll() {
+            const filtered = getFiltered();
+            filtered.forEach(c => selectedIds.add(c.id));
+            updateSelectionUI(); render();
+        }
+        function updateSelectionUI() {
+            document.getElementById('selectedCount').textContent = `${selectedIds.size} selected`;
+            document.getElementById('bulkCallBtn').style.display = selectedIds.size > 0 ? '' : 'none';
+        }
+
+        // ===== RENDER =====
+        function render() {
+            const filtered = getFiltered();
+
+            // Sidebar contact list
+            const listEl = document.getElementById('contactList');
+            listEl.innerHTML = filtered.map(c => `
+            <div class="contact-item${selectedContact?.id === c.id ? ' active' : ''}" onclick="showDetail(${c.id})">
+                <div class="contact-avatar" style="background:${getCatColor(c.category)}20;color:${getCatColor(c.category)}">${c.name.charAt(0)}</div>
+                <div class="contact-info">
+                    <div class="contact-name">${c.name}</div>
+                    <div class="contact-company">${c.company || c.phone}</div>
+                </div>
+                <div class="contact-status status-${c.status}"></div>
+            </div>
+        `).join('') || '<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px">No contacts found</div>';
+
+            // Table
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = filtered.map(c => `
+            <tr>
+                <td><input type="checkbox" ${selectedIds.has(c.id) ? 'checked' : ''} onchange="toggleSelect(${c.id})"></td>
+                <td style="font-weight:700;cursor:pointer" onclick="showDetail(${c.id})">${c.name}</td>
+                <td style="color:var(--muted)">${c.company || '—'}</td>
+                <td><a href="tel:${c.phone.replace(/\s/g, '')}" style="color:var(--cyan);text-decoration:none">${c.phone}</a></td>
+                <td><span style="font-size:11px">${getCatLabel(c.category)}</span></td>
+                <td><span class="status-pill pill-${c.status}">${getStatusLabel(c.status)}</span></td>
+                <td style="font-size:11px;color:var(--muted)">${c.lastContact ? timeAgo(c.lastContact) : 'Never'}</td>
+                <td style="font-weight:700;color:var(--green)">${c.value ? '$' + c.value.toLocaleString() : '—'}</td>
+                <td>
+                    <button class="call-btn-inline" onclick="startCall(${c.id})">📞 Call</button>
+                    <button class="btn-ghost btn-sm" onclick="showAddModal(contacts.find(x=>x.id===${c.id}))">✏️</button>
+                    <button class="btn-ghost btn-sm" onclick="deleteContact(${c.id})">🗑️</button>
+                </td>
+            </tr>
+        `).join('');
+
+            updateCounts();
+            updateSelectionUI();
+        }
+
+        function showDetail(id) {
+            const c = contacts.find(x => x.id === id);
+            if (!c) return;
+            selectedContact = c;
+
+            const el = document.getElementById('detailContent');
+            el.innerHTML = `
+            <div class="detail-header">
+                <div class="detail-avatar" style="background:${getCatColor(c.category)}20;color:${getCatColor(c.category)}">${c.name.charAt(0)}</div>
+                <div class="detail-name">${c.name}</div>
+                <div class="detail-company">${c.company || ''}</div>
+                <div class="detail-actions">
+                    <button class="btn btn-green btn-sm" onclick="startCall(${c.id})">📞 Call</button>
+                    <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '')}" target="_blank" class="btn btn-sm" style="background:#25D366;color:#fff;text-decoration:none">💬 WhatsApp</a>
+                    <button class="btn btn-outline btn-sm" onclick="showAddModal(contacts.find(x=>x.id===${c.id}))">✏️ Edit</button>
+                </div>
+            </div>
+            <div class="detail-section">
+                <h4>Contact Info</h4>
+                <div class="detail-row"><span class="label">Phone</span><span class="value"><a href="tel:${c.phone.replace(/\s/g, '')}">${c.phone}</a></span></div>
+                ${c.email ? `<div class="detail-row"><span class="label">Email</span><span class="value"><a href="mailto:${c.email}">${c.email}</a></span></div>` : ''}
+                <div class="detail-row"><span class="label">Category</span><span class="value">${getCatLabel(c.category)}</span></div>
+                <div class="detail-row"><span class="label">Status</span><span class="value"><span class="status-pill pill-${c.status}">${getStatusLabel(c.status)}</span></span></div>
+                <div class="detail-row"><span class="label">Deal Value</span><span class="value" style="color:var(--green)">${c.value ? 'S$' + c.value.toLocaleString() : '—'}</span></div>
+                ${c.followupDate ? `<div class="detail-row"><span class="label">Follow-up</span><span class="value" style="color:${new Date(c.followupDate) <= new Date() ? 'var(--accent)' : 'var(--orange)'}">${c.followupDate}</span></div>` : ''}
+                <div class="detail-row"><span class="label">Added</span><span class="value">${new Date(c.created).toLocaleDateString()}</span></div>
+            </div>
+            ${c.notes ? `<div class="detail-section"><h4>Notes</h4><p style="font-size:13px;color:#aaa;line-height:1.6">${c.notes}</p></div>` : ''}
+            <div class="detail-section">
+                <h4>Call History (${(c.callLog || []).length} calls)</h4>
+                ${(c.callLog || []).length === 0 ? '<p style="font-size:12px;color:var(--muted)">No calls yet</p>' :
+                    (c.callLog || []).slice().reverse().map(log => `
+                    <div class="call-log-item">
+                        <div class="call-log-header">
+                            <span class="call-log-date">${new Date(log.date).toLocaleString()}</span>
+                            <span class="call-log-duration">${Math.floor(log.duration / 60)}:${String(log.duration % 60).padStart(2, '0')}</span>
+                        </div>
+                        <div style="margin-bottom:4px"><span class="status-pill pill-${log.status}">${getStatusLabel(log.status)}</span></div>
+                        ${log.notes ? `<div class="call-log-notes">${log.notes}</div>` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        `;
+            render();
+        }
+
+        // ===== ANALYTICS =====
+        function renderAnalytics() {
+            const statusCounts = {};
+            const catCounts = {};
+            contacts.forEach(c => {
+                statusCounts[c.status] = (statusCounts[c.status] || 0) + 1;
+                catCounts[c.category] = (catCounts[c.category] || 0) + 1;
+            });
+
+            document.getElementById('anTotal').textContent = contacts.length;
+            document.getElementById('anCalled').textContent = contacts.filter(c => c.status !== 'new').length;
+            document.getElementById('anInterested').textContent = statusCounts.interested || 0;
+            document.getElementById('anClosed').textContent = statusCounts.closed || 0;
+
+            // Funnel
+            const stages = [['new', 'New', contacts.length], ['called', 'Called', contacts.filter(c => c.status !== 'new').length], ['interested', 'Interested', statusCounts.interested || 0], ['closed', 'Closed', (statusCounts.closed || 0)]];
+            const maxVal = Math.max(...stages.map(s => s[2]), 1);
+            document.getElementById('funnelChart').innerHTML = stages.map(([key, label, val]) =>
+                `<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+                <span style="width:70px;font-size:11px;color:var(--muted);text-align:right">${label}</span>
+                <div style="flex:1;height:28px;background:var(--border);border-radius:4px;overflow:hidden">
+                    <div style="height:100%;width:${(val / maxVal * 100)}%;background:${key === 'closed' ? 'var(--gold)' : key === 'interested' ? 'var(--green)' : 'var(--blue)'};border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:#fff;min-width:${val > 0 ? '30px' : '0'}">${val}</div>
+                </div>
+            </div>`
+            ).join('');
+
+            // Category chart
+            document.getElementById('categoryChart').innerHTML = Object.entries(catCounts).map(([cat, count]) =>
+                `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px">
+                <span>${getCatLabel(cat)}</span><span style="font-weight:700">${count}</span>
+            </div>`
+            ).join('') || '<p style="color:var(--muted);font-size:12px">No contacts yet</p>';
+
+            // Follow-ups due
+            const due = contacts.filter(c => c.followupDate && new Date(c.followupDate) <= new Date(Date.now() + 3 * 86400000)).sort((a, b) => new Date(a.followupDate) - new Date(b.followupDate));
+            document.getElementById('followupList').innerHTML = due.map(c =>
+                `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px">
+                <div><span style="font-weight:700">${c.name}</span><br><span style="color:var(--muted)">${c.company || ''}</span></div>
+                <div style="text-align:right">
+                    <span style="color:${new Date(c.followupDate) <= new Date() ? 'var(--accent)' : 'var(--orange)'};font-weight:700">${c.followupDate}</span><br>
+                    <button class="call-btn-inline" style="margin-top:4px" onclick="startCall(${c.id})">📞</button>
+                </div>
+            </div>`
+            ).join('') || '<p style="color:var(--muted);font-size:12px">No follow-ups due</p>';
+        }
+
+        // ===== IMPORT / EXPORT =====
+        function exportCSV() {
+            const headers = 'Name,Phone,Company,Email,Category,Status,Value,Notes,Follow-up Date,Created,Last Contact,Call Count\n';
+            const rows = contacts.map(c =>
+                `"${c.name}","${c.phone}","${c.company || ''}","${c.email || ''}","${c.category}","${c.status}",${c.value || 0},"${(c.notes || '').replace(/"/g, '""')}","${c.followupDate || ''}","${c.created}","${c.lastContact || ''}",${(c.callLog || []).length}`
+            ).join('\n');
+            const blob = new Blob([headers + rows], { type: 'text/csv' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `coldcall-contacts-${new Date().toISOString().slice(0, 10)}.csv`;
+            a.click();
+        }
+
+        function importCSV() {
+            const input = document.createElement('input');
+            input.type = 'file'; input.accept = '.csv';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = ev => {
+                    const lines = ev.target.result.split('\n').filter(l => l.trim());
+                    const header = lines[0].toLowerCase();
+                    for (let i = 1; i < lines.length; i++) {
+                        const cols = lines[i].match(/(".*?"|[^,]*)/g) || [];
+                        const clean = col => (col || '').replace(/^"|"$/g, '').trim();
+                        const name = clean(cols[0]);
+                        const phone = clean(cols[1]);
+                        if (!name || !phone) continue;
+                        if (contacts.find(c => c.phone === phone)) continue; // skip dupes
+                        contacts.push({
+                            id: Date.now() + i,
+                            name, phone,
+                            company: clean(cols[2]),
+                            email: clean(cols[3]),
+                            category: clean(cols[4]) || 'other',
+                            status: 'new',
+                            value: parseFloat(clean(cols[6])) || 0,
+                            notes: clean(cols[7]),
+                            followupDate: clean(cols[8]),
+                            callLog: [],
+                            created: new Date().toISOString()
+                        });
+                    }
+                    save(); render();
+                    alert(`✅ Imported ${lines.length - 1} contacts!`);
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // ===== HELPERS =====
+        function save() { localStorage.setItem('cc_contacts', JSON.stringify(contacts)); }
+
+        function updateCounts() {
+            const all = contacts.length;
+            const counts = {};
+            let pipeline = 0, closed = 0, todayCalls = 0;
+            const today = new Date().toDateString();
+
+            contacts.forEach(c => {
+                counts[c.status] = (counts[c.status] || 0) + 1;
+                if (['interested', 'followup', 'called'].includes(c.status)) pipeline += c.value || 0;
+                if (c.status === 'closed') closed += c.value || 0;
+                (c.callLog || []).forEach(log => { if (new Date(log.date).toDateString() === today) todayCalls++; });
+            });
+
+            document.getElementById('countAll').textContent = all;
+            document.getElementById('countNew2').textContent = counts.new || 0;
+            document.getElementById('countCalled').textContent = counts.called || 0;
+            document.getElementById('countInterested').textContent = counts.interested || 0;
+            document.getElementById('countFollowup').textContent = counts.followup || 0;
+            document.getElementById('countClosed').textContent = counts.closed || 0;
+            document.getElementById('countNotinterested').textContent = counts.notinterested || 0;
+
+            document.getElementById('statToday').textContent = todayCalls;
+            document.getElementById('statRate').textContent = all > 0 ? Math.round(((counts.interested || 0) + (counts.closed || 0)) / Math.max(all - (counts.new || 0), 1) * 100) + '%' : '0%';
+            document.getElementById('statPipeline').textContent = '$' + pipeline.toLocaleString();
+            document.getElementById('statClosed').textContent = '$' + closed.toLocaleString();
+        }
+
+        function getCatColor(cat) {
+            const colors = { 'property-agent': '#4285F4', 'id-contractor': '#FF9800', 'condo-mgmt': '#9C27B0', 'homeowner': '#4CAF50', 'sme': '#00BCD4', 'other': '#888' };
+            return colors[cat] || '#888';
+        }
+        function getCatLabel(cat) {
+            const labels = { 'property-agent': '🏠 Property Agent', 'id-contractor': '🔨 ID/Contractor', 'condo-mgmt': '🏢 Condo Mgmt', 'homeowner': '👤 Homeowner', 'sme': '💼 SME', 'other': '📋 Other' };
+            return labels[cat] || cat;
+        }
+        function getStatusLabel(status) {
+            const labels = { new: 'New', called: 'Called', interested: 'Interested', followup: 'Follow-up', closed: 'Closed', notinterested: 'Not Int.' };
+            return labels[status] || status;
+        }
+        function timeAgo(dateStr) {
+            const diff = Date.now() - new Date(dateStr).getTime();
+            const mins = Math.floor(diff / 60000);
+            if (mins < 60) return mins + 'm ago';
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return hrs + 'h ago';
+            return Math.floor(hrs / 24) + 'd ago';
+        }
+
+        // Close modals on escape
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') { closeModal(); cancelCall(); }
+        });
+
+        // Init
+        render();
+    </script>
+</body>
+
+</html>

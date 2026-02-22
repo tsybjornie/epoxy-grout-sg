@@ -1,0 +1,212 @@
+{
+  "name": "CLEANGROUT Lead Autopilot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cleangrout-lead",
+        "options": {
+          "responseMode": "onReceived"
+        }
+      },
+      "id": "webhook-trigger",
+      "name": "Lead Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.event }}",
+              "value2": "whatsapp_click",
+              "operation": "equals"
+            }
+          ]
+        }
+      },
+      "id": "check-intent",
+      "name": "High Intent?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=🔥 HOT LEAD — WhatsApp Click!\n\n🏠 Property: {{ $json.property }}\n🔧 Service: {{ $json.service }}\n💰 Quote: ${{ $json.quote_amount }}\n⏰ Time: {{ $json.timestamp }}\n\n👉 Customer is opening WhatsApp NOW. Be ready to reply!\n\nAdd-ons: {{ $json.addons ? JSON.stringify($json.addons) : 'None' }}",
+        "additionalFields": {}
+      },
+      "id": "telegram-hot",
+      "name": "Telegram HOT Alert",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [720, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "1",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=📊 New Quote Calculated\n\n🏠 Property: {{ $json.property }}\n🔧 Service: {{ $json.service }}\n💰 Quote: ${{ $json.quote_amount }}\n⏰ Time: {{ $json.timestamp }}\n\nBrowsing — hasn't clicked WhatsApp yet.",
+        "additionalFields": {}
+      },
+      "id": "telegram-browse",
+      "name": "Telegram Browse Alert",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [720, 420],
+      "credentials": {
+        "telegramApi": {
+          "id": "1",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": { "value": "YOUR_GOOGLE_SHEET_ID" },
+        "sheetName": "Leads",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $json.timestamp }}",
+            "Event": "={{ $json.event }}",
+            "Property": "={{ $json.property }}",
+            "Service": "={{ $json.service }}",
+            "Quote Amount": "={{ $json.quote_amount }}",
+            "Intent": "={{ $json.intent }}",
+            "Add-ons": "={{ $json.addons ? JSON.stringify($json.addons) : '' }}",
+            "Source": "={{ $json.source }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "google-sheets",
+      "name": "Log to Google Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [480, 520],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2",
+          "name": "Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "daily-trigger",
+      "name": "Daily 8AM Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 700]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=☀️ Good morning! Daily CLEANGROUT Tasks:\n\n1️⃣ Post in 3 FB Groups (check Content Engine)\n2️⃣ Update WhatsApp Status\n3️⃣ Check yesterday's leads\n4️⃣ Follow up any unresponded quotes\n\n📊 Dashboard: epoxy-nine.vercel.app/autopilot.html\n📝 Content: epoxy-nine.vercel.app/autopilot.html#content\n\nLet's get those leads! 💪",
+        "additionalFields": {}
+      },
+      "id": "daily-reminder",
+      "name": "Daily Task Reminder",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [480, 700],
+      "credentials": {
+        "telegramApi": {
+          "id": "1",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 21
+            }
+          ]
+        }
+      },
+      "id": "evening-trigger",
+      "name": "Evening 9PM Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 900]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=🌙 Evening Check-in:\n\n📊 Check today's leads on your dashboard\n📱 Reply to any unanswered WhatsApp messages\n📝 Prepare tomorrow's FB posts\n🔧 Confirm tomorrow's job schedule with workers\n\nDashboard: epoxy-nine.vercel.app/autopilot.html",
+        "additionalFields": {}
+      },
+      "id": "evening-reminder",
+      "name": "Evening Reminder",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [480, 900],
+      "credentials": {
+        "telegramApi": {
+          "id": "1",
+          "name": "Telegram Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Lead Webhook": {
+      "main": [
+        [
+          { "node": "High Intent?", "type": "main", "index": 0 },
+          { "node": "Log to Google Sheet", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "High Intent?": {
+      "main": [
+        [
+          { "node": "Telegram HOT Alert", "type": "main", "index": 0 }
+        ],
+        [
+          { "node": "Telegram Browse Alert", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Daily 8AM Trigger": {
+      "main": [
+        [
+          { "node": "Daily Task Reminder", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Evening 9PM Trigger": {
+      "main": [
+        [
+          { "node": "Evening Reminder", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

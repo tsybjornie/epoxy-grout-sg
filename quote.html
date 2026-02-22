@@ -740,6 +740,45 @@
     </div>
 
     <script>
+        // ===== N8N WEBHOOK CONFIG =====
+        // Replace this URL with your n8n webhook URL after setup
+        const N8N_WEBHOOK_URL = localStorage.getItem('cg_webhook_url') || '';
+
+        // Send lead data to n8n
+        function fireWebhook(eventType, data) {
+            const webhookUrl = localStorage.getItem('cg_webhook_url') || N8N_WEBHOOK_URL;
+            if (!webhookUrl) return;
+
+            const payload = {
+                event: eventType,
+                timestamp: new Date().toISOString(),
+                source: 'quote_calculator',
+                site: window.location.hostname,
+                ...data
+            };
+
+            // Fire and forget - don't block the UI
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                mode: 'no-cors'
+            }).catch(() => { }); // Silent fail - don't break the calculator
+        }
+
+        // Config panel (press Ctrl+Shift+W to open)
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'W') {
+                const current = localStorage.getItem('cg_webhook_url') || '';
+                const url = prompt('n8n Webhook URL:', current);
+                if (url !== null) {
+                    localStorage.setItem('cg_webhook_url', url);
+                    alert(url ? '✅ Webhook URL saved! All quotes will now ping n8n.' : '⚠️ Webhook URL cleared.');
+                }
+            }
+        });
+        // ===== END CONFIG =====
+
         let selections = { prop: null, area: null, svc: 'epoxy', mode: null, paintScope: null, paintBrand: 'nippon', tileScope: null, handyType: null, bundle: null };
 
         const pricing = {
@@ -888,9 +927,32 @@
 
             // WhatsApp link
             const msg = `Hi! I used the price calculator and got a quote for:\n\nProperty: ${propNames[prop]}\nService: ${label}\nEstimated: $${total.toLocaleString()}\n\nCan I book a free inspection?`;
-            document.getElementById('waBtn').href = `https://wa.me/6598004317?text=${encodeURIComponent(msg)}`;
+            const waBtn = document.getElementById('waBtn');
+            waBtn.href = `https://wa.me/6598004317?text=${encodeURIComponent(msg)}`;
 
-            // Track
+            // Fire webhook on WhatsApp click (high-intent lead!)
+            waBtn.onclick = function () {
+                fireWebhook('whatsapp_click', {
+                    property: propNames[prop],
+                    service: label,
+                    quote_amount: total,
+                    mode: mode,
+                    addons: addons.filter(([id]) => document.getElementById(id)?.checked).map(([, name, price]) => ({ name, price })),
+                    intent: 'HIGH'
+                });
+            };
+
+            // Fire webhook on quote calculation
+            fireWebhook('quote_calculated', {
+                property: propNames[prop],
+                service: label,
+                quote_amount: total,
+                mode: mode,
+                addons: addons.filter(([id]) => document.getElementById(id)?.checked).map(([, name, price]) => ({ name, price })),
+                intent: 'BROWSING'
+            });
+
+            // Track locally
             try {
                 const events = JSON.parse(localStorage.getItem('cg_events') || '[]');
                 events.push({ event: 'quote_calculated', data: { prop, mode, total }, ts: new Date().toISOString() });
