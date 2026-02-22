@@ -2431,15 +2431,41 @@
         // ============================
         function getApiKeys() {
             return getData('apiKeys', {
-                openai: '', gemini: '', google_business: '', meta_token: '', meta_page_id: '',
+                n8n_url: '', openai: '', gemini: '', google_business: '', meta_token: '', meta_page_id: '',
                 whatsapp_token: '', whatsapp_phone_id: '', tiktok: '', carousell: ''
             });
+        }
+
+        // ============================
+        // N8N WEBHOOK BRIDGE
+        // ============================
+        function fireWebhook(event, data) {
+            const keys = getApiKeys();
+            // Check both storage locations for compatibility with quote.html
+            const url = keys.n8n_url || localStorage.getItem('cg_webhook_url') || '';
+            if (!url) return; // silently skip if not configured
+            const payload = {
+                event,
+                timestamp: new Date().toISOString(),
+                source: 'leadgen_dashboard',
+                ...data
+            };
+            fetch(url, {
+                method: 'POST',
+                mode: 'no-cors', // n8n on localhost: avoids CORS block
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(() => { }); // fire-and-forget
         }
 
         function saveApiKey(key, value) {
             const keys = getApiKeys();
             keys[key] = value;
             setData('apiKeys', keys);
+            // Also sync n8n_url to flat key so quote.html shares it
+            if (key === 'n8n_url') {
+                localStorage.setItem('cg_webhook_url', value);
+            }
             renderSettings();
         }
 
@@ -2532,6 +2558,46 @@
             panel.innerHTML = `
                 <p style="color:#777;font-size:13px;margin-bottom:24px">Connect your APIs below. Keys are stored locally in your browser and never sent to any server except the platform itself.</p>
 
+                <!-- N8N CORE HUB -->
+                <div class="test-card" style="padding:20px;margin-bottom:20px;border-left:4px solid #ea4b71;border:2px solid #ea4b71;background:#0d0a0d">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                        <div style="display:flex;align-items:center;gap:12px">
+                            <span style="background:#ea4b71;color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:4px">N8N</span>
+                            <span style="font-size:16px;font-weight:700">n8n Automation Hub</span>
+                            <span style="font-size:10px;background:#D32F2F;color:#fff;padding:2px 8px;border-radius:4px;font-weight:700">CORE</span>
+                        </div>
+                        ${keys.n8n_url ? '<span style="color:#4CAF50;font-size:11px;font-weight:700">CONNECTED</span>' : '<span style="color:#555;font-size:11px">NOT SET</span>'}
+                    </div>
+                    <p style="font-size:12px;color:#aaa;margin-bottom:12px">The central automation engine. All events from this dashboard (new leads, schedule confirmations, quote requests) are sent here and routed to Telegram, Google Sheets, WhatsApp, and more.</p>
+                    <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center">
+                        <label style="font-size:11px;color:#777;min-width:120px">Webhook URL:</label>
+                        <input type="text" id="api_n8n_url" value="${keys.n8n_url || ''}"
+                            placeholder="http://localhost:5678/webhook/cleangrout-lead"
+                            style="flex:1;background:#0a0a0a;border:1px solid #ea4b71;border-radius:6px;padding:8px 12px;color:#fff;font-size:12px;font-family:monospace">
+                        <button onclick="saveApiKey('n8n_url', document.getElementById('api_n8n_url').value)"
+                            style="background:#ea4b71;color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer">Save</button>
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+                        <button onclick="fireWebhook('test_connection', {message:'Hello from CLEANGROUT dashboard!'}); alert('Test event fired to n8n! Check your workflow execution log.')"
+                            style="background:#222;color:#fff;border:1px solid #ea4b71;border-radius:6px;padding:6px 14px;font-size:11px;cursor:pointer;font-weight:700">Fire Test Event</button>
+                        <a href="http://localhost:5678" target="_blank" style="background:#111;color:#ea4b71;border:1px solid #333;border-radius:6px;padding:6px 14px;font-size:11px;text-decoration:none;font-weight:700">Open n8n Dashboard</a>
+                    </div>
+                    <details style="margin-top:12px">
+                        <summary style="font-size:11px;color:#555;cursor:pointer">How to get your Webhook URL + What gets fired automatically</summary>
+                        <div style="padding:12px 0 0;font-size:12px;color:#888">
+                            <p style="margin-bottom:8px"><strong>Step 1:</strong> Open n8n at localhost:5678 and import the <code style="background:#1a1a1a;padding:2px 6px;border-radius:3px">n8n-workflow.json</code> file from your epoxy folder.</p>
+                            <p style="margin-bottom:8px"><strong>Step 2:</strong> Activate the "Lead Webhook" node. Copy the webhook URL and paste it above.</p>
+                            <p style="margin-bottom:12px"><strong>Step 3:</strong> Click "Fire Test Event" to confirm it works. You should see a Telegram alert.</p>
+                            <div style="color:#aaa">Events fired automatically from this dashboard:
+                                <div style="padding:3px 0">&#x2022; <strong>lead_saved</strong> — every time you log a new lead</div>
+                                <div style="padding:3px 0">&#x2022; <strong>quote_calculated</strong> — from quote.html when customer gets a price</div>
+                                <div style="padding:3px 0">&#x2022; <strong>whatsapp_click</strong> — when customer clicks WhatsApp on quote page (HOT LEAD alert)</div>
+                                <div style="padding:3px 0">&#x2022; <strong>test_connection</strong> — from the button above</div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
                 ${integrations.map(int => `
                     <div class="test-card" style="padding:20px;margin-bottom:12px;border-left:4px solid ${int.color}">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
@@ -2608,6 +2674,33 @@
                 </div>
             `;
         }
+
+        // ============================
+        // LEAD SAVE → FIRE N8N
+        // ============================
+        // Patch the modal submit to fire webhook after saving
+        (function patchLeadSave() {
+            const origSave = window.submitLead || null;
+            // Watch for lead count changes via MutationObserver on the leads table
+            let lastCount = 0;
+            setInterval(() => {
+                const leads = getData('cg_leads', []);
+                if (leads.length > lastCount) {
+                    const newest = leads[leads.length - 1];
+                    fireWebhook('lead_saved', {
+                        name: newest.name,
+                        channel: newest.channel,
+                        status: newest.status,
+                        package: newest.package,
+                        location: newest.location || '',
+                        deposit: newest.deposit || ''
+                    });
+                    lastCount = leads.length;
+                } else {
+                    lastCount = leads.length;
+                }
+            }, 2000);
+        })();
 
         // Init
         importChatbotLeads();

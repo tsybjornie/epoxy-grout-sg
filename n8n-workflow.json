@@ -35,7 +35,7 @@
     },
     {
       "parameters": {
-        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "chatId": "388977297",
         "text": "=🔥 HOT LEAD — WhatsApp Click!\n\n🏠 Property: {{ $json.property }}\n🔧 Service: {{ $json.service }}\n💰 Quote: ${{ $json.quote_amount }}\n⏰ Time: {{ $json.timestamp }}\n\n👉 Customer is opening WhatsApp NOW. Be ready to reply!\n\nAdd-ons: {{ $json.addons ? JSON.stringify($json.addons) : 'None' }}",
         "additionalFields": {}
       },
@@ -53,7 +53,7 @@
     },
     {
       "parameters": {
-        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "chatId": "388977297",
         "text": "=📊 New Quote Calculated\n\n🏠 Property: {{ $json.property }}\n🔧 Service: {{ $json.service }}\n💰 Quote: ${{ $json.quote_amount }}\n⏰ Time: {{ $json.timestamp }}\n\nBrowsing — hasn't clicked WhatsApp yet.",
         "additionalFields": {}
       },
@@ -118,7 +118,7 @@
     },
     {
       "parameters": {
-        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "chatId": "388977297",
         "text": "=☀️ Good morning! Daily CLEANGROUT Tasks:\n\n1️⃣ Post in 3 FB Groups (check Content Engine)\n2️⃣ Update WhatsApp Status\n3️⃣ Check yesterday's leads\n4️⃣ Follow up any unresponded quotes\n\n📊 Dashboard: epoxy-nine.vercel.app/autopilot.html\n📝 Content: epoxy-nine.vercel.app/autopilot.html#content\n\nLet's get those leads! 💪",
         "additionalFields": {}
       },
@@ -152,7 +152,7 @@
     },
     {
       "parameters": {
-        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "chatId": "388977297",
         "text": "=🌙 Evening Check-in:\n\n📊 Check today's leads on your dashboard\n📱 Reply to any unanswered WhatsApp messages\n📝 Prepare tomorrow's FB posts\n🔧 Confirm tomorrow's job schedule with workers\n\nDashboard: epoxy-nine.vercel.app/autopilot.html",
         "additionalFields": {}
       },
