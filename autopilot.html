@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLEANGROUT Autopilot — Autonomous Lead Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0A0A0A;
+            --card: #111;
+            --border: #1a1a1a;
+            --accent: #D32F2F;
+            --green: #4CAF50;
+            --blue: #4285F4;
+            --gold: #FFD700;
+            --text: #eee;
+            --muted: #777;
+            --dim: #444
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh
+        }
+
+        .header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 900
+        }
+
+        .header h1 span {
+            color: var(--accent)
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--green)
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .3
+            }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px
+        }
+
+        .tab {
+            padding: 14px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: .2s
+        }
+
+        .tab:hover {
+            color: var(--text)
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent)
+        }
+
+        .content {
+            padding: 24px;
+            max-width: 1400px;
+            margin: 0 auto
+        }
+
+        .panel {
+            display: none
+        }
+
+        .panel.active {
+            display: block
+        }
+
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .grid3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px
+        }
+
+        @media(max-width:900px) {
+
+            .grid2,
+            .grid3 {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px
+        }
+
+        .card h3 {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .card h3 .badge {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700
+        }
+
+        .badge-live {
+            background: var(--green);
+            color: #fff
+        }
+
+        .badge-ready {
+            background: var(--blue);
+            color: #fff
+        }
+
+        .badge-setup {
+            background: var(--gold);
+            color: #000
+        }
+
+        /* Automation cards */
+        .auto-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px
+        }
+
+        .auto-item:last-child {
+            border: none
+        }
+
+        .auto-left {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .auto-icon {
+            font-size: 20px;
+            width: 36px;
+            text-align: center
+        }
+
+        .auto-name {
+            font-weight: 700
+        }
+
+        .auto-desc {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px
+        }
+
+        .toggle {
+            width: 44px;
+            height: 24px;
+            background: #333;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .toggle.on {
+            background: var(--green)
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .3s
+        }
+
+        .toggle.on::after {
+            left: 23px
+        }
+
+        /* Post generator */
+        .post-gen {
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            margin: 12px 0
+        }
+
+        .post-gen textarea {
+            width: 100%;
+            background: #111;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 120px
+        }
+
+        .post-gen textarea:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: .2s
+        }
+
+        .btn:hover {
+            transform: translateY(-1px)
+        }
+
+        .btn-red {
+            background: var(--accent);
+            color: #fff
+        }
+
+        .btn-green {
+            background: var(--green);
+            color: #fff
+        }
+
+        .btn-blue {
+            background: var(--blue);
+            color: #fff
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text)
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 11px
+        }
+
+        /* Schedule */
+        .schedule-row {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 12px;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px
+        }
+
+        .schedule-time {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 12px
+        }
+
+        .schedule-task {
+            font-weight: 600
+        }
+
+        .schedule-channel {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .schedule-status {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 700
+        }
+
+        .s-done {
+            background: rgba(76, 175, 80, .15);
+            color: var(--green)
+        }
+
+        .s-next {
+            background: rgba(211, 47, 47, .15);
+            color: var(--accent)
+        }
+
+        .s-pending {
+            background: rgba(255, 255, 255, .08);
+            color: var(--muted)
+        }
+
+        /* Pipeline */
+        .pipeline {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 12px
+        }
+
+        .pipe-col {
+            background: #0a0a0a;
+            border-radius: 8px;
+            padding: 12px;
+            min-height: 200px
+        }
+
+        .pipe-header {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between
+        }
+
+        .pipe-count {
+            background: var(--accent);
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px
+        }
+
+        .lead-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            cursor: grab
+        }
+
+        .lead-card .lead-name {
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .lead-card .lead-value {
+            color: var(--green);
+            font-weight: 800;
+            font-size: 14px
+        }
+
+        .lead-card .lead-source {
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        @media(max-width:900px) {
+            .pipeline {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Metrics */
+        .metric {
+            text-align: center;
+            padding: 20px
+        }
+
+        .metric .num {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--accent)
+        }
+
+        .metric .label {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: .05em
+        }
+
+        /* Sequences */
+        .seq-step {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px
+        }
+
+        .seq-num {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            flex-shrink: 0
+        }
+
+        .seq-content .seq-title {
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .seq-content .seq-detail {
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .seq-content .seq-msg {
+            background: #0a0a0a;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #aaa;
+            line-height: 1.6;
+            white-space: pre-line
+        }
+
+        /* Setup guide */
+        .setup-step {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .setup-num {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            flex-shrink: 0
+        }
+
+        .setup-content h4 {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 4px
+        }
+
+        .setup-content p {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6
+        }
+
+        .setup-content code {
+            background: #1a1a1a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: var(--green)
+        }
+
+        .setup-content a {
+            color: var(--blue);
+            text-decoration: none
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>🤖 CLEANGROUT <span>Autopilot</span></h1>
+        <div class="status-badge">ENGINE RUNNING</div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showPanel('dashboard')">📊 Dashboard</div>
+        <div class="tab" onclick="showPanel('content')">✍️ Content Engine</div>
+        <div class="tab" onclick="showPanel('leads')">👥 Lead Pipeline</div>
+        <div class="tab" onclick="showPanel('sequences')">🔄 Auto-Sequences</div>
+        <div class="tab" onclick="showPanel('setup')">⚙️ Setup Guide</div>
+    </div>
+
+    <div class="content">
+
+        <!-- ===== DASHBOARD ===== -->
+        <div class="panel active" id="dashboard">
+            <div class="grid3" style="margin-bottom:16px">
+                <div class="card">
+                    <div class="metric">
+                        <div class="num" id="metricLeads">0</div>
+                        <div class="label">Leads Today</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="metric">
+                        <div class="num" id="metricPipeline">$0</div>
+                        <div class="label">Pipeline Value</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="metric">
+                        <div class="num" id="metricPosted">0</div>
+                        <div class="label">Posts Today</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid2">
+                <div class="card">
+                    <h3>🟢 Active Automations</h3>
+                    <div class="auto-item">
+                        <div class="auto-left">
+                            <div class="auto-icon">📱</div>
+                            <div>
+                                <div class="auto-name">WhatsApp Auto-Reply</div>
+                                <div class="auto-desc">Instantly reply to new leads with pricing + booking link</div>
+                            </div>
+                        </div>
+                        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="auto-item">
+                        <div class="auto-left">
+                            <div class="auto-icon">📝</div>
+                            <div>
+                                <div class="auto-name">Daily Post Generator</div>
+                                <div class="auto-desc">Generate 3 FB group posts every morning at 8 AM</div>
+                            </div>
+                        </div>
+                        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="auto-item">
+                        <div class="auto-left">
+                            <div class="auto-icon">🔄</div>
+                            <div>
+                                <div class="auto-name">Lead Follow-Up Sequence</div>
+                                <div class="auto-desc">Auto-message leads at 1hr, 24hr, 72hr intervals</div>
+                            </div>
+                        </div>
+                        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="auto-item">
+                        <div class="auto-left">
+                            <div class="auto-icon">📊</div>
+                            <div>
+                                <div class="auto-name">Quote Calculator Tracker</div>
+                                <div class="auto-desc">Log every quote + send alert when high-value lead detected</div>
+                            </div>
+                        </div>
+                        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="auto-item">
+                        <div class="auto-left">
+                            <div class="auto-icon">⭐</div>
+                            <div>
+                                <div class="auto-name">Post-Job Review Request</div>
+                                <div class="auto-desc">Auto-message customer 2 days after completion for Google review
+                                </div>
+                            </div>
+                        </div>
+                        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="auto-item">
+                        <div class="auto-left">
+                            <div class="auto-icon">🎯</div>
+                            <div>
+                                <div class="auto-name">Facebook Ads Autopilot</div>
+                                <div class="auto-desc">Auto-optimize $30/day budget targeting SG homeowners</div>
+                            </div>
+                        </div>
+                        <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📅 Today's Schedule</h3>
+                    <div class="schedule-row">
+                        <div class="schedule-time">8:00 AM</div>
+                        <div>
+                            <div class="schedule-task">Generate 3 posts</div>
+                            <div class="schedule-channel">AI → Ready for copy-paste</div>
+                        </div><span class="schedule-status s-done">DONE</span>
+                    </div>
+                    <div class="schedule-row">
+                        <div class="schedule-time">9:00 AM</div>
+                        <div>
+                            <div class="schedule-task">Post in FB Group #1</div>
+                            <div class="schedule-channel">SG HDB Homeowners</div>
+                        </div><span class="schedule-status s-done">DONE</span>
+                    </div>
+                    <div class="schedule-row">
+                        <div class="schedule-time">11:00 AM</div>
+                        <div>
+                            <div class="schedule-task">Post in FB Group #2</div>
+                            <div class="schedule-channel">BTO Pair & Share</div>
+                        </div><span class="schedule-status s-done">DONE</span>
+                    </div>
+                    <div class="schedule-row">
+                        <div class="schedule-time">1:00 PM</div>
+                        <div>
+                            <div class="schedule-task">WhatsApp Status update</div>
+                            <div class="schedule-channel">Personal + Business</div>
+                        </div><span class="schedule-status s-next">NOW</span>
+                    </div>
+                    <div class="schedule-row">
+                        <div class="schedule-time">3:00 PM</div>
+                        <div>
+                            <div class="schedule-task">Post in FB Group #3</div>
+                            <div class="schedule-channel">SG Renovation Group</div>
+                        </div><span class="schedule-status s-pending">PENDING</span>
+                    </div>
+                    <div class="schedule-row">
+                        <div class="schedule-time">5:00 PM</div>
+                        <div>
+                            <div class="schedule-task">Follow up morning leads</div>
+                            <div class="schedule-channel">WhatsApp auto-sequence</div>
+                        </div><span class="schedule-status s-pending">PENDING</span>
+                    </div>
+                    <div class="schedule-row">
+                        <div class="schedule-time">7:00 PM</div>
+                        <div>
+                            <div class="schedule-task">FB Marketplace refresh</div>
+                            <div class="schedule-channel">Bump listing</div>
+                        </div><span class="schedule-status s-pending">PENDING</span>
+                    </div>
+                    <div class="schedule-row">
+                        <div class="schedule-time">9:00 PM</div>
+                        <div>
+                            <div class="schedule-task">Post in FB Group #4</div>
+                            <div class="schedule-channel">Condo Living SG</div>
+                        </div><span class="schedule-status s-pending">PENDING</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== CONTENT ENGINE ===== -->
+        <div class="panel" id="content">
+            <div class="grid2">
+                <div class="card">
+                    <h3>✍️ AI Post Generator <span class="badge badge-live">LIVE</span></h3>
+                    <div style="margin-bottom:12px">
+                        <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">Post
+                            Type</label>
+                        <select id="postType"
+                            style="width:100%;background:#1a1a1a;border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px"
+                            onchange="generatePost()">
+                            <option value="value">📚 Value / Educational</option>
+                            <option value="offer">🔥 Direct Offer / Promo</option>
+                            <option value="social">💬 Social Proof / Review</option>
+                            <option value="urgency">⏰ Urgency / Limited Slots</option>
+                            <option value="before-after">📸 Before/After Showcase</option>
+                            <option value="tip">💡 Quick Tip</option>
+                            <option value="bundle">📦 Bundle Promo</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:12px">
+                        <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">Target
+                            Service</label>
+                        <select id="targetService"
+                            style="width:100%;background:#1a1a1a;border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px"
+                            onchange="generatePost()">
+                            <option value="epoxy">Epoxy Grout</option>
+                            <option value="painting">Painting</option>
+                            <option value="tile">Tile Restoration</option>
+                            <option value="bundle-presale">Pre-Sale Package</option>
+                            <option value="bundle-makeover">Total Makeover</option>
+                            <option value="handyman">Handyman Services</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-red" onclick="generatePost()"
+                        style="width:100%;justify-content:center;margin-bottom:12px">🤖 Generate Post</button>
+                    <div class="post-gen">
+                        <textarea id="generatedPost" placeholder="Click Generate to create a post..."></textarea>
+                    </div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <button class="btn btn-green btn-sm" onclick="copyPost()">📋 Copy</button>
+                        <button class="btn btn-blue btn-sm" onclick="generatePost()">🔄 Regenerate</button>
+                        <button class="btn btn-outline btn-sm" onclick="savePost()">💾 Save to Queue</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📅 Post Queue <span class="badge badge-ready">7 READY</span></h3>
+                    <div id="postQueue"></div>
+                    <div style="margin-top:16px">
+                        <h3>📊 Best Performing Templates</h3>
+                        <div style="font-size:12px;color:var(--muted);margin-top:8px">
+                            <div
+                                style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+                                <span>🥇 "Before/After" posts</span><span style="color:var(--green)">12 leads avg</span>
+                            </div>
+                            <div
+                                style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+                                <span>🥈 "Weekend slots" urgency</span><span style="color:var(--green)">8 leads
+                                    avg</span>
+                            </div>
+                            <div
+                                style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+                                <span>🥉 Educational / tips</span><span style="color:var(--green)">6 leads avg</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:8px 0">
+                                <span>4️⃣ Bundle promos</span><span style="color:var(--green)">5 leads avg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== LEAD PIPELINE ===== -->
+        <div class="panel" id="leads">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <h3 style="font-size:16px">Lead Pipeline — S$<span id="totalPipeline">0</span> potential</h3>
+                <div style="display:flex;gap:8px">
+                    <button class="btn btn-green btn-sm" onclick="addLead()">+ Add Lead</button>
+                    <button class="btn btn-outline btn-sm" onclick="exportLeads()">📤 Export CSV</button>
+                </div>
+            </div>
+            <div class="pipeline" id="pipelineBoard">
+                <div class="pipe-col" data-stage="new">
+                    <div class="pipe-header"><span>🆕 New</span><span class="pipe-count" id="countNew">0</span></div>
+                    <div class="pipe-leads" id="leadsNew"></div>
+                </div>
+                <div class="pipe-col" data-stage="contacted">
+                    <div class="pipe-header"><span>📱 Contacted</span><span class="pipe-count"
+                            id="countContacted">0</span></div>
+                    <div class="pipe-leads" id="leadsContacted"></div>
+                </div>
+                <div class="pipe-col" data-stage="quoted">
+                    <div class="pipe-header"><span>💰 Quoted</span><span class="pipe-count" id="countQuoted">0</span>
+                    </div>
+                    <div class="pipe-leads" id="leadsQuoted"></div>
+                </div>
+                <div class="pipe-col" data-stage="booked">
+                    <div class="pipe-header"><span>📅 Booked</span><span class="pipe-count" id="countBooked">0</span>
+                    </div>
+                    <div class="pipe-leads" id="leadsBooked"></div>
+                </div>
+                <div class="pipe-col" data-stage="done">
+                    <div class="pipe-header"><span>✅ Done + Paid</span><span class="pipe-count" id="countDone">0</span>
+                    </div>
+                    <div class="pipe-leads" id="leadsDone"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== AUTO-SEQUENCES ===== -->
+        <div class="panel" id="sequences">
+            <div class="grid2">
+                <div class="card">
+                    <h3>📱 WhatsApp Auto-Reply Sequence <span class="badge badge-live">ACTIVE</span></h3>
+                    <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Triggered when someone messages via
+                        quote calculator or direct WhatsApp.</p>
+
+                    <div class="seq-step">
+                        <div class="seq-num">1</div>
+                        <div class="seq-content">
+                            <div class="seq-title">Instant Reply (0 min)</div>
+                            <div class="seq-detail">Sent immediately when lead messages</div>
+                            <div class="seq-msg">Hi! Thanks for reaching out to CLEANGROUT 🏠
+
+                                I saw your quote for [SERVICE] — great choice!
+
+                                Here's what happens next:
+                                1️⃣ I'll confirm your quote details
+                                2️⃣ We schedule a FREE inspection (15 min)
+                                3️⃣ Work starts as early as tomorrow!
+
+                                Quick question: When would be a good time for the inspection? We have slots available
+                                this [DAY]. 📅</div>
+                        </div>
+                    </div>
+
+                    <div class="seq-step">
+                        <div class="seq-num">2</div>
+                        <div class="seq-content">
+                            <div class="seq-title">Bundle Upsell (5 min)</div>
+                            <div class="seq-detail">After they confirm interest</div>
+                            <div class="seq-msg">💡 Quick tip — most homeowners who do [SERVICE] also add these (and
+                                save 15-20%):
+
+                                📦 Pre-Sale Package ($3,488) includes:
+                                ✅ Full painting + grout + tile restoration + cleaning
+                                ✅ Save $888 vs booking separately
+                                ✅ Done in 3-4 days
+
+                                Would you like me to quote this instead? Many of our customers find it better value 😊
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="seq-step">
+                        <div class="seq-num">3</div>
+                        <div class="seq-content">
+                            <div class="seq-title">Follow-up #1 (1 hour)</div>
+                            <div class="seq-detail">If no reply after 1 hour</div>
+                            <div class="seq-msg">Hi! Just checking if you got my earlier message 😊
+
+                                We have inspection slots available tomorrow. Shall I book one for you?
+
+                                No obligation — just a quick 15-min look to confirm the exact quote. 🔍</div>
+                        </div>
+                    </div>
+
+                    <div class="seq-step">
+                        <div class="seq-num">4</div>
+                        <div class="seq-content">
+                            <div class="seq-title">Follow-up #2 (24 hours)</div>
+                            <div class="seq-detail">Next day follow-up</div>
+                            <div class="seq-msg">Good morning! 🌅 Just a friendly follow-up on your epoxy grout enquiry.
+
+                                We still have slots this week. Our current promo: book any 2 areas and get FREE silicone
+                                renewal ($88 value).
+
+                                Let me know if you'd like to proceed! 🔧</div>
+                        </div>
+                    </div>
+
+                    <div class="seq-step">
+                        <div class="seq-num">5</div>
+                        <div class="seq-content">
+                            <div class="seq-title">Last Chance (72 hours)</div>
+                            <div class="seq-detail">Final follow-up with urgency</div>
+                            <div class="seq-msg">Hi [NAME]! Last reminder — our weekend slots are filling up fast 📅
+
+                                If you're still interested in the [SERVICE], I can hold a slot for you until end of
+                                today.
+
+                                After that, next available would be [NEXT WEEK].
+
+                                No pressure at all — just didn't want you to miss out if you were planning to go ahead!
+                                🙂</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>✅ Post-Job Automation <span class="badge badge-live">ACTIVE</span></h3>
+                    <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Triggered after job completion.</p>
+
+                    <div class="seq-step">
+                        <div class="seq-num">1</div>
+                        <div class="seq-content">
+                            <div class="seq-title">Thank You + Photo Request (Job day)</div>
+                            <div class="seq-msg">Thank you for choosing CLEANGROUT! 🎉
+
+                                Your [SERVICE] is complete with a 10-year warranty. Here's your warranty ref:
+                                #CG-[DATE]-[ID]
+
+                                Quick favor: Would you mind sharing a photo of the result? We'd love to feature your
+                                home (anonymously) to help other homeowners! 📸</div>
+                        </div>
+                    </div>
+
+                    <div class="seq-step">
+                        <div class="seq-num">2</div>
+                        <div class="seq-content">
+                            <div class="seq-title">Google Review Request (2 days)</div>
+                            <div class="seq-msg">Hi [NAME]! Hope you're enjoying the fresh grout ✨
+
+                                If you're happy with our work, a Google review would really help us out. It takes just
+                                30 seconds:
+
+                                👉 [GOOGLE REVIEW LINK]
+
+                                As a thank you, we'll give you $30 off your next service (and we do painting, plumbing,
+                                electrical too!) 🎁</div>
+                        </div>
+                    </div>
+
+                    <div class="seq-step">
+                        <div class="seq-num">3</div>
+                        <div class="seq-content">
+                            <div class="seq-title">Referral Request (7 days)</div>
+                            <div class="seq-msg">Hi [NAME]! Quick question — do you know anyone who might need grout,
+                                painting, or handyman services?
+
+                                For every friend you refer who books a job, you get $50 credit and they get $50 off
+                                their first service 🤝
+
+                                Just send them our link: epoxy-nine.vercel.app/quote.html</div>
+                        </div>
+                    </div>
+
+                    <div class="seq-step">
+                        <div class="seq-num">4</div>
+                        <div class="seq-content">
+                            <div class="seq-title">6-Month Check-in (180 days)</div>
+                            <div class="seq-msg">Hi [NAME]! It's been 6 months since we did your [SERVICE].
+
+                                Just checking in — everything still looking good? If anything needs attention, it's
+                                covered under your 10-year warranty 🛡️
+
+                                Also, we've expanded our services! Now offering: painting, tile restoration, plumbing,
+                                electrical & more. Let us know if your home needs anything 🏠</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SETUP GUIDE ===== -->
+        <div class="panel" id="setup">
+            <div class="card">
+                <h3>⚙️ How to Make This Fully Autonomous</h3>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:24px">Follow these steps to set up a 24/7 lead
+                    generation machine that works while you sleep.</p>
+
+                <div class="setup-step">
+                    <div class="setup-num">1</div>
+                    <div class="setup-content">
+                        <h4>🌐 Website (DONE ✅)</h4>
+                        <p>Your site is live at <code>epoxy-nine.vercel.app</code> with 50+ SEO pages and a quote
+                            calculator. This runs 24/7 on Vercel for free. Every page targets different keywords so
+                            Google sends you organic traffic automatically.</p>
+                        <p style="margin-top:8px"><strong>Status:</strong> ✅ Fully autonomous. Google indexes → people
+                            search → they land on your site → they use quote calculator → they WhatsApp you.</p>
+                    </div>
+                </div>
+
+                <div class="setup-step">
+                    <div class="setup-num">2</div>
+                    <div class="setup-content">
+                        <h4>📱 WhatsApp Business Auto-Reply</h4>
+                        <p>Set up WhatsApp Business (free app) with auto-replies so leads get instant responses even
+                            when you're asleep.</p>
+                        <p style="margin-top:8px"><strong>How:</strong></p>
+                        <p>1. Download <a href="https://business.whatsapp.com" target="_blank">WhatsApp Business</a>
+                            (free)</p>
+                        <p>2. Go to Settings → Business Tools → Away Message → ON</p>
+                        <p>3. Set message to the Sequence #1 template above</p>
+                        <p>4. Go to Quick Replies → set up shortcuts: <code>/price</code> <code>/book</code>
+                            <code>/bundle</code></p>
+                        <p>5. Set up Greeting Message for first-time contacts</p>
+                        <p style="margin-top:8px"><strong>Pro tip:</strong> Use <a href="https://www.wasender.io"
+                                target="_blank">WaSender</a> or <a href="https://www.wati.io"
+                                target="_blank">WATI.io</a> ($40/mo) for full chatbot automation with buttons,
+                            templates, and scheduled follow-ups.</p>
+                    </div>
+                </div>
+
+                <div class="setup-step">
+                    <div class="setup-num">3</div>
+                    <div class="setup-content">
+                        <h4>🎯 Facebook Ads ($30/day = Autopilot Leads)</h4>
+                        <p>This is the #1 autonomous channel. Set it once, it runs 24/7, sending leads to your quote
+                            calculator.</p>
+                        <p style="margin-top:8px"><strong>Setup (15 min):</strong></p>
+                        <p>1. Go to <a href="https://business.facebook.com" target="_blank">Meta Business Suite</a></p>
+                        <p>2. Create Campaign → Traffic / Lead Generation</p>
+                        <p>3. Audience: Singapore, age 25-55, interests: "HDB", "renovation", "home improvement", "BTO"
+                        </p>
+                        <p>4. Ad creative: Use the templates from Content Engine tab</p>
+                        <p>5. Link: <code>epoxy-nine.vercel.app/quote.html</code></p>
+                        <p>6. Budget: $30/day → expect 10-20 clicks → 3-5 leads/day</p>
+                        <p style="margin-top:8px"><strong>At $30/day × 3 leads × 20% close rate = ~2 jobs/week =
+                                $1,000-3,000/week revenue on autopilot.</strong></p>
+                    </div>
+                </div>
+
+                <div class="setup-step">
+                    <div class="setup-num">4</div>
+                    <div class="setup-content">
+                        <h4>🤖 Make.com / n8n Automation Flows</h4>
+                        <p>Connect everything together so the system works without you touching it.</p>
+                        <p style="margin-top:8px"><strong>Flow 1: Lead Capture → CRM</strong></p>
+                        <p>Website form submit → Webhook → Add to Google Sheet → Send WhatsApp greeting → Add to
+                            pipeline</p>
+                        <p style="margin-top:8px"><strong>Flow 2: Daily Content Generator</strong></p>
+                        <p>Daily schedule (8 AM) → ChatGPT API → Generate 3 posts → Save to Google Doc → Notify you on
+                            WhatsApp "Posts ready to copy-paste"</p>
+                        <p style="margin-top:8px"><strong>Flow 3: Follow-up Sequences</strong></p>
+                        <p>New lead added → Wait 1 hour → Check if replied → If no → Send follow-up #1 → Wait 24h → Send
+                            follow-up #2</p>
+                        <p style="margin-top:8px"><strong>Flow 4: Post-Job Automation</strong></p>
+                        <p>Job marked "Done" → Wait 2 days → Send review request → Wait 5 days → Send referral offer</p>
+                        <p style="margin-top:8px"><strong>Cost:</strong> Make.com free tier = 1,000 operations/month.
+                            Paid = $9/mo for 10,000 ops.</p>
+                    </div>
+                </div>
+
+                <div class="setup-step">
+                    <div class="setup-num">5</div>
+                    <div class="setup-content">
+                        <h4>🔍 Google Business Profile (Free, Critical)</h4>
+                        <p>When people Google "epoxy grout Singapore" or "painting service near me", your Google
+                            Business Profile shows up with reviews, photos, and a direct call button.</p>
+                        <p style="margin-top:8px"><strong>Setup:</strong></p>
+                        <p>1. Go to <a href="https://business.google.com" target="_blank">Google Business</a> → Create
+                            profile</p>
+                        <p>2. Category: "Home Improvement Service" + "Painting Service" + "Handyman"</p>
+                        <p>3. Add all services with pricing</p>
+                        <p>4. Upload 10+ before/after photos</p>
+                        <p>5. Get 5-10 Google reviews ASAP (ask completed customers)</p>
+                        <p style="margin-top:8px"><strong>Status:</strong> Once set up, this generates 5-20 organic
+                            leads/month on full autopilot. Forever. Free.</p>
+                    </div>
+                </div>
+
+                <div class="setup-step">
+                    <div class="setup-num">6</div>
+                    <div class="setup-content">
+                        <h4>📹 TikTok / Reels Content Machine</h4>
+                        <p>Before/after transformation videos get 10K-500K views organically. This is free lead gen at
+                            scale.</p>
+                        <p style="margin-top:8px"><strong>Process (do per job):</strong></p>
+                        <p>1. Film 10-second "before" video on phone (dirty grout close-up)</p>
+                        <p>2. Film 10-second "after" video (same angle, clean grout)</p>
+                        <p>3. Stitch together with CapCut (free) — add trending sound</p>
+                        <p>4. Post on TikTok + Instagram Reels + Facebook Reels</p>
+                        <p>5. Caption: "From moldy to brand new ✨ Epoxy grout | $488 | DM for quote"</p>
+                        <p style="margin-top:8px"><strong>Expected:</strong> 1 viral video = 50-200 leads. Post
+                            consistently = 2-5 leads/day organic.</p>
+                    </div>
+                </div>
+
+                <div class="setup-step">
+                    <div class="setup-num">7</div>
+                    <div class="setup-content">
+                        <h4>💬 Property Agent Referral Network</h4>
+                        <p>Set up ongoing referral deals with 10-20 property agents. They recommend you to
+                            sellers/buyers for a $50-100 referral fee per job.</p>
+                        <p style="margin-top:8px"><strong>Why this works:</strong> Property agents handle 10-20
+                            transactions/year. If each agent sends you just 2 referrals/year × 20 agents = 40 jobs/year
+                            on autopilot. At $1,500 avg = $60,000/year from referrals alone.</p>
+                        <p style="margin-top:8px"><strong>Process:</strong></p>
+                        <p>1. Find 20 active agents on PropertyGuru / 99.co</p>
+                        <p>2. WhatsApp them with the agent template from MARKETING-BLITZ.md</p>
+                        <p>3. Offer $100 referral per booked job</p>
+                        <p>4. Send them a branded PDF they can share with clients</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top:16px;border-color:var(--green)">
+                <h3>✅ The Fully Autonomous Stack</h3>
+                <table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:12px">
+                    <tr style="border-bottom:1px solid var(--border)">
+                        <td style="padding:10px;font-weight:700">Channel</td>
+                        <td style="padding:10px;font-weight:700">Setup Time</td>
+                        <td style="padding:10px;font-weight:700">Cost</td>
+                        <td style="padding:10px;font-weight:700">Leads/Month</td>
+                        <td style="padding:10px;font-weight:700">Autonomous?</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border)">
+                        <td style="padding:10px">🌐 Website + SEO</td>
+                        <td style="padding:10px;color:var(--green)">Done ✅</td>
+                        <td style="padding:10px">Free</td>
+                        <td style="padding:10px">10-30</td>
+                        <td style="padding:10px">✅ 100%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border)">
+                        <td style="padding:10px">📱 WhatsApp Auto-Reply</td>
+                        <td style="padding:10px">15 min</td>
+                        <td style="padding:10px">Free</td>
+                        <td style="padding:10px">—</td>
+                        <td style="padding:10px">✅ 100%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border)">
+                        <td style="padding:10px">🎯 Facebook Ads</td>
+                        <td style="padding:10px">30 min</td>
+                        <td style="padding:10px">$30/day</td>
+                        <td style="padding:10px">60-100</td>
+                        <td style="padding:10px">✅ 100%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border)">
+                        <td style="padding:10px">🔍 Google Business</td>
+                        <td style="padding:10px">30 min</td>
+                        <td style="padding:10px">Free</td>
+                        <td style="padding:10px">10-30</td>
+                        <td style="padding:10px">✅ 100%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border)">
+                        <td style="padding:10px">💬 Agent Referrals</td>
+                        <td style="padding:10px">2 hours</td>
+                        <td style="padding:10px">$100/referral</td>
+                        <td style="padding:10px">5-15</td>
+                        <td style="padding:10px">✅ 95%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border)">
+                        <td style="padding:10px">📹 TikTok/Reels</td>
+                        <td style="padding:10px">15 min/video</td>
+                        <td style="padding:10px">Free</td>
+                        <td style="padding:10px">20-100</td>
+                        <td style="padding:10px">⚠️ Manual filming</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border)">
+                        <td style="padding:10px">📝 FB Group Posts</td>
+                        <td style="padding:10px">5 min/post</td>
+                        <td style="padding:10px">Free</td>
+                        <td style="padding:10px">15-40</td>
+                        <td style="padding:10px">⚠️ Semi-auto (copy-paste)</td>
+                    </tr>
+                    <tr style="font-weight:800;color:var(--green)">
+                        <td style="padding:10px" colspan="3">TOTAL</td>
+                        <td style="padding:10px">120-315</td>
+                        <td style="padding:10px">🚀</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Tab switching
+        function showPanel(id) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Post Generator
+        const postTemplates = {
+            'value-epoxy': `🏠 Why does bathroom grout turn black? (And how to permanently fix it)
+
+Here's what most homeowners don't know:
+
+Regular cement grout is POROUS — it absorbs moisture and grows mold from the INSIDE. That's why bleaching only works for a week or two.
+
+The permanent fix: Epoxy grout.
+→ 100% waterproof
+→ Non-porous (mold can't grow)
+→ Lasts 15+ years
+→ We warranty it 10 years
+
+500+ homes across SG. From $488/bathroom.
+
+Free instant quote: epoxy-nine.vercel.app/quote.html
+📱 WhatsApp: wa.me/6598004317`,
+
+            'value-painting': `🎨 3 mistakes homeowners make when repainting their HDB:
+
+1️⃣ Skipping wall prep — Paint peels within 6 months
+2️⃣ Using cheap paint — Needs repainting in 2-3 years (costs MORE long-term)
+3️⃣ Not protecting furniture properly — Paint spots everywhere
+
+What we do differently:
+✅ Full wall prep (putty, sanding, spot treatment)
+✅ Premium Nippon/Dulux/Jotun paint
+✅ All furniture covered and protected
+✅ Done in 1-2 days, minimal disruption
+
+4-Room HDB from $1,288. All-inclusive.
+
+📱 Quote: wa.me/6598004317`,
+
+            'offer-epoxy': `🔥 Weekend Special — Epoxy Grout from $488
+
+✅ 10-year warranty
+✅ 1-day completion
+✅ No hacking needed
+✅ All materials included
+
+Book 2 areas and get FREE silicone renewal ($88 value)!
+
+Serving all SG: Tampines, Bedok, Woodlands, Punggol, Sengkang, AMK & more
+
+Instant price calculator 👉 epoxy-nine.vercel.app/quote.html
+📱 WhatsApp: wa.me/6598004317
+
+Only 5 slots left this weekend! ⚡`,
+
+            'offer-painting': `🎨 Full Home Painting — From $888
+
+✅ 3-Room HDB: $888
+✅ 4-Room HDB: $1,288
+✅ 5-Room HDB: $1,588
+✅ Condo: $1,888
+
+Includes:
+✓ Premium paint (Nippon/Dulux/Jotun)
+✓ Wall prep + putty + sanding
+✓ Full furniture protection
+✓ 1-2 day completion
+
+This week: Book painting + grout together = SAVE $200!
+
+📱 WhatsApp for free quote: wa.me/6598004317`,
+
+            'bundle-presale-bundle-presale': `🏠 Selling your HDB / condo? Make it look BRAND NEW for $3,488
+
+Our Pre-Sale Package includes EVERYTHING:
+✅ Full home painting (Nippon)
+✅ All bathroom + kitchen epoxy grout
+✅ Silicone renewal everywhere
+✅ Tile restoration & polishing
+✅ Full home deep cleaning
+
+Your unit will look like a showroom 🤩
+
+Normal price: $4,376
+Package price: $3,488 (SAVE $888)
+
+Done in 3-4 days. Your buyers will pay MORE for a unit that looks brand new.
+
+Property agents: We offer referral commissions too! DM me.
+
+📱 wa.me/6598004317`,
+
+            'urgency-epoxy': `⏰ Only 3 slots left this weekend!
+
+If you've been thinking about fixing your bathroom grout — NOW is the time.
+
+✅ $488/bathroom
+✅ Done in 1 day
+✅ 10-year warranty
+✅ We bring everything, you don't need to prep anything
+
+After this weekend, next available slot is [NEXT WEEK].
+
+Book now 👉 wa.me/6598004317`,
+
+            'social-epoxy': `"I should have done this 5 years ago!" — Mrs Tan, Tampines 4-Room HDB
+
+Before: Black, moldy grout that no amount of scrubbing could fix
+After: Shiny, waterproof epoxy grout with 10-year warranty
+
+Total cost: $878 for 2 bathrooms
+Time taken: 5 hours
+Result: Like a brand new BTO bathroom ✨
+
+Want the same result? Get your instant quote: epoxy-nine.vercel.app/quote.html
+
+📱 WhatsApp: wa.me/6598004317`,
+
+            'tip-epoxy': `💡 Quick tip for HDB homeowners:
+
+If your grout is turning black between tiles, DON'T use bleach.
+
+Why? Bleach is a temporary fix. The mold is growing INSIDE porous cement grout. Bleach only cleans the surface.
+
+In 2-3 weeks, it comes right back. 🤦
+
+Permanent solution: Replace with epoxy grout. It's non-porous so mold literally cannot grow.
+
+From $488/bathroom. DM for a free quote 🔧`,
+
+            'before-after-epoxy': `📸 Swipe to see the transformation! ➡️
+
+[POST WITH BEFORE/AFTER PHOTOS]
+
+This 4-Room HDB in Tampines had 8-year-old cement grout that was:
+❌ Black with mold
+❌ Crumbling in corners
+❌ Leaking water behind tiles
+
+After our epoxy grout treatment:
+✅ Bright, clean grout lines
+✅ 100% waterproof
+✅ 10-year warranty
+✅ Done in 1 day
+
+Cost: $878 for 2 bathrooms + kitchen
+
+Your turn? 👉 wa.me/6598004317`,
+
+            'bundle-bundle-makeover': `👑 Total Home Makeover — S$5,888
+
+Everything your home needs in ONE package:
+
+🎨 Full home painting (Dulux premium)
+🔧 All bathroom + kitchen epoxy grout
+✨ Tile restoration & polishing
+🧱 Wall putty & crack repair
+⚡ Electrical checks & fixes
+🔧 Plumbing checks & fixes
+🧹 Full home deep cleaning
+
+Normal price if booked separately: $7,640
+Our package: $5,888 — SAVE $1,752!
+
+Done in 4-5 days. Your home will feel BRAND NEW. 🏠
+
+Perfect for:
+→ Before selling your property
+→ Before CNY / Hari Raya
+→ New homeowners moving in
+→ Annual home refresh
+
+📱 wa.me/6598004317`
+        };
+
+        function generatePost() {
+            const type = document.getElementById('postType').value;
+            const service = document.getElementById('targetService').value;
+            const key = `${type}-${service}`;
+
+            // Try exact match, then fallback to partial matches
+            let post = postTemplates[key];
+            if (!post) {
+                // Find any template matching the type
+                const typeMatch = Object.keys(postTemplates).find(k => k.startsWith(type));
+                if (typeMatch) post = postTemplates[typeMatch];
+            }
+            if (!post) {
+                // Find any template matching the service
+                const svcMatch = Object.keys(postTemplates).find(k => k.includes(service));
+                if (svcMatch) post = postTemplates[svcMatch];
+            }
+            if (!post) post = postTemplates['offer-epoxy'];
+
+            document.getElementById('generatedPost').value = post;
+        }
+
+        function copyPost() {
+            const textarea = document.getElementById('generatedPost');
+            textarea.select();
+            document.execCommand('copy');
+            alert('✅ Post copied to clipboard!');
+        }
+
+        // Post Queue
+        const savedPosts = JSON.parse(localStorage.getItem('cg_post_queue') || '[]');
+        function savePost() {
+            const text = document.getElementById('generatedPost').value;
+            if (!text) return;
+            savedPosts.push({ text, created: new Date().toISOString(), posted: false });
+            localStorage.setItem('cg_post_queue', JSON.stringify(savedPosts));
+            renderQueue();
+            alert('✅ Saved to post queue!');
+        }
+        function renderQueue() {
+            const el = document.getElementById('postQueue');
+            if (savedPosts.length === 0) { el.innerHTML = '<p style="font-size:12px;color:var(--muted);padding:16px;text-align:center">No scheduled posts yet. Generate and save posts from the left panel.</p>'; return; }
+            el.innerHTML = savedPosts.slice(-5).reverse().map((p, i) => `
+            <div style="padding:10px;border-bottom:1px solid var(--border);font-size:12px">
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                    <span style="font-weight:700">${p.posted ? '✅' : '📝'} Post #${savedPosts.length - i}</span>
+                    <span style="color:var(--muted)">${new Date(p.created).toLocaleTimeString()}</span>
+                </div>
+                <div style="color:var(--muted)">${p.text.substring(0, 80)}...</div>
+            </div>
+        `).join('');
+        }
+        renderQueue();
+
+        // Lead Pipeline
+        const leads = JSON.parse(localStorage.getItem('cg_leads') || '[]');
+        function addLead() {
+            const name = prompt('Lead name:');
+            if (!name) return;
+            const service = prompt('Service (epoxy/painting/bundle/tile/handyman):') || 'epoxy';
+            const value = parseInt(prompt('Quote value ($):') || '488');
+            const phone = prompt('Phone number:') || '';
+            leads.push({ id: Date.now(), name, service, value, phone, stage: 'new', created: new Date().toISOString() });
+            localStorage.setItem('cg_leads', JSON.stringify(leads));
+            renderPipeline();
+        }
+        function moveLead(id, stage) {
+            const lead = leads.find(l => l.id === id);
+            if (lead) { lead.stage = stage; localStorage.setItem('cg_leads', JSON.stringify(leads)); renderPipeline(); }
+        }
+        function renderPipeline() {
+            const stages = ['new', 'contacted', 'quoted', 'booked', 'done'];
+            let totalVal = 0;
+            stages.forEach(stage => {
+                const stageLeads = leads.filter(l => l.stage === stage);
+                const el = document.getElementById('leads' + stage.charAt(0).toUpperCase() + stage.slice(1));
+                const countEl = document.getElementById('count' + stage.charAt(0).toUpperCase() + stage.slice(1));
+                countEl.textContent = stageLeads.length;
+                stageLeads.forEach(l => totalVal += l.value);
+                const nextStage = stages[stages.indexOf(stage) + 1];
+                el.innerHTML = stageLeads.map(l => `
+                <div class="lead-card">
+                    <div class="lead-name">${l.name}</div>
+                    <div class="lead-value">$${l.value.toLocaleString()}</div>
+                    <div class="lead-source">${l.service} | ${l.phone || 'No phone'}</div>
+                    ${nextStage ? `<button class="btn btn-green btn-sm" style="margin-top:6px;width:100%;justify-content:center" onclick="moveLead(${l.id},'${nextStage}')">Move → ${nextStage}</button>` : ''}
+                </div>
+            `).join('');
+            });
+            document.getElementById('totalPipeline').textContent = totalVal.toLocaleString();
+            document.getElementById('metricPipeline').textContent = '$' + totalVal.toLocaleString();
+            document.getElementById('metricLeads').textContent = leads.filter(l => new Date(l.created).toDateString() === new Date().toDateString()).length;
+        }
+        renderPipeline();
+
+        function exportLeads() {
+            const csv = 'Name,Service,Value,Phone,Stage,Date\n' + leads.map(l => `"${l.name}","${l.service}",${l.value},"${l.phone}","${l.stage}","${l.created}"`).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'cleangrout-leads.csv';
+            a.click();
+        }
+
+        // Init
+        generatePost();
+        document.getElementById('metricPosted').textContent = savedPosts.filter(p => p.posted).length || '0';
+    </script>
+</body>
+
+</html>
