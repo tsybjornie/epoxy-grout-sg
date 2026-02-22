@@ -1069,38 +1069,117 @@
         // ============================
         // TEMPLATES
         // ============================
+        // ============================
+        // SEASONAL CAMPAIGN ENGINE
+        // ============================
+        function getCurrentSeason() {
+            const now = new Date();
+            const m = now.getMonth() + 1; // 1-12
+            const d = now.getDate();
+
+            // CNY: Jan 15 - Feb 28
+            if ((m === 1 && d >= 15) || (m === 2)) return {
+                name: 'CNY', emoji: '🧧', label: 'Chinese New Year Special',
+                discount: '10% OFF', code: 'CNY', end: 'Feb 28',
+                greeting: 'Gong Xi Fa Cai! 🧧',
+                hook: '新年快乐! Start the Year of the Snake with a FRESH home!'
+            };
+            // Hari Raya: Mar 1 - Apr 15
+            if ((m === 3) || (m === 4 && d <= 15)) return {
+                name: 'RAYA', emoji: '🌙', label: 'Hari Raya Special',
+                discount: '10% OFF', code: 'RAYA', end: 'Apr 15',
+                greeting: 'Selamat Hari Raya! 🌙',
+                hook: 'Welcome guests to a sparkling home this Raya! ✨'
+            };
+            // Mother's Day: Apr 16 - May 15
+            if ((m === 4 && d >= 16) || (m === 5 && d <= 15)) return {
+                name: 'MOM', emoji: '💐', label: "Mother's Day Special",
+                discount: '$50 OFF', code: 'MOM', end: 'May 15',
+                greeting: "Happy Mother's Day! 💐",
+                hook: "Give Mom the gift of a sparkling clean home she deserves!"
+            };
+            // National Day: Jul 1 - Aug 15
+            if ((m === 7) || (m === 8 && d <= 15)) return {
+                name: 'SG59', emoji: '🇸🇬', label: 'National Day Special',
+                discount: '$59 OFF', code: 'SG59', end: 'Aug 15',
+                greeting: 'Happy National Day! 🇸🇬',
+                hook: 'Celebrate SG59 with a home transformation!'
+            };
+            // Year-End: Nov 1 - Dec 31
+            if (m >= 11) return {
+                name: 'YEAREND', emoji: '🎄', label: 'Year-End Blowout',
+                discount: '15% OFF', code: 'YEAREND', end: 'Dec 31',
+                greeting: 'Year-End Special! 🎄',
+                hook: 'Start the new year with freshly grouted tiles!'
+            };
+            // Default (no festival)
+            return {
+                name: 'PROMO', emoji: '⚡', label: 'Limited Time Offer',
+                discount: 'FREE tile cleaning', code: 'CLEAN', end: 'this month',
+                greeting: 'Hi there! 👋',
+                hook: 'Transform your home with premium epoxy grout!'
+            };
+        }
+
         function getTemplates() {
             const best = learnings.winPatterns.length > 0 ? learnings.winPatterns[learnings.winPatterns.length - 1].winner : null;
+            const S = getCurrentSeason();
+
             return [
                 {
-                    platform: 'Facebook Marketplace', icon: '🏪', copies: [
-                        { label: 'Listing Title', text: '🧧 CNY 10% OFF | Professional Epoxy Grout | $439' },
-                        { label: 'Description', text: `CLEANGROUT Professional Epoxy Grout Service\n✅ Singapore island-wide & JB\n\n🚿 Bathroom — $439 (usual $780)\n🍳 Kitchen — $529 (usual $980)\n🏠 Full Home — $1,339 (usual $2,380)\n\n100% waterproof • Anti-mold • 15-year life • Done in 1 day\n\n📱 WhatsApp: 9800 4317` }
+                    platform: `Facebook Marketplace (${S.emoji} ${S.name})`, icon: '🏪', copies: [
+                        { label: 'Listing Title', text: `${S.emoji} ${S.discount} | Professional Epoxy Grout | From $488` },
+                        { label: 'Description', text: `CLEANGROUT Professional Epoxy Grout Service\n✅ Singapore island-wide & JB\n\n${S.emoji} ${S.label} — ${S.discount} (Ends ${S.end}!)\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\n100% waterproof • Anti-mold • 15-year life • Done in 1 day\n\n📱 WhatsApp: 9800 4317\n💬 DM "${S.code}" for special pricing!` }
                     ]
                 },
                 {
-                    platform: 'Facebook Ad', icon: '📘', copies: [
-                        { label: best ? '🏆 Winning Copy' : 'Option A — CNY Promo', text: best || '🧧 CNY SPECIAL — 10% OFF All Packages (Ends Feb 28!)\n\nYour grout is full of mold & stains? 😱\n\nWe replace it with PREMIUM EPOXY GROUT:\n✅ 100% Waterproof\n✅ Anti-mold & stain-proof\n✅ Lasts 15-20 years\n✅ Done in 1 day\n\n🔥 Bathroom $439 · Kitchen $529 · Full Home $1,339\n\n📱 DM "CNY" for FREE quote →' },
-                        { label: 'Option B — Problem', text: 'Is your bathroom grout DISGUSTING? 🤢\n\nBlack mold. Yellow stains. Crumbling gaps.\nNo amount of scrubbing will fix cement grout.\n\nThe permanent solution? EPOXY GROUT.\n✅ 100% waterproof\n✅ Mold literally cannot grow\n✅ From just $439\n\n📱 WhatsApp us for FREE inspection →' }
+                    platform: `Facebook Ad (${S.emoji} ${S.name})`, icon: '📘', copies: [
+                        { label: best ? '🏆 Winning Copy' : `Option A — ${S.label}`, text: best || `${S.emoji} ${S.label} — ${S.discount} (Ends ${S.end}!)\n\nYour grout is full of mold & stains? 😱\n\nWe replace it with PREMIUM EPOXY GROUT:\n✅ 100% Waterproof\n✅ Anti-mold & stain-proof\n✅ Lasts 15-20 years\n✅ Done in 1 day\n\n🔥 Bathroom from $488 · Kitchen from $588 · Full Home from $1,488\n\n📱 DM "${S.code}" for FREE quote →` },
+                        { label: 'Option B — Problem', text: 'Is your bathroom grout DISGUSTING? 🤢\n\nBlack mold. Yellow stains. Crumbling gaps.\nNo amount of scrubbing will fix cement grout.\n\nThe permanent solution? EPOXY GROUT.\n✅ 100% waterproof\n✅ Mold literally cannot grow\n✅ From just $488\n\n📱 WhatsApp us for FREE inspection →' }
                     ]
                 },
                 {
                     platform: 'WhatsApp Broadcast', icon: '📱', copies: [
-                        { label: 'CNY Blast', text: 'Hi [Name]! 🧧\n\nCLEANGROUT is running a CNY Special — 10% OFF all packages until Feb 28!\n\n🚿 Bathroom — $439\n🍳 Kitchen — $529\n🏠 Full Home — $1,339\n\nWant me to hold a slot for you? Reply YES and I\'ll book your free inspection! 😊' },
-                        { label: 'Follow-Up', text: 'Hi [Name]! Just following up on your epoxy grout enquiry 😊\n\nOur CNY 10% OFF ends soon — shall I book your free inspection this week?\n\nNo obligation, we just assess and quote. Takes 15 min!' }
+                        { label: `${S.emoji} ${S.name} Blast`, text: `${S.greeting}\n\nCLEANGROUT is running a ${S.label} — ${S.discount} until ${S.end}!\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\nWant me to hold a slot for you? Reply YES and I'll book your free inspection! 😊` },
+                        { label: 'Follow-Up', text: `Hi [Name]! Just following up on your epoxy grout enquiry 😊\n\nOur ${S.label} ends soon — shall I book your free inspection this week?\n\nNo obligation, we just assess and quote. Takes 15 min!` }
+                    ]
+                },
+                {
+                    platform: '📍 Geo-Targeted: SINGAPORE 🇸🇬', icon: '🇸🇬', copies: [
+                        { label: 'SG Facebook Ad', text: `${S.emoji} ${S.label} — Singapore Island-Wide!\n\n🏢 HDB • Condo • Landed • Commercial\nWe serve ALL areas: Tampines, Woodlands, Jurong, Bedok, Ang Mo Kio, Punggol & more\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\n✅ Same-day quote\n✅ Premium Ardex/Sika epoxy\n✅ Done in 1 day\n\n📱 WhatsApp 9800 4317 or DM "${S.code}"` },
+                        { label: 'SG Marketplace Listing', text: `🇸🇬 SINGAPORE ISLAND-WIDE | Professional Epoxy Grout\n\n${S.emoji} ${S.discount} — ${S.label}!\n\nServing: East, West, North, South, Central\nHDB ✅ Condo ✅ Landed ✅\n\nFrom $488. Done in 1 day.\n📱 9800 4317` }
+                    ]
+                },
+                {
+                    platform: '📍 Geo-Targeted: JOHOR BAHRU 🇲🇾', icon: '🇲🇾', copies: [
+                        { label: 'JB Facebook Ad', text: `${S.emoji} ${S.label} — Now Serving Johor Bahru! 🇲🇾\n\n🏢 JB residents get EXTRA 10% OFF on top!\n\nServing: JB City, Iskandar Puteri, Skudai, Kulai, Pasir Gudang, Masai & more\n\n🚿 Bathroom — from RM1,599\n🍳 Kitchen — from RM1,999\n🏠 Full Home — from RM4,999\n\n✅ Same quality as our SG service\n✅ Premium imported epoxy grout\n✅ Done in 1 day\n\n📱 WhatsApp +65 9800 4317` },
+                        { label: 'JB Marketplace Listing', text: `🇲🇾 JOHOR BAHRU | Professional Epoxy Grout Service\n\nFrom Singapore's trusted CLEANGROUT team!\n${S.emoji} ${S.discount} + Extra 10% JB Discount!\n\nServing all JB areas.\nFrom RM1,599. Done in 1 day.\n📱 +65 9800 4317` }
                     ]
                 },
                 {
                     platform: 'Google My Business', icon: '📍', copies: [
-                        { label: 'GMB Update Post', text: '✨ CLEANGROUT — Professional Epoxy Grout Service\n\n🧧 CNY Special: 10% OFF All Packages!\n\n🚿 Bathroom — $439\n🍳 Kitchen — $529\n🏠 Full Home — $1,339\n\n✅ 100% waterproof\n✅ Anti-mold & stain-proof\n✅ Done in 1 day\n✅ 15-20 year lifespan\n\nBook your FREE inspection today!\n📱 WhatsApp: 9800 4317' },
-                        { label: 'Review Request (After Job)', text: 'Hi [Name]! Thank you so much for choosing CLEANGROUT! 🙏\n\nWe hope you love your new epoxy grout! Would you mind leaving us a quick Google review? It really helps other homeowners find us.\n\n👉 [Insert Google Review Link]\n\nThank you! 😊' }
+                        { label: 'GMB Update Post', text: `✨ CLEANGROUT — Professional Epoxy Grout Service\n\n${S.emoji} ${S.label}: ${S.discount}!\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\n✅ 100% waterproof\n✅ Anti-mold & stain-proof\n✅ Done in 1 day\n✅ 15-20 year lifespan\n\nBook your FREE inspection today!\n📱 WhatsApp: 9800 4317` },
+                        { label: 'Review Request (After Job)', text: `Hi [Name]! Thank you so much for choosing CLEANGROUT! 🙏\n\nWe hope you love your new epoxy grout! Would you mind leaving us a quick Google review? It really helps other homeowners find us.\n\n👉 [Insert Google Review Link]\n\nThank you! 😊` }
                     ]
                 },
                 {
                     platform: 'TikTok / Reels / Shorts', icon: '🎬', copies: [
-                        { label: 'ASMR Grout Removal Caption', text: '10 years of mold... removed in 60 seconds 🤢➡️✨\n\n#asmr #groutcleaning #satisfying #oddlysatisfying #cleaningtiktok #beforeandafter #hdb #singapore #bathroomrenovation #cleaningasmr #transformation #sglife #epoxy' },
-                        { label: 'Before/After Transformation', text: 'POV: You finally fix your disgusting grout 😱➡️😍\n\nFrom $439 — link in bio\n\n#grout #epoxy #beforeandafter #homerenovation #satisfying #singapore #hdb #bathroomgoals #asmr #cleaningtiktok #diy' },
-                        { label: 'Epoxy Application ASMR', text: 'The sound of fresh epoxy grout... 🤤\n\n100% waterproof. Zero mold. Lasts 15-20 years.\nFrom $439.\n\n#asmr #epoxy #grout #satisfying #oddlysatisfying #diy #renovation #singapore #hdb #cleaningtiktok #asmrsounds' }
+                        { label: 'ASMR Grout Removal Caption', text: `10 years of mold... removed in 60 seconds 🤢➡️✨\n\n#asmr #groutcleaning #satisfying #oddlysatisfying #cleaningtiktok #beforeandafter #hdb #singapore #bathroomrenovation #cleaningasmr #transformation #sglife #epoxy` },
+                        { label: 'Before/After Transformation', text: `POV: You finally fix your disgusting grout 😱➡️😍\n\nFrom $488 — link in bio\n\n#grout #epoxy #beforeandafter #homerenovation #satisfying #singapore #hdb #bathroomgoals #asmr #cleaningtiktok #diy` },
+                        { label: 'Epoxy Application ASMR', text: `The sound of fresh epoxy grout... 🤤\n\n100% waterproof. Zero mold. Lasts 15-20 years.\nFrom $488.\n\n#asmr #epoxy #grout #satisfying #oddlysatisfying #diy #renovation #singapore #hdb #cleaningtiktok #asmrsounds` }
+                    ]
+                },
+                {
+                    platform: '🔁 Referral Engine', icon: '🎁', copies: [
+                        { label: 'Post-Job Referral Message', text: `Hi [Name]! Thank you for choosing CLEANGROUT! 🙏\n\nLoved our service? Share this with a friend!\n\n🎁 REFERRAL DEAL: When your friend books, you BOTH get $50 OFF your next service!\n\nJust tell them to mention your name when they WhatsApp us:\n📱 9800 4317\n\nOr share this link: https://epoxygrout.sg/?ref=[NAME]\n\nThank you for spreading the word! 🙌` },
+                        { label: 'Referral Reminder (2 weeks later)', text: `Hi [Name]! Hope you're still loving your new epoxy grout! ✨\n\nJust a reminder — if you refer a friend who books with us, you BOTH get $50 OFF! 🎁\n\nSome ideas:\n• Neighbours who've seen your new grout\n• Family members with older HDB/condo\n• Friends who complain about bathroom mold\n\nJust have them text us at 9800 4317 and mention your name! 😊` }
+                    ]
+                },
+                {
+                    platform: '⭐ Review Automation', icon: '⭐', copies: [
+                        { label: 'Google Review Request (Day 1)', text: `Hi [Name]! 🙏\n\nThank you for choosing CLEANGROUT! We loved working on your [bathroom/kitchen/home].\n\nWould you mind leaving us a quick Google review? It takes just 30 seconds and helps other homeowners find us!\n\n⭐ Leave a review here: [Google Review Link]\n\nP.S. If you could mention the specific area we worked on (e.g. "bathroom grout"), it really helps our SEO! 😊` },
+                        { label: 'Review Nudge (Day 3)', text: `Hi [Name]! Just a gentle follow-up 😊\n\nIf you haven't had a chance yet, we'd really appreciate a quick Google review:\n\n⭐ [Google Review Link]\n\nA few words about your experience would mean the world to us! 🙏\n\nEnjoy your new grout! ✨` },
+                        { label: 'Photo Request (Day 7)', text: `Hi [Name]! Quick question 📸\n\nWould you be okay with us using a before/after photo of your [bathroom/kitchen] on our social media?\n\nWe'll blur any personal items and just show the tile transformation. Your home looks amazing!\n\nIf yes, could you snap a quick photo of how it looks now? We'll send you a $20 voucher as thanks! 🎁` }
                     ]
                 }
             ];
@@ -1692,6 +1771,96 @@
             }).join('')}
                 </div>
                 ` : '<p style="color:#777;font-size:13px">No events yet. Visit your main site (index.html) to see PageView events appear here.</p>'}
+
+                <h4 style="margin:24px 0 12px">🌍 Geo-Targeting — Singapore & JB Only</h4>
+                <p style="color:#777;font-size:12px;margin-bottom:12px">Follow these exact steps to restrict your ads to ONLY Singapore and Johor Bahru. This prevents wasting money on clicks from people outside your service area.</p>
+                <div style="display:grid;gap:8px;margin-bottom:24px">
+                    <div class="test-card" style="padding:14px;border-left:4px solid #2196F3">
+                        <h5 style="color:#2196F3;margin-bottom:8px">📘 Facebook / Instagram Ads</h5>
+                        <ol style="color:#ccc;font-size:12px;padding-left:16px;line-height:1.8">
+                            <li>Go to <a href="https://adsmanager.facebook.com" target="_blank" style="color:#4CAF50">Ads Manager</a> → Create Campaign</li>
+                            <li>At Ad Set level → <strong>Locations</strong> section</li>
+                            <li>Change "Living in or recently in" to <strong>"People living in this location"</strong> (prevents tourists)</li>
+                            <li>Type <strong>"Singapore"</strong> → select country → set radius to <strong>+0 km</strong> (exact country border)</li>
+                            <li>Click <strong>"+ Add location"</strong> → type <strong>"Johor Bahru"</strong> → set radius to <strong>25 km</strong></li>
+                            <li>Under <strong>Detailed Targeting</strong>, add: Homeowners, Home improvement, Interior design</li>
+                            <li>Under <strong>Age</strong>: set to <strong>28-65</strong> (homeowners only, not students)</li>
+                        </ol>
+                    </div>
+                    <div class="test-card" style="padding:14px;border-left:4px solid #4CAF50">
+                        <h5 style="color:#4CAF50;margin-bottom:8px">📍 Google My Business</h5>
+                        <ol style="color:#ccc;font-size:12px;padding-left:16px;line-height:1.8">
+                            <li>Go to <a href="https://business.google.com" target="_blank" style="color:#4CAF50">Google Business Profile</a></li>
+                            <li><strong>Info</strong> → Service Area → set to: <strong>Singapore</strong> and <strong>Johor Bahru</strong></li>
+                            <li>This ensures Google shows you only to people searching in SG/JB</li>
+                        </ol>
+                    </div>
+                    <div class="test-card" style="padding:14px;border-left:4px solid #FF9800">
+                        <h5 style="color:#FF9800;margin-bottom:8px">🎬 TikTok / Reels Location Tags</h5>
+                        <ol style="color:#ccc;font-size:12px;padding-left:16px;line-height:1.8">
+                            <li>Always tag location: <strong>"Singapore"</strong> or <strong>"Johor Bahru"</strong> on every post</li>
+                            <li>Use local hashtags: <strong>#singapore #sglife #hdb #jb #johorbahru #iskandar</strong></li>
+                            <li>Mention neighborhoods in captions: "Tampines HDB", "JB condo", "Woodlands flat"</li>
+                            <li>This signals the algorithm to show your content to local viewers</li>
+                        </ol>
+                    </div>
+                    <div class="test-card" style="padding:14px;border-left:4px solid #E91E63">
+                        <h5 style="color:#E91E63;margin-bottom:8px">💡 Pro Tip: Two Separate Campaigns</h5>
+                        <p style="color:#ccc;font-size:12px;line-height:1.6">Run <strong>2 separate ad campaigns</strong> — one for SG, one for JB. Different pricing (SGD vs RM), different messaging, different audiences. This lets you optimize each market independently and gives cleaner data on which market performs better. Use the geo-targeted templates in the "Ad Templates" tab.</p>
+                    </div>
+                </div>
+
+                <h4 style="margin:24px 0 12px">${getCurrentSeason().emoji} Active Campaign: ${getCurrentSeason().label}</h4>
+                <div class="test-card" style="padding:14px;border-left:4px solid #4CAF50;margin-bottom:24px">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-size:14px;font-weight:700;color:#fff">${getCurrentSeason().emoji} ${getCurrentSeason().label}</div>
+                            <div style="font-size:12px;color:#aaa;margin-top:4px">Discount: <strong style="color:#4CAF50">${getCurrentSeason().discount}</strong> · Code: <strong>${getCurrentSeason().code}</strong> · Ends: ${getCurrentSeason().end}</div>
+                        </div>
+                        <span style="background:#4CAF50;color:#fff;padding:4px 12px;border-radius:4px;font-size:11px;font-weight:700">ACTIVE</span>
+                    </div>
+                    <p style="color:#777;font-size:11px;margin-top:8px">All templates in the "Ad Templates" tab auto-use this campaign. When the season changes, messaging updates automatically.</p>
+                </div>
+
+                <h4 style="margin:24px 0 12px">🤖 Post-Job Automation Sequence</h4>
+                <p style="color:#777;font-size:12px;margin-bottom:12px">After every completed job, follow this sequence. Templates are in the "Ad Templates" tab under "⭐ Review Automation" and "🔁 Referral Engine".</p>
+                <div style="display:grid;gap:6px;margin-bottom:24px">
+                    <div class="test-card" style="padding:10px;display:flex;align-items:center;gap:12px">
+                        <span style="background:#4CAF50;color:#fff;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:700;min-width:50px;text-align:center">Day 0</span>
+                        <div>
+                            <div style="font-size:12px;color:#fff;font-weight:600">Complete job + send referral message</div>
+                            <div style="font-size:10px;color:#666">Template: "Post-Job Referral Message"</div>
+                        </div>
+                    </div>
+                    <div class="test-card" style="padding:10px;display:flex;align-items:center;gap:12px">
+                        <span style="background:#2196F3;color:#fff;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:700;min-width:50px;text-align:center">Day 1</span>
+                        <div>
+                            <div style="font-size:12px;color:#fff;font-weight:600">Send Google Review request</div>
+                            <div style="font-size:10px;color:#666">Template: "Google Review Request (Day 1)"</div>
+                        </div>
+                    </div>
+                    <div class="test-card" style="padding:10px;display:flex;align-items:center;gap:12px">
+                        <span style="background:#FF9800;color:#fff;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:700;min-width:50px;text-align:center">Day 3</span>
+                        <div>
+                            <div style="font-size:12px;color:#fff;font-weight:600">Review nudge (if no review yet)</div>
+                            <div style="font-size:10px;color:#666">Template: "Review Nudge (Day 3)"</div>
+                        </div>
+                    </div>
+                    <div class="test-card" style="padding:10px;display:flex;align-items:center;gap:12px">
+                        <span style="background:#9C27B0;color:#fff;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:700;min-width:50px;text-align:center">Day 7</span>
+                        <div>
+                            <div style="font-size:12px;color:#fff;font-weight:600">Ask for before/after photo permission</div>
+                            <div style="font-size:10px;color:#666">Template: "Photo Request (Day 7)" — offer $20 voucher</div>
+                        </div>
+                    </div>
+                    <div class="test-card" style="padding:10px;display:flex;align-items:center;gap:12px">
+                        <span style="background:#E91E63;color:#fff;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:700;min-width:50px;text-align:center">Day 14</span>
+                        <div>
+                            <div style="font-size:12px;color:#fff;font-weight:600">Send referral reminder</div>
+                            <div style="font-size:10px;color:#666">Template: "Referral Reminder (2 weeks later)"</div>
+                        </div>
+                    </div>
+                </div>
             `;
         }
 
