@@ -294,7 +294,7 @@ sensitisers** — and sensitisation is the one that ends careers: irreversible a
 dose-independent once established. Gloves are not optional, and "low-viscosity" epoxy is
 not safer — the low-molecular-weight diluents are often *more* aggressive sensitisers.
 
-Silica dust from removal is respirable crystalline silica. Use extraction, not a broom.
+Silica dust from removal is respirable crystalline silica — see §6 for the controls. Use extraction, not a broom.
 
 ## HDB rules — unresolved, assume the strict reading
 
@@ -342,7 +342,111 @@ Things worth talking a customer out of, and why:
 
 ---
 
-# 6. REMOVAL DIFFICULTY
+# 6. REMOVAL — TOOLS, METHOD, DUST
+
+## The tools
+
+| Tool | Good at | Bad at | Dust | Chip risk |
+|---|---|---|---|---|
+| **Manual carbide rake / grout saw** | Cheap, silent, no dust, total control. Spot repair, fragile tile, tight spots | Slow and tiring. **Don't try epoxy with it** | Minimal | Low |
+| **Oscillating multi-tool + carbide-grit blade** | The workhorse for cement grout. Fast, controllable, gets into corners | Wears fast on hard grout. **Reported ineffective on cured epoxy** | Moderate | Low–moderate |
+| **Oscillating multi-tool + diamond-grit blade** | **Grinds rather than cuts** — the consensus choice for epoxy, and lasts far longer on hard cement | Costs more per blade | Moderate | Low–moderate |
+| **Rotary tool (Dremel) + guide** | Detail, corners, and named by trade sources as the best answer for *stubborn cured epoxy* | Too slow for a whole room | Low–moderate | Low with the guide |
+| **Angle grinder + tuck-point blade** | Genuinely fast on **wide joints (≥5 mm)** — pavers, terracotta, bulk epoxy | Trade sources warn against it for ordinary tile grout: kickback, skating onto the glaze, enormous dust | **Very high** — cited at 50–100 m³/min of dust-laden air under load | **High** |
+| **Reciprocating saw + grout blade** | Bulk demolition-style removal | Long stroke, poor control | High | High |
+
+No genuinely separate "professional grout removal machine" category exists — the
+professional answer is a good oscillating tool with the right blade.
+
+**Blade choice by grout:** carbide for cement, **diamond for epoxy**. Carbide on epoxy
+mostly generates heat and blade wear. Blade economics from §6 apply — the cheap blade is
+the expensive one per metre.
+
+## Technique that stops you chipping tiles
+
+- **Drop the blade into the centre of the joint**, flat, not angled against a tile edge.
+  **Sideways force against the tile edge is the chipping mechanism** — that is the whole
+  cause, and it is avoidable.
+- **Shallow, gradual passes**, deepening progressively. Never try for full depth in one
+  run. Move steadily — roughly 25–50 mm per second, not forced.
+- Establish a channel down the middle first, then approach the edges once the blade is
+  tracking in its own groove.
+- **If chipping starts: thinner blade, lighter pressure.** Not more force.
+- Corners and edges: oscillating tool, or rotary with a guide for the finest work.
+
+## Heat on epoxy — works, but the numbers are unreliable
+
+Heat softens cured epoxy and can make removal much easier. **The published temperatures
+disagree** — softening onset is quoted as both ~71 °C and ~100 °C, and glass transition
+anywhere from 150–260 °C depending on formulation. Treat any specific figure as
+unverified.
+
+Practical method: a heat gun of 1200 W or more, held around 200 mm away, warming a small
+area for a couple of minutes, then scraping while gummy with a **plastic — not metal —
+scraper**. **Keep it moving.** Steady concentrated heat can damage glazes and
+waterproofing membranes in as little as 90 seconds.
+
+## Chemicals — cleaners, not removers
+
+Sulfamic and phosphoric acid products **clean and etch; they do not excavate a joint**.
+Useful for haze and efflorescence, useless as a removal method.
+
+**Never on:** marble, granite, limestone, terrazzo, coloured cement, metallic glazes or
+aluminium — acid etches calcium-carbonate stone permanently.
+
+No chemical stripper for *fully cured* epoxy grout could be confirmed to exist. Products
+sold as "epoxy remover" generally target uncured spills and haze, not hardened joints.
+
+## Dust — the part that actually matters
+
+Grout removal generates **respirable crystalline silica**. This is not a nuisance-dust
+problem. RCS causes **silicosis — progressive, irreversible and incurable** — plus
+elevated COPD, lung cancer and kidney disease risk. The evidence is consistent across US,
+EU and Asia-Pacific regulators.
+
+**Controls, in order of effectiveness:**
+
+1. **On-tool extraction.** An **M-class** vacuum (≥99.95% capture at 0.3 µm) is the
+   baseline for silica-generating work; **H-class** where limits are tighter. A shop vac
+   is not a substitute. For an angle grinder, mains-powered extraction plus a shroud is
+   effectively mandatory given the dust volumes involved.
+2. **Wet suppression.** Misting the joint line knocks airborne dust down substantially.
+   It is a **supplement to** extraction and RPE, not a replacement, and it creates slurry.
+3. **Respiratory protection.** **FFP3 minimum** (P100 is the roughly equivalent US class)
+   — about a 20× reduction when properly fitted. Sustained dry work warrants a powered or
+   full-face respirator. **Fit-testing matters, and facial hair breaks the seal** — a
+   beard makes an FFP3 close to useless.
+
+**Never dry-cut indoors with an unshrouded grinder.** That is the single worst thing you
+can do to your own lungs on this job.
+
+### Singapore rules
+
+Singapore's **WSH Act** and the **WSH (General Provisions) Regulations** set Permissible
+Exposure Levels for around 700 substances, including respirable dust, and employers must
+keep exposure below them. The **WSH (Risk Management) Regulations** require hazards to be
+identified, assessed and controlled *before* work starts, with the assessment reviewed on
+change, after incidents, or every three years.
+
+**bizSAFE** (Level 3 typically) is commonly demanded by main contractors before a
+subcontractor is allowed on site — worth having if we ever want commercial work.
+
+> **[UNVERIFIED]** The **numeric PEL for respirable crystalline silica in Singapore**
+> could not be retrieved — the official lookup tool and MOM PDFs were blocked. No
+> Singapore grout- or tile-specific dust guidance was found either, and whether M/H-class
+> extraction and FFP3 are *mandated* here rather than merely good practice is unconfirmed.
+> The controls above are the international standard and are worth following regardless.
+
+## Productivity — no trustworthy figure exists
+
+Published rates range from **44 to 146 m/hour**, all from tool-review articles, none from
+a trade body, and **none for epoxy at all**. They are best-case, thin-joint, no-corners,
+no-dust-control numbers. Do not plan from them — this is exactly what §8 item 2 exists to
+measure.
+
+---
+
+# 7. REMOVAL DIFFICULTY
 
 How hard the existing joint is to take out, relative to aged cement. **All estimates.**
 
@@ -376,7 +480,7 @@ and it is slower, so it inflates labour too. Blade choice hits cost twice.
 
 ---
 
-# 7. THE MATHS
+# 8. THE MATHS
 
 ## Theorem — joint density
 
@@ -436,7 +540,7 @@ monthly cohorts.
 
 ---
 
-# 8. OPEN QUESTIONS
+# 9. OPEN QUESTIONS
 
 Ordered by consequence. The first three change what happens on site.
 
