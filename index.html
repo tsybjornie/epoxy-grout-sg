@@ -1191,6 +1191,80 @@
             line-height: 1.6;
         }
 
+
+        table.rates {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .93rem;
+            min-width: 460px;
+            margin-top: 28px;
+        }
+
+        table.rates th,
+        table.rates td {
+            text-align: left;
+            padding: 11px 16px 11px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        table.rates th {
+            font-size: .7rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 650;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        table.rates td.num,
+        table.rates th.num {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+            padding-right: 0;
+        }
+
+        table.rates tr.ref td {
+            background: var(--tint);
+        }
+
+        table.rates td.down {
+            color: #1a7f4b;
+        }
+
+        table.rates td.up {
+            color: var(--accent);
+        }
+
+        .policy {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px 32px;
+            margin-top: 34px;
+        }
+
+        .pol h3 {
+            font-size: 1rem;
+            font-weight: 650;
+            margin: 0 0 8px;
+            letter-spacing: -.01em;
+        }
+
+        .pol p {
+            font-size: .92rem;
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+
+        .lead-note {
+            font-size: 1.02rem;
+            color: var(--muted);
+            max-width: 62ch;
+            margin-bottom: 4px;
+        }
+
         /* ---------- Sticky dock ---------- */
         .dock {
             position: fixed;
@@ -1474,6 +1548,108 @@
         </div>
     </section>
 
+    <!-- ============ REMOVAL RATES ============ -->
+    <section class="reveal">
+        <div class="wrap">
+            <p class="eyebrow">Removal</p>
+            <h2>What's already in the joint changes the price.</h2>
+            <p class="lede">Taking out soft new grout and taking out cured epoxy are not the same job —
+                one crumbles, the other has to be ground out. Here is the whole schedule, including the
+                cases the calculator doesn't ask you about because most people can't tell them apart.</p>
+
+            <div class="tablewrap">
+                <table class="rates">
+                    <thead>
+                        <tr>
+                            <th>What's in the joint</th>
+                            <th class="num">Floor $/m</th>
+                            <th class="num">Wall $/m</th>
+                            <th class="num">vs old cement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Never grouted — new tiles</td>
+                            <td class="num">$5.04</td>
+                            <td class="num">$6.55</td>
+                            <td class="num down">−56%</td>
+                        </tr>
+                        <tr>
+                            <td>Recent grout, under about a year (BTO)</td>
+                            <td class="num">$8.50</td>
+                            <td class="num">$11.06</td>
+                            <td class="num down">−25%</td>
+                        </tr>
+                        <tr class="ref">
+                            <td><b>Old cement grout</b> — the usual case</td>
+                            <td class="num"><b>$11.34</b></td>
+                            <td class="num"><b>$14.74</b></td>
+                            <td class="num">—</td>
+                        </tr>
+                        <tr>
+                            <td>Polymer-modified cement</td>
+                            <td class="num">$12.91</td>
+                            <td class="num">$16.79</td>
+                            <td class="num">+14%</td>
+                        </tr>
+                        <tr>
+                            <td>Pre-mixed urethane or polyurea</td>
+                            <td class="num">$13.86</td>
+                            <td class="num">$18.02</td>
+                            <td class="num">+22%</td>
+                        </tr>
+                        <tr>
+                            <td>Epoxy emulsion</td>
+                            <td class="num">$15.12</td>
+                            <td class="num">$19.66</td>
+                            <td class="num">+33%</td>
+                        </tr>
+                        <tr>
+                            <td><b>True epoxy</b> — someone already did this</td>
+                            <td class="num"><b>$18.90</b></td>
+                            <td class="num"><b>$24.57</b></td>
+                            <td class="num up">+67%</td>
+                        </tr>
+                        <tr>
+                            <td>Furan resin — industrial, rare in homes</td>
+                            <td class="num">$20.79</td>
+                            <td class="num">$27.03</td>
+                            <td class="num up">+83%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="policy">
+                <div class="pol">
+                    <h3>The calculator asks you four questions, not eight</h3>
+                    <p>Almost nobody can tell polymer-modified cement from ordinary cement by looking, and
+                        you shouldn't have to. The calculator asks what you can actually answer — never
+                        grouted, recent, old, or someone already epoxied it. We identify the rest.</p>
+                </div>
+                <div class="pol">
+                    <h3>If we find something different, the rate is already published</h3>
+                    <p>Your quote is firm for the condition you described. If what we find on site is
+                        harder to remove, the new rate is the one in this table — not a number we invent
+                        on the day. And we tell you before we start, not after.</p>
+                </div>
+                <div class="pol">
+                    <h3>Existing epoxy we won't quote blind</h3>
+                    <p>Epoxy bonds to the tile edge, so removing it can chip tiles and turn a grouting
+                        job into a tiling job. The calculator will give you a figure, but we treat it as
+                        an estimate and confirm on site. Anyone quoting this firm from a photo hasn't
+                        thought about it.</p>
+                </div>
+                <div class="pol">
+                    <h3>Not sure what you've got? Send a photo</h3>
+                    <p>Close-up of a joint in good light, on WhatsApp. We'll tell you what it looks like
+                        and which rate applies. No charge, no obligation — it costs us a minute and saves
+                        you a surprise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ============ WHAT NOT TO USE ============ -->
     <section class="reveal tint">
         <div class="wrap">
@@ -1534,6 +1710,58 @@
         </div>
     </section>
 
+    <!-- ============ TILE DAMAGE ============ -->
+    <section class="reveal">
+        <div class="wrap">
+            <p class="eyebrow">Chipped and broken tiles</p>
+            <h2>The conversation we have before we start, not after.</h2>
+            <p class="lead-note">Grout removal runs a blade along the edge of your tiles. Done properly the
+                risk is small, but it is not zero — and some situations carry real risk however careful we
+                are. Here is exactly how we handle it.</p>
+
+            <div class="policy">
+                <div class="pol">
+                    <h3>We photograph everything first</h3>
+                    <p>Before any tool comes out, we photograph the whole area including every chip, crack
+                        and scratch already there, and send them to you. Not to protect ourselves — so that
+                        neither of us is relying on memory afterwards.</p>
+                </div>
+                <div class="pol">
+                    <h3>Do you have spare tiles?</h3>
+                    <p>This is the question almost nobody asks, and it is the one that matters most. If
+                        there is a box in the store room, a chipped tile is a small fix. If there isn't,
+                        and the tile is discontinued, it isn't. <strong>Tell us before we start.</strong></p>
+                </div>
+                <div class="pol">
+                    <h3>When the risk is genuinely higher</h3>
+                    <p>Existing epoxy, because it bonds to the tile edge and the failure plane can run
+                        into the tile. Already-cracked or drummy tiles. Thin large-format tiles. Some
+                        natural stone. If we see any of these we tell you the risk <em>before</em> quoting
+                        firm, and for existing epoxy we insist on seeing it first.</p>
+                </div>
+                <div class="pol">
+                    <h3>If we chip a tile, we say so</h3>
+                    <p>Immediately, with a photo, on the day. We make good damage we caused — replacing
+                        from your spares where they exist, or making it good as well as it can be made
+                        where they don't. What we will not do is find it, say nothing, and hope.</p>
+                </div>
+                <div class="pol">
+                    <h3>What we can't promise</h3>
+                    <p>We can't source a tile that is no longer made, and we can't make a replacement tile
+                        in a run of aged tiles look untouched — new tile is a different age to everything
+                        around it. Where that is the realistic outcome, you should know it before you
+                        agree to the work, not after.</p>
+                </div>
+                <div class="pol">
+                    <h3>We don't hide behind small print</h3>
+                    <p>Nothing here is an attempt to sign away responsibility for our own workmanship —
+                        Singapore law wouldn't allow that and we wouldn't want it. This is a disclosure of
+                        a real risk and a statement of what we do about it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ============ COLOUR & EXTRAS ============ -->
     <section class="reveal">
         <div class="wrap">
@@ -1555,8 +1783,11 @@
                     <span class="exp free">Included</span>
                     <h3>Matched against your actual tile</h3>
                     <p>We hold samples against your tile, in your bathroom, in your light — not against a
-                        photo. We'll aim for either a close match or a deliberate contrast, because a
-                        near-miss is the one result that looks like a mistake.</p>
+                        photo. Be aware the range is about 19 colours and epoxy cannot be tinted on site,
+                        so an <em>invisible</em> match is often not physically available. On neutrals we
+                        usually get very close. On anything strongly coloured we won't, and we'll say so
+                        and steer you to a deliberate contrast instead — which always looks chosen, where
+                        a near-miss always looks like a mistake.</p>
                 </div>
                 <div class="ex">
                     <span class="exp">+$45</span>

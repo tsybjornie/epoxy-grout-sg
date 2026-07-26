@@ -123,6 +123,73 @@ that cannot be reused.
 **Colour rule:** aim for a close match **or** a deliberate contrast. Never land in
 between — a near-miss is the one result that reads as a mistake.
 
+## How close can we actually match? Often not very
+
+Epoxy colour lives in factory-coated quartz. **It cannot be tinted on site.** So we are
+limited to the manufacturer's range — Kerapoxy CQ ships **17 colours (China), 19 (EU),
+40 (US)** — and matching is a nearest-neighbour problem on a fixed palette.
+
+Expected ΔE to a random neutral target, by palette size:
+
+| Palette | Expected ΔE |
+|---|---|
+| 17 colours | ~7.7 |
+| 19 colours | ~7.4 |
+| 40 colours | ~5.8 |
+| 60 colours | ~5.0 |
+
+Against a realistic 19-colour neutral palette:
+
+| Tile | Closest grout | ΔE | Reads as |
+|---|---|---|---|
+| Beige homogeneous | bahama beige | 1.0 | **Imperceptible** |
+| Mid grey concrete-look | cement grey | 2.0 | Matched |
+| Charcoal matt | charcoal | 2.0 | Matched |
+| White marble-look | white | 2.2 | Matched |
+| Light grey rectified | light grey | 4.1 | Matched |
+| Warm taupe | tornado | 5.7 | **Awkward — failed match** |
+| Wood-look brown | caramel | 6.4 | **Awkward — failed match** |
+| Blue glass mosaic | pearl grey | 24.7 | Contrast only |
+| Deep green feature tile | manhattan | 29.4 | Contrast only |
+
+**The conclusion that matters commercially: a ΔE < 2 "invisible match" is not reliably
+achievable, so we must not promise one.** Neutrals — which is most Singapore tile — land
+at ΔE 1–4 and read as matched. Warm mid-tones fall in the awkward 5–7 band. Anything
+strongly coloured cannot be matched at all.
+
+**So the sales line is not "we'll match it."** It is: *on neutrals we usually get very
+close; on colour we won't, and a deliberate contrast always looks chosen where a
+near-miss always looks like a mistake.*
+
+## Chipped and broken tiles
+
+Grout removal runs a blade along the tile edge. Correct technique makes the risk small,
+not zero — and some cases carry real risk regardless.
+
+**Always, before any tool comes out:**
+
+1. **Photograph the whole area including existing damage**, and send it to the customer.
+   Not self-protection — so neither side relies on memory afterwards
+2. **Ask whether they have spare tiles.** This is the single most important question and
+   almost nobody asks it. With spares a chip is a small fix; without, on a discontinued
+   tile, it is not
+3. Flag the higher-risk cases before quoting firm: **existing epoxy** (bonds to the tile
+   edge, failure plane can run into the tile), already-cracked or drummy tiles, thin
+   large-format, some natural stone
+
+**If we chip one:** say so immediately, with a photo, on the day. Make good what we
+caused. Never find it, say nothing and hope.
+
+**What we cannot promise:** sourcing discontinued tile, or making a new replacement tile
+look untouched among aged ones. Say that *before* the work, not after.
+
+> **A disclaimer cannot exclude liability for our own workmanship.** Singapore's Housing
+> and Building Act imposes non-excludable warranties (2 years, 6 for major defects), and
+> UCTA limits exclusion clauses generally. The page discloses a real risk and states what
+> we do about it — it does not attempt to sign away responsibility, because that would be
+> both unenforceable and wrong. **Have a lawyer review any customer-facing terms before
+> they go into a contract — I am not one.**
+
 ## What competitors charge
 
 Of about nine named Singapore competitors, **only two publish any price at all.** The
@@ -239,14 +306,25 @@ distribution may already be Chinese-made product, with certification and backing
 
 ## Method — full re-grout
 
-1. Protect, sheet furniture, set up dust extraction
-2. **Rake out to depth** — at least 2× joint width, or ⅔ of joint depth
-3. HEPA-vacuum, wash joints, **dry fully**
-4. Grout release on porous, unglazed or textured tile **before** grouting
-5. Mix → apply diagonally with a hard rubber float → compact fully → tool
-6. Emulsification wash, then second wash
-7. Silicone to movement joints, perimeters, changes of plane
-8. Protect from water for the stated cure period
+> **The full stage-by-stage procedure is a separate document:
+> `METHOD-CEMENT-TO-EPOXY.md`.** It carries four hold points, the QC checklist, the
+> failure-mode table and realistic timings. Print that one for the crew. This is the
+> summary.
+
+1. **Survey and go/no-go** — tap every tile. Drummy, loose, leaking or cracked = stop
+2. Protect, sheet, mask, bag the floor trap, set up extraction and ventilation
+3. **Rake out to depth** — at least 2× joint width, or ⅔ of joint depth
+4. Vacuum, wash, **dry fully** — check with a cotton bud at full depth
+5. Grout release on porous, unglazed or textured tile **before** grouting
+6. Size the batch to the pot life at *today's* temperature, weigh, mix 3 min, scrape, mix
+7. Apply diagonally with a hard rubber float, two passes at right angles, compact fully
+8. Tool the joint, check under raking light
+9. **Emulsification wash within the window** — circular motions, change pads and water
+   constantly
+10. Second wash, then haze check under raking light
+11. Silicone to movement joints **after cure**, never grout there
+12. Protect from water for the stated cure period, then hand over with photos and batch
+    numbers
 
 Removal depth is **our stated workmanship standard, not a code minimum** — it could not
 be found as an explicit clause in TCNA or BS 5385. Photograph it; it is invisible at
