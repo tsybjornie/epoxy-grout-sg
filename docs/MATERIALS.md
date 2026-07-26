@@ -281,6 +281,95 @@ converts someone else's defect into our warranty claim:
 
 ---
 
+## 4B. Mapei sourcing — researched 26 Jul 2026
+
+Decision taken: standardise on Mapei. This is where to buy it.
+
+### Singapore — buy direct
+
+**Mapei Far East Pte Ltd**, 28 Tuas West Road, Singapore 638383 · **+65 6862 3488**
+· Mon–Fri 8.30am–6pm. **[SG-CONFIRMED]**
+
+They sell **direct, including walk-in and self-collection** — no trade account or minimum
+order value found. Order by emailing a PO. Delivery S$64.20 incl. GST under S$800
+ex-GST; free above that, so self-collection is the sensible default for single jobs.
+
+Pack sizes on the SG catalogue:
+
+| Product | Packs |
+|---|---|
+| Kerapoxy | 2 kg (12×2 kg box), 5 kg, 10 kg |
+| Kerapoxy CQ | **3 kg** standard; 10 kg only in white 100, sea blue 283, cream 290 |
+
+Also listed: Kerapoxy IEG, Kerapoxy Easy Design, Ultracolor Plus (cementitious),
+Ultracare Kerapoxy Cleaner.
+
+> **No Singapore dollar price exists publicly for Mapei epoxy grout — none, in any pack
+> size, from any source.** Shopee SG, Lazada SG, Carousell, Horme and Selffix all return
+> nothing. **[UNVERIFIED]** One phone call to 6862 3488 closes the single biggest gap in
+> our cost model.
+
+### Malaysia / Johor Bahru
+
+**Mapei JB office: 44-01 Jalan Anggerik Emas 4, Taman Anggerik Emas, 81200 Johor Bahru
+· +607-595 3032.** **[SG-CONFIRMED]** Mapei Malaysia HQ is in Petaling Jaya.
+
+Retail prices found **[INDICATIVE — search summaries, sellers not vetted]**:
+
+| Listing | Pack | Price | Per kg | SGD/kg @ 3.168 |
+|---|---|---|---|---|
+| Kerapoxy A+B (Shopee) | 5 kg | RM 259.00 | RM 51.80 | **S$16.35** |
+| Kerapoxy (Lazada) | 5 kg | RM 245.00 | RM 49.00 | S$15.47 |
+| Kerapoxy (Shopee) | 5 kg | RM 244.90 | RM 48.98 | S$15.46 |
+
+No 2 kg or 10 kg RM price found. JB-area Mapei stockist confirmed: **Yong Hup Heng
+Machinery Hardware**. Wholesale channel: Man Kian Hardware (Puchong, Selangor).
+
+### Is crossing the causeway worth it? Probably not
+
+**[INDICATIVE — verify with Singapore Customs before acting]**
+
+- Land imports into Singapore pay **9% GST on CIF value with no relief threshold**. The
+  S$400 relief is air/postal only.
+- Traveller allowances (S$100/S$600) cover **personal use only**. Job stock is commercial
+  goods and does not qualify.
+- Commercial import needs a **Customs permit filed via TradeNet before arrival**, plus a
+  Malaysian export declaration.
+
+So MY retail at S$15.46–16.35/kg becomes **S$16.85–17.82/kg** landed before permit
+handling, fuel, tolls, VEP and your own time. GST-registered businesses reclaim the
+import GST as input tax, but the paperwork burden is per trip. **Unless Mapei Far East
+quotes materially above ~S$18/kg, the causeway run is not worth it.**
+
+> **Unresolved and important:** the dangerous-goods classification of Kerapoxy is
+> **[UNVERIFIED]**. Competitor SDSs class epoxy Part A as UN Class 9; Mapei's own SDS was
+> not obtainable. Whether either country restricts carrying it across the checkpoints
+> could not be determined. Ask Mapei to email the SDS and check the transport section
+> before planning any cross-border run.
+
+### Fallback supply
+
+**Davco (Sika)** is the easiest off-the-shelf epoxy in both markets — the only brand with
+a real Singapore consumer retail presence (Lazada SG), and Velocitydiy in Skudai stocks
+Sika grout for walk-in JB purchase. No prices published. ARDEX and Laticrete: no SG or MY
+distributor could be identified.
+
+### Counterfeit risk
+
+No reports of counterfeit or grey-market Mapei in Southeast Asia surfaced, and no Mapei
+authentication scheme was found — **absence of evidence, not evidence of absence.** The
+mitigation doesn't depend on resolving it: buy from Mapei Tuas or Mapei JB directly.
+Treat unvetted Shopee/Lazada marketplace sellers with more caution.
+
+### Two phone calls close most of this
+
+**Mapei Far East +65 6862 3488** — SGD price per pack size, trade terms, walk-in stock,
+and ask them to email the Kerapoxy SDS. **Mapei JB +607-595 3032** — RM trade price and
+the JB dealer list. That settles the price gap, the part-mixing question and the
+dangerous-goods question in an afternoon, faster than any further web research.
+
+---
+
 ## 5. Singapore operating rules
 
 **[CONFLICT — resolve before relying on this]**
