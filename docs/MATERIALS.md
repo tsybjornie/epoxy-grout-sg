@@ -137,7 +137,7 @@ assumed.
 | Product | Joint width | Pot life | Compressive | Flexural | Traffic | Full cure |
 |---|---|---|---|---|---|---|
 | **Ardex EG 15** | 1.5–15 mm | 60 min | ≥ 60 N/mm² | ≥ 30 N/mm² | 24 h | 7 d |
-| **Mapei Kerapoxy / CQ** | ≥ 1 mm (CQ to 10 mm) | 45 min, ~30 min open | — | — | — | — |
+| **Mapei Kerapoxy CQ** | ≥3 mm EU (to 10 mm non-sag) | 45 min @ 23 °C | 49 N/mm² | 38 N/mm² | 24 h | see §3.2b |
 | **Laticrete SPECTRALOCK PRO Premium** | — | **[CONFLICT]** 80 or 120 min @ 21 °C | > 27.5 N/mm² @ 7 d | tensile > 7.6 N/mm² | 2–24 h | — |
 | **Davco Epoxy-Based Coloured Grout** | 1–5 mm | — | > 45 N/mm² **[CONFLICT]** | — | — | — |
 | **Weberfill Epoxy Grout** | — | — | — | — | — | — |
@@ -157,11 +157,111 @@ Notes on what these figures actually mean for us:
 - **SPECTRALOCK's working-time conflict (80 vs 120 min) is unresolved** and matters
   directly: it is the difference between two batch plans.
 
+### 3.2b Mapei Kerapoxy range — the standardisation decision
+
+All Mapei epoxy grouts sit under the **Kerapoxy** name, 2-part (resin + hardener,
+pre-dosed) except Kerapoxy SP.
+
+| Product | For | Joint width | Packs |
+|---|---|---|---|
+| **Kerapoxy CQ** | **Our default.** Residential bath/kitchen regrouting | ≥3 mm EU / to 10 mm non-sag | **3 kg**, 10 kg (3 colours) |
+| Kerapoxy (141) | Industrial; also works as adhesive | ≥3 mm | 2, 5, 10 kg |
+| **Kerapoxy Easy Design** | **Second SKU.** Fine joints, glass mosaic | **1–15 mm** | 3 kg |
+| Kerapoxy IEG / IEG CQ | Food industry, HACCP | ≥3 mm | — |
+| Kerapoxy SP | 3-component, heavy chemical duty | ≥5 mm | 10 kg, pot life only 20 min |
+
+**Why CQ over plain Kerapoxy.** Plain Kerapoxy is sand-filled and coloured through the
+resin, so over-washing during cleanup **bleaches the joint**. CQ uses colour-coated
+quartz — colour lives in the aggregate, so it **cleans back to its original colour**.
+It is also **non-sag to 10 mm**, which matters because most of a bathroom regrout is
+vertical, and carries **BioBlock** anti-mould certified to ISO 22196:2007. **[INDICATIVE]**
+
+**Verified specifications — Kerapoxy CQ** (search summaries of Mapei-hosted documents):
+
+| Property | Value |
+|---|---|
+| Compressive strength (EN 12808-3) | 49 N/mm² |
+| Flexural strength | 38 N/mm² |
+| Abrasion (EN 12808-2) | 147 mm³ |
+| Water absorption (EN 12808-5) | **0.05 g** |
+| Shrinkage (EN 12808-4) | 0.80 mm/m |
+| **Mix density** | **1.60 kg/L** |
+| Mix ratio | pre-dosed **A:B = 9:1** |
+| Pot life | 45 min **at +23 °C, 50% RH** |
+| Foot traffic | ~24 h |
+| Application temp | **+16 to +32 °C**, maintained 72 h |
+| Classification | EN 13888 **RG** · ISO 13007-3 RG · **ANSI A118.3** |
+
+> The **1.60 kg/L** figure supersedes the 1.55 placeholder used earlier — material mass
+> and cost rise 3.2% wherever that was applied.
+
+**Three constraints that bite here:**
+
+1. **Joint width ≥3 mm.** Installers report the quartz **does not pack reliably into
+   finer joints**. Rectified large-format tile is often laid at 2 mm. **Measure the joint
+   on survey** — below ~3 mm the correct product is Kerapoxy Easy Design (1–15 mm), not
+   CQ. This belongs in `ALG-5` as a hard filter, not a preference.
+2. **Application ceiling +32 °C.** A Singapore bathroom in the afternoon routinely
+   exceeds it — the same problem already flagged for Ardex EG 15 at +30 °C. Combined with
+   the Q₁₀ rule (`MATH.md` EQ 3.2), the real working window is far shorter than 45 min.
+3. **Pre-dosed 9:1 means no partial mixing without weighing.** Mapei publishes a separate
+   *Mixing Partial Units of Grout* document, which confirms part-mixing is sanctioned but
+   requires a scale. That resolves the open question in §4.5 for this brand.
+
+**Known criticisms — reported plainly** (installer forums, **[INDICATIVE]**):
+
+- **The cleanup window is the number one complaint.** "Once you've mixed Kerapoxy CQ,
+  you're against the clock." Needs multiple buckets of clean water and a stack of white
+  emulsifying pads — epoxy clogs pads almost immediately.
+- **Epoxy haze is a recurring, expensive failure.** Mapei publishes a whole *Removing
+  Grout Haze* document, which tells you how common it is. The trap: over-washing to clear
+  haze **lightens the joint**, so you are squeezed from both sides. Textured porcelain is
+  the worst case.
+- **White epoxy yellows** — industry-wide, not Mapei-specific, caused by amber pigment in
+  the hardener ageing. Reported even in rooms with no natural light. **Commercial
+  consequence: do not offer brilliant white in kitchens.** Steer to off-white or light
+  grey and the most likely callback disappears.
+- Slower and fussier to install than cementitious grout.
+- Colour varies between batches — Mapei's own troubleshooting guide says use one batch
+  per area, so **record batch codes per job** (which is also the counterfeit control).
+
+**Versus the alternatives.** CQ's non-sag behaviour is a genuine advantage over Litokol
+Starlike, which installers report "keeps slipping out" on vertical work. Laticrete
+SPECTRALOCK is 3-part and has a reputation as more forgiving on cleanup, but **no direct
+installer comparison was found** — treat that as under-researched.
+
+### 3.2c China variants — relevant if stock is Asia-sourced
+
+Mapei manufactures epoxy at **Guangzhou Conghua**, so Asian stock may be Chinese-made
+rather than Italian. The Chinese Kerapoxy 141 datasheet classifies against **both**
+China's **JC/T 1004-2017《陶瓷砖填缝剂》** and EN 13888, as class **RG** — the Chinese
+standard uses the same CG/RG split, sub-dividing RG into solvent-type (RG I) and
+water-based (RG II). Conceptually aligned, which is a useful answer if a client
+questions Chinese-made stock. **[INDICATIVE]**
+
+**But the specs diverge:**
+
+| Parameter | EU | US | China |
+|---|---|---|---|
+| CQ colours | 19 | 40 | 17 |
+| CQ minimum joint | ≥3 mm | to 10 mm non-sag | **from 1 mm** |
+
+The **1 mm vs 3 mm contradiction is unresolved** — either the Chinese formulation uses
+finer quartz or it is spec drift in translation. **Do not assume a datasheet downloaded
+from mapei.com/gb describes the tub you bought locally.** Ask Mapei Singapore which
+origin their stock is and for the matching TDS revision.
+
+**Parallel import is a bigger risk than outright counterfeiting**: genuine product made
+for another market means different colour numbering, possibly a different joint-width
+spec, and stock potentially near its 24-month shelf life — degraded Part B gives soft,
+under-cured joints. Buying from Mapei Tuas or a listed dealer removes the question.
+
 ### 3.3 Density and coverage
 
 Grout density ρ is the input to every material quantity calculation (`MATH.md` §2.1)
 and it was **[UNVERIFIED] for every product above**. The working assumption of
-ρ ≈ 1.55 kg/L is a typical epoxy value, not a sourced one. Since
+ρ = **1.60 kg/L is now verified for Kerapoxy CQ** (§3.2b), superseding the 1.55
+placeholder. It remains unverified for the other products listed. Since
 mass scales linearly in ρ, a 10% error here is a 10% error in every material order.
 
 **This is the single highest-value figure to verify**, because it is used on every job.
