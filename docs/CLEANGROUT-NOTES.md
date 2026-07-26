@@ -161,6 +161,47 @@ strongly coloured cannot be matched at all.
 close; on colour we won't, and a deliberate contrast always looks chosen where a
 near-miss always looks like a mistake.*
 
+## Warranty — terms and what they cost us
+
+Published at `warranty.html`. **5 years** single area · **7 years** whole home ·
+**1 year** silicone · **transferable** if the customer sells.
+
+**Covered:** cracking, crumbling, debonding from the tile edge, soft/uncured grout, mould
+growing *within* the joint, voids from poor compaction, uneven colour breakdown across one
+batch.
+
+**Not covered:** the tiles or anything under them, structural movement, **yellowing of
+white and very light colours** (inherent to epoxy chemistry, not a defect), damage from
+acid/bleach/abrasives, impact, movement joints the customer insisted on grouting, work by
+others, grout we didn't install, normal wear.
+
+**Remedy:** inspect within 5 working days, remove and replace affected joints at no
+charge using the recorded batch, redo the whole area rather than patch if significant,
+and repaired work carries the **remainder** of the original term — not a fresh one.
+
+### What each term costs (EQ 6.1/6.2, Weibull η=25, m=2)
+
+| Term | P(claim) | Reserve | On a $1,074 bathroom |
+|---|---|---|---|
+| 2 yr | 0.6% | 0.46% | $5 |
+| 5 yr | 3.9% | **2.82%** | $30 |
+| 7 yr | 7.5% | **5.43%** | $58 |
+| 10 yr | 14.8% | 10.65% | $114 |
+| 15 yr | 30.2% | 21.77% | $234 |
+
+**Why 2 years signals nothing:** grout failures are bimodal — workmanship faults surface
+at **12–36 months**, wear-out much later. A 2-year term stops just as the evidence
+arrives, so it costs a bad operator almost nothing and cannot separate good from bad.
+Five years clears that window decisively. That is the minimum term that carries
+information, and it is why most of this trade offers exactly two.
+
+> **Decision available:** raising whole-home to **10 years** costs ~10.7% of price against
+> 5.4% at seven — about **$114 on a bathroom, $224 on a flat** — and would be **five times
+> the market norm**. At 43–50% gross that is affordable and would be the single strongest
+> signal available. **15 years at 21.8% is not affordable and should not be offered.**
+> This is a real financial commitment, so it is your call, not an edit I should make
+> unasked.
+
 ## Chipped and broken tiles
 
 Grout removal runs a blade along the tile edge. Correct technique makes the risk small,
