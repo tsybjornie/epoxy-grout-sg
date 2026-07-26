@@ -470,6 +470,107 @@ dangerous-goods question in an afternoon, faster than any further web research.
 
 ---
 
+## 4C. Buying channels — marketplaces and direct-from-China
+
+Researched 26 Jul 2026, WebSearch summaries only.
+
+### 4C.1 Shopee / Lazada / Carousell
+
+| Platform | Mapei epoxy grout | Other epoxy grout |
+|---|---|---|
+| Shopee SG | **None found** | Davco Epoxy Coloured Grout kit (400 ml, price not surfaced) |
+| Lazada SG | **None found** | Davco Epoxy Coloured Grout + application gun |
+| Carousell SG | **None** | Only *services* — contractors selling labour, not product |
+| Qoo10 SG | None | None |
+| Shopee / Lazada MY | Kerapoxy **5 kg RM239–259** = **S$15.10–16.35/kg** | Davco Colour Grout (cementitious, ~RM4/kg — not epoxy) |
+
+**No official Mapei, Davco or Sika storefront was found on any SG or MY marketplace.**
+The Malaysian Kerapoxy listings are third-party sellers.
+
+**Kerapoxy CQ — our chosen product — was not found on any marketplace in either
+country.** Only plain Kerapoxy 5 kg. So for the product we actually want, the online
+channel does not exist and the question is moot.
+
+### 4C.2 The GST hurdle that settles it
+
+Shopee's own help documentation states it **does not issue tax invoices on behalf of
+third-party sellers** — it can only invoice its own service fees. For a GST-registered
+business that means **no input-tax claim on the material**.
+
+Consequence: an authorised supplier at headline price $X$ costs $X/1.09$ net of
+reclaimed GST, while a marketplace seller at price $Y$ costs $Y$ outright.
+
+$$\frac{X}{1.09} > Y \quad\Longrightarrow\quad Y < 0.917X$$
+
+**A marketplace price must be more than 8.3% below the authorised price merely to break
+even** — before provenance, batch code, shelf life or warranty exposure enter the
+calculation.
+
+### 4C.3 The risk break-even
+
+Material is only 4–10% of invoice, so the saving is small while a rework is not:
+
+| Job | Material | Save 50% | One rework | Break-even risk rise |
+|---|---|---|---|---|
+| Bathroom floor | $22 | $11 | $331 | **+2.8 pts** |
+| Bathroom + shower | $60 | $30 | $644 | **+3.9 pts** |
+| Kitchen | $30 | $15 | $458 | **+2.7 pts** |
+| Whole home | $82 | $41 | $921 | **+3.7 pts** |
+| BTO whole flat | $260 | $130 | $1,582 | **+6.8 pts** |
+
+Baseline 7-year failure probability is 7.5% (EQ 6.2). If cheaper material raises it by
+more than **2.7–6.8 percentage points**, the saving is gone. Degraded hardener produces
+joints that look perfect at handover and fail at 12–24 months — exactly inside warranty.
+
+**Policy: buy grout from Mapei Tuas or an authorised dealer. Use marketplaces freely for
+consumables** — pads, sponges, buckets, masking, blades — where provenance is irrelevant
+and the savings are real.
+
+### 4C.4 Direct from China (1688 / Taobao / Alibaba) — a false economy
+
+The 环氧彩砂 category is large and mature (~3,600 listings on 1688 alone), dominated by
+德高 Davco, 马贝 Mapei, 西卡 Sika, 立邦 Nippon, 东方雨虹, 卓高 and a long tail of
+anonymous factories. Reliable RMB/kg pricing could **not** be established.
+
+Five compounding reasons not to do it:
+
+1. **Dangerous-goods freight.** Epoxy resin is commonly **UN3082, Class 9, PG III,
+   marine pollutant**; amine hardeners are typically **Class 8 corrosive**. DG cargo needs
+   approved forwarders, UN-rated packaging and DG documentation. Courier and small-parcel
+   routes are heavily restricted — the economics only work above roughly 500 kg.
+2. **Bulk conflicts with shelf life.** Two-part epoxy keeps ~24 months and degrades
+   thereafter; hardener oxidises and cure becomes unreliable. Buying enough to justify DG
+   freight means holding stock that ages before you use it.
+3. **NEA Hazardous Substances Licence.** If the resin or hardener contains a substance in
+   Part I of the Second Schedule of the EPMA, import requires an NEA HS Licence — approved
+   storage site plus a competency interview. Whether this product's chemistry triggers it
+   needs a CAS-number check. **[UNVERIFIED]**
+4. **Documented quality fraud in the home market.** Chinese trade press reports small
+   workshops adding nonylphenol and hexamethylenediamine to mask cheap raw materials; a
+   seizure of tens of thousands of counterfeit units over hazardous-substance limits; and
+   testing that found flexural strength of **2.7 MPa against a ≥10 MPa requirement**. Real
+   and documented, not hypothetical. **[INDICATIVE]**
+5. **Statutory warranty sits on us regardless.** Singapore's Housing and Building Act
+   imposes non-excludable warranties on the contractor — **2 years, 6 years for major
+   defects** — whatever material was used. There is no practical recourse against an
+   anonymous 1688 factory. **All the liability transfers to us and none of the risk
+   transfers away.**
+
+**And the cost argument collapses anyway:** Mapei already manufactures epoxy at
+**Guangzhou Conghua**. Buying Kerapoxy through Singapore distribution may well be buying
+Chinese-made product — with certification, a data sheet, local technical support and a
+manufacturer standing behind it. The China cost base is already in the price.
+
+### 4C.5 If Chinese product is ever considered: RG I vs RG II
+
+JC/T 1004-2017 splits reaction-resin grout into **RG I solvent-type** and **RG II
+water-based**. For occupied residential work, **RG II is the better choice**: lower VOC
+and odour, and a working time around 40 min against roughly 15 min for solvent-type,
+which is far more forgiving. Solvent off-gassing in an occupied flat is a genuine
+complaint driver. **[INDICATIVE]**
+
+---
+
 ## 5. Singapore operating rules
 
 **[CONFLICT — resolve before relying on this]**
