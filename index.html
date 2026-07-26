@@ -1117,6 +1117,53 @@
             color: var(--accent);
         }
 
+
+        .extras {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            margin-top: 28px;
+        }
+
+        .ex {
+            background: var(--bg);
+            padding: 22px 20px;
+        }
+
+        .exp {
+            display: inline-block;
+            font-size: .74rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: var(--ink);
+            color: var(--bg);
+            margin-bottom: 12px;
+        }
+
+        .exp.free {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--line);
+        }
+
+        .ex h3 {
+            font-size: 1rem;
+            font-weight: 650;
+            margin: 0 0 8px;
+            letter-spacing: -.01em;
+        }
+
+        .ex p {
+            font-size: .9rem;
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.55;
+        }
+
         /* ---------- Sticky dock ---------- */
         .dock {
             position: fixed;
@@ -1355,8 +1402,10 @@
                 &nbsp;+&nbsp; <b>rate</b> × joint length (m)<br>
                 joint length (m) = area (m²) × λ &nbsp;&nbsp;·&nbsp;&nbsp; λ = (L + W) ÷ (L × W) × 1000<br>
                 room perimeter (m) ≈ 4 × √area &nbsp;&nbsp;·&nbsp;&nbsp; charged per room, not per job<br>
-                rate = <b>$6.00</b>/m new tiles &nbsp;|&nbsp; <b>$10.13</b>/m recent grout &nbsp;|&nbsp;
-                <b>$13.50</b>/m old grout<br>
+                joint rate, per metre — floors, and walls at ×1.30:<br>
+                &nbsp;&nbsp;new tiles <b>$5.04</b> floor / <b>$6.55</b> wall &nbsp;·&nbsp;
+                recent grout <b>$8.51</b> / <b>$11.06</b> &nbsp;·&nbsp;
+                old grout <b>$11.34</b> / <b>$14.74</b><br>
                 mobilisation waived above $900 &nbsp;·&nbsp; minimum job $380 &nbsp;·&nbsp; before GST
             </div>
 
@@ -1387,6 +1436,60 @@
                         once whether we do one toilet or a whole flat. Spread over more area, fixed cost per square
                         foot falls. That is the entire reason the home package is cheaper per room — not a promotion,
                         just arithmetic.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ COLOUR & EXTRAS ============ -->
+    <section class="reveal">
+        <div class="wrap">
+            <p class="eyebrow">Colour and extras</p>
+            <h2>Colour is free. Dead material isn't.</h2>
+            <p class="lede">Choosing a colour costs us nothing, so we don't charge for it. What does cost
+                money is what's left in the tub — grout ships in 3&nbsp;kg units and the manufacturer
+                requires one batch per area, so every extra colour on a job strands material we can't
+                reuse. We charge that and nothing more.</p>
+
+            <div class="extras">
+                <div class="ex">
+                    <span class="exp free">Included</span>
+                    <h3>Any colour from the stocked range</h3>
+                    <p>Pick from the standard colour range. Same price whichever you choose — the pigment
+                        costs us the same.</p>
+                </div>
+                <div class="ex">
+                    <span class="exp free">Included</span>
+                    <h3>Matched against your actual tile</h3>
+                    <p>We hold samples against your tile, in your bathroom, in your light — not against a
+                        photo. We'll aim for either a close match or a deliberate contrast, because a
+                        near-miss is the one result that looks like a mistake.</p>
+                </div>
+                <div class="ex">
+                    <span class="exp">+$45</span>
+                    <h3>A different colour in each room</h3>
+                    <p>Each colour needs its own tub, and the remainder can't go into the next room. On a
+                        three-room job that's about $48 of grout left in part-used tubs, plus a separate
+                        mix for each.</p>
+                </div>
+                <div class="ex">
+                    <span class="exp">+$80</span>
+                    <h3>Special-order colour</h3>
+                    <p>Outside the stocked range we buy a full tub for one room and never use the rest,
+                        and it has to be ordered in. If it can't be sourced we'll tell you before you
+                        commit.</p>
+                </div>
+                <div class="ex">
+                    <span class="exp">Quoted</span>
+                    <h3>Metallic and glitter finishes</h3>
+                    <p>Decorative additives are a real material cost and we'll price them per job. Ask if
+                        you want them — they suit feature walls far better than floors.</p>
+                </div>
+                <div class="ex">
+                    <span class="exp free">Included</span>
+                    <h3>Batch codes recorded</h3>
+                    <p>We note the batch on your job sheet. It's how colour stays consistent across an
+                        area, and it's your proof of what actually went in.</p>
                 </div>
             </div>
         </div>
@@ -1440,8 +1543,8 @@
                 <div class="tier">
                     <h3>Kitchen</h3>
                     <p class="who">Kitchen floor and backsplash — the grease-and-stain area.</p>
-                    <div class="price">$588 <small>up to 80 sqft</small></div>
-                    <div class="perunit">$7.35 per sqft</div>
+                    <div class="price">$588 <small>up to 95 sqft</small></div>
+                    <div class="perunit">$6.19 per sqft</div>
                     <ul>
                         <li>Old grout removed to depth, not skimmed over</li>
                         <li>Chemical- and grease-resistant epoxy</li>
@@ -1846,6 +1949,9 @@
                 cHaze: 10,       // $/m² — cleaning and epoxy haze removal, genuinely area-driven
                 cMask: 4,        // $/m of room perimeter — masking and protection, NOT area-driven
                 phi: { new: 0, fresh: 0.55, aged: 1.0 },  // removal difficulty by grout condition
+                kFloor: 0.84,    // joint-rate factor for floor work
+                wallMult: 1.30,  // walls: overhead, repositioning, gravity against you
+                                 // calibrated so a floor + shower-wall bathroom is unchanged
                 cApply: 6.00,    // $/linear m — mixing, packing, tooling
                 cRemove: 7.50,   // $/linear m — raking out existing grout
                 minJob: 380,
@@ -1865,14 +1971,14 @@
 
             /* Typical HDB sizes in sqft, pre-filled so nobody has to measure first. */
             var PRESETS = [
-                { id: 'bath-floor', label: 'Bathroom — floor only', short: 'Bathroom floor', sqft: 40, tile: '300x300' },
-                { id: 'bath-shower', label: 'Bathroom — floor + shower wall', short: 'Bathroom + shower', sqft: 110, tile: '300x300' },
-                { id: 'bath-full', label: 'Bathroom — floor + all walls', short: 'Bathroom + walls', sqft: 250, tile: '300x300' },
-                { id: 'kitchen', label: 'Kitchen — floor + backsplash', short: 'Kitchen', sqft: 110, tile: '600x600' },
-                { id: 'living', label: 'Living / dining floor', short: 'Living / dining', sqft: 300, tile: '600x600' },
-                { id: 'bedroom', label: 'Bedroom floor', short: 'Bedroom', sqft: 120, tile: '600x600' },
-                { id: 'mbr', label: 'Master bedroom floor', short: 'Master bedroom', sqft: 150, tile: '600x600' },
-                { id: 'balcony', label: 'Balcony / service yard', short: 'Balcony / yard', sqft: 45, tile: '300x300' }
+                { id: 'bath-floor', label: 'Bathroom — floor only', short: 'Bathroom floor', sqft: 40, tile: '300x300', wall: 0.00 },
+                { id: 'bath-shower', label: 'Bathroom — floor + shower wall', short: 'Bathroom + shower', sqft: 110, tile: '300x300', wall: 0.64 },
+                { id: 'bath-full', label: 'Bathroom — floor + all walls', short: 'Bathroom + walls', sqft: 250, tile: '300x300', wall: 0.84 },
+                { id: 'kitchen', label: 'Kitchen — floor + backsplash', short: 'Kitchen', sqft: 110, tile: '600x600', wall: 0.27 },
+                { id: 'living', label: 'Living / dining floor', short: 'Living / dining', sqft: 300, tile: '600x600', wall: 0.00 },
+                { id: 'bedroom', label: 'Bedroom floor', short: 'Bedroom', sqft: 120, tile: '600x600', wall: 0.00 },
+                { id: 'mbr', label: 'Master bedroom floor', short: 'Master bedroom', sqft: 150, tile: '600x600', wall: 0.00 },
+                { id: 'balcony', label: 'Balcony / service yard', short: 'Balcony / yard', sqft: 45, tile: '300x300', wall: 0.00 }
             ];
 
             function lambda(t) { return (t.L + t.W) / (t.L * t.W) * 1000; }
@@ -1897,11 +2003,15 @@
                     // P ≈ 4·√A, so it is charged per room — three small rooms carry far more
                     // perimeter than one large one of the same total area.
                     var perim = 4 * Math.sqrt(A);
+                    // Wall work is slower than floor. The preset already tells us how much of
+                    // the surface is wall, so this costs the customer no extra question.
+                    var wf = typeof r.wall === 'number' ? r.wall : 0;
+                    var rate = jointRate * M.kFloor * (1 + (M.wallMult - 1) * wf);
                     area += A; joint += J;
                     items.push({
                         label: r.label, tile: t.label, sqft: Math.round(parseFloat(r.sqft) || 0),
-                        joint: J, perim: perim,
-                        cost: M.cHaze * A + M.cMask * perim + jointRate * J
+                        joint: J, perim: perim, wall: wf, rate: rate,
+                        cost: M.cHaze * A + M.cMask * perim + rate * J
                     });
                 });
 
@@ -1981,8 +2091,9 @@
 
                 var html = q.items.map(function (i) {
                     return '<div class="line"><span>' + esc(i.label) + ' · ' + i.tile + ' · ' + i.sqft + ' sqft</span><span>' + money(i.cost) + '</span></div>' +
-                        '<div class="line sub"><span>' + i.joint.toFixed(1) + ' m of joint × $' + q.jointRate.toFixed(2) +
-                        '/m, plus ' + i.perim.toFixed(1) + ' m of masking and surface prep</span><span></span></div>';
+                        '<div class="line sub"><span>' + i.joint.toFixed(1) + ' m of joint × $' + i.rate.toFixed(2) + '/m' +
+                        (i.wall > 0 ? ' (blended, ' + Math.round(i.wall * 100) + '% wall)' : ' (floor)') +
+                        ', plus ' + i.perim.toFixed(1) + ' m of masking and surface prep</span><span></span></div>';
                 }).join('');
 
                 if (q.discount > 0) {
@@ -2081,7 +2192,7 @@
                 var id = b.getAttribute('data-add');
                 for (var i = 0; i < PRESETS.length; i++) {
                     if (PRESETS[i].id === id) {
-                        rooms.push({ label: PRESETS[i].label, tile: PRESETS[i].tile, sqft: PRESETS[i].sqft });
+                        rooms.push({ label: PRESETS[i].label, tile: PRESETS[i].tile, sqft: PRESETS[i].sqft, wall: PRESETS[i].wall || 0 });
                         break;
                     }
                 }
@@ -2246,7 +2357,7 @@
             /* ---------- boot: first area pre-filled, progress starts part-done ---------- */
             renderChips();
             if (!load()) {
-                rooms = [{ label: PRESETS[0].label, tile: PRESETS[0].tile, sqft: PRESETS[0].sqft }];
+                rooms = [{ label: PRESETS[0].label, tile: PRESETS[0].tile, sqft: PRESETS[0].sqft, wall: PRESETS[0].wall || 0 }];
             }
             syncModeUI();
             renderRooms();

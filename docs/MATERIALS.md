@@ -46,6 +46,157 @@ available signal.
 
 ---
 
+## 1C. Chemistry — compounds, functions, hazards
+
+Researched 26 Jul 2026 from search summaries; **no SDS or standard was read in full**
+(egress policy blocks the hosts). Every compound below appeared in a named product's SDS
+via search summary unless marked otherwise.
+
+### 1C.1 Part A — the resin side
+
+| Component | Typical compound | Function | Why it matters to us |
+|---|---|---|---|
+| Base resin | **DGEBA / BADGE**, CAS **1675-54-3** | Crosslinking backbone | The thing that makes the joint waterproof and chemical-resistant |
+| Co-resin | Phenol-novolac / BPF-type oligomer, CAS **9003-36-5** | Cuts viscosity, raises chemical resistance | Usually blended with DGEBA — neither dominates |
+| Reactive diluent | **BDDGE** CAS 2425-79-8; glycerol triglycidyl ether; C13–C15 alkyl glycidyl ethers | Viscosity control | **Low-MW diluents are often *more* aggressive skin sensitisers than DGEBA** — "low viscosity" is not "safer" |
+| Filler | Crystalline silica / quartz, CAS **14808-60-7** | Bulk, hardness, abrasion resistance, shrinkage control | Its **particle size is why CQ won't pack into joints under ~3 mm** |
+| Coloured quartz | Sintered/ceramic-fired **or** resin-coated with colourfast pigment | Colour carried in aggregate | Two different quality tiers. Cheap product is surface-dyed and fades; premium is fired or pre-coated |
+| Pigment | TiO₂ CAS 13463-67-7, iron oxides, carbon black | Opacity and colour | — |
+| Rheology modifier | Fumed silica (1–5%, up to 6–10% for true non-sag); organoclay | Thixotropy | Non-sag on walls — though in a heavily filled grout much of it comes from **filler packing** itself |
+
+> **Correction to a common shorthand:** CAS 9003-36-5 is *not* "bisphenol-F diglycidyl
+> ether". It is the phenol/formaldehyde/epichlorohydrin **oligomer**. Pure DGEBF is
+> 2095-03-6 and is essentially never what appears on a commercial SDS.
+
+### 1C.2 Part B — the hardener, where the hazard sits
+
+Real grout hardener SDSs show **cycloaliphatic amines and polyamide adducts**, not the
+cheap aliphatics:
+
+| Class | Examples seen in named grout SDSs |
+|---|---|
+| Cycloaliphatic amines | **Isophorone diamine (IPDA)** CAS 2855-13-2; hydrogenated MDA (PACM); **trimethylhexamethylene diamine (TMD)** |
+| Polyamide / amidoamine adducts | Tall-oil / tetraethylenepentamine polyamide (Ardex EG 15 Part B) |
+| Non-reactive diluent | **Benzyl alcohol** CAS 100-51-6 — **primarily a diluent/plasticiser**, not principally an accelerator. Being non-reactive it can **migrate out over time**, causing shrinkage and greasy surfaces |
+| Accelerator | **DMP-30** CAS 90-72-2. A *tertiary* amine — **zero active N–H, so it contributes nothing to stoichiometry**, it only catalyses |
+
+**TETA and DETA — de-emphasise.** The archetypal cheap aliphatic polyamines are volatile,
+strongly alkaline, worst for blush and worst for skin. Branded grout hardeners use them
+as *precursors to adducts*, not free.
+
+**Nonylphenol (CAS 25154-52-3 / 84852-15-3) — get the framing right.** It is a
+**legitimate historical accelerator being designed out**, not an invented adulterant —
+the Danish EPA describes it plainly as used "as a hardener when laying out an epoxy
+floor". Cheap workshops continuing the practice are following a legacy route reputable
+formulators abandoned.
+
+> **Do not say "nonylphenol is banned in the EU."** It is **SVHC-listed** (endocrine
+> disruptor, environmental) and **restricted under REACH Annex XVII entry 46 for
+> specified uses** — a use-specific restriction, and epoxy hardener is not obviously one
+> of the enumerated uses. What drove "nonylphenol-free" hardeners is commercial
+> supply-chain screening more than direct prohibition. **[UNVERIFIED — ECHA blocked; the
+> single highest-risk claim in this document, confirm from the regulation text]**
+
+**GHS classification splits between the two parts:**
+
+| | Typical classification |
+|---|---|
+| **Part A** | Skin Irrit. 2 (H315), Eye Irrit. 2 (H319), **Skin Sens. 1 (H317)**, Aquatic Chronic 2 (H411). Irritant, **not** corrosive |
+| **Part B** | Escalates to **Skin Corr. 1B/1C (H314)** — severe burns — plus **Skin Sens. 1 (H317)** |
+
+**The point that matters for the crew:** the *corrosive* hazard sits on Part B, but
+**sensitisation sits on both** — and sensitisation is the one that ends careers. It is
+irreversible and dose-independent once established. Gloves are not optional.
+
+### 1C.3 Cure chemistry, and why the ratio is not negotiable
+
+Nucleophilic ring-opening of the oxirane by the amine nitrogen. **Each active amine
+hydrogen consumes exactly one epoxide** — primary amine = 2 active H, secondary = 1,
+**tertiary = 0**. The hydroxyls generated autocatalyse, which is why epoxy cure
+accelerates as it runs.
+
+$$\text{phr} = \frac{\text{AHEW} \times 100}{\text{EEW}}$$
+
+> **Correction to a plausible-sounding error:** off-ratio in **either** direction lowers
+> crosslink density and Tg. It is **one failure mode reached from two sides**, not two
+> different problems. What differs is the residue: excess resin leaves **unreacted
+> epoxide** (soft, tacky — and the sensitising species); excess amine leaves **free amine**
+> that plasticises, migrates to the surface, and feeds blush.
+
+In practice the ratio error rarely comes from weighing. It comes from **splitting a kit**,
+**not scraping the hardener pot out**, and **incomplete mixing**, which creates localised
+off-ratio zones even when the bulk ratio is right.
+
+### 1C.4 Amine blush — and why Singapore is not the risk case people assume
+
+Primary amines are hygroscopic and react with atmospheric **CO₂ + moisture** to form
+ammonium carbamate salts that exude as a greasy or cloudy surface film.
+
+> **Correction:** the classic risk window is **RH above ~70% *and* surface temperature
+> below ~15 °C**. Singapore reliably meets the humidity half and **essentially never
+> meets the cold half** — and fast tropical cure is *protective*, because the further
+> polymerisation has advanced the less amine is available to react.
+
+So **do not claim "tropical climate = high blush risk."** The real local triggers are
+**condensation on cool surfaces** (air-conditioned rooms, chilled slabs, fresh concrete)
+and **poor ventilation in enclosed wet areas**. In a filled grout it shows up as surface
+haze, a greasy film resisting the wash-off stage, and patchy colour rather than a full
+coating blush. **[INDICATIVE — extrapolated from coatings; no grout-specific literature
+found]**
+
+### 1C.5 Why white yellows — three mechanisms, not two
+
+1. **UV photo-oxidation** of the DGEBA aromatic backbone → quinone structures.
+2. **Amine curing agent contribution** — residual amine and ionic by-products discolour.
+3. **Hygrothermal thermo-oxidation — requires no UV at all.** Carbonyl formation in the
+   backbone under heat and moisture.
+
+**Mechanism 3 is the one that matters here**, and it is why white grout yellows in a
+**windowless Singapore bathroom**. Any explanation resting only on UV cannot account for
+our own most common field observation.
+
+### 1C.6 The non-epoxy alternatives, chemically
+
+| Product | Chemistry | Cure | Why resistance is lower |
+|---|---|---|---|
+| Pre-mixed "urethane" (Bostik TruColor) | Waterborne polyurethane dispersion, colour-coated quartz | **Water evaporation and coalescence**, not stoichiometric crosslinking — evidenced by its 3-day/7-day water-exposure schedule | Coalesced film has far lower crosslink density and retains **hydrophilic surfactants** needed to stabilise the dispersion |
+| Polyurea | Isocyanate + **amine-terminated** polyether | Seconds | Amine-termination is what makes it urea rather than urethane |
+| Polyaspartic | Aliphatic polyisocyanate + polyaspartic ester (a **sterically hindered secondary amine**) | Minutes — hindrance deliberately slows it to a workable pot life | Formally a **subclass of polyurea**. Aliphatic isocyanate is why it is UV-stable |
+| Furan | Acid-catalysed autocondensation of furfuryl alcohol | Thermoset | **Carbon filler is not stylistic** — carbon is why furan survives hydrofluoric acid; silica does not |
+| Cement (CG) | Portland cement, graded sand, **VAE/EVA redispersible polymer**, **cellulose ethers (HEMC/HPMC)** | Hydration | Polymer forms a film through the matrix giving flexibility and reduced permeability; cellulose ethers are **water-retention agents** so cement can finish hydrating against absorbent tile |
+
+> **CG1 vs CG2 are performance classes, not composition classes.** The standard specifies
+> test outcomes, not polymer content. You may say "CG2 achieves reduced abrasion (A)
+> and/or water absorption (W), usually via polymer modification" — you may **not** say
+> "CG2 means it contains redispersible polymer".
+
+### 1C.7 Certification claims — three to never make
+
+- **"HACCP-certified grout" does not exist.** EC 852/2004 regulates **food businesses**,
+  not building products; HACCP is a management system applied to an operation. The honest
+  claim is that a grout is *suitable for* premises operating under HACCP, or *meets the
+  Annex II surface criteria* (impervious, non-absorbent, easy to clean). Genuine food
+  **contact** is a different instrument entirely — EC 1935/2004.
+- **"Anti-mould certified to ISO 22196"** — ISO 22196 is **bacterial**, and building
+  materials are scope-excluded. See §3.2b.
+- **NSF/ANSI 61 for pool or tile grout.** NSF 61 is a **drinking water** standard. No
+  tile grout was found certified to it, and **swimming pools are out of scope entirely** —
+  pool water is not drinking water. The right route for pools is chemical resistance plus
+  ISO 13007 RG / ANSI A118.3.
+
+Legitimate and useful: **EMICODE EC1 / EC1PLUS** (VOC emissions; EC1PLUS is the stricter
+class and avoids the extra 28-day formaldehyde declaration), **GREENGUARD Gold**, and in
+Singapore the **SGBP certification** run by the Singapore Green Building Council — which
+is the one that feeds **BCA Green Mark** points, and is distinct from the Singapore Green
+Labelling Scheme. Note LEED v4 requires **both** an emissions evaluation **and** a VOC
+*content* limit — EC1PLUS alone does not satisfy the credit.
+
+**ASTM methods** for chemical-resistant grouts: **C579** compressive, **C580** flexural
+and modulus, **C267** chemical resistance, **C531** shrinkage and thermal expansion.
+**ASTM C395 was withdrawn in 2021** — do not cite it.
+
+---
+
 ## 2. Brands available in Singapore
 
 ### 2.1 Confirmed present
@@ -109,9 +260,15 @@ not the standard's own text:
 | Flexural strength | EN 12808-3 | ≥ 2.5 N/mm² | ≥ 2.5 N/mm² | — |
 | Compressive strength | EN 12808-3 | ≥ 15 N/mm² | ≥ 15 N/mm² | ≥ 15 N/mm² |
 
-EN 12808 test-method parts: **-1** chemical resistance of reaction resin mortars;
-**-2** abrasion; **-3** flexural and compressive strength; **-4** shrinkage;
-**-5** water absorption.
+EN 12808 test-method parts: **-1** chemical resistance of reaction resin mortars (note:
+this part is specific to reaction-resin, not cementitious); **-2** abrasion; **-3**
+flexural and compressive strength; **-4** shrinkage; **-5** water absorption.
+
+> **[CONFLICT — currency]** **BS EN 13888-2:2022 "Grouts for ceramic tiles — Test
+> methods"** now exists, and its contents are the EN 12808 set. EN 13888 appears to have
+> been restructured into Part 1 (requirements) + Part 2 (test methods), **absorbing the
+> EN 12808 series**. Citing "EN 13888 + EN 12808-1..5" may be the superseded structure.
+> Confirm with BSI before printing either on a document.
 
 > **[CONFLICT]** EN 13888 was revised in 2022. Whether the thresholds above reflect the
 > 2022 or the superseded 2009 revision could not be determined. ISO 13007-3's numeric
@@ -124,8 +281,8 @@ EN 12808 test-method parts: **-1** chemical resistance of reaction resin mortars
 | **A118.3** | Chemical-resistant, water-cleanable tile-setting and grouting **epoxy** |
 | **A118.5** | Furan resin grout |
 | **A118.6** | Standard cement grouts |
-| **A118.7** | High-performance polymer-modified cement grouts |
-| **A118.8** | Modified epoxy emulsion grout |
+| **A118.7** | **High-Performance Cement Grouts** (2019) — the older "polymer-modified" title is superseded |
+| **A118.8** | Modified Epoxy **Emulsion** Mortar/Grout — an epoxy emulsion in a cementitious system, with **much lower chemical resistance** than a true A118.3 epoxy. Conflating the two is a consequential specification error |
 
 **A118.3 is the one that matters** — it is the claim to ask a competitor's quote for.
 
@@ -167,14 +324,22 @@ pre-dosed) except Kerapoxy SP.
 | **Kerapoxy CQ** | **Our default.** Residential bath/kitchen regrouting | ≥3 mm EU / to 10 mm non-sag | **3 kg**, 10 kg (3 colours) |
 | Kerapoxy (141) | Industrial; also works as adhesive | ≥3 mm | 2, 5, 10 kg |
 | **Kerapoxy Easy Design** | **Second SKU.** Fine joints, glass mosaic | **1–15 mm** | 3 kg |
-| Kerapoxy IEG / IEG CQ | Food industry, HACCP | ≥3 mm | — |
+| Kerapoxy IEG / IEG CQ | Food industry surfaces | ≥3 mm | — |
 | Kerapoxy SP | 3-component, heavy chemical duty | ≥5 mm | 10 kg, pot life only 20 min |
 
 **Why CQ over plain Kerapoxy.** Plain Kerapoxy is sand-filled and coloured through the
 resin, so over-washing during cleanup **bleaches the joint**. CQ uses colour-coated
 quartz — colour lives in the aggregate, so it **cleans back to its original colour**.
 It is also **non-sag to 10 mm**, which matters because most of a bathroom regrout is
-vertical, and carries **BioBlock** anti-mould certified to ISO 22196:2007. **[INDICATIVE]**
+vertical, and carries **BioBlock** bacteriostatic technology. **[INDICATIVE]**
+
+> ⚠ **Correction on the BioBlock claim.** ISO 22196 is an **antibacterial** test, and says
+> nothing about **mould**, which is fungal. Its scope also covers "antibacterial-treated
+> plastics and other non-porous surfaces" and **explicitly excludes building materials**
+> except where used in the same manner as treated articles — so a grout claim sits in a
+> carved-out grey zone. **Do not market Kerapoxy CQ as "anti-mould certified".** The
+> defensible claim is that epoxy is non-absorbent, so it gives mould nothing to feed on —
+> which is a property argument, not a certification.
 
 **Verified specifications — Kerapoxy CQ** (search summaries of Mapei-hosted documents):
 
