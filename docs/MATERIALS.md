@@ -514,6 +514,38 @@ keys into residual cement instead of the tile edge, so the failure plane is the 
 grout. It is invisible at handover — which is precisely why it belongs in a photograph
 (an evidence node) rather than a promise.
 
+### 4.6b Removal difficulty by what is already in the joint
+
+$\varphi$ scales the removal component of the joint rate (`MATH.md` EQ 4.1). **These are
+estimates, not measurements** — the same standing caveat as $\alpha$ and $\beta$.
+
+| What is in the joint | φ | crew-min/m | Why |
+|---|---|---|---|
+| Fresh cement, under ~1 yr (BTO) | 0.55 | 0.88 | Soft, friable — crumbles under carbide |
+| **Aged cement CG1** | **1.00** | 1.60 | Hard but friable — the reference case |
+| Polymer-modified cement CG2 | 1.25 | 2.00 | The polymer film resists crumbling |
+| Pre-mixed urethane / polyurea | 1.40 | 2.24 | Rubbery — gums and loads the blade instead of cutting |
+| Modified epoxy emulsion A118.8 | 1.60 | 2.56 | Part cement, part resin; neither failure mode helps |
+| **True epoxy RG / A118.3** | **2.20** | 3.52 | Thermoset. Will not crumble — must be ground out |
+| Furan A118.5 | 2.50 | 4.00 | As epoxy, plus carbon dust |
+
+On a bathroom floor + shower wall (68 m of joint), removal alone runs from **1.0 h** for
+fresh BTO grout to **4.0 h** for existing epoxy — a labour swing of about **$257**.
+
+**Two things make epoxy removal different in kind, not just degree:**
+
+1. **It does not crumble.** Cement fails in friction and falls out as powder. A cured
+   thermoset has to be *cut* along its whole length, so blade wear and time both scale
+   badly.
+2. **It is bonded to the tile edge.** That is exactly what makes it good grout and exactly
+   what makes it dangerous to remove — the failure plane can run into the tile rather than
+   the joint. **Removing epoxy can chip tiles and turn a grouting job into a
+   tile-replacement job.**
+
+For that reason existing epoxy is offered on the site as an **estimate requiring a
+survey**, not a fixed price. It is the one case where the instant quote is honestly
+qualified.
+
 ### 4.7 Where grout must never go
 
 Movement accommodation is required, per BS 5385-3 and TCNA EJ171 **[INDICATIVE,

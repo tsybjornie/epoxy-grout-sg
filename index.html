@@ -449,7 +449,7 @@
 
         .choice {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
         }
 
@@ -1164,6 +1164,33 @@
             line-height: 1.55;
         }
 
+
+        .warns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px 30px;
+            margin-top: 30px;
+        }
+
+        .wn {
+            border-top: 2px solid var(--ink);
+            padding-top: 14px;
+        }
+
+        .wn h3 {
+            font-size: 1rem;
+            font-weight: 650;
+            margin: 0 0 8px;
+            letter-spacing: -.01em;
+        }
+
+        .wn p {
+            font-size: .92rem;
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
         /* ---------- Sticky dock ---------- */
         .dock {
             position: fixed;
@@ -1331,6 +1358,12 @@
                             <b>Old grout, hardened</b>
                             <small>Raked out to full depth, cleaned, then epoxy applied.</small>
                         </label>
+                        <label>
+                            <input type="radio" name="mode" value="epoxy">
+                            <b>Existing epoxy to remove</b>
+                            <small>Someone already epoxied it. Far harder to take out — the price
+                                below is an estimate and we'll confirm on site.</small>
+                        </label>
                     </div>
                 </div>
 
@@ -1436,6 +1469,66 @@
                         once whether we do one toilet or a whole flat. Spread over more area, fixed cost per square
                         foot falls. That is the entire reason the home package is cheaper per room — not a promotion,
                         just arithmetic.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ WHAT NOT TO USE ============ -->
+    <section class="reveal tint">
+        <div class="wrap">
+            <p class="eyebrow">Before you commit</p>
+            <h2>Things we will talk you out of.</h2>
+            <p class="lede">Some of these cost you money twice. We would rather lose the job than do
+                them, so here they are in advance.</p>
+            <div class="warns">
+                <div class="wn">
+                    <h3>Grout in a movement joint</h3>
+                    <p>The perimeter of a floor, internal corners, where floor meets wall, around
+                        sanitaryware — these move, and <strong>any</strong> rigid grout cracks there. They
+                        take flexible silicone, not grout of any kind. A cracked corner three months after
+                        a "full regrout" is almost always this.</p>
+                </div>
+                <div class="wn">
+                    <h3>Cement grout in a shower</h3>
+                    <p>Cement grout is porous by design — that is not a defect, it is what it is. It drinks
+                        soap, water and body oils, and the black you scrub off is growing inside it.
+                        Sealing slows it for a while. In a wet area it is a three-year consumable.</p>
+                </div>
+                <div class="wn">
+                    <h3>Grout pens and colour seal</h3>
+                    <p>Paint over failed grout and you have painted over failed grout. It looks right for a
+                        few weeks, then peels — usually first where it is wettest. What is underneath keeps
+                        doing whatever it was doing.</p>
+                </div>
+                <div class="wn">
+                    <h3>"Epoxy" that comes ready-mixed in a tub</h3>
+                    <p>Real epoxy is two or three parts mixed on site against a clock. Pre-mixed and ready
+                        to use means urethane or an emulsion — easier to apply, less chemical- and
+                        stain-resistant. It may be right for your job. It is not what you were quoted.</p>
+                </div>
+                <div class="wn">
+                    <h3>Epoxy in joints under about 3&nbsp;mm</h3>
+                    <p>The quartz in most epoxy grout is too coarse for a fine joint, so it bridges and
+                        leaves voids you cannot see. Fine joints need a different product, not more effort.
+                        We measure the joint before choosing.</p>
+                </div>
+                <div class="wn">
+                    <h3>Brilliant white in a kitchen</h3>
+                    <p>White epoxy yellows. It is the chemistry, not a defect, and it happens in rooms with
+                        no window at all. Off-white or light grey looks the same on day one and still looks
+                        right in year five.</p>
+                </div>
+                <div class="wn">
+                    <h3>Grouting over drummy or loose tiles</h3>
+                    <p>Tap a tile — if it sounds hollow the problem is underneath it, and grout does not
+                        hold a tile down. If we find this we tell you and stop. It is a tiling job, not a
+                        grouting job, and doing it in the wrong order wastes both.</p>
+                </div>
+                <div class="wn">
+                    <h3>Unbranded epoxy with no name on the tub</h3>
+                    <p>If nobody will tell you what went into your bathroom, nobody is standing behind it
+                        either. Ask any contractor — us included — for the product name and the receipt.</p>
                 </div>
             </div>
         </div>
@@ -1948,7 +2041,10 @@
                 waiveF: 900,     // mobilisation waived above this
                 cHaze: 10,       // $/m² — cleaning and epoxy haze removal, genuinely area-driven
                 cMask: 4,        // $/m of room perimeter — masking and protection, NOT area-driven
-                phi: { new: 0, fresh: 0.55, aged: 1.0 },  // removal difficulty by grout condition
+                phi: { new: 0, fresh: 0.55, aged: 1.0, epoxy: 2.2 },
+                                 // removal difficulty. Epoxy is a thermoset — it will not
+                                 // crumble, it has to be ground out, and it is bonded to the
+                                 // tile edge. Estimates, not yet measured.
                 kFloor: 0.84,    // joint-rate factor for floor work
                 wallMult: 1.30,  // walls: overhead, repositioning, gravity against you
                                  // calibrated so a floor + shower-wall bathroom is unchanged
@@ -2231,7 +2327,8 @@
                 if (area) msg += '*Area:* ' + area + '\n';
                 var MODEL = { 'new': 'New tiles — first grouting, no removal',
                               'fresh': 'Recent/BTO grout — easy removal + apply epoxy',
-                              'aged': 'Old grout — full removal + apply epoxy' };
+                              'aged': 'Old grout — full removal + apply epoxy',
+                              'epoxy': 'EXISTING EPOXY to remove — estimate only, needs survey' };
                 msg += '*Job type:* ' + MODEL[mode] + '\n\n*Breakdown:*\n';
                 q.items.forEach(function (i) {
                     msg += '• ' + i.label + ' — ' + i.tile + 'mm — ' + i.sqft + ' sqft — ' +
