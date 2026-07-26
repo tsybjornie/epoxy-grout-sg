@@ -424,6 +424,170 @@ signalling value. A claim with no evidence node behind it is decoration.
 
 ---
 
+## 8B. Extension — nodes added since rev 1
+
+Everything worked through after the original schema. Same conventions.
+
+### MAT.Compound — chemistry as nodes
+
+```
+id, part ∈ {A, B, ancillary}
+name, cas
+role ∈ {base_resin, co_resin, reactive_diluent, filler, coloured_quartz,
+        pigment, rheology_modifier, curing_agent, accelerator, non_reactive_diluent}
+function        : text — what it does in the mix
+ghs             : set{H315, H317, H318, H319, H314, H411}
+sensitiser      : bool
+governs         : attribute of MAT.ProductLine this compound determines
+```
+Edges: `—determines→ MAT.Property`. The useful ones:
+**quartz filler particle size → joint_min_mm** (why CQ fails under 3 mm),
+**amine hardener → pot_life and Skin Corr. 1B**,
+**coated quartz → colour_stability under washing**.
+
+### MAT.Standard
+
+```
+code ∈ {EN 13888, ISO 13007-3, EN 12808-1..5, BS EN 13888-2:2022,
+        ANSI A118.3/.5/.6/.7/.8, JC/T 1004-2017, ISO 22196, EMICODE EC1PLUS,
+        GREENGUARD Gold, SGBP, EC 852/2004, REACH Annex XVII, NSF/ANSI 61}
+scope           : text
+covers_grout    : bool          -- ISO 22196 and NSF 61 are FALSE. This field exists
+                                   because claiming otherwise is the common error
+class_awarded   : e.g. RG, CG2WA, A118.3
+claimable       : bool          -- can we legitimately state it
+```
+
+### MAT.Channel — where material comes from
+
+```
+kind ∈ {manufacturer_direct, authorised_dealer, marketplace, cross_border, import_direct}
+tax_invoice     : bool          -- Shopee third-party = FALSE, kills input-tax claim
+gst_reclaimable : bool
+permit_required : bool          -- TradeNet for commercial land import
+dg_class        : UN class if any
+provenance      : enum{traceable, unvetted}
+effective_cost  : price × (gst_reclaimable ? 1 : 1.09) + handling
+```
+The `tax_invoice` field alone forces an **8.3% price gap** before any other factor.
+
+### COND.JointContent — what is in the joint now
+
+```
+type ∈ {none, cement_fresh, cement_aged, cement_cg2, urethane, epoxy_emulsion,
+        epoxy_true, furan}
+phi             : float         -- removal difficulty, 0 → 2.50
+identifiable_by ∈ {customer, survey_only}
+quotable_firm   : bool          -- FALSE for epoxy_true and furan
+```
+**The `identifiable_by` field is the design driver for the whole quoting flow**: the
+calculator asks only what a customer can answer, and the rest is a survey adjustment
+against a published rate.
+
+### PROC.HoldPoint
+
+```
+id ∈ {substrate_sound, joints_dry_and_deep, ratio_weighed, wash_within_window}
+criterion       : text
+evidence        : photo | measurement | timestamp
+blocks          : PROC.Op[]     -- ops that cannot start until satisfied
+```
+
+### PROC.Consumable extended
+
+```
+kind ∈ {carbide_blade, diamond_blade, white_pad, sponge, masking, vac_filter,
+        grout_release, haze_remover, silicone}
+per                 ∈ {job, m2, joint_metre, batch}
+suits_joint_content : COND.JointContent[]   -- carbide ≠ epoxy
+cost_per_unit, life_metres
+```
+
+### RES.MandatoryKit
+
+Not optional equipment — the job cannot legally or safely proceed without these.
+
+```
+item ∈ {m_class_vacuum, ffp3_fit_tested, scale_0p1g, nitrile_gloves, eye_protection}
+reason ∈ {rcs_silicosis, amine_sensitisation, mix_ratio_tolerance}
+regulatory ∈ {WSH_Act, WSH_General_Provisions, WSH_Risk_Management, none}
+```
+
+### COMM.WarrantyTerm
+
+```
+years, scope ∈ {single_area, whole_home, silicone}
+transferable    : bool
+reserve_pct     : float         -- F(n)·K·(1+φ) from EQ 6.2
+covered_modes   : set
+excluded_modes  : set           -- incl. yellowing, which is inherent not defective
+credibility_discount(s) : float -- share of face value collectable at survival rate s
+```
+That last field is why 10 and 15 years were declined: at s = 0.90 a 15-year promise
+delivers ~37% of face value.
+
+### COMM.ClaimBranch — every post-purchase path
+
+```
+id ∈ {B1..B11}
+description, cost_sgd, defence ∈ {stage0_photos, published_exclusions, care_note,
+                                  batch_records, none}
+```
+**B10 (public complaint, $240) is costlier than B2 (genuine claim, $644 but recoverable
+goodwill)** — which is why the claim route is one WhatsApp photo. Design goal: make
+claiming easier than complaining.
+
+### COMM.PriceComponent — the quoting algebra
+
+The tariff regrouped so every term is a lookup or one multiply:
+
+```
+k_tile          : float   -- joint metres per sqft. 0.23 / 0.31 / 0.46 / 0.62 / 0.93 / 1.86
+rate            : float   -- $/m from (condition × floor|wall)
+room_charge(A)  : 10A + 16√A
+P = 150 + Σ room_charge + Σ (sqft × k_tile × rate), then band, waive, floor
+```
+Verified identical to the full model on every reference job — it is the same equation,
+regrouped for a clipboard.
+
+### SITE.TileColour
+
+```
+lab {L, a, b}
+nearest_grout   : MAT.SKU
+delta_e         : float
+verdict ∈ {match, matched_enough, awkward_zone, contrast_only}
+```
+`awkward_zone` is ΔE 5–10 and is the one outcome to design away from — it reads as a
+failed match rather than a choice.
+
+### DEM.SalesMove and DEM.Objection
+
+```
+DEM.SalesMove   { move, mechanism ∈ {reframing, loss_aversion, reciprocity,
+                  costly_signal, commitment, fairness, autonomy},
+                  claim_made, defensible: bool }
+DEM.Objection   { type ∈ {too_expensive, cheaper_quote, discount_request,
+                  thinking_about_it, longevity_doubt}, response, concession_available }
+```
+`defensible` is a required field. A move whose claim we cannot back is not in the graph.
+
+### 8B.1 What the extension buys
+
+Three traversals that did not exist in rev 1:
+
+1. **Survey → quote in four questions.** `COND.JointContent.identifiable_by` splits what
+   the customer answers from what we determine, so the form asks only the former and the
+   published rate table handles the latter.
+2. **Product selection is forced, not chosen.** `MAT.Compound → joint_min_mm` means a
+   2 mm joint mechanically excludes Kerapoxy CQ. It is a filter, not a preference.
+3. **Every claim on the site is traceable to a node.** `MAT.Standard.covers_grout` and
+   `DEM.SalesMove.defensible` exist specifically so that an unsupportable claim cannot be
+   represented in the model — which is how "anti-mould certified" and "HACCP certified"
+   were caught.
+
+---
+
 ## 9. The graph
 
 ### 9.1 Physical chain — what determines the number
