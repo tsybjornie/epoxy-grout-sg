@@ -381,6 +381,102 @@ converts someone else's defect into our warranty claim:
 
 ---
 
+## 1B. Grout types worldwide — and how to tell real epoxy from "epoxy-like"
+
+Researched 26 Jul 2026, WebSearch summaries only.
+
+### 1B.1 Genuine reactive-resin grouts
+
+| Type | Where it is the norm | Notes |
+|---|---|---|
+| **2-part epoxy** — resin + hardener, filler pre-blended | Europe / Italy | Mapei Kerapoxy, Litokol Starlike EVO, Kerakoll Fugalite, Sopro DFX |
+| **3-part epoxy** — resin + hardener + separate coloured filler | USA, Australia, Gulf | Laticrete SPECTRALOCK PRO, Ardex EG 15, Davco, Weber weberepox. One liquid pack serves every colour |
+| **Coloured-quartz epoxy** (环氧彩砂) | China mass market; premium elsewhere | Surface-coloured sintered quartz, so nothing bleeds into porcelain, glass or stone. Kerapoxy CQ, Starlike EVO |
+| **Furan resin** (ANSI A118.5) | US and Indian industrial | Reactive resin but **not epoxy**. Beats epoxy on organic acids — dairies, breweries, acid-brick floors. **Cannot be water-cleaned**: tile must be wax-masked and cleaned with solvent. Never residential |
+| **Potassium silicate** | Extreme chemical service | Fully **inorganic**. Chimneys, stacks, acid-proof brick. No relevance to tiling — don't let a supplier conflate it |
+
+### 1B.2 Marketed alongside epoxy but **not** epoxy
+
+This is where a cheaper competing quote usually differs, and no customer can tell:
+
+- **1-part pre-mixed urethane** — Bostik TruColor (water-based urethane), Custom Fusion Pro. Ready to use, no pot life, ~50% faster, never needs sealing. **Lower chemical and stain resistance than true epoxy.**
+- **Polyurea** — common in Korea's re-grouting trade as the budget option; Korean sources put its life at **~5 years against "semi-permanent" for Kerapoxy**.
+- **Hybrid resin-cement** — Kerakoll **Fugabella Color** sits between cementitious and epoxy by the manufacturer's own description. Not an RG epoxy.
+- **Modified epoxy emulsion** (ANSI **A118.8**) — its own, weaker class. An "epoxy emulsion" grout is not an A118.3 epoxy.
+
+> **⚠ The name trap:** Laticrete **SPECTRALOCK PRO** is a 3-part epoxy. Laticrete
+> **SPECTRALOCK 1** is a **pre-mixed single component** — same family name, different
+> product class.
+
+### 1B.3 The screening rule
+
+> **A genuine 100%-solids epoxy is two or three components mixed on site with a defined
+> pot life.** Anything supplied **pre-mixed in a single tub, ready to use, is by
+> definition not a 2-part epoxy** — it is urethane, polyurea or an emulsion.
+
+Second test: a real epoxy tile grout carries **EN 13888 / ISO 13007-3 class RG** *or*
+**ANSI A118.3**. A product quoting only a manufacturer's internal test, or a national
+*adhesive* standard, has not been assessed against any grout specification at all.
+
+### 1B.4 Standards by region
+
+| Market | Standard | Epoxy class | Versus EN 13888 |
+|---|---|---|---|
+| Europe | **EN 13888** | **RG** — one class, no subdivision | Baseline |
+| International | **ISO 13007-3** | RG | Effectively identical |
+| USA | **ANSI A118.3** | A118.3 | **Structurally different** — ANSI splits grout across five specs (A118.3 epoxy, .5 furan, .6 cement, .7 polymer cement, .8 epoxy emulsion). EN puts all reactive resins in one RG. A118.3 also makes *water-cleanability* a defining requirement |
+| China | **JC/T 1004-2017** | RG I solvent / RG II water-based | RG-aligned but subdivided |
+| Japan | **None found** | — | JIS A 5209 covers tiles, A 5548/5557 adhesives. **No JIS grout standard located** |
+| India | **None found** | — | IS 15477 is adhesives only, ISI-mandatory. **Grout appears uncovered**; Indian epoxies market against ANSI or EN by the maker's own claim |
+| Australia / NZ | **AS ISO 13007** adopted | RG | Equivalent |
+| Gulf | GSO adopts ISO/EN texts | presumed RG | **[UNVERIFIED]** GSO adoption confirmed for 13007-1 (adhesives) only. In practice Gulf datasheets cite ANSI A118.3 |
+
+### 1B.5 How different countries actually use it
+
+The residential-versus-specialist divide is sharp, and one market is worth studying:
+
+- **South Korea — epoxy is the residential default.** A dedicated **줄눈시공** re-grouting trade exists, epoxy grouting before move-in is near-standard in new apartments, consumer pricing is published (₩200,000–600,000 per bathroom, 1–2 days), and **Kerapoxy is a household brand name**. This is the closest thing anywhere to the market we are trying to build here.
+- **Japan — specialist only.** Cement is explicitly mainstream; epoxy is scoped to factories and medical facilities.
+- **Australia — both at once.** Commercial/industrial via Davco and Ardex, plus 3.25 kg DIY epoxy kits sold in Bunnings.
+- **USA — displaced in residential** by pre-mixed urethane "stain-proof" grouts.
+- **Italy — design-led.** Sold on colour, glitter and metallic effects as much as chemistry, with 40–60 colour ranges.
+- **India and China — rapid consumerisation**, far ahead of Japan or continental Europe.
+
+### 1B.6 World price levels — is Singapore expensive?
+
+Roughly **S$3/kg (India, 10 kg trade pack) to S$40/kg (UK, 1.5 kg consumer pack)** — a
+13× spread that is **mostly pack size and channel, not quality**. The developed-market
+trade band clusters tightly:
+
+| Market | Product | ≈ SGD/kg |
+|---|---|---|
+| Australia | Dunlop Easy Clean 3.25 kg (Bunnings) | S$25 |
+| USA | Laticrete SPECTRALOCK PRO unit | S$25 |
+| Australia | Ardex EG 15 A+B+C | S$22 |
+| USA | Custom CEG-Lite 2 gal | ~S$11 |
+| India | Ardex Endura 10 kg trade | S$3–5 |
+| UK | Kerakoll Fugalite 1.5 kg consumer | S$38–40 |
+
+**Benchmarks for our own buying:** S$18–26/kg is *typical by developed-world standards*.
+Above ~S$30/kg is a small-pack or thin-distribution premium. **Below ~S$8/kg** is either
+genuine Indian/Chinese bulk or **not a 100%-solids epoxy — check the component count.**
+The Malaysian Kerapoxy retail price of **S$15–16/kg is below the developed-market band**,
+i.e. good value rather than suspicious.
+
+### 1B.7 No code mandates epoxy anywhere
+
+Searches for a code requirement found the opposite: **USDA and FDA explicitly decline to
+endorse or approve any flooring product or brand**, publishing performance criteria
+(no microbial harbourage, cleanability, structural integrity) and leaving material choice
+open. Epoxy gets specified because it *satisfies* those criteria, not because any code
+names it. The nearest code hook is IBC §2103.2.3.4 recognising furan as a material class
+— recognition, not a mandate.
+
+**Treat any claim that epoxy is "code-required" as a sales claim unless a clause is
+cited** — including if we are ever tempted to make it ourselves.
+
+---
+
 ## 4B. Mapei sourcing — researched 26 Jul 2026
 
 Decision taken: standardise on Mapei. This is where to buy it.
