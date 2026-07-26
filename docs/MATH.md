@@ -98,6 +98,29 @@ A 1.8 × 2.2 m bathroom tiled to 2.4 m gives $2(4.0)(2.4) = 19.2$ m² of wall ag
 3.96 m² of floor — **the walls are 83% of the work**, which is why "per bathroom"
 pricing without a wall specification is meaningless.
 
+### 1.5b Perimeter estimator — masking is not an area cost
+
+Masking and protection scale with the **perimeter** of a room, not its area, yet a flat
+$/m² rate charges them as if they were area-driven. For a square-ish room the perimeter
+follows from the area alone:
+
+$$P \approx 4\sqrt{A} \quad\Longrightarrow\quad \frac{P}{A} = \frac{4}{\sqrt{A}}$$
+
+| Room | $A$ (m²) | $P/A$ (m per m²) |
+|---|---|---|
+| Bathroom floor | 4 | 2.00 |
+| Kitchen | 10 | 1.25 |
+| Living/dining floor | 32.5 | 0.70 |
+| Whole flat | 83.6 | 0.44 |
+
+A bathroom carries **nearly three times** the perimeter intensity of an open living
+floor. Charging both at one $/m² rate systematically overprices large open areas — which
+is exactly where the tariff was found to be uncompetitive (`COMPETITOR-PRICING.md` §4.3).
+
+Because it is a per-room quantity, $4c_{\text{mask}}\sqrt{A}$ must be summed **per
+surface**, never applied to a job total: three 5 m² rooms carry $\sqrt{5}\times3 = 6.7$
+units of perimeter against $\sqrt{15} = 3.9$ for one 15 m² room.
+
 ### 1.5 Mixed tile sizes
 
 For a job spanning surfaces with different tiles, the area-weighted joint density is
@@ -300,15 +323,27 @@ $$C(A) = F + cA$$
 Affine cost ⇒ the efficient tariff is two-part (Oi, 1971): a fixed access charge plus
 a usage rate.
 
-$$P(A) = F + \big(c_{\text{area}} + c_{\text{joint}}\lambda\big) A$$
+$$P = F + \sum_{i}\Big[ c_{\text{haze}}A_i + 4c_{\text{mask}}\sqrt{A_i} + c_{\text{joint}}\lambda_i A_i \Big]$$
 
-$$c_{\text{joint}} = \begin{cases}
-c_{\text{apply}} & \text{new tiles}\\
-c_{\text{apply}} + c_{\text{remove}} & \text{re-grout}
+summed over surfaces $i$, with the perimeter term from §1.5b. The joint rate carries a
+**removal difficulty factor** $\varphi$:
+
+$$c_{\text{joint}} = c_{\text{apply}} + \varphi \, c_{\text{remove}}, \qquad
+\varphi = \begin{cases}
+0 & \text{new tiles, never grouted}\\
+0.55 & \text{recent grout (BTO handover, under ~1 yr)}\\
+1.0 & \text{old hardened grout}
 \end{cases}$$
 
-Current constants: $F=150$, $c_{\text{area}}=18$, $c_{\text{apply}}=6.00$,
-$c_{\text{remove}}=7.50$, $P_{\min}=380$, waive $F$ above $900$.
+A single $\beta_{\text{remove}}$ for all removal was wrong: fresh, soft grout in
+600×600 floor joints is not the same work as ten-year-old grout in 300×300 wall joints.
+$\varphi$ is the first-order correction; the fuller form would also carry joint width
+and wall-versus-floor orientation.
+
+Current constants: $F=150$, $c_{\text{haze}}=10$/m², $c_{\text{mask}}=4$/m of
+perimeter, $c_{\text{apply}}=6.00$/m, $c_{\text{remove}}=7.50$/m, $P_{\min}=380$,
+waive $F$ above $900$. Note $c_{\text{haze}} + 4c_{\text{mask}}/\sqrt{A} = 18$ at
+$A=4$ m², so bathroom pricing is unchanged while large floors fall by 10–26%.
 
 ### 4.2 Average cost is strictly decreasing
 
@@ -766,6 +801,9 @@ Stated plainly, because a model whose limits are unstated is being oversold.
 2. **The learning rate $\ell = 0.9$ is conventional**, not measured for this crew.
 3. **Elasticity is unidentified** at current volume (§7.4). Any claim about the
    profit-maximising price is currently unfalsifiable.
+3b. **$\varphi = 0.55$ for recent grout is an estimate**, not a measurement. It is the
+   single constant now standing between us and the BTO floor segment, so it is the first
+   thing to calibrate from job time logs (`COST-MODEL.md` §6).
 4. **Boundary correction is folded into $\alpha$** rather than modelled (§1.3), which
    slightly overprices very small surfaces and underprices very large ones.
 5. **Material density $\rho$ and pot life $t_p$ are product-specific** — every number

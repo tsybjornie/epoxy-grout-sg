@@ -74,7 +74,7 @@
           "name": "How much does epoxy grouting cost in Singapore?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Cost is driven by linear metres of joint, not floor area. A 600x600 tile has 3.33 m of joint per square metre; a 300x300 tile has 6.67 m — twice the work for the same floor. Our published tariff is a $150 mobilisation charge plus $18 per square metre of surface plus $6.00 per linear metre of joint for new tiles, or $13.50 per linear metre for re-grouting over existing joints. Minimum job $380. A typical HDB bathroom re-grout is around $550 for the floor alone and $1,100 to $1,300 for floor plus shower walls, depending on tile size."
+            "text": "Cost is driven by linear metres of joint, not floor area. A 600x600 tile has 3.33 m of joint per square metre; a 300x300 tile has 6.67 m — twice the work for the same floor. Our published tariff is a $150 mobilisation charge plus $10 per square metre of surface, plus $4 per metre of room perimeter for masking, plus a joint rate of $6.00 per linear metre for new tiles, $10.13 for recent BTO-age grout, or $13.50 for old hardened grout. Minimum job $380. A typical HDB bathroom re-grout is around $550 for the floor alone and $1,050 to $1,250 for floor plus shower walls, depending on tile size. Recent BTO-age grout costs less to remove than old hardened grout."
           }
         },
         {
@@ -90,7 +90,7 @@
           "name": "Can you grout new tiles that have not been grouted yet?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, and it costs around 40% less than re-grouting because there is no removal stage. New BTO and newly renovated units with tiles laid and joints still open are the cheapest possible time to specify epoxy. A full 4-room flat of newly laid 600x600 floor tiles is typically $2,800 to $3,100."
+            "text": "Yes, and it costs around 40% less than re-grouting because there is no removal stage. New BTO and newly renovated units with tiles laid and joints still open are the cheapest possible time to specify epoxy. A full 4-room flat of newly laid 600x600 floor tiles is typically $2,300 to $2,700."
           }
         },
         {
@@ -449,11 +449,11 @@
 
         .choice {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
 
-        @media (max-width:560px) {
+        @media (max-width:820px) {
             .choice {
                 grid-template-columns: 1fr;
             }
@@ -1269,13 +1269,20 @@
                     <div class="choice" id="modeChoice">
                         <label>
                             <input type="radio" name="mode" value="new">
-                            <b>New tiles, not grouted yet</b>
-                            <small>BTO or fresh renovation — tiles laid, joints still open.</small>
+                            <b>New tiles, never grouted</b>
+                            <small>Tiles laid, joints still open. No removal at all — the cheapest
+                                time to go epoxy.</small>
+                        </label>
+                        <label>
+                            <input type="radio" name="mode" value="fresh">
+                            <b>Recent grout — BTO or new reno</b>
+                            <small>Grouted in the last year or so. Still soft, so removal is much
+                                faster and costs less.</small>
                         </label>
                         <label class="on">
-                            <input type="radio" name="mode" value="regrout" checked>
-                            <b>Existing grout to replace</b>
-                            <small>Old grout raked out to depth, cleaned, then epoxy applied.</small>
+                            <input type="radio" name="mode" value="aged">
+                            <b>Old grout, hardened</b>
+                            <small>Raked out to full depth, cleaned, then epoxy applied.</small>
                         </label>
                     </div>
                 </div>
@@ -1343,10 +1350,13 @@
 
             <div class="formula" style="margin-top:28px">
                 Price = <b>$150</b> mobilisation
-                &nbsp;+&nbsp; <b>$18</b> × surface area (m²)
+                &nbsp;+&nbsp; <b>$10</b> × surface area (m²)
+                &nbsp;+&nbsp; <b>$4</b> × room perimeter (m)
                 &nbsp;+&nbsp; <b>rate</b> × joint length (m)<br>
                 joint length (m) = area (m²) × λ &nbsp;&nbsp;·&nbsp;&nbsp; λ = (L + W) ÷ (L × W) × 1000<br>
-                rate = <b>$6.00</b>/m new tiles &nbsp;|&nbsp; <b>$13.50</b>/m re-grout (removal + application)<br>
+                room perimeter (m) ≈ 4 × √area &nbsp;&nbsp;·&nbsp;&nbsp; charged per room, not per job<br>
+                rate = <b>$6.00</b>/m new tiles &nbsp;|&nbsp; <b>$10.13</b>/m recent grout &nbsp;|&nbsp;
+                <b>$13.50</b>/m old grout<br>
                 mobilisation waived above $900 &nbsp;·&nbsp; minimum job $380 &nbsp;·&nbsp; before GST
             </div>
 
@@ -1359,7 +1369,7 @@
                                 <tr>
                                     <th>Tile (mm)</th>
                                     <th class="num">Joint per m²</th>
-                                    <th class="num">Re-grout per m²</th>
+                                    <th class="num">Old-grout rate per m²</th>
                                 </tr>
                             </thead>
                             <tbody id="lambda-table"></tbody>
@@ -1620,9 +1630,9 @@
                     <summary>What will my place actually cost?</summary>
                     <p>Use the calculator above — it runs the same tariff we quote from, so it isn't an estimate that
                         moves later. For reference: an HDB bathroom floor alone is around $550; floor plus shower
-                        walls is $1,100 to $1,300; floor plus every wall is a two-to-three day job at $2,300 and up,
+                        walls is $1,050 to $1,250; floor plus every wall is a two-to-three day job at $2,200 and up,
                         because 300×300 walls hold roughly 155 metres of joint to rake out. A full 4-room flat of
-                        newly laid tiles needing first-time grouting is usually $2,800 to $3,100.</p>
+                        newly laid tiles needing first-time grouting is usually $2,300 to $2,700.</p>
                 </details>
                 <details>
                     <summary>My tiles are new and not grouted yet. Do you do that?</summary>
@@ -1833,7 +1843,9 @@
             var M = {
                 F: 150,          // mobilisation
                 waiveF: 900,     // mobilisation waived above this
-                cArea: 18,       // $/m² — prep, masking, cleaning, haze removal
+                cHaze: 10,       // $/m² — cleaning and epoxy haze removal, genuinely area-driven
+                cMask: 4,        // $/m of room perimeter — masking and protection, NOT area-driven
+                phi: { new: 0, fresh: 0.55, aged: 1.0 },  // removal difficulty by grout condition
                 cApply: 6.00,    // $/linear m — mixing, packing, tooling
                 cRemove: 7.50,   // $/linear m — raking out existing grout
                 minJob: 380,
@@ -1871,20 +1883,25 @@
             function money(n) { return '$' + Math.round(n).toLocaleString('en-SG'); }
 
             var rooms = [];
-            var mode = 'regrout';
+            var mode = 'aged';
 
             function quote() {
-                var jointRate = M.cApply + (mode === 'regrout' ? M.cRemove : 0);
+                var jointRate = M.cApply + M.cRemove * (M.phi[mode] || 0);
                 var area = 0, joint = 0, items = [];
 
                 rooms.forEach(function (r) {
                     var A = Math.max(0, parseFloat(r.sqft) || 0) / M.SQFT;   // m²
                     var t = tileById(r.tile);
                     var J = A * lambda(t);
+                    // Masking is perimeter-driven, not area-driven. For a square-ish room
+                    // P ≈ 4·√A, so it is charged per room — three small rooms carry far more
+                    // perimeter than one large one of the same total area.
+                    var perim = 4 * Math.sqrt(A);
                     area += A; joint += J;
                     items.push({
                         label: r.label, tile: t.label, sqft: Math.round(parseFloat(r.sqft) || 0),
-                        joint: J, cost: M.cArea * A + jointRate * J
+                        joint: J, perim: perim,
+                        cost: M.cHaze * A + M.cMask * perim + jointRate * J
                     });
                 });
 
@@ -1964,7 +1981,8 @@
 
                 var html = q.items.map(function (i) {
                     return '<div class="line"><span>' + esc(i.label) + ' · ' + i.tile + ' · ' + i.sqft + ' sqft</span><span>' + money(i.cost) + '</span></div>' +
-                        '<div class="line sub"><span>' + i.joint.toFixed(1) + ' m of joint × $' + q.jointRate.toFixed(2) + '/m, plus surface prep</span><span></span></div>';
+                        '<div class="line sub"><span>' + i.joint.toFixed(1) + ' m of joint × $' + q.jointRate.toFixed(2) +
+                        '/m, plus ' + i.perim.toFixed(1) + ' m of masking and surface prep</span><span></span></div>';
                 }).join('');
 
                 if (q.discount > 0) {
@@ -2009,7 +2027,7 @@
                     var s = JSON.parse(localStorage.getItem(KEY) || 'null');
                     if (s && s.rooms && s.rooms.length) {
                         rooms = s.rooms;
-                        mode = s.mode === 'new' ? 'new' : 'regrout';
+                        mode = M.phi.hasOwnProperty(s.mode) ? s.mode : 'aged';
                         var r = document.querySelector('input[name=mode][value="' + mode + '"]');
                         if (r) { r.checked = true; syncModeUI(); }
                         return true;
@@ -2100,9 +2118,10 @@
                 var sqft = q.area * M.SQFT;
                 var msg = '*QUOTE FROM WEBSITE*\n\n*Name:* ' + name + '\n*Mobile:* ' + phone + '\n';
                 if (area) msg += '*Area:* ' + area + '\n';
-                msg += '*Job type:* ' + (mode === 'new'
-                    ? 'New tiles — first grouting, no removal'
-                    : 'Re-grout — remove existing + apply epoxy') + '\n\n*Breakdown:*\n';
+                var MODEL = { 'new': 'New tiles — first grouting, no removal',
+                              'fresh': 'Recent/BTO grout — easy removal + apply epoxy',
+                              'aged': 'Old grout — full removal + apply epoxy' };
+                msg += '*Job type:* ' + MODEL[mode] + '\n\n*Breakdown:*\n';
                 q.items.forEach(function (i) {
                     msg += '• ' + i.label + ' — ' + i.tile + 'mm — ' + i.sqft + ' sqft — ' +
                         i.joint.toFixed(1) + 'm joint — ' + money(i.cost) + '\n';
@@ -2147,7 +2166,7 @@
             /* ---------- λ table ---------- */
             document.getElementById('lambda-table').innerHTML = TILES.map(function (t) {
                 var lam = lambda(t);
-                var perM2 = M.cArea + (M.cApply + M.cRemove) * lam;
+                var perM2 = M.cHaze + (M.cApply + M.cRemove) * lam;   // excludes the per-room masking term
                 return '<tr><td>' + t.label + '</td><td class="num">' + lam.toFixed(2) + ' m</td>' +
                     '<td class="num">' + money(perM2) + '</td></tr>';
             }).join('');
@@ -2159,7 +2178,7 @@
                 var W = 420, H = 260, pad = { l: 46, r: 12, t: 14, b: 34 };
                 var lam = lambda(tileById('600x600'));
                 var jr = M.cApply + M.cRemove;
-                var ac = function (A) { return (M.F + (M.cArea + jr * lam) * A) / (A * M.SQFT); };
+                var ac = function (A) { return (M.F + M.cHaze * A + 4 * M.cMask * Math.sqrt(A) + jr * lam * A) / (A * M.SQFT); };
 
                 var A0 = 2, A1 = 120, xs = [], ys = [];
                 for (var i = 0; i <= 60; i++) { var a = A0 + (A1 - A0) * i / 60; xs.push(a); ys.push(ac(a)); }

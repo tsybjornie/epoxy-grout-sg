@@ -186,23 +186,54 @@ plausible tile sizes:
 
 **We are competitive on bathrooms and badly uncompetitive on large open floors.**
 
-### 4.4 The problem this exposes in our own model
+### 4.4 The problem this exposed — and the fix applied
 
-Their $950 for a 350 sqft floor is **below our modelled cost** for the same job
-(`COST-MODEL.md` gives ~$1,031). Either their cost base is lower, or — more likely —
-our $\beta_{\text{remove}}$ is wrong for this job type.
+Their $950 for a 350 sqft floor sat **below our modelled cost** for the same job. That
+pointed at two structural errors in our own tariff, both now corrected:
 
-`MATH.md` EQ 3.1 uses a **single** $\beta_{\text{remove}}$ for all removal. That cannot
-be right. Raking fresh, soft BTO grout out of 600×600 floor joints is nothing like
-raking ten-year-old grout out of 300×300 bathroom wall joints, yet the tariff charges
-the same rate per metre. The model needs a condition-and-format dimension:
+**Error 1 — masking charged as an area cost.** A flat $18/m² bundled masking and
+protection into an area rate, but masking scales with room *perimeter*. By §1.5b of
+`MATH.md`, $P \approx 4\sqrt{A}$, so a bathroom carries nearly three times the
+perimeter intensity of an open living floor. The area term now splits into
+$c_{\text{haze}} = \$10$/m² plus $c_{\text{mask}} = \$4$ per metre of perimeter,
+charged **per room**. Calibrated so that the two are equal at $A = 4$ m² — a bathroom
+floor — which leaves small-room pricing untouched.
 
-$$\beta_{\text{remove}} = \beta_0 \cdot f(\text{grout age}) \cdot g(\text{joint width}) \cdot h(\text{orientation})$$
+**Error 2 — one removal rate for all grout.** Fresh BTO grout in 600×600 floor joints is
+not the same work as ten-year-old grout in 300×300 wall joints. A removal difficulty
+factor $\varphi$ now scales the removal component: 0 for never-grouted, **0.55** for
+recent BTO-age grout, 1.0 for old hardened grout. The site's condition question went from
+two options to three.
 
-Walls are slower than floors (working overhead, no body weight behind the tool), narrow
-joints are slower per metre than wide ones, and aged grout is slower than fresh. Until
-that is measured (`COST-MODEL.md` §6), the tariff over-charges the easy end of the range
-— which is precisely the BTO whole-floor segment we have live enquiries for.
+**Result:**
+
+| Scope (BTO = fresh grout) | Theirs | Was | Now | Gap |
+|---|---|---|---|---|
+| 1 bathroom floor, 40 sqft | $550 | $551 | $552 | level |
+| Kitchen + yard, 120 sqft | $850 | $852 | $691 | **−19%** |
+| 4-rm living/dining, 350 sqft | $950 | $1,885 | $1,393 | +47% (was +98%) |
+| 5-rm living/dining, 450 sqft | $1,380 | $2,423 | $1,778 | +29% (was +76%) |
+
+Bathroom pricing is unchanged, package dominance (EQ 4.6) still holds, and the whole-flat
+new-tile job — the live enquiry segment — falls from $2,796 to **$2,336**.
+
+**We did not chase them to $950.** At that price the job sits near or below our modelled
+cost, so matching it would mean selling large floors at no margin to subsidise nothing.
+The corrections above are the ones the model can justify; the residual gap is a
+deliberate position, not an oversight.
+
+### 4.5 The residual gap is a productivity problem, not a pricing one
+
+We remain about 29–47% above the one price-publishing competitor on large BTO floors. By
+`COST-MODEL.md` §5.2, the joint rate is essentially a labour rate — material is 6–12% of
+invoice — so the only real lever left is $\beta$: better blades, better dust extraction,
+a second person on the tool. Cutting price further without cutting time just moves the
+loss onto us.
+
+$\varphi = 0.55$ is an **estimate**, not a measurement. It is now the single constant
+standing between us and this segment, which makes it the first thing to calibrate from
+job time logs (`COST-MODEL.md` §6). If real fresh-grout removal turns out to be faster
+than 0.55, the gap closes on its own and honestly.
 
 ---
 
