@@ -1087,6 +1087,36 @@
             font-size: .82rem;
         }
 
+
+        .areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 26px;
+            margin-top: 30px;
+        }
+
+        .areas h3 {
+            font-size: .78rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .areas a {
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+            padding: 6px 0;
+            margin-right: 14px;
+            font-size: .95rem;
+        }
+
+        .areas a:hover {
+            border-bottom-color: var(--accent);
+            color: var(--accent);
+        }
+
         /* ---------- Sticky dock ---------- */
         .dock {
             position: fixed;
@@ -1353,7 +1383,7 @@
     </section>
 
     <!-- ============ PACKAGES ============ -->
-    <section class="tint">
+    <section class="tint" id="packages">
         <div class="wrap reveal">
             <p class="eyebrow">Packages</p>
             <h2>Or just take a package.</h2>
@@ -1641,6 +1671,50 @@
                     <p>Yes, on the same published tariff with 10% off. Scheduling is less flexible because we batch JB
                         jobs, so give us a few days of options.</p>
                 </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ WHERE WE WORK ============ -->
+    <section id="locations">
+        <div class="wrap reveal">
+            <p class="eyebrow">Where we work</p>
+            <h2>Island-wide, plus Johor Bahru.</h2>
+            <p class="lede">Same published tariff everywhere in Singapore. JB is the same tariff less 10%,
+                batched into runs — so give us a few dates to choose from.</p>
+            <div class="areas">
+                <div>
+                    <h3>Areas</h3>
+                    <a href="locations/woodlands.html">Woodlands</a>
+                    <a href="locations/sembawang.html">Sembawang</a>
+                    <a href="locations/yishun.html">Yishun</a>
+                    <a href="locations/punggol.html">Punggol</a>
+                    <a href="locations/sengkang.html">Sengkang</a>
+                    <a href="locations/ang-mo-kio.html">Ang Mo Kio</a>
+                    <a href="locations/bishan.html">Bishan</a>
+                    <a href="locations/tampines.html">Tampines</a>
+                    <a href="locations/bedok.html">Bedok</a>
+                    <a href="locations/jurong.html">Jurong</a>
+                    <a href="locations/johor-bahru.html">Johor Bahru</a>
+                </div>
+                <div>
+                    <h3>Property types</h3>
+                    <a href="property-types/bto.html">BTO</a>
+                    <a href="property-types/hdb-3-room.html">HDB 3-room</a>
+                    <a href="property-types/hdb-4-room.html">HDB 4-room</a>
+                    <a href="property-types/hdb-5-room.html">HDB 5-room</a>
+                    <a href="property-types/executive.html">Executive</a>
+                    <a href="property-types/condo.html">Condo</a>
+                    <a href="property-types/landed.html">Landed</a>
+                </div>
+                <div>
+                    <h3>Common problems</h3>
+                    <a href="problems/mold-grout.html">Mouldy grout</a>
+                    <a href="problems/cracked-grout.html">Cracked grout</a>
+                    <a href="problems/stained-grout.html">Stained grout</a>
+                    <a href="problems/peeling-grout.html">Peeling grout</a>
+                    <a href="problems/water-leak-tiles.html">Water leaking through tiles</a>
+                </div>
             </div>
         </div>
     </section>
