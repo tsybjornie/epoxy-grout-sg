@@ -745,6 +745,18 @@ Ordered by consequence. The first three change what happens on site.
 for SGD price per pack size and trade terms, and ask them to email the Kerapoxy CQ
 technical data sheet and safety data sheet.
 
+### 9B. Open decisions on the website itself
+
+These are business calls, not research. I have left each one alone rather than guess.
+
+| # | Decision | The problem |
+|---|---|---|
+| W1 | **Whole Home at $1,488** | The package is meant to be the safe default — never worse than the calculator for jobs inside its scope. It isn't. Two bathrooms plus a kitchen at the full 180 sqft cap prices at **$1,513 on 300×300 tile but $1,303 on 600×600**. A large-tile customer who checks the calculator finds the package $185 more expensive. Either drop it to about $1,300, or cap the scope by tile size |
+| W2 | **Silicone and polyurea prices** | `services/silicone.html` publishes $188 / $288 / $388 and `services/polyurea.html` $688 / $988 / $1,988. Neither is derived from anything — they are not in the tariff and there is no cost model behind them. They need a bottom-up derivation like the grout tariff got, or they should come down |
+| W3 | **`leadgen.html` discount campaigns** | The CNY template offers 10% off — $439 / $529 / $1,339. That contradicts the published-tariff commitment the whole sales argument rests on ("I can't move the rate, and if I discounted for you I'd be overcharging the person who paid it yesterday"). Either the discount goes, or the commitment does. It cannot be both |
+| W4 | **"Anti-mould" as a bare adjective** | The *certified* version is gone everywhere. "Anti-mould epoxy application" still appears on the property-type and location pages. It asserts a product property we do not test for. The honest version is stronger anyway: epoxy is non-absorbent, so mould has nothing to feed on |
+| W5 | **`autopilot.html` on mobile** | Overflows horizontally at 390px (496px wide). It is an internal sales tool, not a customer page, so this only matters if it is used on a phone in front of a customer |
+
 **How to close 2:** a stopwatch and a notes app. Record start/stop for each stage on every
 job, with area and tile size. That is the entire tooling requirement, and it is worth more
 than any further research.
