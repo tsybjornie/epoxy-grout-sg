@@ -161,6 +161,72 @@ strongly coloured cannot be matched at all.
 close; on colour we won't, and a deliberate contrast always looks chosen where a
 near-miss always looks like a mistake.*
 
+## Should price be on the website at all?
+
+Yes — but the *form* matters more than the decision, and there was a sequencing bug.
+
+### The case against publishing (real, not strawman)
+
+- **Anchoring.** A number seen before value is established becomes the dominant
+  attribute. Classic sales sequencing is value first, price second.
+- **Attribute substitution** (Kahneman). "Who will do good work?" is hard; "who is
+  cheapest?" is easy. A visible price makes that substitution effortless.
+- **You lose the conversation.** No diagnosis, no objection handling, no scope
+  discussion. Seven of nine competitors gate behind a site visit precisely because it
+  lets them sell.
+- **Competitors can undercut you precisely.**
+
+### The case for
+
+- **It attacks the actual problem.** Quality is invisible at handover (Akerlof). A
+  published price is one of very few things a customer *can* verify before paying.
+- **Credible commitment** (Schelling). Publishing removes our own ability to price
+  differently per customer — and it is the *removal of that freedom* that makes it
+  worth something.
+- **Reciprocity.** In a market where nobody publishes, publishing reads as a gift.
+- **Procedural fairness.** "Same arithmetic for everyone" drives acceptance more
+  strongly than price level does — the ultimatum-game result.
+- **First-mover anchoring** (EQ 7.3). We set the reference point instead of reacting to
+  someone else's.
+- **Self-selection.** Filters out people who were never going to buy, which raises
+  quote-to-close and saves survey time.
+
+### The resolution — a calculator is not a price list
+
+The anchoring objection applies to a **broadcast price list**. It applies far less to a
+**calculator**, because:
+
+- The number arrives **after** engagement, not before
+- Answering "what tile size" and "what's in the joint" teaches the value drivers on the
+  way to the number, so the price arrives already explained
+- **Effort justification / endowment** — they built it, so it is *their* quote
+- It is not scannable at a glance by a price-shopper or a competitor
+
+So: publish, but publish a **calculator plus the tariff behind it**, not a bare list.
+That is what is built.
+
+### The bug that was there
+
+The strongest counter-frame — $47/year against $110/year — sat at **section 9**, seven
+sections after the number appeared at section 2. **Price salience peaks the moment the
+number lands, and that is exactly where the reframe has to be.**
+
+Fixed two ways: the quote panel now annualises the customer's own figure inline
+("about $48 a year over a 15-year life"), and the lifetime comparison moved from
+section 9 to section 4, directly after the tariff.
+
+### What cannot be resolved
+
+**Whether this converts better than hiding price is not testable at our traffic** —
+EQ 7.2 puts it at ~7,560 visits to detect a 30% effect. Anyone claiming to know is
+guessing. The decision rests on mechanism, and the mechanism argument is strong because
+it attacks the specific failure of this market rather than a general theory of selling.
+
+**One live risk worth watching:** the hero's "from $488" is a low anchor. On a $1,500
+job it may make the real number feel expensive. It sits alongside $3,500 (re-tile) and
+$300-every-3-years (cement), which pull the other way — but if quote-to-booking is weak
+on large jobs, that anchor is the first thing to suspect.
+
 ## Warranty — terms and what they cost us
 
 Published at `warranty.html`. **5 years** single area · **7 years** whole home ·

@@ -1265,6 +1265,25 @@
             margin-bottom: 4px;
         }
 
+
+        .peryear {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--line);
+            font-size: .9rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .peryear b {
+            color: var(--ink);
+            font-weight: 660;
+        }
+
+        .peryear a {
+            color: var(--accent);
+        }
+
         /* ---------- Sticky dock ---------- */
         .dock {
             position: fixed;
@@ -1459,6 +1478,7 @@
                             <b id="grand">$0</b>
                         </div>
                         <small id="perft"></small>
+                        <div id="peryear" class="peryear"></div>
                     </div>
                     <p class="fixnote">Before GST. Fixed in writing before we start — if we misjudge something on
                         site, we absorb it, not you.</p>
@@ -1543,6 +1563,80 @@
                         once whether we do one toilet or a whole flat. Spread over more area, fixed cost per square
                         foot falls. That is the entire reason the home package is cheaper per room — not a promotion,
                         just arithmetic.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ LIFETIME COST ============ -->
+    <section id="lifetime">
+        <div class="wrap reveal">
+            <p class="eyebrow">The real comparison</p>
+            <h2>Cement grout is cheaper. Once.</h2>
+            <p class="lede">Sticker price is the wrong comparison for anything you have to buy again. The honest
+                measure is cost per year of service — what each option actually costs to keep a bathroom in usable
+                condition.</p>
+
+            <div class="tablewrap" style="margin-top:26px">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>What you do</th>
+                            <th class="num">You pay</th>
+                            <th class="num">Lasts</th>
+                            <th class="num">Cost per year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nothing — scrub it every month</td>
+                            <td class="num">$0</td>
+                            <td class="num">—</td>
+                            <td class="num">Your Saturdays, then a leak</td>
+                        </tr>
+                        <tr>
+                            <td>Re-do the cement grout when it goes</td>
+                            <td class="num">$300</td>
+                            <td class="num">~3 yrs</td>
+                            <td class="num">$110</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Epoxy grout, once</strong></td>
+                            <td class="num">$488</td>
+                            <td class="num">15 yrs</td>
+                            <td class="num win">$47</td>
+                        </tr>
+                        <tr>
+                            <td>Hack out and re-tile</td>
+                            <td class="num">$3,500</td>
+                            <td class="num">20 yrs</td>
+                            <td class="num">$281</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="lede" style="font-size:.85rem">Cost per year is the equivalent annual cost at a 5% discount rate
+                — the standard way to compare purchases with different lifespans. Epoxy is the most expensive option
+                on the day and the cheapest one by more than double over its life.</p>
+
+            <div class="cards" style="margin-top:36px">
+                <div class="card">
+                    <h3>Why it doesn't go black</h3>
+                    <p>Cement grout is porous. It drinks water, and mould grows inside it where no amount of scrubbing
+                        reaches. Epoxy has effectively zero water absorption — there is nothing for mould to live in,
+                        so it stays the colour you chose.</p>
+                </div>
+                <div class="card">
+                    <h3>Why waiting gets expensive fast</h3>
+                    <p>Open joints let water past the tile into the screed. While it's cosmetic, it's a few hundred
+                        dollars. Once it reaches the waterproofing membrane it becomes a hacking job — tiles out,
+                        membrane re-laid, tiles back. The jump is not gradual.</p>
+                </div>
+                <div class="card">
+                    <h3>Why we won't be your cheapest quote</h3>
+                    <p>Across five quotes on one job, the lowest is usually the one that under-scoped it. The only ways
+                        out of an underbid are thinner material, shallower removal, or walking off. We'd rather show
+                        our arithmetic and lose on price.</p>
                 </div>
             </div>
         </div>
@@ -1885,80 +1979,6 @@
             <p class="lede" style="margin-top:22px;font-size:.88rem">Newly laid tiles that have never been grouted are
                 priced separately and cost roughly half — there is no removal stage. Johor Bahru: same tariff, 10%
                 off.</p>
-        </div>
-    </section>
-
-    <!-- ============ LIFETIME COST ============ -->
-    <section>
-        <div class="wrap reveal">
-            <p class="eyebrow">The real comparison</p>
-            <h2>Cement grout is cheaper. Once.</h2>
-            <p class="lede">Sticker price is the wrong comparison for anything you have to buy again. The honest
-                measure is cost per year of service — what each option actually costs to keep a bathroom in usable
-                condition.</p>
-
-            <div class="tablewrap" style="margin-top:26px">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>What you do</th>
-                            <th class="num">You pay</th>
-                            <th class="num">Lasts</th>
-                            <th class="num">Cost per year</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Nothing — scrub it every month</td>
-                            <td class="num">$0</td>
-                            <td class="num">—</td>
-                            <td class="num">Your Saturdays, then a leak</td>
-                        </tr>
-                        <tr>
-                            <td>Re-do the cement grout when it goes</td>
-                            <td class="num">$300</td>
-                            <td class="num">~3 yrs</td>
-                            <td class="num">$110</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Epoxy grout, once</strong></td>
-                            <td class="num">$488</td>
-                            <td class="num">15 yrs</td>
-                            <td class="num win">$47</td>
-                        </tr>
-                        <tr>
-                            <td>Hack out and re-tile</td>
-                            <td class="num">$3,500</td>
-                            <td class="num">20 yrs</td>
-                            <td class="num">$281</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="lede" style="font-size:.85rem">Cost per year is the equivalent annual cost at a 5% discount rate
-                — the standard way to compare purchases with different lifespans. Epoxy is the most expensive option
-                on the day and the cheapest one by more than double over its life.</p>
-
-            <div class="cards" style="margin-top:36px">
-                <div class="card">
-                    <h3>Why it doesn't go black</h3>
-                    <p>Cement grout is porous. It drinks water, and mould grows inside it where no amount of scrubbing
-                        reaches. Epoxy has effectively zero water absorption — there is nothing for mould to live in,
-                        so it stays the colour you chose.</p>
-                </div>
-                <div class="card">
-                    <h3>Why waiting gets expensive fast</h3>
-                    <p>Open joints let water past the tile into the screed. While it's cosmetic, it's a few hundred
-                        dollars. Once it reaches the waterproofing membrane it becomes a hacking job — tiles out,
-                        membrane re-laid, tiles back. The jump is not gradual.</p>
-                </div>
-                <div class="card">
-                    <h3>Why we won't be your cheapest quote</h3>
-                    <p>Across five quotes on one job, the lowest is usually the one that under-scoped it. The only ways
-                        out of an underbid are thinner material, shallower removal, or walking off. We'd rather show
-                        our arithmetic and lose on price.</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -2411,6 +2431,7 @@
                 if (!q.items.length) {
                     linesEl.innerHTML = '<p class="empty">Pick your areas above — your price appears here instantly, itemised.</p>';
                     grandEl.textContent = '$0';
+                    document.getElementById('peryear').innerHTML = '';
                     perftEl.textContent = '';
                     barEl.style.width = '22%';
                     save();
@@ -2438,6 +2459,13 @@
 
                 linesEl.innerHTML = html;
                 grandEl.textContent = money(q.total);
+                // Price salience peaks here, so the reframe has to arrive here too.
+                // EQ 5.1 annuity, r = 5%, n = 15 years of material life.
+                var eac = q.total * 0.05 / (1 - Math.pow(1.05, -15));
+                document.getElementById('peryear').innerHTML =
+                    'Over a 15-year material life that is about <b>' + money(eac) +
+                    ' a year</b>. Cement grout, re-done as it fails, runs about $110 a year ' +
+                    'for one bathroom. <a href="#lifetime">See the comparison &rarr;</a>';
 
                 var sqft = q.area * M.SQFT;
                 perftEl.innerHTML = sqft > 0
