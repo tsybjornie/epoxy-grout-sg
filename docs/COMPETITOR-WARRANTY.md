@@ -17,17 +17,32 @@ clearly reproduced the company's own page or listing.
 
 ## 1. The finding that outranks the question
 
-**`epoxygrout.sg` is a live competitor.** [VERIFIED — https://www.epoxygrout.sg/]
-A Singapore grouting firm marketing on "10+ years and 20,000+ man hours on
-waterproofing applications". No warranty findable.
+> **CORRECTION, 27 July 2026.** This section originally reported
+> `epoxygrout.sg` as a competitor. **It is ours.** The owner confirmed it after
+> this research was written. The search sweep found a live Singapore grouting
+> site it did not recognise and classified it as competition — a false positive
+> that the adversarial pass did not catch, because the claim was internally
+> consistent and correctly sourced. It was simply about us. The finding below is
+> rewritten; the original wording is preserved in git history.
 
-Until commit `b8d135c`, **80 references across 18 of our files** — canonical
-tags, `og:url`, sitemap `<loc>`, `robots.txt` and schema `url` — pointed at that
-domain. Every page was telling Google that the authoritative copy of our content
-lives on a competitor's website. That is the single most damaging SEO defect
-available, and we found it by accident while chasing something else.
+**We own two live domains with substantially the same content, and every page
+was canonicalising to the one Vercel does not serve.**
 
-Now unified on `cleangrout.sg`, which is what Vercel actually serves.
+Until commit `b8d135c`, **80 references across 18 files** — canonical tags,
+`og:url`, sitemap `<loc>`, `robots.txt` and schema `url` — pointed at
+`epoxygrout.sg`. Vercel serves `cleangrout.sg`. Now unified there.
+
+That it is our own domain makes this **less alarming and no less urgent**. The
+damage was never "handing content to a competitor" — it is duplicate content
+across two properties we own, which splits link equity between them and lets
+Google choose which to rank. Search engines resolve that badly and arbitrarily,
+and the site being canonicalised *away from* the one actually being served meant
+the wrong copy was nominated as authoritative.
+
+**Outstanding decision:** `epoxygrout.sg` should 301-redirect to
+`cleangrout.sg`, or be added to the Vercel project as an alias. Leaving two
+independently-serving copies of the same business online is the one
+configuration that helps neither. See `CLEANGROUT-NOTES.md` §9 item 10.
 
 ---
 

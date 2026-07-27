@@ -1,6 +1,18 @@
 User-agent: *
 Allow: /
 
+# ============================
+# INTERNAL TOOLS — not for indexing
+# These are reachable by URL but carry lead records, cold-call scripts and
+# unpublished ad copy. They also each send noindex, which is the binding
+# signal; this block just stops well-behaved crawlers fetching them at all.
+# ============================
+Disallow: /leadgen.html
+Disallow: /coldcall.html
+Disallow: /autopilot.html
+Disallow: /collage_render.html
+Disallow: /poster.html
+
 # Sitemap location
 Sitemap: https://cleangrout.sg/sitemap.xml
 
