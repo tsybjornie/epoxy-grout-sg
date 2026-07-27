@@ -17,3 +17,6 @@ Thumbs.db
 # Redesign prototype (Vite/React) — build output and deps
 redesign/node_modules/
 redesign/dist/
+
+# Single-file preview build
+redesign/dist-single/
