@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://epoxygrout.sg/sitemap.xml
+Sitemap: https://cleangrout.sg/sitemap.xml
 
 # ============================
 # AI SEARCH CRAWLERS — EXPLICITLY ALLOWED
