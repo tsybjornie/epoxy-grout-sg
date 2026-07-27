@@ -253,3 +253,109 @@ flagged in `MATH.md` §11.
 **Do not change the site's tariff before step 2 is done.** The current numbers are at
 least market-consistent; replacing them with numbers derived from guessed $\alpha$ and
 $\beta$ would trade a known approximation for an unknown one.
+
+---
+
+## 8. The other two services
+
+The grout tariff is cost-derived. The silicone and polyurea prices on the service pages
+were not — they were round numbers with nothing behind them. This section fixes silicone
+and explains why polyurea gets no published price at all.
+
+### 8.1 Backing out $R$ from the tariff we already publish
+
+We cannot measure $R$ yet (§6 is still open), but the published grout tariff already
+*implies* one, and using that implied value keeps every service on the same cost basis
+instead of inventing a second one.
+
+At target gross margin $m = 0.45$, the published $c_{\text{apply}} = \$6.00/\text{m}$
+decomposes as
+
+$$c_{\text{apply}}(1-m) = R\frac{\beta_{\text{apply}}}{60} + k_{\text{material}}$$
+
+so with $k_{\text{material}} = \$1.39$ (§3.1) and $\beta_{\text{apply}} = 2.5$ min/m:
+
+$$R = \frac{(6.00 \times 0.55 - 1.39) \times 60}{2.5} = \boxed{\$45.84/\text{hr}}$$
+
+**Sanity check, and it is the real test of this number.** Feed $R$ back into the
+*other* published rate and see what $\beta_{\text{remove}}$ it implies:
+
+$$\beta_{\text{remove}} = \frac{(7.50 \times 0.55 - 0.63) \times 60}{45.84} = 4.57 \text{ min/m}$$
+
+Four and a half minutes to rake out a metre of hardened cement grout, clean it and
+vacuum it is a believable figure — and nothing in the derivation forced it to be. The
+two published rates were set independently, so their agreeing on one crew rate is
+evidence the tariff is at least internally coherent. $R = \$45.84/\text{hr}$ for a
+two-person crew is about $23/hr each fully loaded, which is where an SG crew sits.
+
+> This inherits the uncertainty in $\beta_{\text{apply}}$ directly: $R$ is inversely
+> proportional to it. Measuring $\beta$ (§6) fixes $R$ too — one more reason it is the
+> highest-value thing to collect.
+
+### 8.2 Silicone
+
+Silicone is a **linear-metre** service, like grout, but on room perimeters and fixture
+edges rather than tile joints. There is no $\lambda$ and no area term — the customer
+counts metres directly.
+
+**Material.** A 300 ml cartridge of neutral-cure sanitary silicone at a tooled 6×6 mm
+bead consumes about 20 ml/m. At a waste factor of 1.25 that is 25 ml/m, so
+**12 m per cartridge**. At $15 a cartridge:
+
+$$k_{\text{sil}} = \frac{15}{12} = \$1.25/\text{m}$$
+
+**Labour.** Replacement is five distinct operations, and the cut-out dominates:
+
+| Operation | min/m |
+|---|---|
+| Cut both sides, peel, scrape the residue | 1.5 |
+| Solvent-wipe and dry the substrate | 1.0 |
+| Mask both sides | 1.5 |
+| Gun and tool the bead | 1.5 |
+| Pull the masking while wet | 0.5 |
+| **Total $\beta_{\text{sil,replace}}$** | **6.0** |
+
+New bead onto a clean substrate skips the first two: $\beta_{\text{sil,new}} = 3.5$.
+
+**Rates.**
+
+$$c_{\text{sil,replace}} = \frac{45.84 \times 6.0/60 + 1.25 + 0.30}{0.55} = \$11.15 \to \textbf{\$11.20/m}$$
+
+$$c_{\text{sil,new}} = \frac{45.84 \times 3.5/60 + 1.25 + 0.20}{0.55} = \$7.50 \to \textbf{\$7.50/m}$$
+
+**The mobilisation term is what actually matters here.** Silicone is a small job. At
+14 m — a typical bathroom: shower screen, tray or kerb, basin, internal corners — the
+work is $157. Add the $150 mobilisation and it is $307, which is under the $380
+minimum job, so a standalone silicone visit prices at the minimum.
+
+| Scope | Metres | As an add-on to grout work | As a standalone visit |
+|---|---|---|---|
+| One bathroom | 14 | **$157** | **$380** (minimum job) |
+| Kitchen | 7 | **$78** | **$380** (minimum job) |
+| Kitchen + one bathroom | 21 | **$235** | **$385** |
+| Whole unit — 2 baths, kitchen, window and door frames | 45 | **$504** | **$654** |
+
+The gap between the two columns *is* the mobilisation charge, and it is the honest
+argument for bundling: the van trip costs what it costs whether we lay 7 m or 45 m.
+The previously published $188 / $288 / $388 were **below cost as standalone visits** in
+the first two cases — we would have been paying to attend.
+
+### 8.3 Polyurea — no published price
+
+Polyurea gets no tariff, and the service pages now route to a site survey. Three
+reasons, in order of seriousness:
+
+1. **It is a waterproofing membrane, not a finish.** The failure mode is water reaching
+   the structure, and the consequential loss is the room, not the coating. Nothing in
+   `WARRANTY-DECISION.md` — which is built around a grout joint failing visibly and
+   being re-cut — transfers to that risk. A 5-year waterproofing warranty at a
+   guessed price is the largest uncovered liability the site could carry.
+2. **Price is dominated by substrate condition**, which cannot be assessed remotely.
+   Falls, existing membrane, crack width, moisture content and primer choice each swing
+   the job more than area does. There is no $A$-and-$J$ decomposition to publish.
+3. **We have no material cost, no coverage rate and no $\beta$ for it.** Every input
+   the grout tariff has, this does not.
+
+If polyurea becomes a real line of work, it needs its own §1–§4 — its own $R$ is fine,
+but it needs measured coverage per litre, measured application time, and a warranty
+reserve computed against *water ingress*, not grout failure.

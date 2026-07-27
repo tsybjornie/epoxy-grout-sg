@@ -85,10 +85,21 @@
             display: flex;
             gap: 0;
             border-bottom: 1px solid var(--border);
-            padding: 0 24px
+            padding: 0 24px;
+            /* On a phone the tab row is wider than the viewport. Scroll the row,
+               not the page — a horizontally scrolling body is unusable. */
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none
         }
 
         .tab {
+            flex: 0 0 auto;
+            white-space: nowrap;
             padding: 14px 20px;
             font-size: 13px;
             font-weight: 700;

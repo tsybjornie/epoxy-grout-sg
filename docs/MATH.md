@@ -401,9 +401,34 @@ which costs more in credibility than the package earns. Current calibration:
 
 | Scope | Calculator | Package | Verdict |
 |---|---|---|---|
-| Bathroom 50 sqft, 300×300 | $652 | $488 | package wins |
-| Kitchen 80 sqft, 600×600 | $618 | $588 | package wins |
-| Home 180 sqft, mixed | $1,555 | $1,488 | package wins |
+| Bathroom 50 sqft, 300×300 | $650 | $488 | package wins |
+| Kitchen 95 sqft, 300×300 | $1,007 | $588 | package wins |
+| Whole home 180 sqft, 300×300 | $1,664 | $1,488 | package wins |
+
+**But dominance is conditional on $\lambda$, and the condition is not cosmetic.**
+Checking a single representative scope is not enough — the test is over the *whole*
+scope set, minimised. Tile size swings $\lambda$ by 4× (EQ 1.1: 2.50 m/m² at 1200×600
+against 10.0 at 200×200), so a fixed package price cannot dominate across all tile
+sizes. Minimising the calculator over every split of the whole-home scope:
+
+| Tile ceiling | min over scope | vs $1,488 |
+|---|---|---|
+| 200×200 and smaller | $2,244 | dominant |
+| **300×300 and smaller** | **$1,587** | **dominant** |
+| 600×300 and smaller | $1,259 | **fails** |
+| 600×600 and smaller | $930 | fails |
+| 1200×600 and smaller | $900 | fails |
+
+The dominance boundary is **300×300**, which is also the standard HDB bathroom and
+kitchen tile — so the condition costs nothing in coverage and is now stated on every
+package card. Above it the calculator is genuinely cheaper, and the site says so.
+
+Two things this shows about the test itself. First, it must be evaluated at the
+**infimum over the scope**, not at a representative point: the mixed-tile row in the
+previous calibration passed at $1,555 while the true minimum inside the same scope was
+$930. Second, $V_{\text{inclusions}}$ was never load-bearing here — the gap the
+condition closes is $558 at 600×600, far more than a tile clean and a silicone bead
+are worth. Scope restriction, not inclusion value, is what makes the packages honest.
 
 ### 4.7 Bundling (Adams & Yellen)
 

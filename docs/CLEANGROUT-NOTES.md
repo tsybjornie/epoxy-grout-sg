@@ -67,12 +67,14 @@ found. Delivery $64.20 under $800 ex-GST, free above.
 
 | Package | Price | Covers |
 |---|---|---|
-| Single Bathroom | $488 | up to 50 sqft |
-| Kitchen | $588 | up to 95 sqft |
-| Whole Home | $1,488 | up to 180 sqft |
+| Single Bathroom | $488 | up to 50 sqft, tile 300×300 or smaller |
+| Kitchen | $588 | up to 95 sqft, tile 300×300 or smaller |
+| Whole Home | $1,488 | up to 180 sqft, tile 300×300 or smaller |
 
-Rule: **a package must never cost more than the calculator** for the same scope. Re-check
-whenever either moves.
+Rule: **a package must never cost more than the calculator** for the same scope — and the
+test is the *minimum* over the scope, not one representative job. That is what the tile
+ceiling is for: at 600×600 the whole-home scope prices as low as $930 and no fixed price
+can dominate. At 300×300 and below the minimum is $1,587. Re-check whenever either moves.
 
 ---
 
@@ -745,17 +747,17 @@ Ordered by consequence. The first three change what happens on site.
 for SGD price per pack size and trade terms, and ask them to email the Kerapoxy CQ
 technical data sheet and safety data sheet.
 
-### 9B. Open decisions on the website itself
+### 9B. Website decisions — closed
 
-These are business calls, not research. I have left each one alone rather than guess.
+All five are done. What each one landed on and why:
 
-| # | Decision | The problem |
+| # | Decision | Resolution |
 |---|---|---|
-| W1 | **Whole Home at $1,488** | The package is meant to be the safe default — never worse than the calculator for jobs inside its scope. It isn't. Two bathrooms plus a kitchen at the full 180 sqft cap prices at **$1,513 on 300×300 tile but $1,303 on 600×600**. A large-tile customer who checks the calculator finds the package $185 more expensive. Either drop it to about $1,300, or cap the scope by tile size |
-| W2 | **Silicone and polyurea prices** | `services/silicone.html` publishes $188 / $288 / $388 and `services/polyurea.html` $688 / $988 / $1,988. Neither is derived from anything — they are not in the tariff and there is no cost model behind them. They need a bottom-up derivation like the grout tariff got, or they should come down |
-| W3 | **`leadgen.html` discount campaigns** | The CNY template offers 10% off — $439 / $529 / $1,339. That contradicts the published-tariff commitment the whole sales argument rests on ("I can't move the rate, and if I discounted for you I'd be overcharging the person who paid it yesterday"). Either the discount goes, or the commitment does. It cannot be both |
-| W4 | **"Anti-mould" as a bare adjective** | The *certified* version is gone everywhere. "Anti-mould epoxy application" still appears on the property-type and location pages. It asserts a product property we do not test for. The honest version is stronger anyway: epoxy is non-absorbent, so mould has nothing to feed on |
-| W5 | **`autopilot.html` on mobile** | Overflows horizontally at 390px (496px wide). It is an internal sales tool, not a customer page, so this only matters if it is used on a phone in front of a customer |
+| W1 | Whole Home dominance | **Scope restricted, price unchanged.** Repricing was the wrong lever: minimised over the whole scope the calculator reaches $900 at 1200×600, so no fixed price dominates everywhere. The boundary is **300×300 and smaller** (min $1,587 > $1,488), which is the standard HDB tile — so the condition costs nothing in coverage. Now stated on every package card, and `MATH.md` EQ 4.6 records that the test must be taken at the infimum over the scope, not at a representative point |
+| W2 | Silicone and polyurea | **Silicone derived, polyurea withdrawn.** `COST-MODEL.md` §8 backs a crew rate of **$45.84/hr** out of the published grout tariff — and the check that matters is that feeding it into the *other* published rate returns β_remove = 4.57 min/m, a believable figure nothing forced. Silicone prices at **$11.20/m** replaced, **$7.50/m** new. The old $188 and $288 were below cost as standalone visits. Polyurea gets no price: substrate condition dominates, it can't be judged remotely, and a waterproofing warranty is a liability nothing in `WARRANTY-DECISION.md` covers |
+| W3 | Discount campaigns | **Converted to non-price offers.** The seasonal engine in `leadgen.html` now bundles scope (silicone in one bathroom, full tile clean) instead of cutting the rate — the trade `SALES-SCRIPT.md` already sanctions. "Limited slots!" and the stacked JB discount are gone: fabricated scarcity is the most detectable lie available to us |
+| W4 | "Anti-mould" | **Replaced with the mechanism.** Grout copy now says non-absorbent — mould has nothing to feed on, which is the actual argument and doesn't assert a property we don't test. Silicone keeps a claim, but a precise one: fungicide-treated sanitary grade, and the page now says outright that it slows mould rather than preventing it, and that 3–5 years is the replacement interval whatever the brand |
+| W5 | `autopilot.html` on mobile | **Fixed**, and the same defect turned up in `leadgen.html` (1001px wide at a 390px viewport). Both tab rows now scroll horizontally inside themselves rather than scrolling the page |
 
 **How to close 2:** a stopwatch and a notes app. Record start/stop for each stage on every
 job, with area and tile size. That is the entire tooling requirement, and it is worth more
