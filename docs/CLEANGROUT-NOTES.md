@@ -742,6 +742,7 @@ Ordered by consequence. The first three change what happens on site.
 | 7 | Kerapoxy SDS + dangerous-goods class | Needed before any cross-border run |
 | 8 | Whether EN 13888-2:2022 supersedes EN 12808 | Any standards claim we print |
 | 9 | Nonylphenol REACH scope | The highest-risk claim in the materials notes |
+| 10 | **What to do with `epoxygrout.sg`** | We own it and it serves live content. Two domains with the same business splits link equity and lets Google pick. It should 301 to `cleangrout.sg` or become a Vercel alias — not stay a second independent site |
 
 **How to close 1, 3 and 7 in an afternoon:** phone Mapei Far East on **6862 3488**, ask
 for SGD price per pack size and trade terms, and ask them to email the Kerapoxy CQ
