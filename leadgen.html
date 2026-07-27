@@ -1215,8 +1215,8 @@
                 },
                 {
                     platform: '📍 Geo-Targeted: MALAYSIA 🇲🇾', icon: '🇲🇾', copies: [
-                        { label: 'Malaysia Facebook Ad', text: `${S.emoji} ${S.label} — Now Serving Malaysia! 🇲🇾\n\nServing: Johor, Iskandar Puteri, Skudai, Kulai, Pasir Gudang, Masai & more\n\n🚿 Bathroom — from RM1,599\n🍳 Kitchen — from RM1,999\n🏠 Full Home — from RM4,999\n\n✅ Same quality as our SG service\n✅ Premium imported epoxy grout\n✅ Done in 1 day\n\n📱 WhatsApp +65 9800 4317` },
-                        { label: 'Malaysia Marketplace Listing', text: `🇲🇾 MALAYSIA | Professional Epoxy Grout Service\n\nFrom Singapore's trusted CLEANGROUT team!\n${S.emoji} ${S.offer}\n\nServing all Malaysian areas.\nFrom RM1,599. Done in 1 day.\n📱 +65 9800 4317` }
+                        { label: 'Malaysia Facebook Ad', text: `${S.emoji} ${S.label} — Now Crossing the Causeway 🇲🇾\n\nRegular runs to: Johor, Iskandar Puteri, Skudai, Kulai, Pasir Gudang, Masai & more\n\n🚿 Bathroom — from RM1,599\n🍳 Kitchen — from RM1,999\n🏠 Full Home — from RM4,999\n\n✅ Same quality as our SG service\n✅ Premium imported epoxy grout\n✅ Done in 1 day\n\n📱 WhatsApp +65 9800 4317` },
+                        { label: 'Malaysia Marketplace Listing', text: `🇲🇾 MALAYSIA | Professional Epoxy Grout Service\n\nFrom Singapore's trusted CLEANGROUT team!\n${S.emoji} ${S.offer}\n\nRegular runs to Johor and Iskandar. Elsewhere by arrangement.\nFrom RM1,599. Done in 1 day.\n📱 +65 9800 4317` }
                     ]
                 },
                 {
@@ -1234,7 +1234,7 @@
                 },
                 {
                     platform: '🔁 Referral Engine', icon: '🎁', copies: [
-                        { label: 'Post-Job Referral Message', text: `Hi [Name]! Thank you for choosing CLEANGROUT! 🙏\n\nLoved our service? Share this with a friend!\n\n🎁 REFERRAL DEAL: When your friend books, you BOTH get $50 OFF your next service!\n\nJust tell them to mention your name when they WhatsApp us:\n📱 9800 4317\n\nOr share this link: https://epoxygrout.sg/?ref=[NAME]\n\nThank you for spreading the word! 🙌` },
+                        { label: 'Post-Job Referral Message', text: `Hi [Name]! Thank you for choosing CLEANGROUT! 🙏\n\nLoved our service? Share this with a friend!\n\n🎁 REFERRAL DEAL: When your friend books, you BOTH get $50 OFF your next service!\n\nJust tell them to mention your name when they WhatsApp us:\n📱 9800 4317\n\nOr share this link: https://cleangrout.sg/?ref=[NAME]\n\nThank you for spreading the word! 🙌` },
                         { label: 'Referral Reminder (2 weeks later)', text: `Hi [Name]! Hope you're still loving your new epoxy grout! ✨\n\nJust a reminder — if you refer a friend who books with us, you BOTH get $50 OFF! 🎁\n\nSome ideas:\n• Neighbours who've seen your new grout\n• Family members with older HDB/condo\n• Friends who complain about bathroom mold\n\nJust have them text us at 9800 4317 and mention your name! 😊` }
                     ]
                 },
@@ -1718,7 +1718,7 @@
             const seoColor = seoScore >= 10 ? '#4CAF50' : seoScore >= 7 ? '#FF9800' : '#f44336';
 
             // UTM generator data
-            const baseUrl = 'https://epoxygrout.sg';
+            const baseUrl = 'https://cleangrout.sg';
             const utmTemplates = [
                 { name: 'Facebook Ad — Published Price', source: 'facebook', medium: 'paid', campaign: 'always_on', content: 'price_copy' },
                 { name: 'Facebook Ad — Problem Copy', source: 'facebook', medium: 'paid', campaign: 'always_on', content: 'problem_copy' },
@@ -1791,7 +1791,7 @@
                 </div>
 
                 <h4 style="margin:24px 0 12px">🔗 UTM Link Generator (Auto-Tracked URLs)</h4>
-                <p style="color:#777;font-size:12px;margin-bottom:12px">Copy these URLs and use them instead of plain epoxygrout.sg links. GA4 will show you exactly which channel brought each visitor.</p>
+                <p style="color:#777;font-size:12px;margin-bottom:12px">Copy these URLs and use them instead of plain cleangrout.sg links. GA4 will show you exactly which channel brought each visitor.</p>
                 <div style="display:grid;gap:6px;margin-bottom:24px">
                     ${utmTemplates.map((u, i) => {
                 const url = baseUrl + '/?utm_source=' + u.source + '&utm_medium=' + u.medium + '&utm_campaign=' + u.campaign + '&utm_content=' + u.content;
@@ -1848,7 +1848,7 @@
                             <li>At Ad Set level → <strong>Locations</strong> section</li>
                             <li>Change "Living in or recently in" to <strong>"People living in this location"</strong> (prevents tourists)</li>
                             <li>Type <strong>"Singapore"</strong> → select country → set radius to <strong>+0 km</strong> (exact country border)</li>
-                            <li>Click <strong>"+ Add location"</strong> → type <strong>"Malaysia"</strong> → set radius to <strong>25 km</strong></li>
+                            <li>Click <strong>"+ Add location"</strong> → type <strong>"Johor Bahru"</strong> → set radius to <strong>25 km</strong> (a country cannot take a radius; target the cluster you actually drive to)</li>
                             <li>Under <strong>Detailed Targeting</strong>, add: Homeowners, Home improvement, Interior design</li>
                             <li>Under <strong>Age</strong>: set to <strong>28-65</strong> (homeowners only, not students)</li>
                         </ol>

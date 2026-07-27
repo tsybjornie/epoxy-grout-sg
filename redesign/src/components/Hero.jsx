@@ -56,7 +56,7 @@ export default function Hero() {
             variants={rise} initial="hidden" animate="show" custom={0}
             className="font-mono text-[11px] uppercase tracking-ultra text-haze-400"
           >
-            Singapore &amp; Malaysia
+            Singapore &amp; Johor, Malaysia
           </motion.p>
 
           <motion.h1
