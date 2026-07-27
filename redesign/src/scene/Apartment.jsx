@@ -2,6 +2,7 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { ROOM_W, ROOM_D, WALL_H } from './keyframes.js'
+import { concreteMaps } from './concrete.js'
 
 /* A Singapore block, not a detached house with a pitched roof.
 
@@ -132,7 +133,11 @@ function Windows({ register }) {
   )
 }
 
+const NS = new THREE.Vector2(0.9, 0.9)
+
 export default function Apartment({ fade }) {
+  // Generated once, shared by every concrete surface on the block.
+  const cc = useMemo(() => concreteMaps(256), [])
   const mats = useRef({})
   const register = (k) => (m) => { if (m) mats.current[k] = m }
 
@@ -153,12 +158,14 @@ export default function Apartment({ fade }) {
   return (
     <group>
       {/* Main slab block */}
-      <mesh position={[0, BLOCK_H / 2, 0]}>
+      <mesh position={[0, BLOCK_H / 2, 0]} castShadow receiveShadow>
         <boxGeometry args={[BLOCK_W, BLOCK_H, BLOCK_D]} />
         <meshStandardMaterial
           ref={register('body')}
           color="#3A424B"
-          roughness={0.9}
+          {...cc}
+          normalScale={NS}
+          roughness={0.94}
           transparent
           opacity={1}
         />
@@ -167,12 +174,14 @@ export default function Apartment({ fade }) {
       {/* Floor slabs expressed on the facade — the horizontal banding is most
           of what makes a block read as HDB rather than as a generic tower. */}
       {slabs.map((y, i) => (
-        <mesh key={i} position={[0, y, 0]}>
+        <mesh key={i} position={[0, y, 0]} castShadow receiveShadow>
           <boxGeometry args={[BLOCK_W + 0.7, 0.22, BLOCK_D + 0.7]} />
           <meshStandardMaterial
             ref={register(`slab${i}`)}
             color="#4B545E"
-            roughness={0.86}
+            {...cc}
+            normalScale={NS}
+            roughness={0.88}
             transparent
             opacity={1}
           />
@@ -185,7 +194,9 @@ export default function Apartment({ fade }) {
         <meshStandardMaterial
           ref={register('core')}
           color="#2E353D"
-          roughness={0.93}
+          {...cc}
+          normalScale={NS}
+          roughness={0.95}
           transparent
           opacity={1}
         />
@@ -201,7 +212,8 @@ export default function Apartment({ fade }) {
           <meshStandardMaterial
             ref={register(`col${i}`)}
             color="#3E464F"
-            roughness={0.88}
+            {...cc}
+            roughness={0.9}
             transparent
             opacity={1}
           />

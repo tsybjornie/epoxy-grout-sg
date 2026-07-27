@@ -1,6 +1,9 @@
 import { Suspense, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { ScrollControls, Scroll } from '@react-three/drei'
+import { ScrollControls, Scroll, SoftShadows } from '@react-three/drei'
+import { EffectComposer, SSAO, Bloom, Vignette, Noise, DepthOfField } from '@react-three/postprocessing'
+import { BlendFunction } from 'postprocessing'
+import * as THREE from 'three'
 import { motion, AnimatePresence } from 'framer-motion'
 import Journey from '../scene/Journey.jsx'
 
@@ -41,8 +44,20 @@ export default function ScrollJourney() {
            confetti. logarithmicDepthBuffer is what makes the range survivable. */
         camera={{ position: [0, 6.5, 17], fov: 38, near: 0.002, far: 60 }}
         gl={{ antialias: true, logarithmicDepthBuffer: true }}
+        /* ACES is the single biggest step from "3D model" to "render". Linear
+           tone mapping clips highlights to flat white and crushes shadows to
+           flat black; ACES rolls both off the way a camera sensor does, which
+           is most of why CG footage reads as photographed. */
+        onCreated={({ gl }) => {
+          gl.toneMapping = THREE.ACESFilmicToneMapping
+          gl.toneMappingExposure = 1.55
+        }}
       >
-        <color attach="background" args={['#08090A']} />
+        <color attach="background" args={['#0A0C0F']} />
+        {/* Dusk gradient behind the block. A pure-black void is the other
+            instant CG tell — real exteriors always sit against something. */}
+        <fog attach="fog" args={['#0E141C', 55, 150]} />
+        <SoftShadows size={26} samples={12} focus={0.7} />
         <Suspense fallback={null}>
           {/* pages={4}, not 5. scroll.offset spans (pages - 1) screens, so with 4
                 caption blocks each one full viewport tall, caption i centres at
@@ -87,6 +102,40 @@ export default function ScrollJourney() {
               ))}
             </Scroll>
           </ScrollControls>
+
+          {/* The grade. Each of these is doing one specific job:
+              SSAO      — contact darkening in the reveals, balcony undersides
+                          and the 3 mm channel. Absence of AO is the most
+                          reliable "this is CG" signal there is.
+              Bloom     — lit windows bleed slightly, as they do through a lens.
+              DoF       — shallow focus at the macro, where a real 22 mm shot
+                          would have millimetres of depth of field.
+              Noise     — a little grain; perfectly clean pixels look synthetic.
+              Vignette  — lens falloff. */}
+          <EffectComposer multisampling={4} enableNormalPass>
+            <SSAO
+              intensity={22}
+              radius={0.09}
+              luminanceInfluence={0.5}
+              bias={0.006}
+              worldDistanceThreshold={40}
+              worldDistanceFalloff={8}
+              worldProximityThreshold={0.6}
+              worldProximityFalloff={0.2}
+            />
+            {/* DoF only on the macro. focusDistance is normalised against the
+                camera's near/far range, so a value tuned for a 22 mm subject
+                throws a 42 m building completely out of focus — which is
+                exactly what it did on the first pass: the whole block soft.
+                Mounted per stage rather than animated, since it changes three
+                times in a whole journey. */}
+            {stage === 3 && (
+              <DepthOfField focusDistance={0.0006} focalLength={0.008} bokehScale={3.2} height={480} />
+            )}
+            <Bloom intensity={0.42} luminanceThreshold={0.62} luminanceSmoothing={0.3} mipmapBlur />
+            <Noise premultiply blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.22} />
+            <Vignette eskil={false} offset={0.3} darkness={0.55} />
+          </EffectComposer>
         </Suspense>
       </Canvas>
 
