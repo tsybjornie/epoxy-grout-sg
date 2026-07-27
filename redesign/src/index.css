@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { @apply bg-ink-900 text-haze-200 font-sans antialiased; }
+  ::selection { @apply bg-ember text-ink-900; }
+}
+
+/* Anyone who has asked their OS to calm motion down gets a static site.
+   Framer Motion reads this too, but belt and braces. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
