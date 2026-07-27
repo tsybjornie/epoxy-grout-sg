@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNY PROMO POSTER</title>
+    <title>CLEANGROUT — Published Price Poster</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -34,7 +34,7 @@
             padding: 60px;
         }
 
-        /* Festive Background Effects */
+        /* Background */
         .bg-pattern {
             position: absolute;
             top: 0;
@@ -120,9 +120,10 @@
             color: white;
             padding: 15px 40px;
             border-radius: 12px;
-            font-size: 48px;
+            font-size: 40px;
             font-weight: 900;
-            margin: 40px 0;
+            margin: 28px 0;
+            white-space: nowrap;
             box-shadow: 0 10px 25px rgba(211, 47, 47, 0.3);
             letter-spacing: -0.02em;
             text-transform: uppercase;
@@ -135,6 +136,7 @@
             width: 100%;
             gap: 20px;
             margin-bottom: 30px;
+            align-items: stretch;
         }
 
         .price-col {
@@ -142,11 +144,13 @@
             background: #fff;
             border: 2px solid #eee;
             border-radius: 16px;
-            padding: 20px 10px;
+            padding: 34px 10px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .price-col.featured {
@@ -163,14 +167,6 @@
             color: #0A0A0A;
             text-transform: uppercase;
             margin-bottom: 5px;
-        }
-
-        .col-old-price {
-            font-size: 24px;
-            color: #999;
-            text-decoration: line-through;
-            font-weight: 600;
-            margin-bottom: 0px;
         }
 
         .col-new-price {
@@ -199,6 +195,60 @@
         }
 
         /* Scarcity */
+        .ask-box {
+            width: 100%;
+            margin-top: 26px;
+            border-top: 2px solid #eee;
+            border-bottom: 2px solid #eee;
+            padding: 22px 0 20px;
+        }
+
+        .ask-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #0A0A0A;
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .ask-row {
+            display: flex;
+            gap: 18px;
+        }
+
+        .ask-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .ask-num {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            background: #D32F2F;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .ask-text {
+            font-size: 17px;
+            line-height: 1.35;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .ask-foot {
+            text-align: center;
+            font-size: 17px;
+            color: #666;
+            margin-top: 16px;
+            font-style: italic;
+        }
+
         .scarcity-box {
             text-align: center;
             margin-top: auto;
@@ -252,56 +302,68 @@
 
     <div id="poster">
         <div class="bg-pattern"></div>
-        <div class="plum-blossom pb-1">🌸</div>
-        <div class="plum-blossom pb-2">🌸</div>
+        <div class="plum-blossom pb-1">◧</div>
+        <div class="plum-blossom pb-2">◧</div>
 
         <div class="content">
-            <h1>CNY HOME GLOW-UP SALE 🧧</h1>
-            <div class="sub-headline">10% OFF EPOXY GROUT UPGRADE</div>
+            <h1>OUR PRICES ARE PUBLIC 📋</h1>
+            <div class="sub-headline">EPOXY GROUT · SINGAPORE &amp; JOHOR BAHRU</div>
 
             <div class="hook-text">
-                Transform your bathroom, kitchen & floors<br>
-                <span class="date-highlight">Before 28 FEB</span>
+                Cement grout is porous by design. Epoxy isn't.<br>
+                <span class="date-highlight">15+ year life · 5-year written warranty</span>
             </div>
 
-            <div class="offer-box">10% OFF ALL PACKAGES</div>
+            <div class="offer-box">Same price for everyone, all year</div>
 
             <div class="pricing-grid">
-                <!-- Bathroom -->
                 <div class="price-col">
                     <div class="col-title">Bathroom</div>
-                    <div class="col-old-price">$780</div>
-                    <div class="col-new-price">$439</div>
-                    <div class="save-tag">SAVE $49</div>
+                    <div class="col-new-price">$488</div>
+                    <div class="save-tag">UP TO 50 SQFT</div>
                 </div>
 
-                <!-- Kitchen -->
                 <div class="price-col">
                     <div class="col-title">Kitchen</div>
-                    <div class="col-old-price">$980</div>
-                    <div class="col-new-price">$529</div>
-                    <div class="save-tag">SAVE $59</div>
+                    <div class="col-new-price">$588</div>
+                    <div class="save-tag">UP TO 95 SQFT</div>
                 </div>
 
-                <!-- Full Home -->
                 <div class="price-col featured">
-                    <div class="col-title">Full Home</div>
-                    <div class="col-old-price">$2,380</div>
-                    <div class="col-new-price">$1,339</div>
-                    <div class="save-tag">SAVE $149</div>
+                    <div class="col-title">Whole Home</div>
+                    <div class="col-new-price">$1,488</div>
+                    <div class="save-tag">UP TO 180 SQFT</div>
                 </div>
+            </div>
+
+            <div class="ask-box">
+                <div class="ask-title">Three questions worth asking anyone — including us</div>
+                <div class="ask-row">
+                    <div class="ask-item">
+                        <div class="ask-num">1</div>
+                        <div class="ask-text">Which product exactly?<br>Brand and name, not just &ldquo;epoxy&rdquo;.</div>
+                    </div>
+                    <div class="ask-item">
+                        <div class="ask-num">2</div>
+                        <div class="ask-text">How deep is the old grout removed &mdash; and will you photograph it?</div>
+                    </div>
+                    <div class="ask-item">
+                        <div class="ask-num">3</div>
+                        <div class="ask-text">How long is the warranty?<br>Most of the trade does 2 years.</div>
+                    </div>
+                </div>
+                <div class="ask-foot">We answer all three in writing, before you pay anything.</div>
             </div>
 
             <div class="scarcity-box">
-                <div class="scarcity-title">CNY Promotion Ends 28 FEB</div>
-                <div class="scarcity-subtitle">Limited Installation Slots Available</div>
+                <div class="scarcity-title">No countdown. No discount code.</div>
+                <div class="scarcity-subtitle">Tile 300×300 or smaller · larger tiles cost less — use the calculator</div>
             </div>
 
             <div class="footer-area">
-                <div class="footer-loc">Singapore & Johor Bahru</div>
-                <div class="footer-cta">DM TO SECURE YOUR SLOT NOW</div>
+                <div class="footer-loc">Singapore &amp; Johor Bahru</div>
+                <div class="footer-cta">PRICE YOUR OWN JOB AT CLEANGROUT.SG</div>
             </div>
-        </div>
     </div>
 
 </body>

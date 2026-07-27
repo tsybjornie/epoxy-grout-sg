@@ -802,7 +802,7 @@
             <h3>🧪 Create A/B Test</h3>
             <div class="form-group">
                 <label>Test Name</label>
-                <input type="text" id="testName" placeholder="e.g. FB Ad Copy - CNY vs Problem">
+                <input type="text" id="testName" placeholder="e.g. FB Ad Copy - price-first vs problem-first">
             </div>
             <div class="form-group">
                 <label>Channel</label>
@@ -894,8 +894,10 @@
         // CONTENT BRAIN — LEARNS WHAT TO POST
         // ============================
         const MSG_STYLES = {
-            urgency: { keywords: ['limited', 'slots', 'left', 'ends', 'hurry', 'only', 'last'], label: '⏰ Urgency/Scarcity' },
-            price: { keywords: ['$', 'off', 'discount', 'save', 'deal', 'special', 'promo', 'cheap'], label: '💰 Price/Discount' },
+            // Kept as a DETECTOR, not a style to write in. If copy scores here,
+            // it has drifted into fabricated scarcity — rewrite it.
+            costOfDelay: { keywords: ['limited', 'slots', 'left', 'ends', 'hurry', 'only', 'last'], label: '⚠️ Scarcity — rewrite this' },
+            price: { keywords: ['$', 'price', 'save', 'cost', 'calculator', 'published', 'cheap'], label: '💰 Price' },
             problem: { keywords: ['mold', 'stain', 'disgusting', 'dirty', 'ugly', 'crack', 'bacteria', 'scrub'], label: '😱 Problem/Pain' },
             social: { keywords: ['review', 'customer', 'project', 'trust', 'rated', '500+', 'completed'], label: '⭐ Social Proof' },
             benefit: { keywords: ['waterproof', 'permanent', 'last', '15-20', 'mould', 'warranty', 'premium'], label: '✅ Benefits' },
@@ -958,10 +960,10 @@
             // Generate new post ideas based on winning style
             const topStyle = sorted[0]?.[0];
             const postIdeas = {
-                urgency: [
-                    '⏰ "Only 8 slots left for Feb — who needs their grout done?"',
-                    '🔥 "This week only: FREE tile cleaning with every booking"',
-                    '⚡ "Weekend slots filling fast — DM to lock yours in"'
+                costOfDelay: [
+                    '📈 "Discoloured grout is a $600 job. Water behind the tile is a $3,500 one."',
+                    '📋 "Our whole price list is public — check it before you call anybody, including us."',
+                    '🔍 "Send a daylight photo of one joint and I will tell you what you have got. No charge."'
                 ],
                 price: [
                     '💰 "Bathroom grout from $488 — cheaper than 1 year of scrubbing supplies"',
@@ -969,19 +971,19 @@
                     '📊 "Why $488 now saves you $2,000 in 5 years"'
                 ],
                 problem: [
-                    '🤢 "Your grout has 2x more bacteria than a toilet seat. Here\'s proof."',
+                    '🤢 "Cement grout is porous by design. That is not a defect — it is what it is."',
                     '😱 "This is what lives INSIDE your cement grout (swipe →)"',
                     '🔬 "We scraped grout from a 5-year-old HDB bathroom. You won\'t believe what we found."'
                 ],
                 social: [
                     '⭐ "Another happy homeowner — swipe to see the before/after"',
-                    '📸 "Project 127 completed! Tampines 4-room HDB transformation"',
+                    '📸 "Tampines 4-room, floor and shower walls — swipe for the joints opened up before we grouted"',
                     '💬 "Mrs Tan gave us 5 stars — here\'s what she said"'
                 ],
                 benefit: [
                     '✅ "Epoxy vs cement grout: 5 reasons professionals never go back"',
-                    '🛡️ "non-porous. Zero maintenance. Lasts 15-20 years."',
-                    '🏆 "The only grout that comes with a real warranty"'
+                    '🛡️ "Non-porous, so mould has nothing to feed on. 15-20 year life."',
+                    '🏆 "Five-year written warranty, transferable if you sell. Most of the trade does two."'
                 ],
                 emotional: [
                     '😍 "Imagine never scrubbing grout again. That\'s what epoxy does."',
@@ -1026,15 +1028,15 @@
         function getDefaultTests() {
             return [
                 {
-                    id: 1, name: 'FB Ad Copy: CNY vs Problem', channel: 'Facebook', status: 'running',
-                    copyA: '🧧 CNY SPECIAL — free silicone replacement in one bathroom with any package. Bathroom $488, Kitchen $588, Full Home $1,488. DM "CNY" for a free quote →',
+                    id: 1, name: 'FB Ad Copy: price-first vs problem-first', channel: 'Facebook', status: 'running',
+                    copyA: '📋 Our whole price list is public. Bathroom $488, Kitchen $588, Whole Home $1,488 — or use the calculator for an exact number. Full tile clean included. →',
                     copyB: 'Is your bathroom grout DISGUSTING? 🤢 Black mold. Yellow stains. We fix it PERMANENTLY with epoxy grout. From $488. DM for FREE inspection →',
                     leadsA: 0, leadsB: 0, convA: 0, convB: 0, minLeads: 20, winner: null
                 },
                 {
                     id: 2, name: 'CTA Style: Emoji vs Direct', channel: 'Facebook', status: 'running',
-                    copyA: '📱 DM us "CNY" to get your FREE quote today!',
-                    copyB: 'WhatsApp 9800 4317 now — only 12 slots left this month.',
+                    copyA: '📱 Price yourself in 30 seconds at cleangrout.sg — no form first.',
+                    copyB: 'WhatsApp 9800 4317 for a free inspection. Prices are on the site either way.',
                     leadsA: 0, leadsB: 0, convA: 0, convB: 0, minLeads: 20, winner: null
                 }
             ];
@@ -1148,7 +1150,7 @@
             if (leads.length === 0) {
                 insights.push(
                     { icon: '🚀', title: 'Get Started', text: 'Log your first lead to start training the AI. Every lead you log makes the system smarter — it learns which channels and copy convert best.', action: 'Log First Lead', actionFn: openModal },
-                    { icon: '📋', title: 'Your First A/B Test is Ready', text: 'Two default tests are set up: CNY promo vs problem-agitation copy, and emoji CTA vs direct CTA. As you log leads, tag which ad brought them in.', action: null }
+                    { icon: '📋', title: 'Your First A/B Test is Ready', text: 'Two default tests are set up: published-price copy vs problem-agitation copy, and emoji CTA vs direct CTA. As you log leads, tag which ad brought them in.', action: null }
                 );
             }
 
@@ -1161,52 +1163,24 @@
         // ============================
         // SEASONAL CAMPAIGN ENGINE
         // ============================
-        function getCurrentSeason() {
-            const now = new Date();
-            const m = now.getMonth() + 1; // 1-12
-            const d = now.getDate();
+        /* One public offer, all year.
 
-            // CNY: Jan 15 - Feb 28
-            if ((m === 1 && d >= 15) || (m === 2)) return {
-                name: 'CNY', emoji: '🧧', label: 'Chinese New Year Special',
-                offer: 'Free silicone replacement in one bathroom', code: 'CNY', end: 'Feb 28',
-                greeting: 'Gong Xi Fa Cai! 🧧',
-                hook: '新年快乐! Start the Year of the Snake with a FRESH home!'
-            };
-            // Hari Raya: Mar 1 - Apr 15
-            if ((m === 3) || (m === 4 && d <= 15)) return {
-                name: 'RAYA', emoji: '🌙', label: 'Hari Raya Special',
-                offer: 'Free silicone replacement in one bathroom', code: 'RAYA', end: 'Apr 15',
-                greeting: 'Selamat Hari Raya! 🌙',
-                hook: 'Welcome guests to a sparkling home this Raya! ✨'
-            };
-            // Mother's Day: Apr 16 - May 15
-            if ((m === 4 && d >= 16) || (m === 5 && d <= 15)) return {
-                name: 'MOM', emoji: '💐', label: "Mother's Day Special",
-                offer: 'Free full tile clean on completion', code: 'MOM', end: 'May 15',
-                greeting: "Happy Mother's Day! 💐",
-                hook: "Give Mom the gift of a sparkling clean home she deserves!"
-            };
-            // National Day: Jul 1 - Aug 15
-            if ((m === 7) || (m === 8 && d <= 15)) return {
-                name: 'SG59', emoji: '🇸🇬', label: 'National Day Special',
-                offer: 'Free full tile clean on completion', code: 'SG59', end: 'Aug 15',
-                greeting: 'Happy National Day! 🇸🇬',
-                hook: 'Celebrate SG59 with a home transformation!'
-            };
-            // Year-End: Nov 1 - Dec 31
-            if (m >= 11) return {
-                name: 'YEAREND', emoji: '🎄', label: 'Year-End Blowout',
-                offer: 'Free silicone replacement in one bathroom', code: 'YEAREND', end: 'Dec 31',
-                greeting: 'Year-End Special! 🎄',
-                hook: 'Start the new year with freshly grouted tiles!'
-            };
-            // Default (no festival)
+           There is no festival calendar here any more and no unlock code that
+           reveals a different price. The tariff is published on the website and
+           it is the same for everyone — that is the whole argument, and a
+           seasonal discount quietly contradicts it. The offer below is scope we
+           bundle in, not money off the rate, so it can run permanently without
+           making the published price a fiction. */
+        function getCurrentSeason() {
             return {
-                name: 'PROMO', emoji: '⚡', label: 'Limited Time Offer',
-                offer: 'Free full tile clean on completion', code: 'CLEAN', end: 'this month',
+                name: 'PUBLIC',
+                emoji: '📋',
+                label: 'Published price, same for everyone',
+                offer: 'Full tile clean on completion, included',
+                code: 'QUOTE',
+                end: '',
                 greeting: 'Hi there! 👋',
-                hook: 'Transform your home with premium epoxy grout!'
+                hook: 'Every price is on the website. Put your rooms into the calculator and it gives you a fixed, itemised number before you talk to anybody.'
             };
         }
 
@@ -1218,24 +1192,24 @@
                 {
                     platform: `Facebook Marketplace (${S.emoji} ${S.name})`, icon: '🏪', copies: [
                         { label: 'Listing Title', text: `${S.emoji} ${S.offer} | Professional Epoxy Grout | From $488` },
-                        { label: 'Description', text: `CLEANGROUT Professional Epoxy Grout Service\n✅ Singapore island-wide & JB\n\n${S.emoji} ${S.label} — ${S.offer} (Ends ${S.end}!)\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\nNon-porous • Nothing for mould to feed on • 15-year life • Done in 1 day\n\n📱 WhatsApp: 9800 4317\n💬 DM "${S.code}" to claim it!` }
+                        { label: 'Description', text: `CLEANGROUT Professional Epoxy Grout Service\n✅ Singapore island-wide & JB\n\n${S.emoji} ${S.offer}\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\nNon-porous • Nothing for mould to feed on • 15-year life • Done in 1 day\n\n📱 WhatsApp: 9800 4317\n💬 Or just run the calculator at cleangrout.sg` }
                     ]
                 },
                 {
                     platform: `Facebook Ad (${S.emoji} ${S.name})`, icon: '📘', copies: [
-                        { label: best ? '🏆 Winning Copy' : `Option A — ${S.label}`, text: best || `${S.emoji} ${S.label} — ${S.offer} (Ends ${S.end}!)\n\nYour grout is full of mold & stains? 😱\n\nWe replace it with PREMIUM EPOXY GROUT:\n✅ Non-porous — mould has nothing to feed on\n✅ Stain-resistant\n✅ Lasts 15-20 years\n✅ Done in 1 day\n\n🔥 Bathroom from $488 · Kitchen from $588 · Full Home from $1,488\n\n📱 DM "${S.code}" for FREE quote →` },
+                        { label: best ? '🏆 Winning Copy' : `Option A — ${S.label}`, text: best || `${S.emoji} ${S.offer}\n\nYour grout is full of mold & stains? 😱\n\nWe replace it with PREMIUM EPOXY GROUT:\n✅ Non-porous — mould has nothing to feed on\n✅ Stain-resistant\n✅ Lasts 15-20 years\n✅ Done in 1 day\n\n🔥 Bathroom from $488 · Kitchen from $588 · Full Home from $1,488\n\n📱 Full price list and calculator at cleangrout.sg →` },
                         { label: 'Option B — Problem', text: 'Is your bathroom grout DISGUSTING? 🤢\n\nBlack mold. Yellow stains. Crumbling gaps.\nNo amount of scrubbing will fix cement grout.\n\nThe permanent solution? EPOXY GROUT.\n✅ Non-porous\n✅ Mold literally cannot grow\n✅ From just $488\n\n📱 WhatsApp us for FREE inspection →' }
                     ]
                 },
                 {
                     platform: 'WhatsApp Broadcast', icon: '📱', copies: [
-                        { label: `${S.emoji} ${S.name} Blast`, text: `${S.greeting}\n\nCLEANGROUT is running a ${S.label} — ${S.offer} until ${S.end}!\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\nWant me to hold a slot for you? Reply YES and I'll book your free inspection! 😊` },
-                        { label: 'Follow-Up', text: `Hi [Name]! Just following up on your epoxy grout enquiry 😊\n\nOur ${S.label} ends soon — shall I book your free inspection this week?\n\nNo obligation, we just assess and quote. Takes 15 min!` }
+                        { label: `${S.emoji} ${S.name} Blast`, text: `${S.greeting}\n\nEvery price is published on our site — no site visit needed to get a number. ${S.offer}.\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\nWant me to hold a slot for you? Reply YES and I'll book your free inspection! 😊` },
+                        { label: 'Follow-Up', text: `Hi [Name]! Just following up on your epoxy grout enquiry 😊\n\nOur full price list is on the site if you want to check it yourself — shall I book your free inspection this week?\n\nNo obligation, we just assess and quote. Takes 15 min!` }
                     ]
                 },
                 {
                     platform: '📍 Geo-Targeted: SINGAPORE 🇸🇬', icon: '🇸🇬', copies: [
-                        { label: 'SG Facebook Ad', text: `${S.emoji} ${S.label} — Singapore Island-Wide!\n\n🏢 HDB • Condo • Landed • Commercial\nWe serve ALL areas: Tampines, Woodlands, Jurong, Bedok, Ang Mo Kio, Punggol & more\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\n✅ Same-day quote\n✅ Premium Ardex/Sika epoxy\n✅ Done in 1 day\n\n📱 WhatsApp 9800 4317 or DM "${S.code}"` },
+                        { label: 'SG Facebook Ad', text: `${S.emoji} ${S.label} — Singapore Island-Wide!\n\n🏢 HDB • Condo • Landed • Commercial\nWe serve ALL areas: Tampines, Woodlands, Jurong, Bedok, Ang Mo Kio, Punggol & more\n\n🚿 Bathroom — from $488\n🍳 Kitchen — from $588\n🏠 Full Home — from $1,488\n\n✅ Same-day quote\n✅ Premium Ardex/Sika epoxy\n✅ Done in 1 day\n\n📱 WhatsApp 9800 4317 · full price list at cleangrout.sg` },
                         { label: 'SG Marketplace Listing', text: `🇸🇬 SINGAPORE ISLAND-WIDE | Professional Epoxy Grout\n\n${S.emoji} ${S.offer} — ${S.label}!\n\nServing: East, West, North, South, Central\nHDB ✅ Condo ✅ Landed ✅\n\nFrom $488. Done in 1 day.\n📱 9800 4317` }
                     ]
                 },
@@ -1746,8 +1720,8 @@
             // UTM generator data
             const baseUrl = 'https://epoxygrout.sg';
             const utmTemplates = [
-                { name: 'Facebook Ad — CNY Promo', source: 'facebook', medium: 'paid', campaign: 'cny_2026', content: 'cny_promo' },
-                { name: 'Facebook Ad — Problem Copy', source: 'facebook', medium: 'paid', campaign: 'cny_2026', content: 'problem_copy' },
+                { name: 'Facebook Ad — Published Price', source: 'facebook', medium: 'paid', campaign: 'always_on', content: 'price_copy' },
+                { name: 'Facebook Ad — Problem Copy', source: 'facebook', medium: 'paid', campaign: 'always_on', content: 'problem_copy' },
                 { name: 'Facebook Marketplace', source: 'facebook', medium: 'marketplace', campaign: 'organic', content: 'listing' },
                 { name: 'Instagram Reels', source: 'instagram', medium: 'organic', campaign: 'content', content: 'reel' },
                 { name: 'TikTok ASMR Video', source: 'tiktok', medium: 'organic', campaign: 'asmr', content: 'video' },
@@ -1902,12 +1876,12 @@
                     </div>
                 </div>
 
-                <h4 style="margin:24px 0 12px">${getCurrentSeason().emoji} Active Campaign: ${getCurrentSeason().label}</h4>
+                <h4 style="margin:24px 0 12px">${getCurrentSeason().emoji} Standing offer: ${getCurrentSeason().label}</h4>
                 <div class="test-card" style="padding:14px;border-left:4px solid #4CAF50;margin-bottom:24px">
                     <div style="display:flex;justify-content:space-between;align-items:center">
                         <div>
                             <div style="font-size:14px;font-weight:700;color:#fff">${getCurrentSeason().emoji} ${getCurrentSeason().label}</div>
-                            <div style="font-size:12px;color:#aaa;margin-top:4px">Offer: <strong style="color:#4CAF50">${getCurrentSeason().offer}</strong> · Code: <strong>${getCurrentSeason().code}</strong> · Ends: ${getCurrentSeason().end}</div>
+                            <div style="font-size:12px;color:#aaa;margin-top:4px">Offer: <strong style="color:#4CAF50">${getCurrentSeason().offer}</strong> · Runs all year</div>
                         </div>
                         <span style="background:#4CAF50;color:#fff;padding:4px 12px;border-radius:4px;font-size:11px;font-weight:700">ACTIVE</span>
                     </div>
