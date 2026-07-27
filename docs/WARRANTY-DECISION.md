@@ -147,8 +147,26 @@ a 5-working-day promise, not a form.
 misses, it pays for itself on a 5% conversion lift, and at $40 all-in it is cheap enough
 that being wrong about the failure model doesn't hurt much.
 
-**Keep 7 years on whole-home.** Bigger job, better margin, and the extra $36 is
-proportionate.
+**One term, not a tier — 5 years on every job.** The earlier version of this
+document recommended 7 years on whole-home work on the grounds that the extra
+$36 was proportionate to the bigger job. That has been overruled, and on
+reflection the cost argument was answering the wrong question.
+
+A warranty that lengthens with job size invites one the customer will actually
+ask: *so is the small job built worse?* There is no good answer. The work is
+identical — same removal depth, same material, same crew — so the promise should
+be identical. Tiering it undercuts the claim that the tariff is one published
+rule applied evenly, which is the whole position.
+
+It also simplifies the sale. "Five years, every job" needs no qualification, no
+asterisk and no scope check, where "five, or seven if it is big enough" needs
+all three.
+
+If a longer term is ever wanted, sell it as a **paid extension** rather than a
+size threshold — `COMPETITOR-WARRANTY.md` §7 found VH Waterproofing extending
+4 years to 30 via a paid programme and KL1 Plumber selling 10-25 years as an
+upgrade tier. Priced, it is a product. Given away on the big jobs, it is just a
+discount with extra steps.
 
 **Do not go to 10 or 15.** Not because of cost — 10 is affordable — but because of §1.5:
 we cannot credibly back a decade yet, the customer discounts it to about seven effective

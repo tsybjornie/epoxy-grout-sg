@@ -104,7 +104,7 @@ export default function Hero() {
           {[
             ['Cement, re-done as it fails', '$110', 'a year'],
             ['Epoxy, 15-year material life', '$47', 'a year'],
-            ['Written warranty', '5 yr', '7 whole home'],
+            ['Written warranty', '5 yr', 'any job size'],
             ['Every price', 'Published', 'no site visit first']
           ].map(([label, big, sub]) => (
             <div key={label}>

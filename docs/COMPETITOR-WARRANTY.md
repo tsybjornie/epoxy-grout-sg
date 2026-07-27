@@ -169,7 +169,11 @@ warranty we underwrite. That is what it should say.
 
 ## 7. Where this lands
 
-**Keep 5 years / 7 whole home / 1 silicone.**
+**Keep 5 years on every job, 1 year on silicone.** The 7-year whole-home tier
+has been dropped — see `WARRANTY-DECISION.md` §4. The research below argues for
+the *length*; the tiering was a separate decision and it lost on a different
+axis, namely that a warranty which grows with job size implies the small job is
+built worse.
 
 | Argument | Weight |
 |---|---|

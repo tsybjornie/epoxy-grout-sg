@@ -231,7 +231,7 @@ on large jobs, that anchor is the first thing to suspect.
 
 ## Warranty — terms and what they cost us
 
-Published at `warranty.html`. **5 years** single area · **7 years** whole home ·
+Published at `warranty.html`. **5 years** on every job, any size ·
 **1 year** silicone · **transferable** if the customer sells.
 
 **Covered:** cracking, crumbling, debonding from the tile edge, soft/uncured grout, mould
