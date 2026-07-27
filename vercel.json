@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/locations/johor-bahru.html",
+      "destination": "/locations/malaysia.html",
+      "permanent": true
+    }
+  ]
+}

@@ -32,7 +32,7 @@
       "priceRange": "$380 - $4,000",
       "areaServed": [
         { "@type": "Country", "name": "Singapore" },
-        { "@type": "City", "name": "Johor Bahru" }
+        { "@type": "City", "name": "Malaysia" }
       ],
       "description": "Epoxy grout application and re-grouting for residential tiled surfaces in Singapore. Transparent published tariff, fixed written quote, written workmanship warranty.",
       "makesOffer": [
@@ -1399,7 +1399,7 @@
     <header class="hero">
         <div class="hero-bg" aria-hidden="true"></div>
         <div class="hero-in">
-            <p class="eyebrow" style="color:#9BA0AA">Singapore &amp; Johor Bahru · HDB · BTO · Condo · Landed</p>
+            <p class="eyebrow" style="color:#9BA0AA">Singapore &amp; Malaysia · HDB · BTO · Condo · Landed</p>
             <h1>Stop paying to <em>re-tile</em> what only needs re-grouting.</h1>
             <p class="hero-sub">Hacking out tiles costs thousands and takes a week. Replacing the 3 mm between them
                 costs hundreds and takes a day — and epoxy joints don't go black again. Build your own itemised quote
@@ -1497,7 +1497,7 @@
                                 <option>Jurong / Clementi / Bukit Batok</option>
                                 <option>Central / City</option>
                                 <option>Other (Singapore)</option>
-                                <option>Johor Bahru</option>
+                                <option>Malaysia</option>
                             </select>
                             <textarea id="cnotes" class="full" rows="2"
                                 placeholder="Anything else? (grout colour, access, timing)"></textarea>
@@ -1975,7 +1975,7 @@
             </div>
 
             <p class="lede" style="margin-top:22px;font-size:.88rem">Newly laid tiles that have never been grouted are
-                priced separately and cost roughly half — there is no removal stage. Johor Bahru: same tariff, 10%
+                priced separately and cost roughly half — there is no removal stage. Malaysia: same tariff, 10%
                 off.</p>
         </div>
     </section>
@@ -2122,8 +2122,8 @@
                         quotes.</p>
                 </details>
                 <details>
-                    <summary>Do you cover Johor Bahru?</summary>
-                    <p>Yes, on the same published tariff with 10% off. Scheduling is less flexible because we batch JB
+                    <summary>Do you cover Malaysia?</summary>
+                    <p>Yes, on the same published tariff with 10% off. Scheduling is less flexible because we batch Malaysia
                         jobs, so give us a few days of options.</p>
                 </details>
             </div>
@@ -2134,8 +2134,8 @@
     <section id="locations">
         <div class="wrap reveal">
             <p class="eyebrow">Where we work</p>
-            <h2>Island-wide, plus Johor Bahru.</h2>
-            <p class="lede">Same published tariff everywhere in Singapore. JB is the same tariff less 10%,
+            <h2>Island-wide, plus Malaysia.</h2>
+            <p class="lede">Same published tariff everywhere in Singapore. Malaysia is the same tariff less 10%,
                 batched into runs — so give us a few dates to choose from.</p>
             <div class="areas">
                 <div>
@@ -2150,7 +2150,7 @@
                     <a href="locations/tampines.html">Tampines</a>
                     <a href="locations/bedok.html">Bedok</a>
                     <a href="locations/jurong.html">Jurong</a>
-                    <a href="locations/johor-bahru.html">Johor Bahru</a>
+                    <a href="locations/malaysia.html">Malaysia</a>
                 </div>
                 <div>
                     <h3>Property types</h3>
@@ -2197,7 +2197,7 @@
                 <div>
                     <a href="/" class="logo" style="color:#fff;font-size:1.3rem">CLEAN<span>GROUT</span></a>
                     <p style="margin-top:12px;max-width:34ch">Epoxy grouting and re-grouting for homes across Singapore
-                        and Johor Bahru. Published tariff, fixed written quote, written warranty.</p>
+                        and Malaysia. Published tariff, fixed written quote, written warranty.</p>
                     <p style="margin-top:14px"><a href="https://wa.me/6598004317" style="color:#fff">WhatsApp 9800
                             4317</a></p>
                 </div>
@@ -2223,7 +2223,7 @@
                     <a href="locations/punggol.html">Punggol</a>
                     <a href="locations/tampines.html">Tampines</a>
                     <a href="locations/jurong.html">Jurong</a>
-                    <a href="locations/johor-bahru.html">Johor Bahru</a>
+                    <a href="locations/malaysia.html">Malaysia</a>
                 </div>
             </div>
             <div class="fgrid" style="margin-top:30px;grid-template-columns:repeat(4,1fr)">
@@ -2632,7 +2632,12 @@
             /* ---------- λ table ---------- */
             document.getElementById('lambda-table').innerHTML = TILES.map(function (t) {
                 var lam = lambda(t);
-                var perM2 = M.cHaze + (M.cApply + M.cRemove) * lam;   // excludes the per-room masking term
+                // kFloor matters here. The calculator charges (cApply + cRemove) × kFloor
+                // on floor joints, so omitting it made this table quote 14–18% more per m²
+                // than the same job actually bills — on a page whose whole argument is
+                // "check our arithmetic". Masking is still excluded because it scales with
+                // room perimeter, not area, and has no honest per-m² value.
+                var perM2 = M.cHaze + (M.cApply + M.cRemove) * M.kFloor * lam;
                 return '<tr><td>' + t.label + '</td><td class="num">' + lam.toFixed(2) + ' m</td>' +
                     '<td class="num">' + money(perM2) + '</td></tr>';
             }).join('');
@@ -2643,7 +2648,7 @@
                 if (!svg) return;
                 var W = 420, H = 260, pad = { l: 46, r: 12, t: 14, b: 34 };
                 var lam = lambda(tileById('600x600'));
-                var jr = M.cApply + M.cRemove;
+                var jr = (M.cApply + M.cRemove) * M.kFloor;   // floor rate — same omission as the λ table had
                 var ac = function (A) { return (M.F + M.cHaze * A + 4 * M.cMask * Math.sqrt(A) + jr * lam * A) / (A * M.SQFT); };
 
                 var A0 = 2, A1 = 120, xs = [], ys = [];
