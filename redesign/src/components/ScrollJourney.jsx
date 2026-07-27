@@ -1,0 +1,122 @@
+import { Suspense, useState } from 'react'
+import { Canvas } from '@react-three/fiber'
+import { ScrollControls, Scroll } from '@react-three/drei'
+import { motion, AnimatePresence } from 'framer-motion'
+import Journey from '../scene/Journey.jsx'
+
+const STAGES = [
+  {
+    kicker: '01 — The house',
+    title: 'Nobody re-tiles a whole flat because the tiles failed.',
+    body: 'The tiles are fine. They are almost always fine. What went is the three millimetres between them, and that is a different job at a different price.'
+  },
+  {
+    kicker: '02 — The room',
+    title: 'It starts in the one room that never dries out.',
+    body: 'Cement grout is porous by design — it drinks water, soap and body oils. Scrubbing the black off cleans the surface of something growing inside the joint.'
+  },
+  {
+    kicker: '03 — The floor',
+    title: 'We price the joint, not the floor area.',
+    body: 'A 300×300 floor holds exactly twice the joint of a 600×600 floor the same size. That is why a per-square-foot quote tells you nothing, and why ours is per metre of joint.'
+  },
+  {
+    kicker: '04 — The joint',
+    title: 'Three millimetres. Cement one end, epoxy the other.',
+    body: 'One joint, running from the grout you have into the grout we lay. Epoxy is a cured thermoset with nothing for mould to feed on — which is the whole argument, and the whole job.'
+  }
+]
+
+export default function ScrollJourney() {
+  const [stage, setStage] = useState(0)
+
+  return (
+    <section className="relative h-[100svh] w-full bg-ink-900">
+      <Canvas
+        shadows
+        dpr={[1, 1.75]}
+        /* near = 2 mm because the last keyframe sits 24 mm off the joint. But
+           a 2 mm near against a 60 m far is a 30,000:1 depth range, which
+           shreds a normal 24-bit depth buffer — the house z-fights itself into
+           confetti. logarithmicDepthBuffer is what makes the range survivable. */
+        camera={{ position: [0, 6.5, 17], fov: 38, near: 0.002, far: 60 }}
+        gl={{ antialias: true, logarithmicDepthBuffer: true }}
+      >
+        <color attach="background" args={['#08090A']} />
+        <Suspense fallback={null}>
+          {/* pages={4}, not 5. scroll.offset spans (pages - 1) screens, so with 4
+                caption blocks each one full viewport tall, caption i centres at
+                offset i/3 = 0, 0.33, 0.66, 1.0 — exactly the keyframe times. At
+                pages={5} they centred at i/4 and every caption ran a stage ahead
+                of the camera. */}
+          <ScrollControls pages={4} damping={0.32}>
+            <Journey onStage={setStage} />
+
+            {/* Captions laid out in NORMAL FLOW, one full viewport each.
+                Absolutely positioning them at `${i*100}vh` looked right but
+                drifts: ScrollControls sizes its html track from the canvas
+                container, and scroll.offset spans (pages - 1) screens, not
+                pages. Stacked h-screen blocks stay locked to the keyframes by
+                construction, with a trailing spacer for the 5th page. */}
+            <Scroll html style={{ width: '100%' }}>
+              {STAGES.map((s, i) => (
+                <div
+                  key={s.kicker}
+                  className="pointer-events-none flex h-screen w-screen items-center px-6 pb-28 md:px-16"
+                >
+                  <div className="max-w-md">
+                    <p className="font-mono text-[11px] uppercase tracking-ultra text-ember">
+                      {s.kicker}
+                    </p>
+                    <h2 className="mt-6 text-[clamp(1.7rem,3.4vw,2.7rem)] font-light leading-[1.08] tracking-tight text-white">
+                      {s.title}
+                    </h2>
+                    <p className="mt-5 text-[14px] leading-relaxed text-haze-300">
+                      {s.body}
+                    </p>
+                    {i === 3 && (
+                      <a
+                        href="#quote"
+                        className="pointer-events-auto mt-8 inline-block rounded-full bg-white px-7 py-3.5 text-[13px] font-medium text-ink-900 transition hover:bg-ember hover:text-white"
+                      >
+                        Price your own joint — 30 seconds
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </Scroll>
+          </ScrollControls>
+        </Suspense>
+      </Canvas>
+
+      {/* Fixed chrome — outside the canvas so it never scrolls with the rig. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 px-6 pb-7 md:px-16">
+        <div className="flex items-center gap-3">
+          {STAGES.map((s, i) => (
+            <div
+              key={s.kicker}
+              className={`h-px flex-1 transition-colors duration-500 ${
+                i <= stage ? 'bg-ember' : 'bg-white/15'
+              }`}
+            />
+          ))}
+        </div>
+        <div className="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-wide2 text-haze-400">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={stage}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.32 }}
+            >
+              {['Exterior', 'Interior', 'Tile slab', '3 mm channel'][stage]}
+            </motion.span>
+          </AnimatePresence>
+          <span>{stage < 3 ? 'Scroll' : 'End of path'}</span>
+        </div>
+      </div>
+    </section>
+  )
+}

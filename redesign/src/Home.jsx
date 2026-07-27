@@ -1,5 +1,6 @@
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
+import ScrollJourney from './components/ScrollJourney.jsx'
 import GalleryGrid from './components/GalleryGrid.jsx'
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <ScrollJourney />
         <GalleryGrid />
       </main>
 
