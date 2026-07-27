@@ -1,26 +1,16 @@
 import * as THREE from 'three'
 
 /* ─────────────────────────────────────────────────────────────────────────
-   THE CAMERA PATH
+   THE CAMERA PATH — interior only.
 
-   Everything in this scene is METRIC: 1 world unit = 1 metre. That is not
-   fussiness, it is the only way the last keyframe works. The shot list spans
-   a house at 17 m and a grout joint at 3 mm — a range of about 5,700:1 — so
-   the moment you use "whatever units look right" for the house, the joint
-   ends up either invisible or the size of a car.
+   The exterior is now a photograph, so the building geometry is gone and the
+   path starts inside the room. Three keyframes instead of four.
 
-   ── Note on the supplied keyframes ──
-   The brief specified the macro at (0.1, 0.05, 0.2). At true scale that puts
-   the lens 224 mm from the joint. With a 38° vertical FOV the frame is then
-   2 · 0.224 · tan(19°) = 154 mm tall, so a 3 mm joint occupies under 2% of
-   the picture — a hairline, not a macro. To actually fill the frame the lens
-   has to come in to roughly 24 mm, which is what K3 below does:
+   Everything is METRIC: 1 world unit = 1 metre. The path still spans a 3.6 m
+   room down to a 3 mm joint — about 1,200:1 — so the units have to mean
+   something or the last shot is unframeable.
 
-       frame height = 2 · d · tan(fov/2)
-       d = 22 mm  →  15.3 mm tall, 25.6 mm wide  →  3 mm joint ≈ 12% of width
-
-   That is the difference between "you can see a line" and "you are looking
-   at the channel". The rest of the supplied path is used as given.
+       frame height = 2 · d · tan(fov/2),  fov 38° → h = 0.689 · d
    ───────────────────────────────────────────────────────────────────────── */
 
 export const TILE = 0.6      // 600 mm tile
@@ -36,29 +26,23 @@ export const ROOM_W = COLS * PITCH   // 3.618 m
 export const ROOM_D = ROWS * PITCH   // 2.412 m
 export const WALL_H = 2.6
 
+/* The photograph owns scroll 0 → PHOTO_OUT. The camera path is parameterised
+   over what is left, so the 3D is never moving behind an opaque image. */
+export const PHOTO_HOLD = 0.30   // full-opacity photo up to here
+export const PHOTO_OUT = 0.50    // fully crossfaded to WebGL by here
+
 export const KEYFRAMES = [
   {
     at: 0.0,
-    // Whole block in frame. It is 21.6 m wide and 21 m tall, so d = 38 m puts
-    // it across about half the frame width with the roofline clear of the top
-    // edge — the silhouette has to be readable as an HDB block before anything
-    // else registers.
-    pos: new THREE.Vector3(0, 15, 42),
-    look: new THREE.Vector3(0, 9.5, 0),
-    label: 'exterior'
-  },
-  {
-    at: 0.33,
-    // Through the facade, standing height, floor already dominating frame.
+    // Standing in the room, floor already dominating frame. d = 4.5 m puts the
+    // 3.62 m room across ~70% of frame width.
     pos: new THREE.Vector3(0, 1.55, 3.6),
     look: new THREE.Vector3(0, 0.75, -0.8),
     label: 'interior'
   },
   {
-    at: 0.66,
-    // Pitched down onto the tile grid. d = 3.89 m puts the 3.62 m floor across
-    // ~80% of frame width. The first pass had this at d = 1.4 m, which framed
-    // about two tiles — the "slab overview" showed no slab.
+    at: 0.5,
+    // Pitched down onto the tile grid. d = 3.89 m frames the whole floor.
     pos: new THREE.Vector3(0, 2.6, 2.9),
     look: new THREE.Vector3(0, 0, 0),
     label: 'slab'
@@ -78,7 +62,7 @@ export const KEYFRAMES = [
 
    smoothstep inside each leg kills the velocity discontinuity you get at a
    keyframe boundary with raw linear blending — without it the camera visibly
-   "ticks" every 33% of the scroll even though the positions are correct. */
+   "ticks" at every keyframe even though the positions are correct. */
 const smoothstep = (t) => t * t * (3 - 2 * t)
 
 const _a = new THREE.Vector3()
@@ -103,4 +87,10 @@ export function samplePath(t, outPos, outLook) {
 /* Fade helper: 0 before `from`, 1 after `to`, smooth in between. */
 export function ramp(t, from, to) {
   return smoothstep(THREE.MathUtils.clamp((t - from) / (to - from), 0, 1))
+}
+
+/* Page scroll → camera-path parameter. The photo owns the first stretch, so
+   the camera only starts moving once the image is on its way out. */
+export function cameraParam(t) {
+  return THREE.MathUtils.clamp((t - PHOTO_HOLD) / (1 - PHOTO_HOLD), 0, 1)
 }

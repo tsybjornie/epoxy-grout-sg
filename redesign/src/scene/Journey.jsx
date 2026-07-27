@@ -1,20 +1,18 @@
 import { useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useScroll } from '@react-three/drei'
 import * as THREE from 'three'
-import Apartment, { Room } from './Apartment.jsx'
+import { Room } from './Apartment.jsx'
 import TileFloor from './TileFloor.jsx'
-import { samplePath, ramp } from './keyframes.js'
+import { samplePath, ramp, cameraParam } from './keyframes.js'
+import { scrollState } from './scrollState.js'
 
 const _pos = new THREE.Vector3()
 const _look = new THREE.Vector3()
 
 export default function Journey({ onStage }) {
-  const scroll = useScroll()
   const { camera } = useThree()
 
-  const eased = useRef(0)          // our own smoothed copy of scroll.offset
-  const wallFade = useRef(1)
+  const eased = useRef(0)
   const ambient = useRef()
   const sun = useRef()
   const spot = useRef()
@@ -23,33 +21,34 @@ export default function Journey({ onStage }) {
   useFrame((_, delta) => {
     /* Weighted scrubbing.
 
-       ScrollControls already damps, but a fast wheel flick still arrives as a
-       near-step change in offset. Running our own critically-damped follow on
-       top gives the camera mass — it keeps moving briefly after you stop, and
-       it never snaps. Framed in terms of delta so a 144 Hz monitor gets the
-       same feel as a 60 Hz one; a bare `lerp(x, y, 0.1)` does not. */
+       scrollState.t is raw page scroll, which arrives as a near-step change on
+       a fast wheel flick. A critically-damped follow gives the camera mass: it
+       keeps moving briefly after you stop and never snaps. Framed in terms of
+       delta so a 144 Hz monitor gets the same feel as a 60 Hz one — a bare
+       lerp(x, y, 0.1) does not. */
     const k = 1 - Math.pow(0.0000001, delta)
-    eased.current = THREE.MathUtils.lerp(eased.current, scroll.offset, k)
+    eased.current = THREE.MathUtils.lerp(eased.current, scrollState.t, k)
     const t = eased.current
 
-    samplePath(t, _pos, _look)
+    // The photograph owns the opening, so the camera runs on its own remapped
+    // parameter rather than on raw page scroll — otherwise the 3D is already
+    // halfway through its path by the time the image finishes fading out.
+    const u = cameraParam(t)
+
+    samplePath(u, _pos, _look)
     camera.position.copy(_pos)
     camera.lookAt(_look)
     camera.updateProjectionMatrix()
 
-    // Shell dissolves as we pass through the facade.
-    wallFade.current = 1 - ramp(t, 0.18, 0.34)
-
-    /* Light ramps with the shot. Flat daylight for the massing, then the
-       ambient drops away and a hard spot takes over for the macro — at 24 mm
-       the whole read is the shadow line down the channel, and flat light
-       destroys it. */
-    const macro = ramp(t, 0.62, 1.0)
-    if (ambient.current) ambient.current.intensity = 1.6 - 1.37 * macro
-    if (sun.current) sun.current.intensity = 3.2 - 2.3 * macro
+    /* Light ramps with the shot. Broad daylight for the room, then the ambient
+       drops away and a hard raking spot takes over for the macro — at 22 mm the
+       whole read is the shadow line down the channel, and flat light kills it. */
+    const macro = ramp(u, 0.45, 1.0)
+    if (ambient.current) ambient.current.intensity = 1.5 - 1.28 * macro
+    if (sun.current) sun.current.intensity = 3.0 - 2.2 * macro
     if (spot.current) spot.current.intensity = 1.9 * macro
 
-    const stage = t < 0.25 ? 0 : t < 0.5 ? 1 : t < 0.75 ? 2 : 3
+    const stage = u < 0.3 ? 0 : u < 0.72 ? 1 : 2
     if (stage !== lastStage.current) {
       lastStage.current = stage
       onStage?.(stage)
@@ -58,32 +57,29 @@ export default function Journey({ onStage }) {
 
   return (
     <>
-      <ambientLight ref={ambient} intensity={1.6} />
+      <ambientLight ref={ambient} intensity={1.5} />
       <directionalLight
         ref={sun}
-        position={[6, 12, 8]}
-        intensity={3.2}
+        position={[3, 6, 4]}
+        intensity={3.0}
         castShadow
         shadow-mapSize={[2048, 2048]}
         shadow-camera-near={0.01}
-        shadow-camera-far={40}
-        shadow-camera-left={-8}
-        shadow-camera-right={8}
-        shadow-camera-top={8}
-        shadow-camera-bottom={-8}
+        shadow-camera-far={20}
+        shadow-camera-left={-4}
+        shadow-camera-right={4}
+        shadow-camera-top={4}
+        shadow-camera-bottom={-4}
       />
-      {/* Sky/ground bounce — without it the block silhouette dissolves
-          into a near-black page and reads as a dark smudge. */}
-      <hemisphereLight args={['#93AECC', '#15181B', 1.15]} />
+      <hemisphereLight args={['#93AECC', '#15181B', 0.9]} />
 
       {/* Raking spot for the macro. Almost parallel to the floor, so the 5 mm
-          tile edge throws a shadow straight down the 3 mm channel. */}
-      {/* decay={0} is deliberate. Physical inverse-square falloff is unusable
-          across a scene spanning 17 m to 22 mm: aimed from 80 mm away, an
-          intensity that reads correctly at the slab arrives at the macro
-          multiplied by ~1/0.08² and blows every tile to pure white — which is
-          exactly what the first macro render did. With decay off, intensity is
-          the only variable and the ramp below stays predictable. */}
+          tile edge throws a shadow straight down the 3 mm channel.
+
+          decay={0} is deliberate: physical inverse-square falloff is unusable
+          across a scene spanning metres to millimetres — aimed from 80 mm away,
+          an intensity that reads at the slab arrives at the macro scaled by
+          1/0.08² and blows every tile to pure white. */}
       <spotLight
         ref={spot}
         position={[0.06, 0.05, -0.02]}
@@ -95,7 +91,6 @@ export default function Journey({ onStage }) {
         color="#FFF3E4"
       />
 
-      <Apartment fade={wallFade} />
       <Room />
       <TileFloor />
     </>
