@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useScroll } from '@react-three/drei'
 import * as THREE from 'three'
-import Architecture from './Architecture.jsx'
+import Apartment, { Room } from './Apartment.jsx'
 import TileFloor from './TileFloor.jsx'
 import { samplePath, ramp } from './keyframes.js'
 
@@ -45,8 +45,8 @@ export default function Journey({ onStage }) {
        the whole read is the shadow line down the channel, and flat light
        destroys it. */
     const macro = ramp(t, 0.62, 1.0)
-    if (ambient.current) ambient.current.intensity = 1.15 - 0.92 * macro
-    if (sun.current) sun.current.intensity = 2.4 - 1.5 * macro
+    if (ambient.current) ambient.current.intensity = 1.6 - 1.37 * macro
+    if (sun.current) sun.current.intensity = 3.2 - 2.3 * macro
     if (spot.current) spot.current.intensity = 1.9 * macro
 
     const stage = t < 0.25 ? 0 : t < 0.5 ? 1 : t < 0.75 ? 2 : 3
@@ -58,11 +58,11 @@ export default function Journey({ onStage }) {
 
   return (
     <>
-      <ambientLight ref={ambient} intensity={1.15} />
+      <ambientLight ref={ambient} intensity={1.6} />
       <directionalLight
         ref={sun}
         position={[6, 12, 8]}
-        intensity={2.4}
+        intensity={3.2}
         castShadow
         shadow-mapSize={[2048, 2048]}
         shadow-camera-near={0.01}
@@ -72,7 +72,9 @@ export default function Journey({ onStage }) {
         shadow-camera-top={8}
         shadow-camera-bottom={-8}
       />
-      <hemisphereLight args={['#9DB4D0', '#0A0B0C', 0.5]} />
+      {/* Sky/ground bounce — without it the block silhouette dissolves
+          into a near-black page and reads as a dark smudge. */}
+      <hemisphereLight args={['#93AECC', '#15181B', 1.15]} />
 
       {/* Raking spot for the macro. Almost parallel to the floor, so the 5 mm
           tile edge throws a shadow straight down the 3 mm channel. */}
@@ -93,7 +95,8 @@ export default function Journey({ onStage }) {
         color="#FFF3E4"
       />
 
-      <Architecture fade={wallFade} />
+      <Apartment fade={wallFade} />
+      <Room />
       <TileFloor />
     </>
   )

@@ -39,9 +39,12 @@ export const WALL_H = 2.6
 export const KEYFRAMES = [
   {
     at: 0.0,
-    // Elevated exterior. Whole massing in frame, roof included.
-    pos: new THREE.Vector3(0, 6.5, 17),
-    look: new THREE.Vector3(0, 1.8, 0),
+    // Whole block in frame. It is 21.6 m wide and 21 m tall, so d = 38 m puts
+    // it across about half the frame width with the roofline clear of the top
+    // edge — the silhouette has to be readable as an HDB block before anything
+    // else registers.
+    pos: new THREE.Vector3(0, 15, 42),
+    look: new THREE.Vector3(0, 9.5, 0),
     label: 'exterior'
   },
   {

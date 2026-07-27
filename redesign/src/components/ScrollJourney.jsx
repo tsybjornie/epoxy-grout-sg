@@ -6,7 +6,7 @@ import Journey from '../scene/Journey.jsx'
 
 const STAGES = [
   {
-    kicker: '01 — The house',
+    kicker: '01 — The block',
     title: 'Nobody re-tiles a whole flat because the tiles failed.',
     body: 'The tiles are fine. They are almost always fine. What went is the three millimetres between them, and that is a different job at a different price.'
   },
