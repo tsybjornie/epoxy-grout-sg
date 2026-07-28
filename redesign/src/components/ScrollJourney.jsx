@@ -8,6 +8,7 @@ import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
 import Journey from '../scene/Journey.jsx'
 import { scrollState } from '../scene/scrollState.js'
+import { windowFlash } from '../scene/keyframes.js'
 import GroutControls from './GroutControls.jsx'
 
 const STAGES = [
@@ -43,6 +44,7 @@ const smoothstep = (t) => t * t * (3 - 2 * t)
 
 export default function ScrollJourney() {
   const sectionRef = useRef(null)
+  const flashRef = useRef(null)
   const [stage, setStage] = useState(0)
 
   /* One scroll listener drives BOTH layers.
@@ -56,7 +58,17 @@ export default function ScrollJourney() {
     if (!el) return
     const rect = el.getBoundingClientRect()
     const travel = el.offsetHeight - window.innerHeight
-    scrollState.t = clamp01(-rect.top / (travel || 1))
+    const t = clamp01(-rect.top / (travel || 1))
+    scrollState.t = t
+
+    /* Through-the-window blink. Mutated on the DOM node directly — same
+       rule as everything scroll-driven here: no React state at 60 Hz. */
+    const fl = flashRef.current
+    if (fl) {
+      const f = windowFlash(t)
+      fl.style.opacity = String(f)
+      fl.style.visibility = f > 0.002 ? 'visible' : 'hidden'
+    }
   }, [])
 
   const onPointerMove = useCallback((e) => {
@@ -128,6 +140,18 @@ export default function ScrollJourney() {
             </Suspense>
           </Canvas>
         </div>
+
+        {/* ── The blink: warm-white wash that covers the cut from the
+             window pane to the interior. Above the canvas, below the rail. ── */}
+        <div
+          ref={flashRef}
+          className="pointer-events-none absolute inset-0 z-[25] will-change-[opacity]"
+          style={{
+            opacity: 0,
+            visibility: 'hidden',
+            background: 'radial-gradient(ellipse at center, #FFF7E8 0%, #FFEFD2 55%, #F4E3BC 100%)'
+          }}
+        />
 
         {/* ── Layer 2: type. Above both, so it survives the crossfade. ── */}
         <div className="pointer-events-none absolute inset-0 z-20 flex items-center px-6 pb-32 md:px-16">
