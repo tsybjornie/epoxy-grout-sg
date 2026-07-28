@@ -1,16 +1,14 @@
 import * as THREE from 'three'
 
 /* ─────────────────────────────────────────────────────────────────────────
-   THE CAMERA PATH — a gallery fly-through of three rooms, ending 20 mm
-   above a 1.5 mm joint.
+   THE CAMERA PATH — the page opens ON the block.
 
-   Three open-fronted room sets sit side by side along X like museum
-   dioramas: living hall, kitchen, bathroom. The camera tracks laterally
-   past them, steps into each, then dives into the bathroom floor.
+   Shot order: an HDB slab block at dusk (the 3D exterior from
+   Apartment.jsx, parked 40 m behind the gallery), push in toward one lit
+   window, then swing down into three open-fronted room sets — living
+   hall, kitchen, bathroom — and finally dive 20 mm above a 1.5 mm joint.
 
-   Everything is METRIC: 1 world unit = 1 metre. The path spans a 21 m
-   gallery down to a 1.5 mm joint — about 14,000:1 — so units have to mean
-   something or the last shot is unframeable.
+   Everything is METRIC: 1 world unit = 1 metre.
 
        frame height = 2 · d · tan(fov/2),  fov 38° → h = 0.689 · d
    ───────────────────────────────────────────────────────────────────────── */
@@ -28,46 +26,71 @@ export const BTILE = 0.3
 export const JOINT = 0.0015
 export const BPITCH = BTILE + JOINT
 
-/* The macro target: a point ON the joint that runs along Z at x = BATH_X.
-   MACRO_Z sits on the joint between two tile columns, clear of the walls. */
+/* The macro target: a point ON the joint that runs along Z at x = BATH_X. */
 export const MACRO_Z = 0.45
 
-/* The photograph owns scroll 0 → PHOTO_OUT. The camera path is parameterised
-   over what is left, so the 3D is never moving behind an opaque image. */
-export const PHOTO_HOLD = 0.10
-export const PHOTO_OUT = 0.22
+/* The HDB block exterior. Centre of the block; its front facade is at
+   BLOCK_Z + 5.5 (block depth 11 m). Aligned with the living hall on X so
+   the exterior-to-interior swing is one straight pull-back. */
+export const BLOCK_X = -7
+export const BLOCK_Z = -40
+const FACE_Z = BLOCK_Z + 5.5
+
+/* One lit window on the facade to push toward (bay 3, storey 1 of the
+   Apartment.jsx grid, offset from the block centre). */
+const WIN_X = BLOCK_X + 1.8 - 0.55
+const WIN_Y = 4.65
+
+/* Legacy exports — the photo layer is gone, the camera owns scroll 0→1. */
+export const PHOTO_HOLD = 0
+export const PHOTO_OUT = 0
 
 export const KEYFRAMES = [
   {
     at: 0.0,
-    // Standing in the living hall. d ≈ 4.6 m frames the full set.
+    // The block at dusk, whole massing in frame, camera at streetlamp height.
+    pos: new THREE.Vector3(BLOCK_X + 5, 2.4, FACE_Z + 33),
+    look: new THREE.Vector3(BLOCK_X, 9, FACE_Z),
+    label: 'block'
+  },
+  {
+    at: 0.1,
+    // Pushed in toward one lit unit — the window glow fills the frame.
+    pos: new THREE.Vector3(WIN_X, WIN_Y, FACE_Z + 1.6),
+    look: new THREE.Vector3(WIN_X, WIN_Y, FACE_Z),
+    label: 'window'
+  },
+  {
+    at: 0.2,
+    // Inside: the living hall diorama. The pull-back from the window is
+    // the reveal — the block hangs in the fog behind the rooms.
     pos: new THREE.Vector3(LIVING_X, 1.5, 4.6),
     look: new THREE.Vector3(LIVING_X, 0.8, -0.8),
     label: 'living'
   },
   {
-    at: 0.22,
+    at: 0.36,
     // Pitched onto the marble floor and its checkered runner.
     pos: new THREE.Vector3(LIVING_X, 2.4, 2.7),
     look: new THREE.Vector3(LIVING_X, 0, 0.2),
     label: 'living-floor'
   },
   {
-    at: 0.48,
+    at: 0.54,
     // Kitchen: framed on the zellige backsplash over the soapstone top.
     pos: new THREE.Vector3(KITCHEN_X, 1.35, 3.0),
     look: new THREE.Vector3(KITCHEN_X, 0.95, -1.5),
     label: 'kitchen'
   },
   {
-    at: 0.72,
+    at: 0.74,
     // Bathroom: vanity mirror and zellige wall.
     pos: new THREE.Vector3(BATH_X, 1.45, 3.2),
     look: new THREE.Vector3(BATH_X, 1.1, -1.5),
     label: 'bath'
   },
   {
-    at: 0.86,
+    at: 0.87,
     // Kneeling over the terracotta floor, lined up on the target joint.
     pos: new THREE.Vector3(BATH_X, 0.85, 1.5),
     look: new THREE.Vector3(BATH_X, 0, MACRO_Z),
@@ -77,7 +100,6 @@ export const KEYFRAMES = [
     at: 1.0,
     // 20 mm out, looking DOWN the joint rather than across it, so the
     // channel recedes through the cement/epoxy transition at z = MACRO_Z.
-    // Frame is ~14 mm wide; the 1.5 mm joint is ~11% of it.
     pos: new THREE.Vector3(BATH_X, 0.011, MACRO_Z - 0.017),
     look: new THREE.Vector3(BATH_X, 0.0008, MACRO_Z + 0.004),
     label: 'macro'
@@ -87,8 +109,8 @@ export const KEYFRAMES = [
 /* Piecewise interpolation across the keyframe list.
 
    smoothstep inside each leg kills the velocity discontinuity you get at a
-   keyframe boundary with raw linear blending — without it the camera visibly
-   "ticks" at every keyframe even though the positions are correct. */
+   keyframe boundary with raw linear blending — without it the camera
+   visibly "ticks" at every keyframe even though the positions are correct. */
 const smoothstep = (t) => t * t * (3 - 2 * t)
 
 const _a = new THREE.Vector3()
@@ -115,13 +137,14 @@ export function ramp(t, from, to) {
   return smoothstep(THREE.MathUtils.clamp((t - from) / (to - from), 0, 1))
 }
 
-/* Page scroll → camera-path parameter. The photo owns the first stretch, so
-   the camera only starts moving once the image is on its way out. */
+/* Page scroll → camera-path parameter. Identity now that the camera owns
+   the full scroll — kept as a function so callers don't care. */
 export function cameraParam(t) {
-  return THREE.MathUtils.clamp((t - PHOTO_HOLD) / (1 - PHOTO_HOLD), 0, 1)
+  return THREE.MathUtils.clamp(t, 0, 1)
 }
 
-/* Stage index for the copy overlay: 0 living, 1 kitchen, 2 bath, 3 macro. */
+/* Stage index for the copy overlay:
+   0 block · 1 living · 2 kitchen · 3 bath · 4 macro. */
 export function stageAt(u) {
-  return u < 0.34 ? 0 : u < 0.6 ? 1 : u < 0.82 ? 2 : 3
+  return u < 0.16 ? 0 : u < 0.46 ? 1 : u < 0.62 ? 2 : u < 0.83 ? 3 : 4
 }

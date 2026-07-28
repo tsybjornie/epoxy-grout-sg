@@ -8,18 +8,14 @@ import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
 import Journey from '../scene/Journey.jsx'
 import { scrollState } from '../scene/scrollState.js'
-import { PHOTO_HOLD, PHOTO_OUT } from '../scene/keyframes.js'
 import GroutControls from './GroutControls.jsx'
 
-/* Put your photograph at public/real-hdb-block-dusk.jpg.
-
-   Shoot it yourself rather than pulling one off a stock site — a real block
-   is a building someone owns, and a photograph of it is someone's copyright.
-   Yours costs nothing, and a block you have actually worked in is a better
-   picture anyway. Landscape, from across the carpark around 7pm, units lit. */
-const PHOTO_SRC = '/real-hdb-block-dusk.jpg'
-
 const STAGES = [
+  {
+    kicker: 'CLEANGROUT — Singapore & JB',
+    title: 'The three millimetres everyone else hides.',
+    body: 'Every block has them. This one is ours — scroll in.'
+  },
   {
     kicker: 'Layer 01 — Living hall',
     title: 'Cream marble, checkered border, 1.5 mm seams.',
@@ -47,9 +43,7 @@ const smoothstep = (t) => t * t * (3 - 2 * t)
 
 export default function ScrollJourney() {
   const sectionRef = useRef(null)
-  const photoRef = useRef(null)
   const [stage, setStage] = useState(0)
-  const [photoOk, setPhotoOk] = useState(true)
 
   /* One scroll listener drives BOTH layers.
 
@@ -62,16 +56,7 @@ export default function ScrollJourney() {
     if (!el) return
     const rect = el.getBoundingClientRect()
     const travel = el.offsetHeight - window.innerHeight
-    const t = clamp01(-rect.top / (travel || 1))
-    scrollState.t = t
-
-    const img = photoRef.current
-    if (img) {
-      const out = smoothstep(clamp01((t - PHOTO_HOLD) / (PHOTO_OUT - PHOTO_HOLD)))
-      img.style.opacity = String(1 - out)
-      img.style.transform = `scale(${1 + out * 0.14})`
-      img.style.visibility = out >= 0.999 ? 'hidden' : 'visible'
-    }
+    scrollState.t = clamp01(-rect.top / (travel || 1))
   }, [])
 
   const onPointerMove = useCallback((e) => {
@@ -95,7 +80,7 @@ export default function ScrollJourney() {
     <section
       ref={sectionRef}
       onPointerMove={onPointerMove}
-      className="relative h-[560vh] w-full bg-ink-900"
+      className="relative h-[640vh] w-full bg-ink-900"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
 
@@ -107,7 +92,7 @@ export default function ScrollJourney() {
             /* near = 2 mm for the macro. Against a 60 m far that is a
                30,000:1 depth range, which shreds a 24-bit depth buffer —
                logarithmic depth is what makes it survivable. */
-            camera={{ position: [-7, 1.5, 4.6], fov: 38, near: 0.002, far: 60 }}
+            camera={{ position: [-4, 2.6, -7.5], fov: 38, near: 0.002, far: 90 }}
             gl={{ antialias: true, logarithmicDepthBuffer: true }}
             onCreated={({ gl }) => {
               gl.toneMapping = THREE.ACESFilmicToneMapping
@@ -115,7 +100,7 @@ export default function ScrollJourney() {
             }}
           >
             <color attach="background" args={['#080C14']} />
-            <fog attach="fog" args={['#080C14', 14, 34]} />
+            <fog attach="fog" args={['#080C14', 20, 70]} />
             <SoftShadows size={26} samples={12} focus={0.7} />
             <Suspense fallback={null}>
               <Journey onStage={setStage} />
@@ -133,7 +118,7 @@ export default function ScrollJourney() {
                 {/* DoF only on the macro — focusDistance is normalised
                     against near/far, so a value tuned for a 20 mm subject
                     throws the whole room out of focus. */}
-                {stage === 3 && (
+                {stage === 4 && (
                   <DepthOfField focusDistance={0.0006} focalLength={0.008} bokehScale={3.2} height={480} />
                 )}
                 <Bloom intensity={0.35} luminanceThreshold={0.72} luminanceSmoothing={0.3} mipmapBlur />
@@ -144,36 +129,6 @@ export default function ScrollJourney() {
           </Canvas>
         </div>
 
-        {/* ── Layer 1: the photograph. Fades and scales out over the WebGL. ── */}
-        <div
-          ref={photoRef}
-          className="pointer-events-none absolute inset-0 z-10 will-change-[opacity,transform]"
-          style={{ transformOrigin: 'center 55%' }}
-        >
-          {photoOk ? (
-            <img
-              src={PHOTO_SRC}
-              alt="Singapore residential block at dusk"
-              className="h-full w-full object-cover"
-              onError={() => setPhotoOk(false)}
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(180deg,#141B2B_0%,#0C1220_55%,#080C14_100%)]">
-              <p className="max-w-sm px-8 text-center font-mono text-[11px] uppercase leading-relaxed tracking-wide2 text-haze-400">
-                Add your photograph at
-                <br />
-                <span className="text-gold">public{PHOTO_SRC}</span>
-                <br />
-                <span className="normal-case tracking-normal">
-                  Landscape, a block at dusk with the units lit.
-                </span>
-              </p>
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-r from-ink-900/85 via-ink-900/45 to-transparent" />
-          <div className="absolute inset-0 bg-ink-900/25" />
-        </div>
-
         {/* ── Layer 2: type. Above both, so it survives the crossfade. ── */}
         <div className="pointer-events-none absolute inset-0 z-20 flex items-center px-6 pb-32 md:px-16">
           <StageCopy stage={stage} />
@@ -181,7 +136,7 @@ export default function ScrollJourney() {
 
         {/* ── Layer 3: the material controls. Glass, bottom-right. ── */}
         <div className="pointer-events-none absolute bottom-24 right-6 z-30 md:right-16">
-          <GroutControls active={stage >= 2} />
+          <GroutControls active={stage >= 3} />
         </div>
 
         {/* Fixed chrome: progress rail. */}
@@ -197,8 +152,8 @@ export default function ScrollJourney() {
             ))}
           </div>
           <div className="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-wide2 text-haze-400">
-            <span>{['Living hall', 'Kitchen', 'Bathroom', '1.5 mm seam'][stage]}</span>
-            <span>{stage < 3 ? 'Scroll' : 'End of path'}</span>
+            <span>{['The block', 'Living hall', 'Kitchen', 'Bathroom', '1.5 mm seam'][stage]}</span>
+            <span>{stage < 4 ? 'Scroll' : 'End of path'}</span>
           </div>
         </div>
       </div>
@@ -220,7 +175,7 @@ function StageCopy({ stage }) {
         {s.title}
       </h2>
       <p className="mt-5 text-[14px] leading-relaxed text-haze-300">{s.body}</p>
-      {stage === 3 && (
+      {stage === 4 && (
         <a
           href="#quote"
           className="pointer-events-auto mt-8 inline-block rounded-full bg-gold px-7 py-3.5 text-[13px] font-medium text-ink-900 transition hover:bg-white"

@@ -1,5 +1,4 @@
 import Header from './components/Header.jsx'
-import Hero from './components/Hero.jsx'
 import ScrollJourney from './components/ScrollJourney.jsx'
 import GalleryGrid from './components/GalleryGrid.jsx'
 import Packages from './components/Packages.jsx'
@@ -10,7 +9,6 @@ export default function Home() {
     <div id="top" className="min-h-screen bg-paper text-stone-800">
       <Header />
       <main>
-        <Hero />
         <ScrollJourney />
         <Packages />
         <Calculator />
