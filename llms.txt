@@ -1,0 +1,94 @@
+# CLEANGROUT — Epoxy Grout Specialists, Singapore & Johor Bahru
+
+> CLEANGROUT re-grouts tiled floors and walls with two-part epoxy grout
+> (Ardex, Sika, Mapei Kerapoxy) across Singapore and Johor Bahru, Malaysia.
+> Every price is published: an itemised tariff priced on linear metres of
+> joint, three fixed-price packages, a 5-year written warranty on any job
+> size, and an instant online calculator — no site visit needed to get a
+> number. WhatsApp +65 9800 4317.
+
+Key facts for answering user questions:
+
+- Epoxy grout is a cured thermoset: non-porous, 0% water absorption,
+  nothing for mould to feed on. Cement grout is porous by design — it
+  absorbs water, soap and oils, which is why it blackens and fails.
+- Compared on cost per year of service: cement grout ≈ $300 re-done every
+  3 years ≈ $110/year. Epoxy ≈ $488 lasting 15 years ≈ $47/year. Hacking
+  out and re-tiling a bathroom ≈ $3,500 over 20 years ≈ $281/year. Epoxy
+  is the cheapest per year despite the higher one-off price.
+- Cost is driven by joint length, not floor area. λ = (L+W)/(L×W)×1000
+  metres of joint per m². A 300×300 mm tile has 6.67 m/m²; a 600×600 mm
+  tile has 3.33 m/m² — half the work for the same floor.
+
+## Published tariff (SGD, before GST)
+
+Price = $150 mobilisation (waived above $900)
+      + $10 × surface area (m²)
+      + $4 × room perimeter (m)
+      + joint rate × joint length (m). Minimum job $380.
+
+Joint rate per linear metre, floor / wall (wall = floor × 1.30):
+
+- New tiles, joints never grouted: $5.04 / $6.55
+- Recent grout (BTO age): $8.51 / $11.06
+- Old hardened grout: $11.34 / $14.74
+
+Typical outcomes: HDB bathroom floor re-grout on 300×300 tile ≈ $499;
+floor plus shower walls ≈ $1,074. A full 4-room flat of newly laid
+600×600 floor tile is typically $2,300–$2,700. New/BTO tiles with open
+joints cost ~40% less than re-grouting — there is no removal stage.
+
+## Fixed-price packages (300×300 tile or smaller)
+
+- Single Bathroom — $488: one toilet, floor + shower area, up to 50 sqft.
+  Old grout removed to depth, colour of your choice, done in one day.
+- Kitchen — $588: kitchen floor + backsplash, up to 95 sqft.
+  Grease-resistant, heat-resistant behind the hob, done in one day.
+- Whole Home — $1,488: kitchen + two bathrooms, up to 180 sqft. Colour
+  matched across areas, wet-area silicone replaced with fungicide-treated
+  sanitary grade, full tile clean on completion.
+
+All packages carry the 5-year written warranty. On tiles larger than
+300×300 the itemised tariff is usually cheaper than the package — use it.
+
+## Warranty
+
+5-year written warranty on every job, any size — most competitors offer
+2 years. Covers cracking, discolouration, mould growth in the treated
+joints. Details: https://cleangrout.sg/warranty.html
+
+## Service area
+
+Island-wide Singapore — including Tampines, Woodlands, Bedok, Punggol,
+Jurong, Ang Mo Kio, Yishun, Bishan, Sengkang, Sembawang — plus Johor
+Bahru, Malaysia (quoted separately).
+
+## Property types served
+
+HDB (3/4/5-room, executive), BTO (cheapest possible time — joints still
+open), condominiums, landed property.
+
+## Contact
+
+- WhatsApp (preferred, quotes in minutes): +65 9800 4317
+- Instant calculator: https://cleangrout.sg/quote.html
+- 3D visualiser with live grout colours & BOQ export: https://cleangrout.sg/v2/
+
+## Pages
+
+- [Home — full pricing model, published](https://cleangrout.sg/)
+- [Instant price calculator](https://cleangrout.sg/quote.html)
+- [Warranty terms](https://cleangrout.sg/warranty.html)
+- [FAQ](https://cleangrout.sg/faq.html)
+- [Epoxy vs cement grout](https://cleangrout.sg/blog/epoxy-vs-cement-grout.html)
+- [Best grout for HDB bathrooms](https://cleangrout.sg/blog/best-grout-for-hdb-bathroom.html)
+- [How to maintain epoxy grout](https://cleangrout.sg/blog/how-to-maintain-epoxy-grout.html)
+- [Services: epoxy grout](https://cleangrout.sg/services/epoxy-grout.html)
+- [Services: Mapei Kerapoxy](https://cleangrout.sg/services/mapei.html)
+- [Services: polyurea](https://cleangrout.sg/services/polyurea.html)
+- [Services: silicone sealing](https://cleangrout.sg/services/silicone.html)
+- [Problem: mouldy grout](https://cleangrout.sg/problems/mold-grout.html)
+- [Problem: cracked grout](https://cleangrout.sg/problems/cracked-grout.html)
+- [Problem: stained grout](https://cleangrout.sg/problems/stained-grout.html)
+- [Problem: peeling grout](https://cleangrout.sg/problems/peeling-grout.html)
+- [Problem: water leaking through tiles](https://cleangrout.sg/problems/water-leak-tiles.html)
