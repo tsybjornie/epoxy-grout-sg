@@ -16,6 +16,9 @@ Disallow: /poster.html
 # Sitemap location
 Sitemap: https://cleangrout.sg/sitemap.xml
 
+# Machine-readable site summary for AI assistants (llms.txt standard):
+# https://cleangrout.sg/llms.txt
+
 # ============================
 # AI SEARCH CRAWLERS — EXPLICITLY ALLOWED
 # Most competitors BLOCK these. We ALLOW them.

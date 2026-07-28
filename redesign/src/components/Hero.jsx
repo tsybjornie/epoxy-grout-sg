@@ -83,7 +83,7 @@ export default function Hero() {
           >
             <a
               href="#quote"
-              className="pointer-events-auto rounded-full bg-white px-7 py-3.5 text-[13px] font-medium text-ink-900 transition hover:bg-ember hover:text-white"
+              className="pointer-events-auto rounded-full bg-white px-7 py-3.5 text-[13px] font-medium text-ink-900 transition hover:bg-gold"
             >
               Build my quote — 30 seconds
             </a>

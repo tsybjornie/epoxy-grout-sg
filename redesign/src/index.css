@@ -5,7 +5,18 @@
 @layer base {
   html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
   body { @apply bg-ink-900 text-haze-200 font-sans antialiased; }
-  ::selection { @apply bg-ember text-ink-900; }
+  ::selection { @apply bg-gold text-ink-900; }
+}
+
+@layer components {
+  /* Frosted glass panel — the one overlay treatment used everywhere, so the
+     UI reads as a single system floating over the rooms. */
+  .glass {
+    @apply rounded-2xl border border-white/10 bg-white/[0.06] shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl;
+  }
+  .glass-strong {
+    @apply rounded-2xl border border-white/10 bg-ink-800/70 shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl;
+  }
 }
 
 /* Anyone who has asked their OS to calm motion down gets a static site.
