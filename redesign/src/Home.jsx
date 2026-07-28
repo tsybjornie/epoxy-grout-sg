@@ -2,6 +2,7 @@ import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import ScrollJourney from './components/ScrollJourney.jsx'
 import GalleryGrid from './components/GalleryGrid.jsx'
+import Calculator from './components/Calculator.jsx'
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <main>
         <Hero />
         <ScrollJourney />
+        <Calculator />
         <GalleryGrid />
       </main>
 
