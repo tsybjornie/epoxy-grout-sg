@@ -4,13 +4,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Deep slate — the brief's #080C14 — stepping up to lifted panels.
-        // The site is a gallery: surfaces recede, the rooms carry the light.
+        // The page is a bright gallery: warm ivory paper, white glass panels.
+        // The 3D journey section stays dark — it is the cinema in the middle
+        // of the gallery, and the contrast is the point.
+        paper: { DEFAULT: '#F7F5F1', deep: '#EFEBE3', edge: '#E3DDD1' },
         ink: { 900: '#080C14', 800: '#0C111B', 700: '#121826', 600: '#1A2233' },
+        // haze greys are for the DARK sections only (journey overlays).
         haze: { 400: '#6E7687', 300: '#9BA3B4', 200: '#D6D9E0' },
-        // Gold is the only accent. It marks price, controls and proof.
-        gold: { DEFAULT: '#D4AF37', soft: '#E8CE7A', deep: '#A8862A' },
-        // The four grout colours we actually sell, so UI chips match the 3D.
+        // Gold is the only accent. `deep` is the legible-on-white variant.
+        gold: { DEFAULT: '#D4AF37', soft: '#E8CE7A', deep: '#9A7B24' },
         grout: {
           champagne: '#D4AF37',
           pearl: '#F5F2EB',
@@ -22,8 +24,7 @@ export default {
         bronze: '#8A6A45'
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+        sans: ['Manrope', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
       },
       letterSpacing: { ultra: '0.42em', wide2: '0.22em' }

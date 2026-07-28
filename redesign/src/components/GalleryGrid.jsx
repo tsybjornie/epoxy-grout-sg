@@ -52,16 +52,16 @@ export default function GalleryGrid() {
     <section id="work" className="mx-auto max-w-6xl px-6 py-28 md:px-12 md:py-40">
       <div className="mb-14 flex items-end justify-between gap-8">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-ultra text-haze-400">
+          <p className="font-mono text-[11px] uppercase tracking-ultra text-stone-500">
             Selected work
           </p>
-          <h2 className="mt-5 max-w-xl text-[clamp(1.8rem,3.6vw,2.9rem)] font-light leading-tight tracking-tight text-white">
+          <h2 className="mt-5 max-w-xl text-[clamp(1.8rem,3.6vw,2.9rem)] font-light leading-tight tracking-tight text-ink-900">
             Every job priced from the same published tariff.
           </h2>
         </div>
-        <p className="hidden max-w-[15rem] text-[13px] leading-relaxed text-haze-400 md:block">
-          The figure under each project is what the calculator returns for that
-          scope. Not a range, and not a starting price.
+        <p className="hidden max-w-[15rem] text-[13px] leading-relaxed text-stone-500 md:block">
+          The figure on each project is the calculator's number for that scope.
+          Not a range. Not a starting price.
         </p>
       </div>
 
@@ -75,7 +75,7 @@ export default function GalleryGrid() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-80px' }}
-            className="group relative block overflow-hidden rounded-2xl border border-white/10 bg-ink-800"
+            className="group relative block overflow-hidden rounded-2xl border border-white/70 bg-white/60 shadow-[0_18px_50px_rgba(30,25,15,0.07)] backdrop-blur-2xl"
           >
             {/* Media well. Scale the inner layer, never the card, so the
                 border and radius stay crisp through the zoom. */}
@@ -96,7 +96,7 @@ export default function GalleryGrid() {
                 />
               </motion.div>
 
-              <span className="absolute left-5 top-5 font-mono text-[11px] text-haze-400">
+              <span className="absolute left-5 top-5 font-mono text-[11px] text-white/60">
                 {p.id}
               </span>
               <span className="absolute right-5 top-5 rounded-full bg-ink-900/70 px-3 py-1 font-mono text-[11px] text-white backdrop-blur">
@@ -106,11 +106,11 @@ export default function GalleryGrid() {
 
             <div className="flex items-end justify-between gap-6 p-6">
               <div>
-                <h3 className="text-[15px] font-medium text-white">{p.title}</h3>
-                <p className="mt-1.5 text-[13px] text-haze-300">{p.scope}</p>
-                <p className="mt-0.5 font-mono text-[11px] text-haze-400">{p.detail}</p>
+                <h3 className="text-[15px] font-semibold text-ink-900">{p.title}</h3>
+                <p className="mt-1.5 text-[13px] text-stone-500">{p.scope}</p>
+                <p className="mt-0.5 font-mono text-[11px] text-stone-400">{p.detail}</p>
               </div>
-              <span className="shrink-0 text-haze-400 transition-all duration-500 group-hover:translate-x-1 group-hover:text-white">
+              <span className="shrink-0 text-stone-400 transition-all duration-500 group-hover:translate-x-1 group-hover:text-ink-900">
                 →
               </span>
             </div>

@@ -27,7 +27,7 @@ export default function Hero() {
   return (
     <section
       onPointerMove={onMove}
-      className="relative h-[100svh] w-full overflow-hidden bg-ink-900"
+      className="relative h-[100svh] w-full overflow-hidden bg-paper"
     >
       {/* ---- WebGL layer ---- */}
       <div className="absolute inset-0">
@@ -37,44 +37,43 @@ export default function Hero() {
           camera={{ position: [0, 2.6, 8.2], fov: 38 }}
           gl={{ antialias: true }}
         >
+          <color attach="background" args={['#F4F1EA']} />
           <Suspense fallback={null}>
             <TileSlab pointer={pointer} />
           </Suspense>
         </Canvas>
       </div>
 
-      {/* Vignette so type stays legible over the render, whatever it is doing. */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#08090A_92%)]" />
+      {/* Soft ivory vignette so type sits on calm ground. */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#F7F5F1_95%)]" />
 
       {/* ---- DOM overlay ----
-          The whole overlay is pointer-events-none so the cursor reaches the
-          canvas underneath; only the things you can actually click opt back in
-          with pointer-events-auto. This is the bug that ruins most 3D sites. */}
+          pointer-events-none so the cursor reaches the canvas; only the
+          clickable things opt back in. */}
       <div className="pointer-events-none absolute inset-0 flex flex-col justify-between px-6 pb-10 pt-28 md:px-12 md:pb-14">
         <div className="mx-auto w-full max-w-6xl">
           <motion.p
             variants={rise} initial="hidden" animate="show" custom={0}
-            className="font-mono text-[11px] uppercase tracking-ultra text-haze-400"
+            className="font-mono text-[11px] uppercase tracking-ultra text-stone-500"
           >
             Singapore &amp; Johor, Malaysia
           </motion.p>
 
           <motion.h1
             variants={rise} initial="hidden" animate="show" custom={1}
-            className="mt-7 max-w-3xl text-[clamp(2.4rem,6.4vw,5.2rem)] font-light leading-[0.98] tracking-tight text-white"
+            className="mt-7 max-w-3xl text-[clamp(2.4rem,6.4vw,5.2rem)] font-light leading-[0.98] tracking-tight text-ink-900"
           >
             The three millimetres
             <br />
-            <span className="text-haze-400">everyone else</span> hides.
+            <span className="text-stone-400">everyone else</span> hides.
           </motion.h1>
 
           <motion.p
             variants={rise} initial="hidden" animate="show" custom={2}
-            className="mt-8 max-w-md text-[15px] leading-relaxed text-haze-300"
+            className="mt-8 max-w-md text-[15px] leading-relaxed text-stone-600"
           >
-            Left of the line is cement. Right of it is epoxy. Same tile, same
-            light — the joint is the only thing we changed, and it is the only
-            thing that fails.
+            Cement left of the line. Epoxy right. Same tile, same light —
+            the joint is the only thing that fails.
           </motion.p>
 
           <motion.div
@@ -83,15 +82,15 @@ export default function Hero() {
           >
             <a
               href="#quote"
-              className="pointer-events-auto rounded-full bg-white px-7 py-3.5 text-[13px] font-medium text-ink-900 transition hover:bg-gold"
+              className="pointer-events-auto rounded-full bg-ink-900 px-7 py-3.5 text-[13px] font-medium text-white transition hover:bg-gold hover:text-ink-900"
             >
-              Build my quote — 30 seconds
+              The price, itemised
             </a>
             <a
               href="#work"
-              className="pointer-events-auto rounded-full border border-white/15 px-7 py-3.5 text-[13px] font-medium text-white transition hover:border-white/40"
+              className="pointer-events-auto rounded-full border border-stone-300 px-7 py-3.5 text-[13px] font-medium text-ink-900 transition hover:border-stone-500"
             >
-              See the work
+              The work
             </a>
           </motion.div>
         </div>
@@ -99,7 +98,7 @@ export default function Hero() {
         {/* Bottom rail — the numbers, stated flatly. */}
         <motion.div
           variants={rise} initial="hidden" animate="show" custom={5}
-          className="mx-auto grid w-full max-w-6xl grid-cols-2 gap-6 border-t border-white/10 pt-7 md:grid-cols-4"
+          className="mx-auto grid w-full max-w-6xl grid-cols-2 gap-6 border-t border-stone-300/70 pt-7 md:grid-cols-4"
         >
           {[
             ['Cement, re-done as it fails', '$110', 'a year'],
@@ -108,11 +107,11 @@ export default function Hero() {
             ['Every price', 'Published', 'no site visit first']
           ].map(([label, big, sub]) => (
             <div key={label}>
-              <p className="font-mono text-[10px] uppercase tracking-wide2 text-haze-400">
+              <p className="font-mono text-[10px] uppercase tracking-wide2 text-stone-500">
                 {label}
               </p>
-              <p className="mt-2 text-2xl font-light text-white">{big}</p>
-              <p className="text-[11px] text-haze-400">{sub}</p>
+              <p className="mt-2 text-2xl font-light text-ink-900">{big}</p>
+              <p className="text-[11px] text-stone-500">{sub}</p>
             </div>
           ))}
         </motion.div>

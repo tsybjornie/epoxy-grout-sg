@@ -23,22 +23,22 @@ const STAGES = [
   {
     kicker: 'Layer 01 — Living hall',
     title: 'Cream marble, checkered border, 1.5 mm seams.',
-    body: 'Porcelain the colour of warm stone, laid with a terracotta-and-cream runner at the threshold. The seams are the thinnest thing in the room — and the only part that will ever fail.'
+    body: 'The seams are the thinnest thing in the room — and the only part that ever fails.'
   },
   {
     kicker: 'Layer 02 — Kitchen',
     title: 'Where cement grout drinks the cooking.',
-    body: 'Burl wood below, glazed zellige above, soapstone between. Oil, turmeric and soap hit these joints daily. Epoxy is non-porous — it wipes clean because nothing ever soaked in.'
+    body: 'Oil and soap live on these joints. Ours are non-porous — nothing ever soaks in.'
   },
   {
     kicker: 'Layer 03 — Bathroom',
     title: '100% waterproof. Nothing for mould to eat.',
-    body: 'Terracotta underfoot, zellige to the ceiling, a backlit mirror in bronze. Epoxy grout is a cured thermoset — zero absorption, no feeding ground, no black lines by year two.'
+    body: 'A cured thermoset with zero absorption. No black lines by year two.'
   },
   {
     kicker: 'Layer 04 — The seam, ×150',
-    title: 'This is the whole argument, twenty millimetres up.',
-    body: 'One 1.5 mm joint. The near end is the cement you have: porous, matte, dead. The far end is liquid-set epoxy: 100% solids, light sliding off it. Pick its colour — the price is the same.'
+    title: 'The whole argument, twenty millimetres up.',
+    body: 'Cement at the near end. Liquid-set epoxy at the far. Any colour — the price is the same.'
   }
 ]
 
@@ -212,7 +212,7 @@ function StageCopy({ stage }) {
   const s = STAGES[stage]
   if (!s) return null
   return (
-    <div key={s.kicker} className="glass max-w-md p-7 md:bg-transparent md:border-0 md:shadow-none md:backdrop-blur-0 md:p-0">
+    <div key={s.kicker} className="glass-dark max-w-md p-7 md:bg-transparent md:border-0 md:shadow-none md:backdrop-blur-0 md:p-0">
       <p className="font-mono text-[11px] uppercase tracking-ultra text-gold">
         {s.kicker}
       </p>
@@ -225,7 +225,7 @@ function StageCopy({ stage }) {
           href="#quote"
           className="pointer-events-auto mt-8 inline-block rounded-full bg-gold px-7 py-3.5 text-[13px] font-medium text-ink-900 transition hover:bg-white"
         >
-          Price this for my place — 30 seconds
+          The price, itemised →
         </a>
       )}
     </div>
