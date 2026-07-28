@@ -4,23 +4,26 @@
 
 @layer base {
   html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
-  body { @apply bg-ink-900 text-haze-200 font-sans antialiased; }
+  body { @apply bg-paper text-stone-800 font-sans antialiased; }
   ::selection { @apply bg-gold text-ink-900; }
 }
 
 @layer components {
-  /* Frosted glass panel — the one overlay treatment used everywhere, so the
-     UI reads as a single system floating over the rooms. */
+  /* White glass — the one panel treatment on the light page. */
   .glass {
-    @apply rounded-2xl border border-white/10 bg-white/[0.06] shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl;
+    @apply rounded-2xl border border-white/70 bg-white/55 shadow-[0_18px_50px_rgba(30,25,15,0.07)] backdrop-blur-2xl;
   }
+  /* Dark glass — for overlays that float on the 3D cinema section only. */
+  .glass-dark {
+    @apply rounded-2xl border border-white/10 bg-ink-800/70 shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl;
+  }
+  /* Kept as an alias so in-canvas overlays keep working. */
   .glass-strong {
     @apply rounded-2xl border border-white/10 bg-ink-800/70 shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl;
   }
 }
 
-/* Anyone who has asked their OS to calm motion down gets a static site.
-   Framer Motion reads this too, but belt and braces. */
+/* Anyone who has asked their OS to calm motion down gets a static site. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

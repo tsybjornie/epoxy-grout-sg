@@ -101,7 +101,9 @@ export default function TileSlab({ pointer }) {
           dependency that adds a render-blocking round trip, and one that throws
           and kills the whole canvas if it fails. Three lights and a warm bounce
           get us the same read with nothing to download. */}
-      <hemisphereLight args={['#9DB4D0', '#141210', 0.55]} />
+      {/* Ground bounce is warm ivory now — the slab floats over paper, not
+          over a void, and the underside should read as lit by the page. */}
+      <hemisphereLight args={['#DFE7F2', '#C9BFAD', 0.6]} />
       <pointLight position={[-3, 1.4, 4]} intensity={12} distance={14} color="#FFB27A" />
 
       {/* Pushed right so the slab occupies the empty half of the hero and

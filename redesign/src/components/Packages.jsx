@@ -79,36 +79,36 @@ export default function Packages() {
   return (
     <section id="packages" className="relative mx-auto max-w-6xl px-6 pt-24 md:px-12">
       {/* ── The anchor: what NOT doing this costs, per year of service ── */}
-      <p className="font-mono text-[11px] uppercase tracking-ultra text-gold">
+      <p className="font-mono text-[11px] uppercase tracking-ultra text-gold-deep">
         The number that matters is per year
       </p>
-      <h2 className="mt-6 max-w-2xl text-[clamp(1.8rem,3.8vw,2.9rem)] font-light leading-[1.05] tracking-tight text-white">
+      <h2 className="mt-6 max-w-2xl text-[clamp(1.8rem,3.8vw,2.9rem)] font-light leading-[1.05] tracking-tight text-ink-900">
         You are not buying grout.
         <br />
-        <span className="text-haze-400">You are cancelling a $3,500 problem.</span>
+        <span className="text-stone-400">You are cancelling a $3,500 problem.</span>
       </h2>
 
       <div className="mt-10 grid gap-4 md:grid-cols-3">
         {ANCHORS.map((a) => (
           <div
             key={a.label}
-            className={`glass p-6 ${a.gold ? 'border-gold/40' : ''}`}
+            className={`glass p-6 ${a.gold ? '!border-gold/50' : ''}`}
           >
-            <p className="font-mono text-[10px] uppercase tracking-wide2 text-haze-400">
+            <p className="font-mono text-[10px] uppercase tracking-wide2 text-stone-500">
               {a.label}
             </p>
             <p
               className={`mt-3 text-3xl font-light ${
                 a.strike
-                  ? 'text-haze-400 line-through decoration-haze-400/60'
+                  ? 'text-stone-400 line-through decoration-stone-400/60'
                   : a.gold
-                    ? 'text-gold'
-                    : 'text-white'
+                    ? 'text-gold-deep'
+                    : 'text-ink-900'
               }`}
             >
               {a.big}
             </p>
-            <p className="mt-1.5 text-[12px] text-haze-300">{a.sub}</p>
+            <p className="mt-1.5 text-[12px] text-stone-500">{a.sub}</p>
           </div>
         ))}
       </div>
@@ -120,30 +120,30 @@ export default function Packages() {
             key={t.name}
             className={`flex flex-col p-7 ${
               t.featured
-                ? 'glass-strong border-gold/50 lg:-my-3 lg:py-10'
+                ? 'glass !border-gold/60 !bg-white/80 lg:-my-3 lg:py-10'
                 : 'glass'
             }`}
           >
             {t.tag && (
-              <p className="mb-3 inline-block self-start rounded-full bg-gold/15 px-3 py-1 font-mono text-[9px] uppercase tracking-wide2 text-gold">
+              <p className="mb-3 inline-block self-start rounded-full bg-gold/15 px-3 py-1 font-mono text-[9px] uppercase tracking-wide2 text-gold-deep">
                 {t.tag}
               </p>
             )}
-            <h3 className="text-xl font-light text-white">{t.name}</h3>
-            <p className="mt-1 text-[13px] text-haze-300">{t.who}</p>
-            <p className="mt-5 text-4xl font-light text-white">{t.price}</p>
-            <p className="mt-1 font-mono text-[10px] uppercase tracking-wide2 text-haze-400">
+            <h3 className="text-xl font-medium text-ink-900">{t.name}</h3>
+            <p className="mt-1 text-[13px] text-stone-500">{t.who}</p>
+            <p className="mt-5 text-4xl font-light text-ink-900">{t.price}</p>
+            <p className="mt-1 font-mono text-[10px] uppercase tracking-wide2 text-stone-500">
               {t.scope}
             </p>
-            <ul className="mt-5 space-y-2 text-[13px] text-haze-200">
+            <ul className="mt-5 space-y-2 text-[13px] text-stone-600">
               {t.points.map((p) => (
                 <li key={p} className="flex gap-2.5">
-                  <span className={t.featured ? 'text-gold' : 'text-haze-400'}>—</span>
+                  <span className={t.featured ? 'text-gold-deep' : 'text-stone-400'}>—</span>
                   <span>{p}</span>
                 </li>
               ))}
               <li className="flex gap-2.5">
-                <span className={t.featured ? 'text-gold' : 'text-haze-400'}>—</span>
+                <span className={t.featured ? 'text-gold-deep' : 'text-stone-400'}>—</span>
                 <span>5-year written warranty</span>
               </li>
             </ul>
@@ -153,8 +153,8 @@ export default function Packages() {
               rel="noopener noreferrer"
               className={`mt-7 block rounded-full py-3.5 text-center text-[13px] font-medium transition ${
                 t.featured
-                  ? 'bg-gold text-ink-900 hover:bg-white'
-                  : 'border border-white/15 text-white hover:border-white/40'
+                  ? 'bg-ink-900 text-white hover:bg-gold hover:text-ink-900'
+                  : 'border border-stone-300 text-ink-900 hover:border-stone-500'
               }`}
             >
               Book this →
@@ -163,11 +163,10 @@ export default function Packages() {
         ))}
       </div>
 
-      <p className="mt-8 text-[12px] leading-relaxed text-haze-400">
-        Packages are priced for 300×300 tile and smaller. On larger tiles there
-        is less joint to do — the calculator below usually comes out cheaper,
-        and you should use it. Newly laid tiles that have never been grouted
-        cost roughly half: there is no removal stage.
+      <p className="mt-8 text-[12px] leading-relaxed text-stone-500">
+        Priced for 300×300 tile and smaller. Larger tiles carry less joint —
+        the calculator below usually lands lower. Never-grouted new tiles run
+        roughly half: there is no removal stage.
       </p>
     </section>
   )

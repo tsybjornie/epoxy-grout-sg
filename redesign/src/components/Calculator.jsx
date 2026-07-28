@@ -131,18 +131,17 @@ export default function Calculator() {
 
   return (
     <section id="quote" className="relative mx-auto max-w-6xl px-6 py-24 md:px-12">
-      <p className="font-mono text-[11px] uppercase tracking-ultra text-gold">
+      <p className="font-mono text-[11px] uppercase tracking-ultra text-gold-deep">
         Singapore package calculator
       </p>
-      <h2 className="mt-6 max-w-2xl text-[clamp(1.8rem,3.8vw,2.9rem)] font-light leading-[1.05] tracking-tight text-white">
+      <h2 className="mt-6 max-w-2xl text-[clamp(1.8rem,3.8vw,2.9rem)] font-light leading-[1.05] tracking-tight text-ink-900">
         The same published tariff.
         <br />
-        <span className="text-haze-400">Itemised for your layout.</span>
+        <span className="text-stone-400">Itemised for your layout.</span>
       </h2>
-      <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-haze-300">
-        Toggle the areas you want done. Every line is priced on joint length —
-        $10/m² surface + $4/m perimeter + a per-metre joint rate. Nothing here
-        differs from the tariff on the main site.
+      <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-stone-500">
+        Every line is metres of joint at the published rate — the same
+        arithmetic as the main site, to the dollar.
       </p>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_360px]">
@@ -156,8 +155,8 @@ export default function Calculator() {
                 aria-pressed={layoutKey === k}
                 className={`rounded-full px-5 py-2.5 text-[13px] font-medium transition ${
                   layoutKey === k
-                    ? 'bg-gold text-ink-900'
-                    : 'border border-white/15 text-haze-200 hover:border-white/40'
+                    ? 'bg-ink-900 text-white'
+                    : 'border border-stone-300 text-stone-600 hover:border-stone-500'
                 }`}
               >
                 {l.name}
@@ -173,8 +172,8 @@ export default function Calculator() {
                 aria-pressed={condition === k}
                 className={`rounded-full px-4 py-2 text-[12px] transition ${
                   condition === k
-                    ? 'bg-white/90 text-ink-900'
-                    : 'border border-white/10 text-haze-300 hover:border-white/30'
+                    ? 'bg-gold text-ink-900'
+                    : 'border border-stone-300 text-stone-500 hover:border-stone-500'
                 }`}
               >
                 {r.label}
@@ -182,7 +181,7 @@ export default function Calculator() {
             ))}
           </div>
 
-          <div className="mt-6 divide-y divide-white/[0.06]">
+          <div className="mt-6 divide-y divide-stone-200/80">
             {layout.items.map((it) => {
               const on = enabled[layoutKey][it.id]
               const p = priceItem(it, condition)
@@ -204,14 +203,14 @@ export default function Calculator() {
                     className="h-4 w-4 accent-[#D4AF37]"
                   />
                   <span className="flex-1">
-                    <span className={`block text-[14px] ${on ? 'text-white' : 'text-haze-400'}`}>
+                    <span className={`block text-[14px] ${on ? 'text-ink-900' : 'text-stone-400'}`}>
                       {it.name}
                     </span>
-                    <span className="block font-mono text-[10px] uppercase tracking-wide2 text-haze-400">
+                    <span className="block font-mono text-[10px] uppercase tracking-wide2 text-stone-400">
                       {it.area} m² · {it.tile} mm tile · ~{p.joint.toFixed(0)} m joint
                     </span>
                   </span>
-                  <span className={`font-mono text-[13px] ${on ? 'text-white' : 'text-haze-400/60 line-through'}`}>
+                  <span className={`font-mono text-[13px] ${on ? 'text-ink-900' : 'text-stone-400/70 line-through'}`}>
                     {sgd(total)}
                   </span>
                 </label>
@@ -221,42 +220,42 @@ export default function Calculator() {
         </div>
 
         {/* ── Right: the BOQ ── */}
-        <div className="glass-strong flex flex-col p-6">
-          <p className="font-mono text-[10px] uppercase tracking-wide2 text-haze-400">
+        <div className="glass !bg-white/75 flex flex-col p-6">
+          <p className="font-mono text-[10px] uppercase tracking-wide2 text-stone-500">
             Bill of quantities
           </p>
           <dl className="mt-4 space-y-2.5 text-[13px]">
-            <div className="flex justify-between text-haze-300">
+            <div className="flex justify-between text-stone-600">
               <dt>Joint length, total</dt>
               <dd className="font-mono">{totalJoint.toFixed(0)} m</dd>
             </div>
-            <div className="flex justify-between text-haze-300">
+            <div className="flex justify-between text-stone-600">
               <dt>Areas selected</dt>
               <dd className="font-mono">{rows.length}</dd>
             </div>
-            <div className="flex justify-between text-haze-300">
+            <div className="flex justify-between text-stone-600">
               <dt>Work subtotal</dt>
               <dd className="font-mono">{sgd(sub)}</dd>
             </div>
-            <div className="flex justify-between text-haze-300">
+            <div className="flex justify-between text-stone-600">
               <dt>Mobilisation</dt>
               <dd className="font-mono">
                 {sub === 0 ? '—' : mob ? sgd(mob) : 'waived'}
               </dd>
             </div>
             {grand > raw && (
-              <div className="flex justify-between text-haze-300">
+              <div className="flex justify-between text-stone-600">
                 <dt>Minimum job</dt>
                 <dd className="font-mono">{sgd(MIN_JOB)}</dd>
               </div>
             )}
           </dl>
 
-          <div className="mt-6 border-t border-white/10 pt-5">
-            <p className="font-mono text-[10px] uppercase tracking-wide2 text-haze-400">
+          <div className="mt-6 border-t border-stone-200 pt-5">
+            <p className="font-mono text-[10px] uppercase tracking-wide2 text-stone-500">
               Estimated total, before GST
             </p>
-            <p className="mt-1 text-4xl font-light text-white">
+            <p className="mt-1 text-4xl font-light text-ink-900">
               {sgd(grand)}
             </p>
           </div>
@@ -268,16 +267,15 @@ export default function Calculator() {
             className={`mt-auto block rounded-full pt-3.5 pb-3.5 text-center text-[14px] font-medium transition ${
               rows.length
                 ? 'bg-[#25D366] text-ink-900 hover:brightness-110'
-                : 'pointer-events-none bg-white/10 text-haze-400'
+                : 'pointer-events-none bg-stone-200 text-stone-400'
             }`}
             style={{ marginTop: '1.75rem' }}
           >
-            Export BOQ to WhatsApp →
+            Send to WhatsApp →
           </a>
-          <p className="mt-3 text-center text-[10px] leading-snug text-haze-400">
-            Opens WhatsApp with this itemised list prefilled.
-            <br />
-            Final price confirmed from exact sizes — never higher without asking.
+          <p className="mt-3 text-center text-[10px] leading-snug text-stone-500">
+            The itemised list, prefilled. Final price from exact sizes —
+            never higher without asking.
           </p>
         </div>
       </div>
