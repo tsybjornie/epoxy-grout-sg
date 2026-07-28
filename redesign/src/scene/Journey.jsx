@@ -44,7 +44,7 @@ export default function Journey({ onStage }) {
     const pk = 1 - Math.pow(0.00001, delta)
     pointer.current.x = THREE.MathUtils.lerp(pointer.current.x, scrollState.px, pk)
     pointer.current.y = THREE.MathUtils.lerp(pointer.current.y, scrollState.py, pk)
-    const sway = 0.05 * (1 - ramp(u, 0.8, 0.96))
+    const sway = 0.05 * (1 - ramp(u, 0.83, 0.96))
     camera.position.set(
       _pos.x + pointer.current.x * sway,
       _pos.y - pointer.current.y * sway * 0.6,
@@ -68,7 +68,7 @@ export default function Journey({ onStage }) {
        the ambient drops away and a hard raking spot takes over for the
        macro — at 20 mm the whole read is the shadow line down the channel,
        and flat light kills it. */
-    const macro = ramp(u, 0.84, 1.0)
+    const macro = ramp(u, 0.87, 1.0)
     if (ambient.current) ambient.current.intensity = 1.15 - 0.95 * macro
     if (sun.current) sun.current.intensity = 2.6 - 1.9 * macro
     if (key.current) key.current.intensity = 1.1 * (1 - macro)

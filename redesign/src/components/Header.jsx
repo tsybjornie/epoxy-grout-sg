@@ -30,8 +30,8 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:h-20 md:px-12">
-        <a href="#top" className="text-[13px] font-semibold tracking-wide2 text-ink-900">
-          CLEAN<span className="text-stone-400">GROUT</span>
+        <a href="#top" className={`text-[13px] font-semibold tracking-wide2 ${solid ? 'text-ink-900' : 'text-white'}`}>
+          CLEAN<span className={solid ? 'text-stone-400' : 'text-white/50'}>GROUT</span>
         </a>
 
         <nav className="hidden items-center gap-9 md:flex">
@@ -39,7 +39,9 @@ export default function Header() {
             <a
               key={href}
               href={href}
-              className="text-[13px] font-medium text-stone-500 transition-colors hover:text-ink-900"
+              className={`text-[13px] font-medium transition-colors ${
+                solid ? 'text-stone-500 hover:text-ink-900' : 'text-white/70 hover:text-white'
+              }`}
             >
               {label}
             </a>
@@ -48,7 +50,11 @@ export default function Header() {
 
         <a
           href="#quote"
-          className="rounded-full bg-ink-900 px-5 py-2 text-[12px] font-medium text-white transition hover:bg-gold hover:text-ink-900"
+          className={`rounded-full px-5 py-2 text-[12px] font-medium transition ${
+            solid
+              ? 'bg-ink-900 text-white hover:bg-gold hover:text-ink-900'
+              : 'bg-white text-ink-900 hover:bg-gold'
+          }`}
         >
           My price
         </a>

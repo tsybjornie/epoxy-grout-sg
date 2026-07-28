@@ -3,8 +3,10 @@ import * as THREE from 'three'
 import {
   LIVING_X, KITCHEN_X, BATH_X,
   ROOM_W, ROOM_D, WALL_H,
-  BTILE, JOINT, BPITCH, MACRO_Z
+  BTILE, JOINT, BPITCH, MACRO_Z,
+  BLOCK_X, BLOCK_Z
 } from './keyframes.js'
+import Apartment from './Apartment.jsx'
 import { makeGroutMaterial } from './materials.js'
 import { burlWood, creamMarble, soapstone, terracottaTile, plaster } from './textures.js'
 
@@ -384,10 +386,17 @@ function Bathroom() {
   )
 }
 
+const BLOCK_FADE = { current: 1 }
+
 /* ── The gallery: dark plinth floor tying the three sets together ───────── */
 export default function Rooms() {
   return (
     <group>
+      {/* The block itself — the opening shot, and afterwards a silhouette
+          hanging in the fog behind the dioramas. */}
+      <group position={[BLOCK_X, 0, BLOCK_Z]}>
+        <Apartment fade={BLOCK_FADE} />
+      </group>
       <mesh position={[0, -0.012, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[60, 30]} />
         <meshStandardMaterial color="#0A0E16" roughness={0.85} metalness={0.1} />
