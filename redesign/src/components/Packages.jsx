@@ -46,11 +46,11 @@ const TIERS = [
     wa: WA + encodeURIComponent("Hi, I'd like the Kitchen package ($588).")
   },
   {
-    name: 'Whole Home',
+    name: 'Kitchen + 2 Bathrooms',
     tag: 'Most people take this',
     price: '$1,488',
-    scope: 'up to 180 sqft · kitchen + two bathrooms',
-    who: 'Floors and wet areas across the standard 4-room job.',
+    scope: 'up to 180 sqft · all wet areas together',
+    who: 'Every wet area in the flat, done in one visit.',
     points: [
       'Everything in both other packages',
       'Colour matched across all three areas',
@@ -58,7 +58,7 @@ const TIERS = [
       'Full tile clean on completion'
     ],
     featured: true,
-    wa: WA + encodeURIComponent("Hi, I'd like the Whole Home package ($1,488).")
+    wa: WA + encodeURIComponent("Hi, I'd like the Kitchen + 2 Bathrooms package ($1,488).")
   },
   {
     name: 'Single Bathroom',
