@@ -72,7 +72,7 @@ export default function Home() {
             <p className="font-mono text-[10px] uppercase tracking-wide2 text-stone-400">
               The paperwork
             </p>
-            <ul className="mt-3 space-y-2 text-[13px]">
+            <ul className="mt-3 space-y-1 text-[13px]">
               {[
                 ['5-year warranty terms', 'https://cleangrout.sg/warranty.html'],
                 ['Full published tariff', 'https://cleangrout.sg/tariff.html#tariff'],
@@ -84,7 +84,7 @@ export default function Home() {
                 ['Privacy', 'https://cleangrout.sg/privacy.html']
               ].map(([label, href]) => (
                 <li key={href}>
-                  <a href={href} className="text-stone-500 transition hover:text-ink-900">
+                  <a href={href} className="-mx-1 inline-block px-1 py-1.5 text-stone-500 transition hover:text-ink-900">
                     {label}
                   </a>
                 </li>
