@@ -68,6 +68,9 @@ export default function Home() {
                 ['5-year warranty terms', 'https://cleangrout.sg/warranty.html'],
                 ['Full published tariff', 'https://cleangrout.sg/tariff.html#tariff'],
                 ['FAQ', 'https://cleangrout.sg/faq.html'],
+                ['Guide: epoxy vs cement grout', 'https://cleangrout.sg/blog/epoxy-vs-cement-grout.html'],
+                ['Guide: best grout for HDB bathrooms', 'https://cleangrout.sg/blog/best-grout-for-hdb-bathroom.html'],
+                ['Guide: maintaining epoxy grout', 'https://cleangrout.sg/blog/how-to-maintain-epoxy-grout.html'],
                 ['Terms & conditions', 'https://cleangrout.sg/terms.html'],
                 ['Privacy', 'https://cleangrout.sg/privacy.html']
               ].map(([label, href]) => (
