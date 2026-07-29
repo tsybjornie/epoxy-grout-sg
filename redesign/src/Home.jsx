@@ -3,7 +3,6 @@ import Header from './components/Header.jsx'
 import ScrollJourney from './components/ScrollJourney.jsx'
 import Packages from './components/Packages.jsx'
 import Calculator from './components/Calculator.jsx'
-import BeforeAfter from './components/BeforeAfter.jsx'
 import ProcessStrip from './components/ProcessStrip.jsx'
 import ThreeQuestions from './components/ThreeQuestions.jsx'
 import GalleryGrid from './components/GalleryGrid.jsx'
@@ -31,7 +30,6 @@ export default function Home() {
         <ScrollJourney />
         <Packages />
         <Calculator />
-        <BeforeAfter />
         <ProcessStrip />
         <ThreeQuestions />
         <GalleryGrid />
