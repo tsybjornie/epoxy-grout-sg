@@ -10,7 +10,8 @@ const PROJECTS = [
     scope: '4-Room HDB · floor + shower walls',
     detail: '300×300 · old cement raked to depth',
     price: '$1,074',
-    img: 'work/bathroom.png',
+    img: 'work/bathroom-ai.jpg',
+    render: true,
     tone: 'from-[#2A2118] to-[#0E0C0A]'
   },
   {
@@ -19,7 +20,7 @@ const PROJECTS = [
     scope: 'Whole flat · joints still open, no removal',
     detail: '600×600 floors · 1200×600 wet areas',
     price: '$2,738',
-    img: 'work/bto-render.jpg',
+    img: 'work/bto-ai.jpg',
     render: true,
     tone: 'from-[#1A2028] to-[#0A0C0E]'
   },
@@ -29,7 +30,8 @@ const PROJECTS = [
     scope: 'Condo · grease-zone epoxy',
     detail: '600×600 · grease and stain exposure',
     price: '$721',
-    img: 'work/kitchen.png',
+    img: 'work/kitchen-ai.jpg',
+    render: true,
     tone: 'from-[#221C22] to-[#0C0A0C]'
   },
   {
@@ -38,7 +40,7 @@ const PROJECTS = [
     scope: 'Terrace home · Johor Bahru, Malaysia',
     detail: '300×300 · 15-year-old joints',
     price: '$1,977',
-    img: 'work/jb-render.jpg',
+    img: 'work/jb-ai.jpg',
     render: true,
     tone: 'from-[#1C2220] to-[#0A0D0C]'
   }
@@ -101,7 +103,7 @@ export default function GalleryGrid() {
               </motion.div>
               {p.render && (
                 <span className="absolute bottom-4 left-5 rounded-full bg-ink-900/60 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wide2 text-white/70 backdrop-blur">
-                  3D render
+                  Illustration
                 </span>
               )}
 
