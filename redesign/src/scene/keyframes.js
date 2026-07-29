@@ -48,65 +48,35 @@ export const PHOTO_OUT = 0
 export const KEYFRAMES = [
   {
     at: 0.0,
-    // The block at dusk, whole massing in frame, camera at streetlamp height.
-    pos: new THREE.Vector3(BLOCK_X + 5, 2.4, FACE_Z + 33),
-    look: new THREE.Vector3(BLOCK_X, 9, FACE_Z),
-    label: 'block'
-  },
-  {
-    at: 0.09,
-    // Pushed in toward one lit unit.
-    pos: new THREE.Vector3(WIN_X, WIN_Y, FACE_Z + 1.5),
-    look: new THREE.Vector3(WIN_X, WIN_Y, FACE_Z),
-    label: 'window'
-  },
-  {
-    at: 0.105,
-    // Nose against the glass — the pane's glow fills the frame. The white
-    // blink (ScrollJourney) peaks here and hides the cut to the interior.
-    pos: new THREE.Vector3(WIN_X, WIN_Y, FACE_Z + 0.3),
-    look: new THREE.Vector3(WIN_X, WIN_Y, FACE_Z - 1),
-    label: 'pane'
-  },
-  {
-    at: 0.12,
-    // THROUGH. Inside the living hall, tight at the back wall as if we just
-    // came in through that window — aimed DOWN at the room, not out of it:
-    // the first thing you see on arrival is marble, runner and sofa.
-    pos: new THREE.Vector3(LIVING_X + 0.9, 1.9, -0.9),
-    look: new THREE.Vector3(LIVING_X - 0.4, 0.0, 1.0),
-    label: 'inside'
-  },
-  {
-    at: 0.26,
-    // The pull-back reveal: the whole living hall.
+    // Open ON the living hall — the whole room in frame. (The exterior
+    // block prologue is retired until real footage replaces it.)
     pos: new THREE.Vector3(LIVING_X, 1.5, 4.6),
     look: new THREE.Vector3(LIVING_X, 0.8, -0.8),
     label: 'living'
   },
   {
-    at: 0.4,
+    at: 0.19,
     // Pitched onto the marble floor and its checkered runner.
     pos: new THREE.Vector3(LIVING_X, 2.4, 2.7),
     look: new THREE.Vector3(LIVING_X, 0, 0.2),
     label: 'living-floor'
   },
   {
-    at: 0.56,
+    at: 0.41,
     // Kitchen: framed on the zellige backsplash over the soapstone top.
     pos: new THREE.Vector3(KITCHEN_X, 1.35, 3.0),
     look: new THREE.Vector3(KITCHEN_X, 0.95, -1.5),
     label: 'kitchen'
   },
   {
-    at: 0.75,
+    at: 0.66,
     // Bathroom: vanity mirror and zellige wall.
     pos: new THREE.Vector3(BATH_X, 1.45, 3.2),
     look: new THREE.Vector3(BATH_X, 1.1, -1.5),
     label: 'bath'
   },
   {
-    at: 0.875,
+    at: 0.83,
     // Kneeling over the terracotta floor, lined up on the target joint.
     pos: new THREE.Vector3(BATH_X, 0.85, 1.5),
     look: new THREE.Vector3(BATH_X, 0, MACRO_Z),
@@ -122,14 +92,10 @@ export const KEYFRAMES = [
   }
 ]
 
-/* The through-the-window blink: 0 → 1 → 0 around the pane keyframe. Driven
-   off RAW scroll t (not the damped camera parameter) with generous width,
-   so the flash fully covers the damped camera's crossing. */
-export function windowFlash(t) {
-  if (t <= 0.085 || t >= 0.16) return 0
-  if (t < 0.102) return (t - 0.085) / 0.017
-  if (t <= 0.13) return 1
-  return 1 - (t - 0.13) / 0.03
+/* The through-the-window blink is retired with the exterior prologue —
+   kept as a no-op so callers don't care. */
+export function windowFlash() {
+  return 0
 }
 
 /* Piecewise interpolation across the keyframe list.
@@ -170,7 +136,7 @@ export function cameraParam(t) {
 }
 
 /* Stage index for the copy overlay:
-   0 block · 1 living · 2 kitchen · 3 bath · 4 macro. */
+   0 living · 1 kitchen · 2 bath · 3 macro. */
 export function stageAt(u) {
-  return u < 0.11 ? 0 : u < 0.5 ? 1 : u < 0.66 ? 2 : u < 0.845 ? 3 : 4
+  return u < 0.32 ? 0 : u < 0.56 ? 1 : u < 0.79 ? 2 : 3
 }
