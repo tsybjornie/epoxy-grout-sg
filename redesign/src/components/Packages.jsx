@@ -168,6 +168,33 @@ export default function Packages() {
         the calculator below usually lands lower. Never-grouted new tiles run
         roughly half: there is no removal stage.
       </p>
+
+      {/* ── Block rate: a published volume rule, not a private discount.
+           The give is priced at the real cost saving of clustered jobs. ── */}
+      <div className="glass mt-10 flex flex-col gap-5 p-7 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-wide2 text-gold-deep">
+            The block rate
+          </p>
+          <h3 className="mt-2 text-lg font-medium text-ink-900">
+            Same block, same fortnight — every unit pays less.
+          </h3>
+          <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-stone-500">
+            When neighbouring units book works within the same two weeks, one
+            trip serves everyone — and the saving is passed on: two units,
+            5% off each. Three or more, 8% off each. Applies on top of the
+            published tariff or any package; best single discount applies.
+          </p>
+        </div>
+        <a
+          href={WA + encodeURIComponent('Hi, we are a few neighbours in the same block interested in the block rate.')}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="shrink-0 rounded-full border border-stone-300 px-6 py-3 text-center text-[13px] font-medium text-ink-900 transition hover:border-stone-500"
+        >
+          Ask about your block →
+        </a>
+      </div>
     </section>
   )
 }
