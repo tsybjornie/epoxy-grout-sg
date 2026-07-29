@@ -90,22 +90,8 @@ const LAYOUTS = {
       { id: 'bedrooms', name: 'Bedrooms (3, floors)', area: 34, perim: 46, tile: 600, surface: 'floor', on: false }
     ]
   },
-  landed: {
-    name: 'Landed',
-    items: [
-      { id: 'living', name: 'Living & dining floor', area: 32, perim: 24, tile: 600, surface: 'floor', on: true },
-      { id: 'kitchen', name: 'Wet kitchen floor', area: 10, perim: 13, tile: 300, surface: 'floor', on: true },
-      { id: 'dryk', name: 'Dry kitchen floor', area: 8, perim: 11.5, tile: 600, surface: 'floor', on: false },
-      { id: 'ksplash', name: 'Kitchen backsplash', area: 5, perim: 10, tile: 300, surface: 'wall', on: true },
-      { id: 'mbath-f', name: 'Master bath floor', area: 5, perim: 9, tile: 300, surface: 'floor', on: true },
-      { id: 'mbath-w', name: 'Master bath walls', area: 14, perim: 15, tile: 300, surface: 'wall', on: true },
-      { id: 'bath2-f', name: 'Bath 2 floor', area: 4, perim: 8, tile: 300, surface: 'floor', on: true },
-      { id: 'bath2-w', name: 'Bath 2 walls', area: 11, perim: 13, tile: 300, surface: 'wall', on: false },
-      { id: 'bath3-f', name: 'Bath 3 floor', area: 3.5, perim: 7.5, tile: 300, surface: 'floor', on: false },
-      { id: 'patio', name: 'Patio / porch floor', area: 12, perim: 14, tile: 300, surface: 'floor', on: false }
-    ]
-  }
 }
+
 
 const MOBILISATION = 150
 const MOB_WAIVE_ABOVE = 900
@@ -132,8 +118,7 @@ function priceItem(it, condition) {
    answer — HDB, Condo, Landed), then flat size only where it applies. */
 const TYPES = [
   { key: 'hdb', label: 'HDB' },
-  { key: 'condo', label: 'Condo' },
-  { key: 'landed', label: 'Landed' }
+  { key: 'condo', label: 'Condo' }
 ]
 const HDB_SIZES = [
   { key: 'hdb3', label: '3-Room' },
@@ -149,7 +134,7 @@ export default function Calculator() {
   const [propType, setPropType] = useState('hdb')
   const [hdbSize, setHdbSize] = useState('hdb4')
   const [condoSize, setCondoSize] = useState('condo')
-  const layoutKey = propType === 'hdb' ? hdbSize : propType === 'condo' ? condoSize : propType
+  const layoutKey = propType === 'hdb' ? hdbSize : condoSize
   const [condition, setCondition] = useState('recent')
   // Which line items are on, per layout, so switching layouts keeps choices.
   const [enabled, setEnabled] = useState(() => {
@@ -223,7 +208,7 @@ export default function Calculator() {
                 {t.label}
               </button>
             ))}
-            {propType !== 'landed' && (
+            {(
               <span className="ml-2 flex items-center gap-1 rounded-full border border-stone-200 bg-white/60 p-1">
                 {(propType === 'hdb' ? HDB_SIZES : CONDO_SIZES).map((sz) => {
                   const current = propType === 'hdb' ? hdbSize : condoSize
