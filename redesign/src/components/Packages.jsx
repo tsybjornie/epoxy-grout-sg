@@ -120,7 +120,7 @@ export default function Packages() {
             key={t.name}
             className={`flex flex-col p-7 ${
               t.featured
-                ? 'glass !border-gold/60 !bg-white/80 lg:-my-3 lg:py-10'
+                ? 'glass !border-gold/60 !bg-white/80'
                 : 'glass'
             }`}
           >
@@ -135,7 +135,7 @@ export default function Packages() {
             <p className="mt-1 font-mono text-[10px] uppercase tracking-wide2 text-stone-500">
               {t.scope}
             </p>
-            <ul className="mt-5 space-y-2 text-[13px] text-stone-600">
+            <ul className="mb-7 mt-5 space-y-2 text-[13px] text-stone-600">
               {t.points.map((p) => (
                 <li key={p} className="flex gap-2.5">
                   <span className={t.featured ? 'text-gold-deep' : 'text-stone-400'}>—</span>
@@ -151,9 +151,9 @@ export default function Packages() {
               href={t.wa}
               target="_blank"
               rel="noopener noreferrer"
-              className={`mt-7 block rounded-full py-3.5 text-center text-[13px] font-medium transition ${
+              className={`mt-auto block rounded-full py-3.5 pt-3.5 text-center text-[13px] font-medium transition ${
                 t.featured
-                  ? 'bg-ink-900 text-white hover:bg-gold hover:text-ink-900'
+                  ? 'border border-transparent bg-ink-900 text-white hover:bg-gold hover:text-ink-900'
                   : 'border border-stone-300 text-ink-900 hover:border-stone-500'
               }`}
             >
