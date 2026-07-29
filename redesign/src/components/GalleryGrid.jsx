@@ -6,32 +6,32 @@ import { motion } from 'framer-motion'
 const PROJECTS = [
   {
     id: '01',
-    title: '4-Room HDB · Tampines',
-    scope: 'Bathroom floor + shower walls',
+    title: 'Bathroom re-grout, full depth',
+    scope: '4-Room HDB · floor + shower walls',
     detail: '300×300 · old cement raked to depth',
     price: '$1,074',
     tone: 'from-[#2A2118] to-[#0E0C0A]'
   },
   {
     id: '02',
-    title: 'BTO · Woodlands',
-    scope: 'Whole flat, first grout',
+    title: 'New BTO, first grout',
+    scope: 'Whole flat · joints still open, no removal',
     detail: '600×600 floors · 1200×600 wet areas',
     price: '$2,738',
     tone: 'from-[#1A2028] to-[#0A0C0E]'
   },
   {
     id: '03',
-    title: 'Condo · Bishan',
-    scope: 'Kitchen floor + backsplash',
+    title: 'Kitchen floor & backsplash',
+    scope: 'Condo · grease-zone epoxy',
     detail: '600×600 · grease and stain exposure',
     price: '$721',
     tone: 'from-[#221C22] to-[#0C0A0C]'
   },
   {
     id: '04',
-    title: '5-Room HDB · Punggol',
-    scope: 'Two bathrooms, floor + wet zones',
+    title: 'Two bathrooms, one visit',
+    scope: 'Terrace home · Johor Bahru, Malaysia',
     detail: '300×300 · 15-year-old joints',
     price: '$1,977',
     tone: 'from-[#1C2220] to-[#0A0D0C]'
