@@ -5,6 +5,16 @@
       "source": "/locations/johor-bahru.html",
       "destination": "/locations/malaysia.html",
       "permanent": true
+    },
+    {
+      "source": "/v2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/v2/:path*",
+      "destination": "/:path*",
+      "permanent": true
     }
   ]
 }

@@ -66,7 +66,7 @@ export default function Home() {
             <ul className="mt-3 space-y-2 text-[13px]">
               {[
                 ['5-year warranty terms', 'https://cleangrout.sg/warranty.html'],
-                ['Full published tariff', 'https://cleangrout.sg/#tariff'],
+                ['Full published tariff', 'https://cleangrout.sg/tariff.html#tariff'],
                 ['FAQ', 'https://cleangrout.sg/faq.html'],
                 ['Terms & conditions', 'https://cleangrout.sg/terms.html'],
                 ['Privacy', 'https://cleangrout.sg/privacy.html']

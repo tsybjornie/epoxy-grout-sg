@@ -100,11 +100,12 @@ Close matches on neutrals; deliberate contrast recommended otherwise
 
 - WhatsApp (preferred, quotes in minutes): +65 9800 4317
 - Instant calculator: https://cleangrout.sg/quote.html
-- 3D visualiser with live grout colours & BOQ export: https://cleangrout.sg/v2/
+- 3D visualiser with BOQ export: https://cleangrout.sg/
 
 ## Pages
 
-- [Home — full pricing model, published](https://cleangrout.sg/)
+- [Home — 3D visualiser, packages, instant BOQ calculator](https://cleangrout.sg/)
+- [Full published tariff detail](https://cleangrout.sg/tariff.html)
 - [Instant price calculator](https://cleangrout.sg/quote.html)
 - [Warranty terms](https://cleangrout.sg/warranty.html)
 - [FAQ](https://cleangrout.sg/faq.html)
