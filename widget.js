@@ -29,7 +29,7 @@
       'Every colour is the same price. One colour per continuous surface (changes at doorways); each room, bathroom and feature wall can differ. Confirm ~3 days before works — epoxy cannot be tinted on site.',
       ['/blog/epoxy-grout-colours-how-to-choose.html', 'Colour guide →']],
     [['deposit', 'pay', 'payment', 'paynow'],
-      'No deposit. Payment on completion — after a joint walkthrough of the finished work with the photo record of every joint. PayNow, bank transfer or cash.'],
+      'A 50% deposit confirms your booking and reserves the date. The balance is due on completion — after a joint walkthrough of the finished work with the photo record of every joint. PayNow, bank transfer or cash.'],
     [['jb', 'johor', 'malaysia', 'causeway'],
       'Yes — Johor Bahru also can. JB jobs are quoted in advance on WhatsApp before the team crosses the Causeway.'],
     [['block', 'neighbour', 'neighbor', 'discount', 'cheaper'],
