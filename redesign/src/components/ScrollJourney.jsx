@@ -9,7 +9,6 @@ import * as THREE from 'three'
 import Journey from '../scene/Journey.jsx'
 import { scrollState } from '../scene/scrollState.js'
 import { windowFlash } from '../scene/keyframes.js'
-import GroutControls from './GroutControls.jsx'
 
 const STAGES = [
   {
@@ -200,10 +199,6 @@ export default function ScrollJourney() {
           <StageCopy stage={stage} />
         </div>
 
-        {/* ── Layer 3: the material controls. Glass, bottom-right. ── */}
-        <div className="pointer-events-none absolute bottom-24 right-6 z-30 md:right-16">
-          <GroutControls visible={stage >= 1} active={stage >= 3} />
-        </div>
 
         {/* Fixed chrome: progress rail. */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 px-6 pb-7 md:px-16">

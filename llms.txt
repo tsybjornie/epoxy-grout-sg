@@ -92,8 +92,7 @@ open), condominiums, landed property.
 ## Epoxy grout colours
 
 Champagne Gold (#D4AF37), Off-White Pearl (#F5F2EB), Espresso Bronze
-(#3D352E), Sparkle Silver (#C0C0C0) — previewable live on the 3D
-visualiser at https://cleangrout.sg/v2/. Same price in every colour.
+(#3D352E), Sparkle Silver (#C0C0C0). Same price in every colour.
 Close matches on neutrals; deliberate contrast recommended otherwise
 (epoxy cannot be tinted on site).
 
