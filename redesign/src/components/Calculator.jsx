@@ -11,7 +11,7 @@ import { useMemo, useState } from 'react'
            + rate × joint length (m)
 
      joint length = area × λ,  λ = (L + W) / (L × W) × 1000   (tile in mm)
-     wall rate = floor rate × 1.30 · minimum job $380 · before GST */
+     wall rate = floor rate × 1.30 · minimum job $380 · no GST (not GST-registered) */
 
 const RATES = {
   new: { label: 'New tiles, joints still open', floor: 5.04, wall: 6.55 },
@@ -168,7 +168,7 @@ export default function Calculator() {
       ...rows.map((r) => `• ${r.name}: ${r.area} m², ~${r.joint.toFixed(0)} m joint — ${sgd(r.total)}`),
       '',
       mob ? `Mobilisation: ${sgd(mob)}` : 'Mobilisation: waived (job above $900)',
-      `Estimated total: ${sgd(grand)} (before GST)`,
+      `Estimated total: ${sgd(grand)} (no GST)`,
       '',
       'From the 3D visualiser — please confirm with exact sizes.'
     ]
@@ -321,7 +321,7 @@ export default function Calculator() {
 
           <div className="mt-6 border-t border-stone-200 pt-5">
             <p className="font-mono text-[10px] uppercase tracking-wide2 text-stone-500">
-              Estimated total, before GST
+              Estimated total · no GST
             </p>
             <p className="mt-1 text-4xl font-light text-ink-900">
               {sgd(grand)}
