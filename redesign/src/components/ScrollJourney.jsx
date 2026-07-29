@@ -42,10 +42,50 @@ const STAGES = [
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v)
 const smoothstep = (t) => t * t * (3 - 2 * t)
 
+/* A cheap phone should get the pitch, not a slideshow. No WebGL or very
+   low memory → static fallback: one render + the stage copy as sections. */
+function isWeakDevice() {
+  try {
+    const c = document.createElement('canvas')
+    if (!(c.getContext('webgl2') || c.getContext('webgl'))) return true
+  } catch { return true }
+  if (navigator.deviceMemory && navigator.deviceMemory <= 2) return true
+  return false
+}
+
+function StaticJourney() {
+  return (
+    <section className="relative w-full bg-ink-900 pb-16 pt-24">
+      <img
+        src={`${import.meta.env.BASE_URL}og.jpg`}
+        alt="Bathroom interior with zellige walls and backlit mirror — CLEANGROUT visualiser"
+        className="mx-auto w-full max-w-5xl px-6"
+        loading="eager"
+      />
+      <div className="mx-auto max-w-2xl space-y-12 px-6 pt-14">
+        {STAGES.map((s) => (
+          <div key={s.kicker}>
+            <p className="font-mono text-[11px] uppercase tracking-ultra text-gold">{s.kicker}</p>
+            <h2 className="mt-4 text-2xl font-light leading-tight text-white">{s.title}</h2>
+            <p className="mt-3 text-[14px] leading-relaxed text-haze-300">{s.body}</p>
+          </div>
+        ))}
+        <a
+          href="#quote"
+          className="inline-block rounded-full bg-gold px-7 py-3.5 text-[13px] font-medium text-ink-900"
+        >
+          The price, itemised →
+        </a>
+      </div>
+    </section>
+  )
+}
+
 export default function ScrollJourney() {
   const sectionRef = useRef(null)
   const flashRef = useRef(null)
   const [stage, setStage] = useState(0)
+  const [weak] = useState(isWeakDevice)
 
   /* One scroll listener drives BOTH layers.
 
@@ -85,6 +125,8 @@ export default function ScrollJourney() {
       window.removeEventListener('resize', onScroll)
     }
   }, [onScroll])
+
+  if (weak) return <StaticJourney />
 
   return (
     /* The tall section is the scroll track. Everything visible lives in one
