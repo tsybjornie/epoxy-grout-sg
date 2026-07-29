@@ -31,7 +31,7 @@ const PROJECTS = [
   {
     id: '04',
     title: 'Two bathrooms, one visit',
-    scope: '5-Room HDB · floors + wet zones',
+    scope: 'Terrace home · Johor Bahru, Malaysia',
     detail: '300×300 · 15-year-old joints',
     price: '$1,977',
     tone: 'from-[#1C2220] to-[#0A0D0C]'
