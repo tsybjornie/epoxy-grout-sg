@@ -10,6 +10,7 @@ const PROJECTS = [
     scope: '4-Room HDB · floor + shower walls',
     detail: '300×300 · old cement raked to depth',
     price: '$1,074',
+    img: 'work/bathroom.png',
     tone: 'from-[#2A2118] to-[#0E0C0A]'
   },
   {
@@ -18,6 +19,8 @@ const PROJECTS = [
     scope: 'Whole flat · joints still open, no removal',
     detail: '600×600 floors · 1200×600 wet areas',
     price: '$2,738',
+    img: 'work/bto-render.jpg',
+    render: true,
     tone: 'from-[#1A2028] to-[#0A0C0E]'
   },
   {
@@ -26,6 +29,7 @@ const PROJECTS = [
     scope: 'Condo · grease-zone epoxy',
     detail: '600×600 · grease and stain exposure',
     price: '$721',
+    img: 'work/kitchen.png',
     tone: 'from-[#221C22] to-[#0C0A0C]'
   },
   {
@@ -34,6 +38,8 @@ const PROJECTS = [
     scope: 'Terrace home · Johor Bahru, Malaysia',
     detail: '300×300 · 15-year-old joints',
     price: '$1,977',
+    img: 'work/jb-render.jpg',
+    render: true,
     tone: 'from-[#1C2220] to-[#0A0D0C]'
   }
 ]
@@ -85,16 +91,19 @@ export default function GalleryGrid() {
                 whileHover={{ scale: 1.06 }}
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               >
-                {/* Placeholder joint lattice — replace with a photo. */}
-                <div
-                  className="absolute inset-0 opacity-[0.13]"
-                  style={{
-                    backgroundImage:
-                      'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-                    backgroundSize: '58px 58px'
-                  }}
+                {/* The gradient stays underneath as the loading state. */}
+                <img
+                  src={`${import.meta.env.BASE_URL}${p.img}`}
+                  alt={`${p.title} — ${p.scope}`}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               </motion.div>
+              {p.render && (
+                <span className="absolute bottom-4 left-5 rounded-full bg-ink-900/60 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wide2 text-white/70 backdrop-blur">
+                  3D render
+                </span>
+              )}
 
               <span className="absolute left-5 top-5 font-mono text-[11px] text-white/60">
                 {p.id}
