@@ -29,17 +29,13 @@ export default function Header() {
       {/* One small pill, not a full-width bar. Glass both ways: dark glass
           over the hero, white glass over the paper sections. */}
       <div
-        className={`pointer-events-auto flex items-center gap-4 rounded-full border px-4 py-2 shadow-[0_8px_30px_rgba(20,18,12,0.12)] backdrop-blur-2xl transition-colors duration-500 md:gap-6 md:px-5 ${
-          solid
-            ? 'border-white/70 bg-white/65'
-            : 'border-white/15 bg-white/10'
-        }`}
+        className="pointer-events-auto flex items-center gap-4 rounded-full border border-white/70 bg-white/65 px-4 py-2 shadow-[0_8px_30px_rgba(20,18,12,0.12)] backdrop-blur-2xl md:gap-6 md:px-5"
       >
         <a
           href="#top"
-          className={`text-[12px] font-semibold tracking-wide2 ${solid ? 'text-ink-900' : 'text-white'}`}
+          className="text-[12px] font-semibold tracking-wide2 text-ink-900"
         >
-          CLEAN<span className={solid ? 'text-stone-400' : 'text-white/50'}>GROUT</span>
+          CLEAN<span className="text-stone-400">GROUT</span>
         </a>
 
         <nav className="hidden items-center gap-5 md:flex">
@@ -47,9 +43,7 @@ export default function Header() {
             <a
               key={href}
               href={href}
-              className={`text-[12px] font-medium transition-colors ${
-                solid ? 'text-stone-500 hover:text-ink-900' : 'text-white/70 hover:text-white'
-              }`}
+              className="text-[12px] font-medium text-stone-500 transition-colors hover:text-ink-900"
             >
               {label}
             </a>
@@ -58,11 +52,7 @@ export default function Header() {
 
         <a
           href="#quote"
-          className={`rounded-full px-4 py-1.5 text-[11px] font-medium transition ${
-            solid
-              ? 'bg-ink-900 text-white hover:bg-gold hover:text-ink-900'
-              : 'bg-white/90 text-ink-900 hover:bg-gold'
-          }`}
+          className="rounded-full bg-ink-900 px-4 py-1.5 text-[11px] font-medium text-white transition hover:bg-gold hover:text-ink-900"
         >
           My price
         </a>
