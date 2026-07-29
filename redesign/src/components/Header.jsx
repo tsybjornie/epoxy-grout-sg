@@ -9,7 +9,7 @@ const NAV = [
 ]
 
 export default function Header() {
-  // Transparent over the hero, then white glass once you leave it.
+  // Frosted-dark over the hero, frosted-white once you leave it.
   const [solid, setSolid] = useState(false)
 
   useEffect(() => {
@@ -24,23 +24,30 @@ export default function Header() {
       initial={{ opacity: 0, y: -14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        solid
-          ? 'border-b border-white/60 bg-white/60 backdrop-blur-2xl'
-          : 'bg-transparent'
-      }`}
+      className="pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-4 md:top-5"
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:h-20 md:px-12">
-        <a href="#top" className={`text-[13px] font-semibold tracking-wide2 ${solid ? 'text-ink-900' : 'text-white'}`}>
+      {/* One small pill, not a full-width bar. Glass both ways: dark glass
+          over the hero, white glass over the paper sections. */}
+      <div
+        className={`pointer-events-auto flex items-center gap-4 rounded-full border px-4 py-2 shadow-[0_8px_30px_rgba(20,18,12,0.12)] backdrop-blur-2xl transition-colors duration-500 md:gap-6 md:px-5 ${
+          solid
+            ? 'border-white/70 bg-white/65'
+            : 'border-white/15 bg-white/10'
+        }`}
+      >
+        <a
+          href="#top"
+          className={`text-[12px] font-semibold tracking-wide2 ${solid ? 'text-ink-900' : 'text-white'}`}
+        >
           CLEAN<span className={solid ? 'text-stone-400' : 'text-white/50'}>GROUT</span>
         </a>
 
-        <nav className="hidden items-center gap-9 md:flex">
+        <nav className="hidden items-center gap-5 md:flex">
           {NAV.map(([label, href]) => (
             <a
               key={href}
               href={href}
-              className={`text-[13px] font-medium transition-colors ${
+              className={`text-[12px] font-medium transition-colors ${
                 solid ? 'text-stone-500 hover:text-ink-900' : 'text-white/70 hover:text-white'
               }`}
             >
@@ -51,10 +58,10 @@ export default function Header() {
 
         <a
           href="#quote"
-          className={`rounded-full px-5 py-2 text-[12px] font-medium transition ${
+          className={`rounded-full px-4 py-1.5 text-[11px] font-medium transition ${
             solid
               ? 'bg-ink-900 text-white hover:bg-gold hover:text-ink-900'
-              : 'bg-white text-ink-900 hover:bg-gold'
+              : 'bg-white/90 text-ink-900 hover:bg-gold'
           }`}
         >
           My price
