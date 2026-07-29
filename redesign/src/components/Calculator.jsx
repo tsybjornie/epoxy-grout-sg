@@ -102,8 +102,22 @@ function priceItem(it, condition) {
   }
 }
 
+/* Two-step chooser: property TYPE first (the question people actually
+   answer — HDB, Condo, Landed), then flat size only where it applies. */
+const TYPES = [
+  { key: 'hdb', label: 'HDB' },
+  { key: 'condo', label: 'Condo' },
+  { key: 'landed', label: 'Landed' }
+]
+const HDB_SIZES = [
+  { key: 'hdb4', label: '4-Room' },
+  { key: 'hdb5', label: '5-Room' }
+]
+
 export default function Calculator() {
-  const [layoutKey, setLayoutKey] = useState('hdb4')
+  const [propType, setPropType] = useState('hdb')
+  const [hdbSize, setHdbSize] = useState('hdb4')
+  const layoutKey = propType === 'hdb' ? hdbSize : propType
   const [condition, setCondition] = useState('recent')
   // Which line items are on, per layout, so switching layouts keeps choices.
   const [enabled, setEnabled] = useState(() => {
@@ -162,21 +176,39 @@ export default function Calculator() {
       <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_360px]">
         {/* ── Left: configuration ── */}
         <div className="glass p-6">
-          <div className="flex flex-wrap gap-2">
-            {Object.entries(LAYOUTS).map(([k, l]) => (
+          <div className="flex flex-wrap items-center gap-2">
+            {TYPES.map((t) => (
               <button
-                key={k}
-                onClick={() => setLayoutKey(k)}
-                aria-pressed={layoutKey === k}
-                className={`rounded-full px-5 py-2.5 text-[13px] font-medium transition ${
-                  layoutKey === k
+                key={t.key}
+                onClick={() => setPropType(t.key)}
+                aria-pressed={propType === t.key}
+                className={`rounded-full px-6 py-2.5 text-[13px] font-medium transition ${
+                  propType === t.key
                     ? 'bg-ink-900 text-white'
                     : 'border border-stone-300 text-stone-600 hover:border-stone-500'
                 }`}
               >
-                {l.name}
+                {t.label}
               </button>
             ))}
+            {propType === 'hdb' && (
+              <span className="ml-2 flex items-center gap-1 rounded-full border border-stone-200 bg-white/60 p-1">
+                {HDB_SIZES.map((sz) => (
+                  <button
+                    key={sz.key}
+                    onClick={() => setHdbSize(sz.key)}
+                    aria-pressed={hdbSize === sz.key}
+                    className={`rounded-full px-4 py-1.5 text-[12px] font-medium transition ${
+                      hdbSize === sz.key
+                        ? 'bg-gold text-ink-900'
+                        : 'text-stone-500 hover:text-ink-900'
+                    }`}
+                  >
+                    {sz.label}
+                  </button>
+                ))}
+              </span>
+            )}
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2">
