@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 const NAV = [
   ['Quote', '#quote'],
   ['Packages', '#packages'],
-  ['Work', '#work']
+  ['Work', '#work'],
+  ['Good to know', '/guides.html']
 ]
 
 export default function Header() {

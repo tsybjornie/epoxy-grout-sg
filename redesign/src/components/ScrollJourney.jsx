@@ -8,18 +8,12 @@ import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
 import Journey from '../scene/Journey.jsx'
 import { scrollState } from '../scene/scrollState.js'
-import { windowFlash } from '../scene/keyframes.js'
 
 const STAGES = [
   {
     kicker: 'CLEANGROUT — Singapore & JB',
     title: 'The three millimetres everyone else hides.',
-    body: 'Every block has them. This one is ours — scroll in.'
-  },
-  {
-    kicker: 'Layer 01 — Living hall',
-    title: 'Cream marble, checkered border, 1.5 mm seams.',
-    body: 'The seams are the thinnest thing in the room — and the only part that ever fails.'
+    body: 'Cream marble, checkered runner, 1.5 mm seams — the only part of this room that ever fails. Scroll in.'
   },
   {
     kicker: 'Layer 02 — Kitchen',
@@ -82,7 +76,6 @@ function StaticJourney() {
 
 export default function ScrollJourney() {
   const sectionRef = useRef(null)
-  const flashRef = useRef(null)
   const [stage, setStage] = useState(0)
   const [weak] = useState(isWeakDevice)
 
@@ -99,15 +92,6 @@ export default function ScrollJourney() {
     const travel = el.offsetHeight - window.innerHeight
     const t = clamp01(-rect.top / (travel || 1))
     scrollState.t = t
-
-    /* Through-the-window blink. Mutated on the DOM node directly — same
-       rule as everything scroll-driven here: no React state at 60 Hz. */
-    const fl = flashRef.current
-    if (fl) {
-      const f = windowFlash(t)
-      fl.style.opacity = String(f)
-      fl.style.visibility = f > 0.002 ? 'visible' : 'hidden'
-    }
   }, [])
 
   const onPointerMove = useCallback((e) => {
@@ -133,7 +117,7 @@ export default function ScrollJourney() {
     <section
       ref={sectionRef}
       onPointerMove={onPointerMove}
-      className="relative h-[640vh] w-full bg-ink-900"
+      className="relative h-[520vh] w-full bg-ink-900"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
 
@@ -171,7 +155,7 @@ export default function ScrollJourney() {
                 {/* DoF only on the macro — focusDistance is normalised
                     against near/far, so a value tuned for a 20 mm subject
                     throws the whole room out of focus. */}
-                {stage === 4 && (
+                {stage === 3 && (
                   <DepthOfField focusDistance={0.0006} focalLength={0.008} bokehScale={3.2} height={480} />
                 )}
                 <Bloom intensity={0.35} luminanceThreshold={0.72} luminanceSmoothing={0.3} mipmapBlur />
@@ -181,18 +165,6 @@ export default function ScrollJourney() {
             </Suspense>
           </Canvas>
         </div>
-
-        {/* ── The blink: warm-white wash that covers the cut from the
-             window pane to the interior. Above the canvas, below the rail. ── */}
-        <div
-          ref={flashRef}
-          className="pointer-events-none absolute inset-0 z-[25] will-change-[opacity]"
-          style={{
-            opacity: 0,
-            visibility: 'hidden',
-            background: 'radial-gradient(ellipse at center, #FFF7E8 0%, #FFEFD2 55%, #F4E3BC 100%)'
-          }}
-        />
 
         {/* ── Layer 2: type. Above both, so it survives the crossfade. ── */}
         <div className="pointer-events-none absolute inset-0 z-20 flex items-center px-6 pb-32 md:px-16">
@@ -213,8 +185,8 @@ export default function ScrollJourney() {
             ))}
           </div>
           <div className="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-wide2 text-haze-400">
-            <span>{['The block', 'Living hall', 'Kitchen', 'Bathroom', '1.5 mm seam'][stage]}</span>
-            <span>{stage < 4 ? 'Scroll' : 'End of path'}</span>
+            <span>{['Living hall', 'Kitchen', 'Bathroom', '1.5 mm seam'][stage]}</span>
+            <span>{stage < 3 ? 'Scroll' : 'End of path'}</span>
           </div>
         </div>
       </div>
@@ -236,7 +208,7 @@ function StageCopy({ stage }) {
         {s.title}
       </h2>
       <p className="mt-5 text-[14px] leading-relaxed text-haze-300">{s.body}</p>
-      {stage === 4 && (
+      {stage === 3 && (
         <a
           href="#quote"
           className="pointer-events-auto mt-8 inline-block rounded-full bg-gold px-7 py-3.5 text-[13px] font-medium text-ink-900 transition hover:bg-white"

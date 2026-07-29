@@ -61,7 +61,7 @@ export default function GalleryGrid() {
       <div className="mb-14 flex items-end justify-between gap-8">
         <div>
           <p className="font-mono text-[11px] uppercase tracking-ultra text-stone-500">
-            Selected work
+            Example scopes
           </p>
           <h2 className="mt-5 max-w-xl text-[clamp(1.8rem,3.6vw,2.9rem)] font-light leading-tight tracking-tight text-ink-900">
             Every job priced from the same published tariff.
@@ -101,12 +101,6 @@ export default function GalleryGrid() {
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               </motion.div>
-              {p.render && (
-                <span className="absolute bottom-4 left-5 rounded-full bg-ink-900/60 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wide2 text-white/70 backdrop-blur">
-                  Illustration
-                </span>
-              )}
-
               <span className="absolute left-5 top-5 font-mono text-[11px] text-white/60">
                 {p.id}
               </span>
@@ -128,6 +122,12 @@ export default function GalleryGrid() {
           </motion.a>
         ))}
       </div>
+
+      <p className="mt-6 font-mono text-[11px] text-stone-400">
+        Scopes and prices are real, from the published tariff — imagery is
+        visualised. Photographs of our launch flats replace these as they
+        complete.
+      </p>
     </section>
   )
 }
