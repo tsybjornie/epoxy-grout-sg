@@ -95,7 +95,7 @@ export default function Home() {
         <div className="border-t border-paper-edge">
           <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 font-mono text-[11px] text-stone-400 md:flex-row md:items-center md:justify-between md:px-12">
             <p>CLEANGROUT · Singapore &amp; Johor Bahru</p>
-            <p>Prices exclude GST · tariff current as shown</p>
+            <p>No GST charged · tariff current as shown</p>
           </div>
         </div>
       </footer>

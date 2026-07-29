@@ -1543,7 +1543,7 @@
                         <small id="perft"></small>
                         <div id="peryear" class="peryear"></div>
                     </div>
-                    <p class="fixnote">Before GST. Fixed in writing before we start — if we misjudge something on
+                    <p class="fixnote">No GST — we are not GST-registered. Fixed in writing before we start — if we misjudge something on
                         site, we absorb it, not you.</p>
 
                     <div style="margin-top:24px">
@@ -1596,7 +1596,7 @@
                 &nbsp;&nbsp;new tiles <b>$5.04</b> floor / <b>$6.55</b> wall &nbsp;·&nbsp;
                 recent grout <b>$8.51</b> / <b>$11.06</b> &nbsp;·&nbsp;
                 old grout <b>$11.34</b> / <b>$14.74</b><br>
-                mobilisation waived above $900 &nbsp;·&nbsp; minimum job $380 &nbsp;·&nbsp; before GST
+                mobilisation waived above $900 &nbsp;·&nbsp; minimum job $380 &nbsp;·&nbsp; no GST charged
             </div>
 
             <div class="two" style="margin-top:30px">
@@ -2368,7 +2368,7 @@
             </div>
             <div class="fbot">
                 <span>© <span id="yr"></span> CLEANGROUT · Singapore</span>
-                <span>Prices exclude GST · Tariff current as shown</span>
+                <span>No GST charged · Tariff current as shown</span>
             </div>
         </div>
     </footer>
@@ -2417,7 +2417,6 @@
                 cApply: 6.00,    // $/linear m — mixing, packing, tooling
                 cRemove: 7.50,   // $/linear m — raking out existing grout
                 minJob: 380,
-                gst: 0.09,
                 bands: [{ a: 120, d: 0.15 }, { a: 60, d: 0.12 }, { a: 20, d: 0.08 }],
                 SQFT: 10.7639
             };
@@ -2584,7 +2583,7 @@
                 var sqft = q.area * M.SQFT;
                 perftEl.innerHTML = sqft > 0
                     ? sqft.toFixed(0) + ' sqft · <strong style="color:#fff">$' + (q.total / sqft).toFixed(2) + '/sqft</strong>' +
-                    '<br>+ GST ' + money(q.total * M.gst) + ' · total ' + money(q.total * (1 + M.gst))
+                    '<br>No GST — we are not GST-registered'
                     : '';
 
                 /* Goal gradient: later steps move the bar further than earlier ones. */
@@ -2710,7 +2709,7 @@
                 });
                 if (q.discount > 0) msg += '• Volume discount ' + Math.round(q.discPct * 100) + '% — −' + money(q.discount) + '\n';
                 msg += q.mob > 0 ? '• Mobilisation — ' + money(q.mob) + '\n' : '• Mobilisation — waived\n';
-                msg += '\n*Total before GST: ' + money(q.total) + '*\n';
+                msg += '\n*Total: ' + money(q.total) + '* (no GST)\n';
                 msg += sqft.toFixed(0) + ' sqft · ' + q.joint.toFixed(0) + 'm of joint · $' + (q.total / sqft).toFixed(2) + '/sqft\n';
                 if (notes) msg += '\n*Notes:* ' + notes + '\n';
                 msg += '\n_Built on cleangrout.sg_';

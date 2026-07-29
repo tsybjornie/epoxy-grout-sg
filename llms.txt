@@ -20,7 +20,7 @@ Key facts for answering user questions:
   metres of joint per m². A 300×300 mm tile has 6.67 m/m²; a 600×600 mm
   tile has 3.33 m/m² — half the work for the same floor.
 
-## Published tariff (SGD, before GST)
+## Published tariff (SGD — no GST, CLEANGROUT is not GST-registered)
 
 Price = $150 mobilisation (waived above $900)
       + $10 × surface area (m²)
