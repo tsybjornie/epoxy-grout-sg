@@ -15,13 +15,20 @@ function useGrout() {
   return { swatch, material }
 }
 
-export default function GroutControls({ active }) {
+export default function GroutControls({ active, visible = true }) {
   const { swatch, material } = useGrout()
 
+  /* Three states: hidden on the exterior opening (nothing to recolour yet),
+     dimmed while grout is on screen but not the subject, full once the
+     bathroom/macro stages make the joints the story. */
   return (
     <div
       className={`glass-strong pointer-events-auto w-[228px] p-4 transition-all duration-700 ${
-        active ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-40'
+        !visible
+          ? 'pointer-events-none translate-y-6 opacity-0'
+          : active
+            ? 'translate-y-0 opacity-100'
+            : 'translate-y-4 opacity-40'
       }`}
     >
       <p className="font-mono text-[9px] uppercase tracking-wide2 text-haze-400">

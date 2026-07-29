@@ -160,7 +160,7 @@ export default function ScrollJourney() {
 
         {/* ── Layer 3: the material controls. Glass, bottom-right. ── */}
         <div className="pointer-events-none absolute bottom-24 right-6 z-30 md:right-16">
-          <GroutControls active={stage >= 3} />
+          <GroutControls visible={stage >= 1} active={stage >= 3} />
         </div>
 
         {/* Fixed chrome: progress rail. */}
