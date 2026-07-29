@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import Header from './components/Header.jsx'
-import ScrollJourney from './components/ScrollJourney.jsx'
+import Hero from './components/Hero.jsx'
 import Packages from './components/Packages.jsx'
 import Calculator from './components/Calculator.jsx'
 import ProcessStrip from './components/ProcessStrip.jsx'
@@ -27,7 +27,7 @@ export default function Home() {
     <div id="top" className="min-h-screen bg-paper text-stone-800">
       <Header />
       <main>
-        <ScrollJourney />
+        <Hero />
         <Packages />
         <Calculator />
         <ProcessStrip />
