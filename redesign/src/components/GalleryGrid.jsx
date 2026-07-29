@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 const PROJECTS = [
   {
     id: '01',
-    title: 'Bathroom re-grout, full depth',
+    title: 'Bathroom re-grout',
     scope: '4-Room HDB · floor + shower walls',
     detail: '300×300 · old cement raked to depth',
     price: '$1,074',
@@ -14,7 +14,7 @@ const PROJECTS = [
   },
   {
     id: '02',
-    title: 'New BTO, first grout',
+    title: 'BTO first-time grouting',
     scope: 'Whole flat · joints still open, no removal',
     detail: '600×600 floors · 1200×600 wet areas',
     price: '$2,738',
@@ -30,7 +30,7 @@ const PROJECTS = [
   },
   {
     id: '04',
-    title: 'Two bathrooms, one visit',
+    title: 'Two-bathroom re-grout',
     scope: 'Terrace home · Johor Bahru, Malaysia',
     detail: '300×300 · 15-year-old joints',
     price: '$1,977',
