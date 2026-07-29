@@ -38,6 +38,32 @@ const LAYOUTS = {
       { id: 'balcony', name: 'Balcony floor', area: 5, perim: 9, tile: 300, surface: 'floor', on: false }
     ]
   },
+  condo3: {
+    name: 'Condo (3-bed)',
+    items: [
+      { id: 'living', name: 'Living & dining floor', area: 22, perim: 19, tile: 600, surface: 'floor', on: true },
+      { id: 'kitchen', name: 'Kitchen floor', area: 8, perim: 12, tile: 600, surface: 'floor', on: true },
+      { id: 'ksplash', name: 'Kitchen backsplash', area: 4, perim: 9, tile: 300, surface: 'wall', on: true },
+      { id: 'mbath-f', name: 'Master bath floor', area: 4.5, perim: 8.5, tile: 300, surface: 'floor', on: true },
+      { id: 'mbath-w', name: 'Master bath walls', area: 12, perim: 14, tile: 300, surface: 'wall', on: true },
+      { id: 'cbath-f', name: 'Common bath floor', area: 3.5, perim: 7.5, tile: 300, surface: 'floor', on: true },
+      { id: 'cbath-w', name: 'Common bath walls', area: 10, perim: 12, tile: 300, surface: 'wall', on: false },
+      { id: 'balcony', name: 'Balcony floor', area: 6, perim: 10, tile: 300, surface: 'floor', on: false }
+    ]
+  },
+  hdb3: {
+    name: 'HDB 3-Room',
+    items: [
+      { id: 'living', name: 'Living & dining floor', area: 16, perim: 16, tile: 600, surface: 'floor', on: true },
+      { id: 'kitchen', name: 'Kitchen floor', area: 7, perim: 11, tile: 300, surface: 'floor', on: true },
+      { id: 'ksplash', name: 'Kitchen backsplash', area: 3.5, perim: 8, tile: 300, surface: 'wall', on: true },
+      { id: 'bath-f', name: 'Bathroom floor', area: 3.5, perim: 7.5, tile: 300, surface: 'floor', on: true },
+      { id: 'bath-w', name: 'Bathroom walls', area: 10, perim: 12, tile: 300, surface: 'wall', on: true },
+      { id: 'wc-f', name: 'WC floor', area: 2.5, perim: 6.5, tile: 300, surface: 'floor', on: true },
+      { id: 'wc-w', name: 'WC walls', area: 8, perim: 11, tile: 300, surface: 'wall', on: false },
+      { id: 'bedrooms', name: 'Bedrooms (2, floors)', area: 20, perim: 28, tile: 600, surface: 'floor', on: false }
+    ]
+  },
   hdb4: {
     name: 'HDB 4-Room',
     items: [
@@ -110,14 +136,20 @@ const TYPES = [
   { key: 'landed', label: 'Landed' }
 ]
 const HDB_SIZES = [
+  { key: 'hdb3', label: '3-Room' },
   { key: 'hdb4', label: '4-Room' },
   { key: 'hdb5', label: '5-Room' }
+]
+const CONDO_SIZES = [
+  { key: 'condo', label: '2-Bed' },
+  { key: 'condo3', label: '3-Bed' }
 ]
 
 export default function Calculator() {
   const [propType, setPropType] = useState('hdb')
   const [hdbSize, setHdbSize] = useState('hdb4')
-  const layoutKey = propType === 'hdb' ? hdbSize : propType
+  const [condoSize, setCondoSize] = useState('condo')
+  const layoutKey = propType === 'hdb' ? hdbSize : propType === 'condo' ? condoSize : propType
   const [condition, setCondition] = useState('recent')
   // Which line items are on, per layout, so switching layouts keeps choices.
   const [enabled, setEnabled] = useState(() => {
@@ -191,22 +223,26 @@ export default function Calculator() {
                 {t.label}
               </button>
             ))}
-            {propType === 'hdb' && (
+            {propType !== 'landed' && (
               <span className="ml-2 flex items-center gap-1 rounded-full border border-stone-200 bg-white/60 p-1">
-                {HDB_SIZES.map((sz) => (
-                  <button
-                    key={sz.key}
-                    onClick={() => setHdbSize(sz.key)}
-                    aria-pressed={hdbSize === sz.key}
-                    className={`rounded-full px-4 py-1.5 text-[12px] font-medium transition ${
-                      hdbSize === sz.key
-                        ? 'bg-gold text-ink-900'
-                        : 'text-stone-500 hover:text-ink-900'
-                    }`}
-                  >
-                    {sz.label}
-                  </button>
-                ))}
+                {(propType === 'hdb' ? HDB_SIZES : CONDO_SIZES).map((sz) => {
+                  const current = propType === 'hdb' ? hdbSize : condoSize
+                  const set = propType === 'hdb' ? setHdbSize : setCondoSize
+                  return (
+                    <button
+                      key={sz.key}
+                      onClick={() => set(sz.key)}
+                      aria-pressed={current === sz.key}
+                      className={`rounded-full px-4 py-1.5 text-[12px] font-medium transition ${
+                        current === sz.key
+                          ? 'bg-gold text-ink-900'
+                          : 'text-stone-500 hover:text-ink-900'
+                      }`}
+                    >
+                      {sz.label}
+                    </button>
+                  )
+                })}
               </span>
             )}
           </div>
