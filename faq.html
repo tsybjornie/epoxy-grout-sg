@@ -25,7 +25,7 @@
         content="Frequently asked questions about our epoxy grout services in Singapore and Malaysia.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <style>
         * {
@@ -35,9 +35,9 @@
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: #FFFFFF;
-            color: #0A0A0A;
+            font-family: 'Manrope', sans-serif;
+            background: #F7F5F1;
+            color: #2A2D33;
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
         }
@@ -49,7 +49,7 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(15, 15, 20, 0.45);
+            background: rgba(247, 245, 241, 0.82);
             backdrop-filter: blur(24px) saturate(1.4);
             -webkit-backdrop-filter: blur(24px) saturate(1.4);
             padding: 0 40px;
@@ -57,13 +57,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid #E5E1D8;
         }
 
         .nav-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.4rem;
-            color: #FFFFFF;
+            font-weight: 800;
+            font-size: .95rem;
+            color: #2A2D33;
             text-decoration: none;
             letter-spacing: 0.06em;
         }
@@ -75,7 +75,7 @@
         }
 
         .nav-links a {
-            color: rgba(255, 255, 255, 0.6);
+            color: #6A6F76;
             text-decoration: none;
             font-size: 0.8rem;
             font-weight: 500;
@@ -86,13 +86,14 @@
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: #FFFFFF;
+            color: #2A2D33;
         }
 
         .nav-cta {
-            background: #FFFFFF !important;
-            color: #0A0A0A !important;
+            background: #171A20 !important;
+            color: #FFFFFF !important;
             padding: 8px 20px;
+            border-radius: 999px;
             font-weight: 600 !important;
         }
 
@@ -107,7 +108,7 @@
         .hamburger span {
             width: 24px;
             height: 2px;
-            background: #FFFFFF;
+            background: #2A2D33;
             transition: all 0.3s;
         }
 
@@ -122,7 +123,8 @@
                 top: 64px;
                 left: 0;
                 right: 0;
-                background: rgba(10, 10, 10, 0.98);
+                background: #F7F5F1;
+                border-bottom: 1px solid #E5E1D8;
                 flex-direction: column;
                 padding: 24px;
                 gap: 16px;
@@ -141,21 +143,20 @@
         .page-header {
             padding: 140px 20px 60px;
             text-align: center;
-            background: #0A0A0A;
-            color: #FFFFFF;
+            background: transparent;
+            color: #2A2D33;
         }
 
         .page-header h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 400;
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
+            font-weight: 800; letter-spacing: -0.01em;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
             margin-bottom: 12px;
         }
 
         .page-header p {
-            color: rgba(255, 255, 255, 0.5);
+            color: #8A8578;
             font-size: 1rem;
             max-width: 500px;
             margin: 0 auto;
@@ -173,17 +174,15 @@
         }
 
         .faq-category-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.6rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            padding-bottom: 16px;
-            border-bottom: 2px solid #0A0A0A;
+            font-weight: 800; letter-spacing: -0.01em;
+            font-size: 1.2rem;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #9A7B24;
             margin-bottom: 32px;
         }
 
         .faq-item {
-            border-bottom: 1px solid #E8E8E8;
+            border-bottom: 1px solid #E5E1D8;
         }
 
         .faq-question {
@@ -227,9 +226,10 @@
 
         /* Footer */
         .site-footer {
-            background: #0A0A0A;
-            color: #FFFFFF;
-            padding: 80px 40px 40px;
+            background: #F7F5F1;
+            color: #2A2D33;
+            border-top: 1px solid #E5E1D8;
+            padding: 56px 40px 32px;
         }
 
         .footer-grid {
@@ -242,30 +242,30 @@
         }
 
         .footer-brand h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 800; letter-spacing: -0.01em;
             font-size: 1.4rem;
             letter-spacing: 0.06em;
             margin-bottom: 16px;
         }
 
         .footer-brand p {
-            color: rgba(255, 255, 255, 0.4);
+            color: #8A8578;
             font-size: 0.85rem;
             line-height: 1.7;
         }
 
         .footer-col h4 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 800; letter-spacing: -0.01em;
             font-size: 1rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.6);
+            color: #6A6F76;
         }
 
         .footer-col a {
             display: block;
-            color: rgba(255, 255, 255, 0.4);
+            color: #8A8578;
             text-decoration: none;
             font-size: 0.85rem;
             margin-bottom: 10px;
@@ -280,7 +280,7 @@
             max-width: 1100px;
             margin: 0 auto;
             padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid #E5E1D8;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -289,7 +289,7 @@
         }
 
         .footer-bottom p {
-            color: rgba(255, 255, 255, 0.3);
+            color: #A8A294;
             font-size: 0.75rem;
         }
 
@@ -533,20 +533,20 @@
         <!-- Back to home -->
         <div style="text-align: center; margin-top: 40px;">
             <a href="index.html"
-                style="display: inline-block; background: #0A0A0A; color: #FFFFFF; padding: 14px 36px; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase;">Back
+                style="display: inline-block; background: #171A20; color: #FFFFFF; padding: 13px 32px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: .9rem;">Back
                 to Home</a>
         </div>
     </div>
 
     <!-- Footer -->
     <!-- calculator CTA -->
-<section style="background:#0A0A0A;color:#fff;padding:56px 20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+<section style="background:#EFEBE3;color:#2A2D33;padding:56px 20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
   <div style="max-width:760px;margin:0 auto;text-align:center;">
-    <p style="font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#9BA0AA;font-weight:700;margin:0 0 14px;">Know the price before you message anyone</p>
+    <p style="font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#8A8578;font-weight:700;margin:0 0 14px;">Know the price before you message anyone</p>
     <h2 style="font-size:clamp(1.5rem,4.5vw,2.2rem);line-height:1.12;letter-spacing:-.025em;margin:0 0 14px;font-weight:700;">Build your own itemised quote in 30 seconds.</h2>
-    <p style="color:#C9CBD1;font-size:1rem;line-height:1.6;margin:0 0 26px;">Pick your rooms and tile sizes and get a fixed price, itemised, with no form to fill in first. Grout is priced by metres of joint, so a 300&times;300 floor costs about twice a 600&times;600 floor the same size &mdash; the calculator does that maths for you.</p>
-    <a href="index.html#quote" style="display:inline-block;background:#FF5C1A;color:#fff;text-decoration:none;font-weight:650;padding:17px 30px;border-radius:999px;min-height:54px;font-size:1rem;">Build my quote &rarr;</a>
-    <p style="color:#9BA0AA;font-size:.86rem;margin:22px 0 0;">Newly laid tiles never grouted? That costs around 40% less &mdash; there&rsquo;s no removal stage. <a href="index.html#quote" style="color:#fff;">Price it here</a>.</p>
+    <p style="color:#5A5E66;font-size:1rem;line-height:1.6;margin:0 0 26px;">Pick your rooms and tile sizes and get a fixed price, itemised, with no form to fill in first. Grout is priced by metres of joint, so a 300&times;300 floor costs about twice a 600&times;600 floor the same size &mdash; the calculator does that maths for you.</p>
+    <a href="index.html#quote" style="display:inline-block;background:#171A20;color:#fff;text-decoration:none;font-weight:650;padding:17px 30px;border-radius:999px;min-height:54px;font-size:1rem;">Build my quote &rarr;</a>
+    <p style="color:#8A8578;font-size:.86rem;margin:22px 0 0;">Newly laid tiles never grouted? That costs around 40% less &mdash; there&rsquo;s no removal stage. <a href="index.html#quote" style="color:#2A2D33;font-weight:600;">Price it here</a>.</p>
   </div>
 </section>
 
@@ -593,6 +593,7 @@
             });
         });
     </script>
+    <script defer src="/widget.js"></script>
 </body>
 
 </html>

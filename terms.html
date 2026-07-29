@@ -10,268 +10,43 @@
         href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Manrope', sans-serif; background: #F7F5F1; color: #2A2D33; line-height: 1.7; -webkit-font-smoothing: antialiased; }
 
-        body {
-            font-family: 'Manrope', sans-serif;
-            background: #F7F5F1;
-            color: #2A2D33;
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(15, 15, 20, 0.45);
-            backdrop-filter: blur(24px) saturate(1.4);
-            -webkit-backdrop-filter: blur(24px) saturate(1.4);
-            padding: 0 40px;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .nav-logo {
-            font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.01em;
-            font-size: 1.4rem;
-            color: #FFFFFF;
-            text-decoration: none;
-            letter-spacing: 0.06em;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #FFFFFF;
-        }
-
-        .nav-cta {
-            background: #FFFFFF !important;
-            color: #0A0A0A !important;
-            padding: 8px 20px;
-            font-weight: 600 !important;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 4px;
-        }
-
-        .hamburger span {
-            width: 24px;
-            height: 2px;
-            background: #FFFFFF;
-            transition: all 0.3s;
-        }
-
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(247,245,241,.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E5E1D8; }
+        .nav-logo { font-weight: 800; font-size: .95rem; letter-spacing: .1em; color: #2A2D33; text-decoration: none; }
+        .nav-links { display: flex; gap: 28px; align-items: center; }
+        .nav-links a { color: #6A6F76; text-decoration: none; font-size: .78rem; font-weight: 600; letter-spacing: .04em; transition: color .3s; }
+        .nav-links a:hover, .nav-links a.active { color: #2A2D33; }
+        .nav-cta { background: #171A20 !important; color: #fff !important; padding: 8px 20px; border-radius: 999px; font-weight: 600 !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+        .hamburger span { width: 24px; height: 2px; background: #2A2D33; transition: all .3s; }
         @media (max-width: 768px) {
-            .navbar {
-                padding: 0 20px;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 64px;
-                left: 0;
-                right: 0;
-                background: rgba(10, 10, 10, 0.98);
-                flex-direction: column;
-                padding: 24px;
-                gap: 16px;
-            }
-
-            .nav-links.open {
-                display: flex;
-            }
-
-            .hamburger {
-                display: flex;
-            }
+            .navbar { padding: 0 20px; }
+            .nav-links { display: none; position: absolute; top: 60px; left: 0; right: 0; background: #F7F5F1; border-bottom: 1px solid #E5E1D8; flex-direction: column; padding: 24px; gap: 16px; }
+            .nav-links.open { display: flex; }
+            .hamburger { display: flex; }
         }
 
-        .page-header {
-            padding: 140px 20px 60px;
-            text-align: center;
-            background: #0A0A0A;
-            color: #FFFFFF;
-        }
+        .page-header { padding: 130px 20px 28px; max-width: 800px; margin: 0 auto; text-align: left; }
+        .page-header h1 { font-weight: 800; letter-spacing: -.02em; font-size: clamp(1.9rem, 4.5vw, 2.8rem); line-height: 1.15; margin-bottom: 10px; color: #2A2D33; }
+        .page-header p { color: #8A8578; font-size: .85rem; }
 
-        .page-header h1 {
-            font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.01em;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 400;
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
+        .legal-content { max-width: 800px; margin: 0 auto; padding: 12px 20px 70px; }
+        .legal-content h2 { font-size: 1.15rem; font-weight: 700; color: #2A2D33; margin: 38px 0 12px; }
+        .legal-content p { font-size: .92rem; color: #4A4E55; margin-bottom: 14px; }
+        .legal-content ul, .legal-content ol { padding-left: 22px; margin-bottom: 14px; }
+        .legal-content li { font-size: .9rem; color: #4A4E55; margin-bottom: 6px; }
+        .legal-content strong { color: #2A2D33; }
+        .highlight-box { background: #EFEBE3; border-left: 3px solid #9A7B24; border-radius: 0 10px 10px 0; padding: 16px 18px; margin: 18px 0; font-size: .9rem; color: #4A4E55; }
 
-        .page-header p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 1rem;
-        }
-
-        .legal-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .legal-content h2 {
-            font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.01em;
-            font-size: 1.5rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            margin: 48px 0 16px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #0A0A0A;
-        }
-
-        .legal-content h2:first-child {
-            margin-top: 0;
-        }
-
-        .legal-content p {
-            margin-bottom: 16px;
-            color: #444;
-            font-size: 0.9rem;
-            line-height: 1.8;
-        }
-
-        .legal-content ul,
-        .legal-content ol {
-            margin: 16px 0 24px 24px;
-            color: #444;
-            font-size: 0.9rem;
-        }
-
-        .legal-content li {
-            margin-bottom: 8px;
-            line-height: 1.7;
-        }
-
-        .legal-content strong {
-            color: #0A0A0A;
-        }
-
-        .highlight-box {
-            background: #EFEBE3; border-left: 3px solid #9A7B24;
-            border-left: 4px solid #0A0A0A;
-            padding: 20px 24px;
-            margin: 24px 0;
-            font-size: 0.9rem;
-            color: #333;
-        }
-
-        .site-footer {
-            background: #0A0A0A;
-            color: #FFFFFF;
-            padding: 80px 40px 40px;
-        }
-
-        .footer-grid {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-
-        .footer-brand h3 {
-            font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.01em;
-            font-size: 1.4rem;
-            letter-spacing: 0.06em;
-            margin-bottom: 16px;
-        }
-
-        .footer-brand p {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.85rem;
-            line-height: 1.7;
-        }
-
-        .footer-col h4 {
-            font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.01em;
-            font-size: 1rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .footer-col a {
-            display: block;
-            color: rgba(255, 255, 255, 0.4);
-            text-decoration: none;
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            transition: color 0.3s;
-        }
-
-        .footer-col a:hover {
-            color: #FFFFFF;
-        }
-
-        .footer-bottom {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer-bottom p {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 0.75rem;
-        }
-
-        @media (max-width: 768px) {
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 40px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-        }
-    </style>
+        .site-footer { border-top: 1px solid #E5E1D8; background: #F7F5F1; padding: 48px 20px 32px; }
+        .footer-grid { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 28px; }
+        .site-footer h3, .site-footer h4 { color: #2A2D33; font-size: .9rem; font-weight: 700; margin-bottom: 10px; }
+        .site-footer p, .site-footer a, .site-footer li { color: #6A6F76; font-size: .82rem; text-decoration: none; list-style: none; line-height: 1.9; }
+        .site-footer a:hover { color: #2A2D33; }
+        .footer-bottom { max-width: 960px; margin: 28px auto 0; padding-top: 18px; border-top: 1px solid #E5E1D8; color: #8A8578; font-size: .75rem; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }
+</style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script><script defer src="/_vercel/insights/script.js"></script>
 </head>
 
@@ -458,7 +233,7 @@
 
         <div style="text-align: center; margin-top: 60px;">
             <a href="index.html"
-                style="display: inline-block; background: #0A0A0A; color: #FFFFFF; padding: 14px 36px; text-decoration: none; font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.01em; font-size: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase;">Back
+                style="display: inline-block; background: #171A20; color: #FFFFFF; padding: 13px 32px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: .9rem;">Back
                 to Home</a>
         </div>
     </div>
@@ -494,6 +269,7 @@
             <p>Singapore &middot; Malaysia</p>
         </div>
     </footer>
+    <script defer src="/widget.js"></script>
 </body>
 
 </html>
