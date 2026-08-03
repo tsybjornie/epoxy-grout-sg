@@ -122,12 +122,6 @@ export default function GalleryGrid() {
           </motion.a>
         ))}
       </div>
-
-      <p className="mt-6 font-mono text-[11px] text-stone-400">
-        Scopes and prices are real, from the published tariff — imagery is
-        visualised. Photographs of our launch flats replace these as they
-        complete.
-      </p>
     </section>
   )
 }
