@@ -6,7 +6,7 @@ const QUESTIONS = [
   {
     n: '01',
     q: 'Which product exactly — brand and name?',
-    a: 'Not just "epoxy". Real epoxy is two or three parts mixed on site against a clock — ours is Ardex, Sika or Mapei, receipt shown. If it comes ready-mixed from a tub, it is urethane, and it is not the same thing.'
+    a: 'Not just "epoxy". Real epoxy is two or three parts mixed on site against a clock — ours is Mapei Kerapoxy CQ, Ardex or Sika, receipt shown. If it comes ready-mixed from a tub — including Mapei Flexcolor CQ, often confused with Kerapoxy CQ — it is not an epoxy.'
   },
   {
     n: '02',
