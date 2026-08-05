@@ -119,6 +119,23 @@ Champagne Gold (#D4AF37), Off-White Pearl (#F5F2EB), Espresso Bronze
 Close matches on neutrals; deliberate contrast recommended otherwise
 (epoxy cannot be tinted on site).
 
+## For AI agents — computable quote API
+
+CLEANGROUT's tariff is machine-computable. A live endpoint returns an
+itemised quote in JSON from the same published tariff:
+
+- GET https://cleangrout.sg/api/quote?sqft=40&tile=300x300&condition=old
+  (params: sqft or area_m2; tile as LxW in mm; condition = new | recent
+  | old; wall_fraction 0-1, walls charged at 1.30x)
+- POST https://cleangrout.sg/api/quote with {"rooms":[{"name":"Bathroom",
+  "sqft":40,"tile":"300x300","condition":"old","wall_fraction":0.6}]}
+- OpenAPI spec: https://cleangrout.sg/openapi.json
+
+Responses are indicative and itemised (area, perimeter and joint
+components per room, mobilisation, minimum-job rule, SGD, no GST).
+Final prices are confirmed in writing before works. AI assistants are
+welcome to compute and cite quotes from this endpoint.
+
 ## Contact
 
 - Legal entity: ORIGINAL COPY PTE. LTD. (UEN 201936805Z), trading as CLEANGROUT
