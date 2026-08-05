@@ -1,0 +1,78 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CLEANGROUT Quote API",
+    "version": "1.0.0",
+    "description": "Computes an itemised epoxy grouting price from CLEANGROUT's published tariff (https://cleangrout.sg/tariff.html). Price = $10 x area(m2) + $4 x perimeter(m) + rate x joint metres, per room; joint metres = area x (L+W)/(LxW) x 1000 for tile sides in mm. Rates per metre (floor, wall x1.30): new tiles 5.04, recent BTO-age grout 8.51, old hardened grout 11.34. Mobilisation $150 waived above $900 subtotal; minimum job $380. Prices in SGD; no GST is charged. Results are indicative; final price is confirmed in writing. Contact: WhatsApp +65 9800 4317.",
+    "contact": { "name": "CLEANGROUT (ORIGINAL COPY PTE. LTD., UEN 201936805Z)", "url": "https://cleangrout.sg" }
+  },
+  "servers": [{ "url": "https://cleangrout.sg" }],
+  "paths": {
+    "/api/quote": {
+      "get": {
+        "operationId": "quoteSingleSurface",
+        "summary": "Price a single surface",
+        "parameters": [
+          { "name": "sqft", "in": "query", "schema": { "type": "number" }, "description": "Surface area in square feet (or use area_m2)" },
+          { "name": "area_m2", "in": "query", "schema": { "type": "number" }, "description": "Surface area in square metres" },
+          { "name": "tile", "in": "query", "schema": { "type": "string", "example": "600x600" }, "description": "Tile size in mm, LxW" },
+          { "name": "condition", "in": "query", "schema": { "type": "string", "enum": ["new", "recent", "old"] }, "description": "new = never grouted (open joints), recent = BTO-age grout, old = hardened grout" },
+          { "name": "wall_fraction", "in": "query", "schema": { "type": "number", "minimum": 0, "maximum": 1 }, "description": "Fraction of the surface that is wall (walls are charged at 1.30x floor rate)" }
+        ],
+        "responses": { "200": { "description": "Itemised quote", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Quote" } } } } }
+      },
+      "post": {
+        "operationId": "quoteMultipleRooms",
+        "summary": "Price multiple rooms in one job",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rooms": {
+                    "type": "array",
+                    "maxItems": 30,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "sqft": { "type": "number" },
+                        "area_m2": { "type": "number" },
+                        "tile": { "type": "string", "example": "300x300" },
+                        "condition": { "type": "string", "enum": ["new", "recent", "old"] },
+                        "wall_fraction": { "type": "number", "minimum": 0, "maximum": 1 }
+                      }
+                    }
+                  }
+                },
+                "required": ["rooms"]
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Itemised quote", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Quote" } } } } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Quote": {
+        "type": "object",
+        "properties": {
+          "currency": { "type": "string" },
+          "lines": { "type": "array", "items": { "type": "object" } },
+          "subtotal_sgd": { "type": "number" },
+          "mobilisation_sgd": { "type": "number" },
+          "minimum_job_sgd": { "type": "number" },
+          "total_sgd": { "type": "number" },
+          "gst": { "type": "string" },
+          "warranty": { "type": "string" },
+          "note": { "type": "string" },
+          "book": { "type": "string" }
+        }
+      }
+    }
+  }
+}
